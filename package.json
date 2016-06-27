@@ -1,0 +1,43 @@
+{
+  "author": "Sergey Pimenov",
+  "name": "core",
+  "version": "0.0.1",
+  "description": "The front-end framework for developing responsive, mobile projects on the phonegap",
+  "keywords": [
+    "core",
+    "css",
+    "less",
+    "mobile-first",
+    "responsive",
+    "front-end",
+    "framework",
+    "web",
+    "mobile",
+    "cordova",
+    "phonegap"
+  ],
+  "homepage": "https://github.com/olton/CoreCSS",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/olton/CoreCSS.git"
+  },
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/olton/CoreCSS/blob/master/LICENSE"
+  },
+  "devDependencies": {
+    "autoprefixer": "^5.1.11",
+    "grunt": "^0.4.5",
+    "grunt-autoprefixer": "^3.0.0",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-copy": "^0.8.0",
+    "grunt-contrib-cssmin": "^0.12.2",
+    "grunt-contrib-less": "^1.0.0",
+    "grunt-contrib-uglify": "^0.8.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-postcss": "^0.3.0",
+    "grunt-replace": "^0.9.1",
+    "load-grunt-tasks": "^3.1.0"
+  }
+}

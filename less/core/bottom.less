@@ -1,0 +1,144 @@
+@import (once) "../include/variables";
+@import (once) "../include/mixins";
+@import (once) "../utils/shadows";
+
+.bottom-nav {
+    display: flex;
+    flex-wrap: nowrap;
+    height: @unitSize;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    box-shadow: 0 -2px 10px 0 rgba(0, 0, 0, 0.16), 0 -1px 5px 0 rgba(0, 0, 0, 0.26);
+    z-index: @zIndexBottomNav;
+}
+
+.bottom-nav {
+    .button {
+        min-width: 80px;
+        width: auto;
+        height: 100%;
+        flex-grow: 1;
+        text-align: center;
+        text-transform: capitalize;
+        margin: 0;
+        border-radius: 0;
+
+        .icon {
+            .box(24px);
+        }
+
+        .label {
+            display: block;
+        }
+    }
+}
+
+.bottom-sheet {
+    .fix-to-bottom();
+    .clear();
+    background-color: @white;
+    display: block;
+    z-index: @zIndexBottomSheet;
+    max-width: 360px;
+    left: 50%;
+    list-style: none inside;
+    padding: 0;
+    margin: 0 0 0 -180px;
+    width: 100%;
+}
+
+.bottom-sheet {
+
+    & > .title {
+        height: 56px;
+        font-size: 16px;
+        color: rgba(0,0,0, .87);
+    }
+
+    & > li, & > .item {
+
+        font-size: 16px;
+        position: relative;
+        height: 48px;
+        padding-left: @unitSize;
+        display: block;
+        cursor: pointer;
+        vertical-align: middle;
+        line-height: 48px;
+
+        .icon {
+            left: 16px;
+            position: absolute;
+            .square(24px);
+            font-size: 24px;
+            line-height: 24px;
+            vertical-align: middle;
+            text-align: center;
+            top: 50%;
+            margin-top: -12px;
+        }
+
+        &:hover, &.hovered, &.active {
+            background-color: @menuHoverBackground;
+        }
+
+    }
+
+    & > .divider {
+        height: 1px;
+        background-color: @menuHoverBackground;
+    }
+
+    height: 0;
+    .transition();
+}
+
+.bottom-sheet {
+    &.opened {
+        height: auto;
+        .transition();
+    }
+}
+
+.bottom-sheet {
+    &.grid-style {
+        padding: 16px;
+
+        & > li, & > .item {
+            width: 64px;
+            height: 72px;
+            line-height: normal;
+            text-align: center;
+            vertical-align: middle;
+            display: block;
+            float: left;
+            margin: 8px;
+            padding: 4px;
+            font-size: 11px;
+
+            .icon {
+                display: block;
+                position: relative;
+                .square(42px);
+                font-size: 42px;
+                margin: 0 0 8px -21px;
+                padding: 0;
+                top: 0;
+                left: 50%;
+                line-height: 1;
+
+            }
+        }
+
+        & > .divider {
+            display: none;
+        }
+    }
+}
+
+.bottom-nav ~ .bottom-sheet {
+    padding-bottom: @unitSize;
+}

@@ -1,0 +1,59 @@
+@import (once) "../include/variables";
+
+.table {
+    width: 100%;
+}
+
+.table {
+    th {
+        font-size: 12px;
+    }
+
+    td {
+        font-size: 13px;
+    }
+
+    th, td {
+        padding: 16px;
+        height: 48px;
+        vertical-align: middle;
+
+        &.numeric {
+            text-align: right;
+        }
+    }
+}
+
+.table {
+    tbody {
+        tr:hover {
+            background-color: @gray200;
+        }
+        tr.selected {
+            background-color: @gray100;
+        }
+    }
+}
+
+.table {
+    &.condensed {
+        th, td {
+            padding: 4px;
+        }
+    }
+}
+
+.table-header, .table-footer {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.table-header {
+    height: 64px;
+    padding: 24px;
+}
+
+.table-footer {
+    height: 56px;
+    padding: 18px;
+}

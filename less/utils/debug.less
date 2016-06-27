@@ -1,0 +1,16 @@
+@import (once) "../include/mixins";
+
+.debug {
+    border: 1px dotted red !important;
+
+    &.as-block {
+        display: block;
+    }
+    &.as-inline-block {
+        display: inline-block;
+    }
+}
+
+.clear, .clear-float {
+    .clear();
+}

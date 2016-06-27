@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />-->
+    <meta http-equiv="Content-Security-Policy" content="" />
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,700,400' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/core.css">
+    <link rel="stylesheet" type="text/css" href="css/core-colors.css">
+    <link rel="stylesheet" type="text/css" href="css/docs.css">
+    <title>CoreCSS</title>
+</head>
+
+<body>
+<div class="app" style="background: #fff">
+    <div class="view">
+        <header>
+            <button class="tool-button"><i class="material-icons icon">menu</i></button>
+            <span class="app-title">Core CSS</span>
+            <button class="tool-button place-right"><i class="material-icons icon">more_vert</i></button>
+            <button class="tool-button place-right"><i class="material-icons icon">bookmark</i></button>
+            <button class="tool-button place-right"><i class="material-icons icon">share</i></button>
+        </header>
+
+        <div class="bottom-nav">
+            <button class="button bg-pink fg-white ripple"><i class="material-icons icon">add</i><span class="label">Add</span></button>
+            <button class="button bg-pink fg-white ripple"><i class="material-icons icon">favorites</i><span class="label">Favorites</span></button>
+            <button class="button bg-pink fg-white ripple"><i class="material-icons icon">history</i><span class="label">history</span></button>
+        </div>
+
+        <div class="view-content">
+            <h2 class="headline fg-teal">Base colors</h2>
+            <ul class="list" id="colors-list"></ul>
+            <h2 class="headline fg-teal">Colors Schemas</h2>
+            <ul class="list" id="colors-list-schemas"></ul>
+
+            <h2 class="headline fg-teal">Typography</h2>
+
+            <div class="display4">Disp4</div>
+            <div class="display3">Display3</div>
+            <div class="display2">Display2</div>
+            <div class="display1">Display1</div>
+            <div class="headline">Headline</div>
+            <div class="heading">Heading</div>
+            <div class="subheading">Subheading</div>
+            <div class="body">Body</div>
+            <div class="body2">Body2</div>
+            <div class="caption">Caption</div>
+
+            <h4 class="subheading fg-teal">Paragraph</h4>
+
+            <p>First paragraph. Lorem ipsum dolor mesum. Lorem ipsum dolor mesum.</p>
+            <p>First paragraph. Lorem ipsum dolor mesum. Lorem ipsum dolor mesum.</p>
+
+            <h4 class="subheading fg-teal">HR</h4>
+            <hr class="hr">
+            <hr class="hr thin">
+
+            <h2 class="headline fg-teal">Buttons</h2>
+            <table class="table">
+                <tr>
+                    <td>Flat button</td>
+                    <td class="align-center">
+                        <button class="flat-button">Flat</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Raised button</td>
+                    <td class="align-center">
+                        <button class="raised-button">Flat</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Action button</td>
+                    <td class="align-center">
+                        <button class="action-button"><span class="material-icons">add</span></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Custom action button</td>
+                    <td class="align-center">
+                        <button class="action-button primary bg-pink fg-white"><span class="material-icons">create</span></button>
+                    </td>
+                </tr>
+            </table>
+
+            <h2 class="headline fg-teal">Simple menu</h2>
+
+            <div class="bg-blueGray-50 padding2 clear">
+                <ul class="menu static place-left">
+                    <li><a href="#">Undo</a></li>
+                    <li class="disabled"><a href="#">Redo</a></li>
+                    <li class="divider"></li>
+                    <li class="disabled"><a href="#">Cut</a></li>
+                    <li class="disabled"><a href="#">Copy</a></li>
+                    <li><a href="#">Paste</a></li>
+                </ul>
+                <ul class="menu static place-left" style="margin-left: 16px">
+                    <li data-hotkey-info="Ctrl+C"><a href="#">Item 1</a></li>
+                    <li data-hotkey-info="Ctrl+A" class="disabled"><a href="#">Item 2</a></li>
+                    <li class="divider"></li>
+                    <li data-hotkey-info="Alt+C" class="checkable"><a href="#">Item 3</a></li>
+                    <li data-hotkey-info="Ctrl+Shift+C" class="checkable checked"><a href="#">Item 4</a></li>
+                    <li data-hotkey-info="Ctrl+Alt+K"><a href="#">Item 5</a></li>
+                </ul>
+            </div>
+
+
+            <h2 class="headline fg-teal">Cascading menu</h2>
+
+            <div class="bg-blueGray-50 padding2 clear">
+                <ul class="menu compact-dropdown static place-left" style="margin-left: 16px;">
+                    <li data-hotkey-info="Ctrl+B"><a href="#">Bold</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown"><a href="#">Paragraph styles</a>
+                        <ul class="menu">
+                            <li><a href="#">Single</a></li>
+                            <li><a href="#">1.15</a></li>
+                            <li class="checkable checked dropdown"><a href="#">Double</a>
+                                <ul class="menu">
+                                    <li><a href="#">Single</a></li>
+                                    <li class="dropdown"><a href="#">1.15</a>
+                                        <ul class="menu">
+                                            <li><a href="#">Single</a></li>
+                                            <li><a href="#">1.15</a></li>
+                                            <li class="checked"><a href="#">Double</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">Add space before...</a></li>
+                                            <li><a href="#">Add space after...</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">Custom...</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="checked"><a href="#">Double</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Add space before...</a></li>
+                                    <li><a href="#">Add space after...</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Custom...</a></li>
+                                </ul>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="#">Add space before...</a></li>
+                            <li><a href="#">Add space after...</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Custom...</a></li>
+                        </ul>
+                    </li>
+                    <li class=""><a href="#">Align</a></li>
+                    <li class="checkable checked"><a href="#">Line spacing</a></li>
+                    <li class=""><a href="#">Numbered list</a></li>
+                    <li class=""><a href="#">List options</a></li>
+                </ul>
+            </div>
+
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <h2 class="headline fg-teal">Input</h2>
+            <form>
+                <input type="text" placeholder="Input value">
+            </form>
+
+            <h2 class="headline fg-teal">Switches</h2>
+            Three types of selection controls are covered in this guidance:
+
+            <ul class="list">
+                <li>Checkboxes allow the selection of multiple options from a set.</li>
+                <li>Radio buttons allow the selection of a single option from a set.</li>
+                <li>Switches allow a selection to be turned on or off.</li>
+            </ul>
+
+            <table class="table">
+                <tr>
+                    <td>checkbox</td>
+                    <td class="align-center">
+                        <label class="checkbox">
+                            <input type="checkbox">
+                            <span class="check"></span>
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox" checked>
+                            <span class="check"></span>
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox" disabled>
+                            <span class="check"></span>
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox" disabled checked>
+                            <span class="check"></span>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>radio</td>
+                    <td class="align-center">
+                        <label class="radio">
+                            <input type="radio" name="r1">
+                            <span class="check"></span>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="r1" checked>
+                            <span class="check"></span>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="r1" disabled>
+                            <span class="check"></span>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="r2" checked disabled>
+                            <span class="check"></span>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>switch</td>
+                    <td class="align-center">
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="check"></span>
+                        </label>
+                        <label class="switch">
+                            <input type="checkbox" disabled>
+                            <span class="check"></span>
+                        </label>
+                    </td>
+                </tr>
+            </table>
+
+
+        </div>
+    </div>
+</div>
+
+
+<script src="js/jquery.js"></script>
+<script src="js/core.js"></script>
+
+<script>
+    var list = $("#colors-list").html("");
+    var list_schemas = $("#colors-list-schemas").html("");
+    var color_name = ['red', 'pink', 'purple', 'deepPurple', 'indigo', 'blue', 'lightBlue', 'cyan', 'teal', 'green', 'lightGreen', 'lime', 'yellow', 'amber', 'orange', 'deepOrange'];
+    var color_name_2 = ['brown', 'gray', 'blueGray'];
+    var color_index = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', 'A100', 'A200', 'A400', 'A700'];
+    var color_index_2 = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900'];
+    var li;
+
+
+    $.each(color_name, function (i, cn) {
+        $("<li>").addClass("bg-"+cn).appendTo(list);
+    });
+    $.each(color_name_2, function (i, cn) {
+        $("<li>").addClass("bg-"+cn).appendTo(list);
+    });
+
+    $.each(color_name, function (i, cn) {
+        $("<li>").addClass("color-title").html(cn).appendTo(list_schemas);
+        $.each(color_index, function (ii, ci) {
+            $("<li>").addClass("bg-"+cn+"-"+ci).html(cn+"-"+ci).appendTo(list_schemas);
+        });
+    });
+
+    $.each(color_name_2, function (i, cn) {
+        $("<li>").addClass("color-title").html(cn).appendTo(list_schemas);
+        $.each(color_index_2, function (ii, ci) {
+            $("<li>").addClass("bg-"+cn+"-"+ci).html(cn+"-"+ci).appendTo(list_schemas);
+        });
+    });
+
+</script>
+
+</body>
+</html>

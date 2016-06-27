@@ -1,0 +1,79 @@
+@import (once) "../include/variables";
+
+* .size1 {width: @unitSize;}
+* .size2 {width: @unitSize * 2;}
+* .size3 {width: @unitSize * 3;}
+* .size4 {width: @unitSize * 4;}
+* .size5 {width: @unitSize * 5;}
+* .size6 {width: @unitSize * 6;}
+* .size7 {width: @unitSize * 7;}
+* .size0, * .full-width {width: 100%;}
+* .full-height {height: 100%;}
+
+* .fixed-bottom, * .fixed-top {
+    position: fixed;
+    left: 0;
+    right: 0;
+}
+
+* .fixed-top {
+    top: 0;
+    bottom: auto;
+}
+
+* .fixed-bottom {
+    top: auto;
+    bottom: 0;
+}
+
+* .pos-static {position: static;}
+* .pos-relative {position: relative;}
+* .pos-absolute {position: absolute;}
+* .pos-fixed {position: fixed;}
+
+* .block {display: block;}
+* .inline-block {display: inline-block;}
+
+* .place-right {float: right;}
+* .place-left {float: left;}
+
+* .no-display {display: none;}
+* .no-margin {margin: 0;}
+* .no-margin-right {margin-right: 0;}
+* .no-margin-left {margin-left: 0;}
+* .no-margin-top {margin-top: 0;}
+* .no-margin-bottom {margin-bottom: 0;}
+* .no-padding {padding: 0;}
+* .no-padding-left {padding-left: 0;}
+* .no-padding-right {padding-right: 0;}
+* .no-padding-top {padding-top: 0;}
+* .no-padding-bottom {padding-bottom: 0;}
+* .no-float {float: none;}
+* .no-visible {visibility: hidden;}
+* .no-border {border: 0;}
+* .no-overflow {overflow: hidden;}
+* .no-scroll {overflow: hidden;}
+* .no-scroll-x {overflow-x: hidden;}
+* .no-scroll-y {overflow-y: hidden;}
+* .no-wrap {white-space: nowrap;}
+* .no-border-left {border-left: none;}
+* .no-border-right {border-right: none;}
+* .no-border-top {border-top: none;}
+* .no-border-bottom {border-bottom: none;}
+* .no-border-visible {border-color: transparent;}
+
+// Generate margin and padding
+
+@indentIndexes: 8, 16, 32, 40, 48, 56, 64;
+@indentIndexLength: length(@indentIndexes);
+
+.generate-indent(@indentIndexLength);
+.generate-indent(@size, @i: 1) when (@i =< @indentIndexLength) {
+    @size: extract(@indentIndexes, @i);
+    @indentID: @size / 8;
+
+    * .padding@{indentID} {padding: unit(@size, px);}
+    * .margin@{indentID} {margin: unit(@size, px);}
+
+    .generate-indent(@size, @i + 1);
+}

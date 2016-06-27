@@ -1,0 +1,136 @@
+@import (once) "../include/variables";
+@import (once) "../include/mixins";
+
+.menu {
+    margin: 0;
+    padding: 8px 0;
+    background-color: @menuBackground;
+    position: absolute;
+    width: auto;
+    min-width: @unitSize * 1.5;
+    float: left;
+    list-style: none inside;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+
+.menu {
+    li {
+
+        font-size: 14px;
+        display: block;
+        color: @gray800;
+        cursor: pointer;
+        position: relative;
+        white-space: nowrap;
+
+        & > a {
+            color: inherit;
+            min-width: @unitSize;
+            display: block;
+            height: 40px;
+            padding: 14px 16px 18px;
+        }
+    }
+
+    li:hover, li.hovered, li.active {
+        background-color: @menuHoverBackground;
+    }
+
+    li.disabled {
+        background-color: @menuBackground;
+        color: @gray400;
+    }
+
+    li.divider {
+        height: 1px;
+        background-color: @menuHoverBackground;
+    }
+
+    li {
+        &:after {
+            content: attr(data-hotkey-info);
+            position: absolute;
+            top: 50%;
+            margin-top: -7px;
+            right: 10px;
+            opacity: .8;
+            font-size: 12px;
+        }
+
+        &.dropdown {
+            padding-right: 20px;
+            &:after {
+                content: @blackRightPointingTriangle;
+            }
+        }
+
+        &[data-hotkey-info] {
+            padding-right: 120px;
+        }
+
+        &.checkable {
+            padding-left: 28px;
+
+            &.checked {
+                &:before {
+                    position: absolute;
+                    vertical-align: middle;
+                    color: transparent;
+                    font-size: 0;
+                    content: "";
+                    height: 6px;
+                    width: 16px;
+                    background-color: @transparent;
+                    border-left: 2px solid;
+                    border-bottom: 2px solid;
+                    border-color: @gray700;
+                    left: 20px;
+                    top: 50%;
+                    margin-left: -5px;
+                    margin-top: -6px;
+                    display: block;
+                    .rotate(-45deg);
+                }
+            }
+        }
+    }
+}
+
+.menu {
+    .menu {
+        position: absolute;
+        left: 100%;
+        top: 0;
+        z-index: 2;
+        display: none;
+
+        &.opened {
+            display: block;
+        }
+    }
+
+    li:hover > .menu {
+        display: block;
+    }
+}
+
+.menu {
+    &.compact-dropdown {
+        .menu {
+            left: 100%;
+            .menu {
+                left: -100%;
+                .menu {
+                    left: 100%;
+                }
+            }
+        }
+    }
+}
+
+
+.menu:not(.compact-dropdown) {
+    .menu {
+        left: 100%;
+    }
+}

@@ -1,0 +1,5 @@
+var CoreCss = {
+    init: function(){
+        
+    }
+};

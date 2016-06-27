@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />-->
+    <meta http-equiv="Content-Security-Policy" content="" />
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,700,400' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/core.css">
+    <link rel="stylesheet" type="text/css" href="css/core-colors.css">
+    <link rel="stylesheet" type="text/css" href="css/docs.css">
+    <title>CoreCSS</title>
+</head>
+
+<body>
+<div class="app" style="background: #fff">
+    <div class="view">
+        <header>
+            <button class="tool-button"><i class="material-icons icon">menu</i></button>
+            <span class="app-title">Core::Bottom Sheets</span>
+        </header>
+
+        <div class="view-content">
+
+            <div class="overlay"></div>
+            <h2 class="headline fg-teal">Bottom sheet</h2>
+
+        </div>
+
+        <ul class="bottom-sheet opened">
+            <li class="ripple"><span class="icon material-icons">email</span>Mail</li>
+            <li class="ripple"><span class="icon material-icons">message</span>Message</li>
+            <li class="ripple"><span class="icon material-icons">location_on</span>Location</li>
+            <li class="ripple"><span class="icon material-icons">voicemail</span>Voice</li>
+            <li class="ripple"><span class="icon material-icons">phone</span>Dialer</li>
+            <li class="divider"></li>
+            <li class="ripple"><span class="icon material-icons">cloud_upload</span>Upload</li>
+            <li class="ripple"><span class="icon material-icons">security</span>Security</li>
+        </ul>
+
+    </div>
+</div>
+
+<script src="js/jquery.js"></script>
+<script src="js/core.js"></script>
+</body>
+</html>

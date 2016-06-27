@@ -1,0 +1,24 @@
+@import (once) "../include/variables";
+
+.view {
+    position: relative;
+    min-height: 100%;
+}
+
+.view-content {
+    position: relative;
+    padding: @default-padding;
+    min-height: 100%;
+}
+
+header ~ .view-content, .header ~ .view-content {
+    padding-top: @headerSize;
+}
+
+header.more ~ .view-content, .header.more ~ .view-content {
+    padding-top: @headerSize * 2;
+}
+
+.bottom-nav ~ .view-content {
+    padding-bottom: @unitSize;
+}

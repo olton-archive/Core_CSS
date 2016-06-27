@@ -1,0 +1,57 @@
+@import "../include/variables";
+
+/* Full color scheme*/
+
+
+.generate-colors(@colors-names-length);
+.generate-colors(@name, @i: 1) when (@i =< @colors-names-length) {
+    @name: extract(@color-names-list-full, @i);
+
+    .generate-sub-colors(@colors-accents-length);
+    .generate-sub-colors(@accent, @j: 1) when (@j =< @colors-accents-length) {
+        @accent-name: extract(@color-accent-list, @j);
+        @colors-lst: '@{name}-color-list';
+        @accent-color: extract(@@colors-lst, @j);
+
+        * .bg-@{name}-@{accent-name} {background-color: @accent-color;}
+        * .fg-@{name}-@{accent-name} {color: @@name;}
+
+        .generate-sub-colors(@accent, @j + 1);
+    }
+
+    * .fg-@{name} {color: @@name;}
+    * .bg-@{name} {background-color: @@name;}
+
+    .generate-colors(@name, @i + 1);
+}
+
+/* Short color scheme*/
+
+
+.generate-colors-short(@colors-names-length-short);
+.generate-colors-short(@name, @i: 1) when (@i =< @colors-names-length-short) {
+    @name: extract(@color-names-list-short, @i);
+
+    .generate-sub-colors-short(@colors-accents-length-short);
+    .generate-sub-colors-short(@accent, @j: 1) when (@j =< @colors-accents-length-short) {
+        @accent-name: extract(@color-accent-list-short, @j);
+        @colors-lst: '@{name}-color-list';
+        @accent-color: extract(@@colors-lst, @j);
+
+        * .bg-@{name}-@{accent-name} {background-color: @accent-color;}
+        * .fg-@{name}-@{accent-name} {color: @@name;}
+
+        .generate-sub-colors-short(@accent, @j + 1);
+    }
+
+    * .fg-@{name} {color: @@name;}
+    * .bg-@{name} {background-color: @@name;}
+
+    .generate-colors-short(@name, @i + 1);
+}
+
+* .fg-white {color: @white;}
+* .bg-white {background-color: @white;}
+* .fg-black {color: @black;}
+* .bg-black {background-color: @black;}
+

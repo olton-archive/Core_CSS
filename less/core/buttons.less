@@ -1,0 +1,110 @@
+@import (once) "../include/variables";
+@import (once) "../utils/shadows";
+
+.button {
+    border: 0;
+    outline: 0;
+    display: inline-block;
+    line-height: 100%;
+    vertical-align: middle;
+    height: 36px;
+    margin: 0 8px;
+    padding: 0 8px;
+    font-size: 14px;
+    background-color: @white;
+    color: @black;
+    border-radius: 2px;
+
+    &:active, &:focus {
+        outline: none;
+    }
+}
+
+.flat-button, .raised-button, .action-button, .tool-button {
+    .button;
+}
+
+.flat-button {
+    min-width: 64px;
+    background-color: transparent;
+}
+
+.raised-button {
+    min-width: 88px;
+    padding: 0 16px;
+    .shadow-1;
+}
+
+.action-button {
+    padding: 0;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    .shadow-1;
+
+    .icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    &.primary {
+        .shadow-2;
+    }
+
+    &.secondary {
+        width: 40px;
+        height: 40px;
+        box-shadow: none;
+    }
+
+    &:active {
+        .shadow-3;
+    }
+}
+
+.flat-button {
+    &.active, &:active {
+        background-color: #D5D5D5;
+    }
+}
+
+.raised-button, .action-button {
+    &.disabled, &:disabled {
+        .shadow-0;
+        color: lighten(@black, 60%);
+    }
+
+    &.active, &:active {
+        background-color: #D5D5D5;
+        .shadow-3;
+    }
+}
+
+.tool-button {
+    height: 48px;
+    width: 48px;
+    display: inline-block;
+    background-color: @lightBlue700;
+    color: @white;
+
+    .icon {
+        width: 24px;
+        height: 24px;
+        font-size: 24px;
+    }
+}
+
+.dialog-actions {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: block;
+    padding: 8px;
+    margin-top: 24px;
+    text-align: right;
+
+    .button {
+        min-width: 0;
+    }
+}

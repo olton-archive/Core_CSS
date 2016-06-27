@@ -1,0 +1,180 @@
+@import (once) "../include/variables";
+@import (once) "../include/mixins";
+
+body {
+    font-family: @fontName;
+}
+
+.align-left {
+    .align(left);
+}
+
+.align-right {
+    .align(right);
+}
+
+.align-center {
+    .align(center);
+}
+
+.align-justify {
+    .align(justify);
+}
+
+.text-regular {
+    font-weight: 400;
+}
+
+.text-light {
+    font-weight: 300;
+}
+
+.text-light-ultra {
+    font-weight: 100;
+}
+
+.text-medium {
+    font-weight: 500;
+}
+
+.text-bold {
+    font-weight: 700;
+}
+
+.text-upper {
+    text-transform: uppercase;
+}
+
+.text-lower {
+    text-transform: lowercase;
+}
+
+.text-capitalize {
+    text-transform: capitalize;
+}
+
+.display3, .display4, .caption, .button {
+    white-space: nowrap;
+}
+
+.display4, .display3, .display2, .display1, .caption {
+    color: lighten(@black, 46%);
+}
+
+.headline, .title, .heading, .subheading, .body, .body2, .button, .menu {
+    color: lighten(@black, 13%);
+}
+
+.display4 {
+    font-size: 112px;
+    margin-bottom: 20px;
+    .text-light;
+    line-height: 1.2;
+    color: lighten(@black, 46%);
+}
+
+.display3 {
+    font-size: 56px;
+    margin-bottom: 20px;
+    .text-regular;
+    line-height: 1.2;
+    color: lighten(@black, 46%);
+}
+
+.display2 {
+    font-size: 45px;
+    margin-bottom: 20px;
+    .text-regular;
+    line-height: 1.2;
+    color: lighten(@black, 46%);
+}
+
+.display1 {
+    font-size: 34px;
+    margin-bottom: 16px;
+    .text-regular;
+    color: lighten(@black, 46%);
+}
+
+.headline {
+    font-size: 24px;
+    margin-bottom: 14px;
+    .text-regular;
+    color: lighten(@black, 13%);
+}
+
+.title, .heading {
+    font-size: 20px;
+    margin-bottom: 12px;
+    .text-medium;
+    color: lighten(@black, 13%);
+}
+
+.subheading {
+    font-size: 15px;
+    margin-bottom: 12px;
+    .text-regular;
+    color: lighten(@black, 13%);
+}
+
+.body {
+    font-size: 14px;
+    margin-bottom: 10px;
+    .text-regular;
+    color: lighten(@black, 13%);
+}
+
+.body2 {
+    font-size: 13px;
+    margin-bottom: 10px;
+    .text-medium;
+    color: lighten(@black, 13%);
+}
+
+.caption {
+    font-size: 12px;
+    .text-regular;
+    color: lighten(@black, 46%);
+}
+
+.button {
+    font-size: 14px;
+    .text-medium;
+    .text-upper;
+    line-height: 1.5;
+    color: lighten(@black, 13%);
+}
+
+.hr {
+    color: @lightBlue;
+    background-color: @lightBlue;
+    border: 0 none;
+    height: 2px;
+    clear: both;
+
+    &.thin {
+        height: 1px;
+    }
+}
+
+body {
+    .body;
+}
+
+p + p {
+    margin-top: @default-margin;
+}
+
+.avatar {
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    position: relative;
+
+    .icon {
+        width: 40px;
+        height: 40px;
+        font-size: 40px;
+        margin: 4px;
+    }
+}

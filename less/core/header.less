@@ -1,0 +1,40 @@
+@import (once) "../include/variables";
+@import (once) "typo";
+@import (once) "../utils/shadows";
+
+header, .header {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: @lightBlue700;
+    color: @white;
+    height: @headerSize;
+    z-index: @zIndexHeader;
+    padding: 0 4px;
+    .shadow-1;
+}
+
+.app-title {
+    font-weight: 300;
+    height: 48px;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 4px 0;
+    line-height: 48px;
+    color: inherit;
+    font-size: 20px;
+}
+
+header, .header {
+    & > .tool-button {
+        margin: 4px 0;
+    }
+}
+
+header, .header {
+    &.more {
+        height: @headerSize * 2;
+    }
+}
