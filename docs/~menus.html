@@ -1,149 +1,70 @@
-<!DOCTYPE html>
-<html>
+<h2 class="headline fg-teal">Simple menu</h2>
 
-<head>
-    <meta charset="utf-8" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="msapplication-tap-highlight" content="no" />
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-    <!--<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />-->
-    <meta http-equiv="Content-Security-Policy" content="" />
-
-    <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,700,400' rel='stylesheet' type='text/css'>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/core.css">
-    <link rel="stylesheet" type="text/css" href="css/core-colors.css">
-    <link rel="stylesheet" type="text/css" href="css/docs.css">
-    <title>CoreCSS</title>
-</head>
-
-<body>
-<div class="app" style="background: #fff">
-    <div class="view">
-        <header>
-            <button class="tool-button"><i class="material-icons icon">menu</i></button>
-            <span class="app-title">Core::Menus</span>
-        </header>
-
-        <div class="view-content">
-
-            <h2 class="headline fg-teal">Simple menu</h2>
-
-            <div class="bg-blueGray-50 padding2 clear">
-                <ul class="menu static place-left">
-                    <li><a href="#">Undo</a></li>
-                    <li class="disabled"><a href="#">Redo</a></li>
-                    <li class="divider"></li>
-                    <li class="disabled"><a href="#">Cut</a></li>
-                    <li class="disabled"><a href="#">Copy</a></li>
-                    <li><a href="#">Paste</a></li>
-                </ul>
-                <ul class="menu static place-left" style="margin-left: 16px">
-                    <li data-hotkey-info="Ctrl+C"><a href="#">Item 1</a></li>
-                    <li data-hotkey-info="Ctrl+A" class="disabled"><a href="#">Item 2</a></li>
-                    <li class="divider"></li>
-                    <li data-hotkey-info="Alt+C" class="checkable"><a href="#">Item 3</a></li>
-                    <li data-hotkey-info="Ctrl+Shift+C" class="checkable checked"><a href="#">Item 4</a></li>
-                    <li data-hotkey-info="Ctrl+Alt+K"><a href="#">Item 5</a></li>
-                </ul>
-            </div>
-
-
-            <h2 class="headline fg-teal">Cascading menu</h2>
-
-            <div class="bg-blueGray-50 padding2 clear">
-                <ul class="menu static place-left" id="cascading-menu">
-                    <li data-hotkey-info="Ctrl+B"><a href="#">Bold</a></li>
-                    <li class="divider"></li>
-                    <li class="dropdown"><a href="#">Paragraph styles</a>
-                        <ul class="menu opened1">
-                            <li><a href="#">Single</a></li>
-                            <li><a href="#">1.15</a></li>
-                            <li class="checked dropdown"><a href="#">Double</a>
-                                <ul class="menu opened1">
-                                    <li><a href="#">Single</a></li>
-                                    <li class="dropdown"><a href="#">1.15</a>
-                                        <ul class="menu opened1">
-                                            <li><a href="#">Single</a></li>
-                                            <li><a href="#">1.15</a></li>
-                                            <li class="checked"><a href="#">Double</a></li>
-                                            <li class="divider"></li>
-                                            <li><a href="#">Add space before...</a></li>
-                                            <li><a href="#">Add space after...</a></li>
-                                            <li class="divider"></li>
-                                            <li><a href="#">Custom...</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="checked"><a href="#">Double</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Add space before...</a></li>
-                                    <li><a href="#">Add space after...</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Custom...</a></li>
-                                </ul>
-                            </li>
-                            <li class="divider"></li>
-                            <li><a href="#">Add space before...</a></li>
-                            <li><a href="#">Add space after...</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Custom...</a></li>
-                        </ul>
-                    </li>
-                    <li class=""><a href="#">Align</a></li>
-                    <li class=""><a href="#">Line spacing</a></li>
-                    <li class=""><a href="#">Numbered list</a></li>
-                    <li class=""><a href="#">List options</a></li>
-                </ul>
-
-                <ul class="menu compact-dropdown static place-left" style="margin-left: 16px;">
-                    <li data-hotkey-info="Ctrl+B"><a href="#">Bold</a></li>
-                    <li class="divider"></li>
-                    <li class="dropdown"><a href="#">Paragraph styles</a>
-                        <ul class="menu opened">
-                            <li><a href="#">Single</a></li>
-                            <li><a href="#">1.15</a></li>
-                            <li class="checkable checked dropdown"><a href="#">Double</a>
-                                <ul class="menu opened">
-                                    <li><a href="#">Single</a></li>
-                                    <li class="dropdown"><a href="#">1.15</a>
-                                        <ul class="menu opened">
-                                            <li><a href="#">Single</a></li>
-                                            <li><a href="#">1.15</a></li>
-                                            <li class="checked"><a href="#">Double</a></li>
-                                            <li class="divider"></li>
-                                            <li><a href="#">Add space before...</a></li>
-                                            <li><a href="#">Add space after...</a></li>
-                                            <li class="divider"></li>
-                                            <li><a href="#">Custom...</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="checked"><a href="#">Double</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Add space before...</a></li>
-                                    <li><a href="#">Add space after...</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Custom...</a></li>
-                                </ul>
-                            </li>
-                            <li class="divider"></li>
-                            <li><a href="#">Add space before...</a></li>
-                            <li><a href="#">Add space after...</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Custom...</a></li>
-                        </ul>
-                    </li>
-                    <li class=""><a href="#">Align</a></li>
-                    <li class=""><a href="#">Line spacing</a></li>
-                    <li class=""><a href="#">Numbered list</a></li>
-                    <li class=""><a href="#">List options</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+<div class="bg-blueGray-50 padding2 clear" style="height: 280px">
+    <ul class="menu static place-left">
+        <li><a href="#">Undo</a></li>
+        <li class="disabled"><a href="#">Redo</a></li>
+        <li class="divider"></li>
+        <li class="disabled"><a href="#">Cut</a></li>
+        <li class="disabled"><a href="#">Copy</a></li>
+        <li><a href="#">Paste</a></li>
+    </ul>
+</div>
+<div class="bg-blueGray-50 padding2 clear" style="height: 280px">
+    <ul class="menu static place-left">
+        <li data-hotkey-info="Ctrl+C"><a href="#">Item 1</a></li>
+        <li data-hotkey-info="Ctrl+A" class="disabled"><a href="#">Item 2</a></li>
+        <li class="divider"></li>
+        <li data-hotkey-info="Alt+C" class="checkable"><a href="#">Item 3</a></li>
+        <li data-hotkey-info="Ctrl+Shift+C" class="checkable checked"><a href="#">Item 4</a></li>
+        <li data-hotkey-info="Ctrl+Alt+K"><a href="#">Item 5</a></li>
+    </ul>
 </div>
 
-<script src="js/jquery.js"></script>
-<script src="js/core.js"></script>
 
-</body>
-</html>
+<h2 class="headline fg-teal">Cascading menu</h2>
+
+<div class="bg-blueGray-50 clear" style="height: 400px; padding: 4px;">
+    <ul class="menu compact-dropdown place-left" id="cascading-menu">
+        <li data-hotkey-info="Ctrl+B"><a href="#">Bold</a></li>
+        <li class="divider"></li>
+        <li class="dropdown"><a href="#">Paragraph styles</a>
+            <ul class="menu opened1">
+                <li><a href="#">Single</a></li>
+                <li><a href="#">1.15</a></li>
+                <li class="checked dropdown"><a href="#">Double</a>
+                    <ul class="menu opened1">
+                        <li><a href="#">Single</a></li>
+                        <li class="dropdown"><a href="#">1.15</a>
+                            <ul class="menu opened1">
+                                <li><a href="#">Single</a></li>
+                                <li><a href="#">1.15</a></li>
+                                <li class="checked"><a href="#">Double</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Add space before...</a></li>
+                                <li><a href="#">Add space after...</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Custom...</a></li>
+                            </ul>
+                        </li>
+                        <li class="checked"><a href="#">Double</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Add space before...</a></li>
+                        <li><a href="#">Add space after...</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Custom...</a></li>
+                    </ul>
+                </li>
+                <li class="divider"></li>
+                <li><a href="#">Add space before...</a></li>
+                <li><a href="#">Add space after...</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Custom...</a></li>
+            </ul>
+        </li>
+        <li class=""><a href="#">Align</a></li>
+        <li class=""><a href="#">Line spacing</a></li>
+        <li class=""><a href="#">Numbered list</a></li>
+        <li class=""><a href="#">List options</a></li>
+    </ul>
+</div>

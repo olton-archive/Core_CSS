@@ -1,8 +1,87 @@
 @import (once) "../include/variables";
 @import (once) "../include/mixins";
 
+
+@gridCell: 4px;
+@gridMargin: @gridCell * 2;
+
 .list {
-    margin: 10px 0;
-    padding-left: 20px;
+    margin: 0;
+    padding: 4px;
+    list-style: inset none;
+    position: relative;
+
+    &.bordered {
+        border-top: 1px @gray200 solid;
+        border-bottom: 1px @gray200 solid;
+    }
 }
 
+.list-item {
+    position: relative;
+    display: block;
+    height: 56px;
+    line-height: 56px;
+    padding: 8px 16px;
+    vertical-align: middle;
+    font-size: 16px;
+    font-weight: normal;
+    overflow: hidden;
+}
+
+.list-item {
+    .avatar {
+        .square(42px);
+        border-radius: 50%;
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        margin-top: -21px;
+    }
+
+    .label, .second-label {
+        display: block;
+        line-height: normal;
+    }
+
+    .label {
+        margin-top: 8px;
+        font-size: 16px;
+    }
+
+    .second-label ~ .label {
+        margin-top: 0;
+    }
+
+    .second-label {
+        font-size: .9em;
+        color: @gray400;
+    }
+
+    .second-action {
+        position: absolute;
+        right: 16px;
+        .square(24px);
+        font-size: 24px;
+        top: 50%;
+        margin-top: -12px;
+    }
+
+    .avatar ~ .label, .avatar ~ .second-label {
+        padding-left: 72px;
+    }
+
+    .title + .second-label {
+        padding-top: 8px;
+    }
+
+    &.with-second-label {
+        .label {
+            margin-top: 0;
+        }
+    }
+}
+
+.list-item + .list-item {
+    border-top: 1px @gray200 solid;
+}

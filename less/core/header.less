@@ -1,6 +1,5 @@
 @import (once) "../include/variables";
-@import (once) "typo";
-@import (once) "../utils/shadows";
+@import (once) "../include/mixins";
 
 header, .header {
     display: block;
@@ -13,7 +12,7 @@ header, .header {
     height: @headerSize;
     z-index: @zIndexHeader;
     padding: 0 4px;
-    .shadow-1;
+    .shadow(1);
 }
 
 .app-title {

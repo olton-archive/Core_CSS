@@ -116,8 +116,8 @@ module.exports = function(grunt) {
 
         watch: {
             scripts: {
-                files: ['js/*.js', 'js/utils/*.js', 'js/widgets/*js'],
-                tasks: ['concat', 'uglify', 'copy:docs_js']
+                files: ['js/*.js', 'js/utils/*.js', 'js/widgets/*js', 'less/*.less', 'less/utils/*.less', 'less/core/*.less', 'less/include/*.less', 'less/schemes/*.less'],
+                tasks: ['concat', 'uglify', 'less', 'postcss', 'copy']
             }
         }
     });

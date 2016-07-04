@@ -1,5 +1,6 @@
 @import (once) "../include/variables";
-@import (once) "../utils/shadows";
+@import (once) "../include/mixins";
+
 
 .button {
     border: 0;
@@ -32,7 +33,7 @@
 .raised-button {
     min-width: 88px;
     padding: 0 16px;
-    .shadow-1;
+    .shadow(1);
 }
 
 .action-button {
@@ -40,7 +41,7 @@
     border-radius: 50%;
     width: 56px;
     height: 56px;
-    .shadow-1;
+    .shadow(1);
 
     .icon {
         width: 24px;
@@ -48,7 +49,7 @@
     }
 
     &.primary {
-        .shadow-2;
+        .shadow(2);
     }
 
     &.secondary {
@@ -58,7 +59,11 @@
     }
 
     &:active {
-        .shadow-3;
+        .shadow(3);
+    }
+
+    &.mini {
+        .square(40px);
     }
 }
 
@@ -70,13 +75,13 @@
 
 .raised-button, .action-button {
     &.disabled, &:disabled {
-        .shadow-0;
+        .shadow(0);
         color: lighten(@black, 60%);
     }
 
     &.active, &:active {
         background-color: #D5D5D5;
-        .shadow-3;
+        .shadow(3);
     }
 }
 
@@ -94,17 +99,3 @@
     }
 }
 
-.dialog-actions {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    display: block;
-    padding: 8px;
-    margin-top: 24px;
-    text-align: right;
-
-    .button {
-        min-width: 0;
-    }
-}

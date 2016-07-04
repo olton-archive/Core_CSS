@@ -1,3 +1,7 @@
+body {
+    background: #fff;
+}
+
 #colors-list {
     list-style: none inside;
     margin: 0;

@@ -1,4 +1,5 @@
 @import (once) "../include/variables";
+@import (once) "../include/mixins";
 
 .table {
     width: 100%;
@@ -7,6 +8,7 @@
 .table {
     th {
         font-size: 12px;
+        text-align: left;
     }
 
     td {
@@ -15,7 +17,6 @@
 
     th, td {
         padding: 16px;
-        height: 48px;
         vertical-align: middle;
 
         &.numeric {
@@ -32,13 +33,24 @@
         tr.selected {
             background-color: @gray100;
         }
+
+        tr + tr {
+            border-top: 1px @gray200 solid;
+        }
+    }
+
+    thead {
+        border-bottom: 1px @gray300 solid;
+    }
+    tfoot {
+        border-top: 1px @gray300 solid;
     }
 }
 
 .table {
     &.condensed {
         th, td {
-            padding: 4px;
+            padding: 8px;
         }
     }
 }

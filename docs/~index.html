@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />-->
+    <meta http-equiv="Content-Security-Policy" content="" />
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,700,400' rel='stylesheet' type='text/css'>
+
+
+    <link rel="stylesheet" type="text/css" href="css/core.css">
+    <link rel="stylesheet" type="text/css" href="css/core-colors.css">
+    <link rel="stylesheet" type="text/css" href="css/docs.css">
+    <link rel="stylesheet" type="text/css" href="css/metro-icons.css">
+    <title>CoreCSS</title>
+</head>
+<body>
+
+    <div class="app">
+        <div class="view">
+            <header>
+                <button class="tool-button ripple"><span class="mif-menu icon"></span></button>
+                <span class="app-title">Core CSS</span>
+                <button class="tool-button place-right ripple"><span class="mif-more-vert icon"></span></button>
+                <button class="tool-button place-right ripple"><span class="mif-bookmark icon"></span></button>
+                <button class="tool-button place-right ripple"><span class="mif-share icon"></span></button>
+            </header>
+
+            <div class="bottom-nav">
+                <button class="button bg-pink fg-white ripple"><span class="mif-plus icon"></span><span class="label">Add</span></button>
+                <button class="button bg-pink fg-white ripple"><span class="mif-favorite icon"></span><span class="label">Favorites</span></button>
+                <button class="button bg-pink fg-white ripple"><span class="mif-history icon"></span><span class="label">history</span></button>
+            </div>
+
+            <div class="view-content">
+            </div>
+        </div>
+    </div>
+
+
+    <script src="js/jquery-3.0.0.min.js"></script>
+    <script src="js/core.js"></script>
+
+    <script>
+
+        var parts = [
+            'lists', 'dialogs', 'tables', 'panels', 'chips', 'tabs', 'buttons', 'sheet', 'inputs', 'switches', 'menus', 'colors', 'typo'
+        ];
+
+        $.each(parts, function(){
+
+            var file = '~'+this+'.html';
+            var target = $("<div>");
+
+            target
+                    .attr("id", this)
+                    .addClass("clear")
+                    .appendTo($(".view-content"));
+
+            $('#'+this).load(file);
+        });
+
+        setTimeout(function(){
+            var list = $("#colors-list").html("");
+            var list_schemas = $("#colors-list-schemas").html("");
+            var color_name = ['red', 'pink', 'purple', 'deepPurple', 'indigo', 'blue', 'lightBlue', 'cyan', 'teal', 'green', 'lightGreen', 'lime', 'yellow', 'amber', 'orange', 'deepOrange'];
+            var color_name_2 = ['brown', 'gray', 'blueGray'];
+            var color_index = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', 'A100', 'A200', 'A400', 'A700'];
+            var color_index_2 = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900'];
+            var li;
+
+
+            $.each(color_name, function (i, cn) {
+                $("<li>").addClass("bg-"+cn).appendTo(list);
+            });
+            $.each(color_name_2, function (i, cn) {
+                $("<li>").addClass("bg-"+cn).appendTo(list);
+            });
+
+            $.each(color_name, function (i, cn) {
+                $("<li>").addClass("color-title").html(cn).appendTo(list_schemas);
+                $.each(color_index, function (ii, ci) {
+                    $("<li>").addClass("bg-"+cn+"-"+ci).html(cn+"-"+ci).appendTo(list_schemas);
+                });
+            });
+
+            $.each(color_name_2, function (i, cn) {
+                $("<li>").addClass("color-title").html(cn).appendTo(list_schemas);
+                $.each(color_index_2, function (ii, ci) {
+                    $("<li>").addClass("bg-"+cn+"-"+ci).html(cn+"-"+ci).appendTo(list_schemas);
+                });
+            });
+        }, 500);
+
+
+    </script>
+
+</body>
+</html>

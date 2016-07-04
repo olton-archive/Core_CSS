@@ -13,14 +13,14 @@
         @colors-lst: '@{name}-color-list';
         @accent-color: extract(@@colors-lst, @j);
 
-        * .bg-@{name}-@{accent-name} {background-color: @accent-color;}
-        * .fg-@{name}-@{accent-name} {color: @@name;}
+        .bg-@{name}-@{accent-name} {background-color: @accent-color !important;}
+        .fg-@{name}-@{accent-name} {color: @@name !important;}
 
         .generate-sub-colors(@accent, @j + 1);
     }
 
-    * .fg-@{name} {color: @@name;}
-    * .bg-@{name} {background-color: @@name;}
+    .fg-@{name} {color: @@name !important;}
+    .bg-@{name} {background-color: @@name !important;}
 
     .generate-colors(@name, @i + 1);
 }
@@ -38,20 +38,20 @@
         @colors-lst: '@{name}-color-list';
         @accent-color: extract(@@colors-lst, @j);
 
-        * .bg-@{name}-@{accent-name} {background-color: @accent-color;}
-        * .fg-@{name}-@{accent-name} {color: @@name;}
+        .bg-@{name}-@{accent-name} {background-color: @accent-color !important;}
+        .fg-@{name}-@{accent-name} {color: @@name !important;}
 
         .generate-sub-colors-short(@accent, @j + 1);
     }
 
-    * .fg-@{name} {color: @@name;}
-    * .bg-@{name} {background-color: @@name;}
+    .fg-@{name} {color: @@name !important;}
+    .bg-@{name} {background-color: @@name !important;}
 
     .generate-colors-short(@name, @i + 1);
 }
 
-* .fg-white {color: @white;}
-* .bg-white {background-color: @white;}
-* .fg-black {color: @black;}
-* .bg-black {background-color: @black;}
+.fg-white {color: @white !important;}
+.bg-white {background-color: @white !important;}
+.fg-black {color: @black !important;}
+.bg-black {background-color: @black !important;}
 

@@ -1,104 +1,66 @@
-<!DOCTYPE html>
-<html>
+<h2 class="headline fg-teal">Switches</h2>
+Three types of selection controls are covered in this guidance:
 
-<head>
-    <meta charset="utf-8" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="msapplication-tap-highlight" content="no" />
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-    <!--<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />-->
-    <meta http-equiv="Content-Security-Policy" content="" />
+<ul>
+    <li>Checkboxes allow the selection of multiple options from a set.</li>
+    <li>Radio buttons allow the selection of a single option from a set.</li>
+    <li>Switches allow a selection to be turned on or off.</li>
+</ul>
 
-    <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,700,400' rel='stylesheet' type='text/css'>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/core.css">
-    <title>CoreCSS</title>
-</head>
-
-<body>
-<div class="app" style="background: #fff">
-    <div class="view">
-        <header>
-            <button class="tool-button"><i class="material-icons icon">menu</i></button>
-            <span class="app-title">Core::Switches</span>
-        </header>
-
-        <div class="view-content">
-            <h2 class="headline fg-teal">Switches</h2>
-            Three types of selection controls are covered in this guidance:
-
-            <ul class="list">
-                <li>Checkboxes allow the selection of multiple options from a set.</li>
-                <li>Radio buttons allow the selection of a single option from a set.</li>
-                <li>Switches allow a selection to be turned on or off.</li>
-            </ul>
-
-            <table class="table">
-                <tr>
-                    <td>checkbox</td>
-                    <td class="align-center">
-                        <label class="checkbox">
-                            <input type="checkbox">
-                            <span class="check"></span>
-                        </label>
-                        <label class="checkbox">
-                            <input type="checkbox" checked>
-                            <span class="check"></span>
-                        </label>
-                        <label class="checkbox">
-                            <input type="checkbox" disabled>
-                            <span class="check"></span>
-                        </label>
-                        <label class="checkbox">
-                            <input type="checkbox" disabled checked>
-                            <span class="check"></span>
-                        </label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>radio</td>
-                    <td class="align-center">
-                        <label class="radio">
-                            <input type="radio" name="r1">
-                            <span class="check"></span>
-                        </label>
-                        <label class="radio">
-                            <input type="radio" name="r1" checked>
-                            <span class="check"></span>
-                        </label>
-                        <label class="radio">
-                            <input type="radio" name="r1" disabled>
-                            <span class="check"></span>
-                        </label>
-                        <label class="radio">
-                            <input type="radio" name="r2" checked disabled>
-                            <span class="check"></span>
-                        </label>
-                    </td>
-                </tr>
-                <tr>
-                    <td>switch</td>
-                    <td class="align-center">
-                        <label class="switch">
-                            <input type="checkbox">
-                            <span class="check"></span>
-                        </label>
-                        <label class="switch">
-                            <input type="checkbox" disabled>
-                            <span class="check"></span>
-                        </label>
-                    </td>
-                </tr>
-            </table>
-
-
-        </div>
-    </div>
-</div>
-
-
-<script src="js/jquery.js"></script>
-<script src="js/core.js"></script>
-
-</body>
-</html>
+<table class="table">
+    <tr>
+        <td>checkbox</td>
+        <td class="align-center">
+            <label class="checkbox">
+                <input type="checkbox">
+                <span class="check"></span>
+            </label>
+            <label class="checkbox">
+                <input type="checkbox" checked>
+                <span class="check"></span>
+            </label>
+            <label class="checkbox">
+                <input type="checkbox" disabled>
+                <span class="check"></span>
+            </label>
+            <label class="checkbox">
+                <input type="checkbox" disabled checked>
+                <span class="check"></span>
+            </label>
+        </td>
+    </tr>
+    <tr>
+        <td>radio</td>
+        <td class="align-center">
+            <label class="radio">
+                <input type="radio" name="r1">
+                <span class="check"></span>
+            </label>
+            <label class="radio">
+                <input type="radio" name="r1" checked>
+                <span class="check"></span>
+            </label>
+            <label class="radio">
+                <input type="radio" name="r1" disabled>
+                <span class="check"></span>
+            </label>
+            <label class="radio">
+                <input type="radio" name="r2" checked disabled>
+                <span class="check"></span>
+            </label>
+        </td>
+    </tr>
+    <tr>
+        <td>switch</td>
+        <td class="align-center">
+            <label class="switch">
+                <input type="checkbox">
+                <span class="check"></span>
+            </label>
+            <label class="switch">
+                <input type="checkbox" disabled>
+                <span class="check"></span>
+            </label>
+        </td>
+    </tr>
+</table>

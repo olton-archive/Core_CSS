@@ -1,0 +1,61 @@
+@import (once) "../include/variables";
+@import (once) "../include/mixins";
+
+.panel {
+    display: block;
+    font-size: 16px;
+    .shadow(1);
+}
+
+.panel {
+    .panel-header {
+        height: 48px;
+        line-height: 48px;
+        padding: 0 24px;
+        border-bottom: 1px @gray100 solid;
+
+        .secondary-header {
+            color: @gray400;
+            font-size: .8em;
+        }
+
+        .toggle {
+
+            display: block;
+            float: right;
+
+            &:before {
+                content: "\276E";
+                display: block;
+                position: absolute;
+                top: 50%;
+                margin-top: -20px;
+                right: 24px;
+                color: inherit;
+                vertical-align: middle;
+                font-size: 14px;
+                .rotate(-270deg);
+            }
+        }
+    }
+
+    &.collapsed {
+        .toggle:before {
+            .rotate(-90deg);
+        }
+    }
+
+    .panel-content, .panel-footer {
+        padding: 16px 24px;
+        font-size: 14px;
+    }
+
+    .panel-footer {
+        border-top: 1px @gray100 solid;
+        padding: 8px 24px;
+    }
+}
+
+* + .panel {
+    margin-top: 16px;
+}

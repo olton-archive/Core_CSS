@@ -1,0 +1,94 @@
+@import (once) "../include/variables";
+@import (once) "../include/mixins";
+
+.tabs {
+    margin: 0;
+    padding: 0;
+    //border-width: 2px;
+    text-align: center;
+    position: relative;
+    height: 48px;
+
+    .tab {
+        position: relative;
+        display: inline-block;
+        height: 48px;
+        //line-height: 48px;
+        padding: 16px 12px 20px;
+        border-bottom: 2px solid;
+        cursor: pointer;
+        opacity: .6;
+        font-weight: 400;
+        text-align: center;
+        text-transform: uppercase;
+        margin: 0;
+    }
+
+    .tab {
+        &.active, &:hover {
+            opacity: 1;
+            border-bottom: 2px solid;
+            border-color: inherit !important;
+            transition: .3s linear;
+        }
+
+        &:not(.active), &:not(:hover) {
+            border-bottom-color: transparent;
+        }
+    }
+
+    &.compact {
+        height: auto;
+        .tab {
+            display: block;
+            border-bottom: 0 #ccc solid;
+
+            &:active {
+                border-bottom: inherit;
+            }
+        }
+    }
+
+    .tabs-container {
+        margin: 0 auto;
+    }
+}
+
+.tabs {
+    &.overflow {
+        padding: 0 32px;
+        overflow: hidden;
+
+        .scroll-control-left, .scroll-control-right {
+            display: block;
+            position: absolute;
+            left: 0;
+            width: 32px;
+            color: inherit;
+            height: 48px;
+            cursor: pointer;
+            z-index: 2;
+            background-color: inherit;
+            text-align: center;
+
+            &:before {
+                //padding-top: 6px;
+                display: block;
+                width: 100%;
+                content: "\2039";
+                font-size: 1.6em;
+                height: 48px;
+                line-height: 48px;
+            }
+        }
+
+        .scroll-control-right {
+            left: auto;
+            right: 0;
+
+            &:before {
+                content: "\203A";
+            }
+        }
+    }
+}

@@ -1,0 +1,37 @@
+@import (once) "../include/variables";
+@import (once) "../include/mixins";
+
+.dialog {
+    font-size: 14px;
+    padding: 24px 24px 76px;
+    .shadow(3);
+}
+
+.dialog-title {
+    color: @blueGray900;
+    font-size: 18px;
+}
+
+.dialog-content {
+
+}
+
+.dialog-title + .dialog-content {
+    margin-top: 20px;
+}
+
+.dialog-actions {
+    border-top: 1px @gray200 solid;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: block;
+    padding: 8px;
+    text-align: right;
+
+    .flat-button {
+        margin: 0 4px;
+        min-width: 64px;
+    }
+}
