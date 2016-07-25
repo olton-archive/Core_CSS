@@ -23,3 +23,31 @@
 .shadow-5 {
     .shadow(5)
 }
+
+.long-shadow-text {
+    #long-shadow.inline();
+}
+
+.long-shadow-block {
+    #long-shadow.block();
+}
+
+.long-shadow-svg {
+    #long-shadow.svg();
+}
+
+.right-shadow {
+    box-shadow: 5px 0 5px 0 rgba(0,0,0,0.3);
+}
+.left-shadow {
+    box-shadow: -5px 0 5px 0 rgba(0,0,0,0.3);
+}
+.top-shadow {
+    box-shadow: 0 -5px 5px 0 rgba(0,0,0,0.3);
+}
+.bottom-shadow {
+    box-shadow: 0 5px 5px 0 rgba(0,0,0,0.3);
+}
+.logo-shadow {
+    #long-shadow.inline(@gray800, 45, 100);
+}

@@ -29,7 +29,7 @@
 @red100: #ffcdd2;
 @red200: #ef9a9a;
 @red300: #e57373;
-@res400: #ef5350;
+@red400: #ef5350;
 @red500: #f44336; // eq red
 @red600: #e53935;
 @red700: #d32f2f;
@@ -375,11 +375,15 @@
 @default-padding: 10px;
 @default-margin: 10px;
 
-@zIndexHeader: 1000;
-@zIndexBottomNav: 1000;
-@zIndexBottomSheet: 900;
-@zIndexOverlay: 500;
-@zIndexOverlayX: 1001;
+@zIndexHeader: 4000;
+@zIndexBottomNav: 4000;
+@zIndexBottomSheet: 3000;
+@zIndexOverlay: 5000;
+@zIndexDialog: 2000;
+@zIndexModalPage: @zIndexOverlay + 1;
+@zIndexOverlayX: 10000;
+@zIndexSidebar: 6000;
+@zIndexDropdown: 1000;
 
 @headerSize: @unitSize;
 @touchTarget: 48px;
@@ -396,3 +400,5 @@
 
 @indentIndexes: 8, 16, 32, 40, 48, 56, 64;
 @indentIndexLength: length(@indentIndexes);
+
+@borderRadius: 4px;

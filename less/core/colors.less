@@ -12,9 +12,10 @@
         @accent-name: extract(@color-accent-list, @j);
         @colors-lst: '@{name}-color-list';
         @accent-color: extract(@@colors-lst, @j);
+        @accent-color-name: "@{name}@{accent-name}";
 
-        .bg-@{name}-@{accent-name} {background-color: @accent-color !important;}
-        .fg-@{name}-@{accent-name} {color: @@name !important;}
+        .bg-@{name}-@{accent-name} {background-color: @@accent-color-name !important;}
+        .fg-@{name}-@{accent-name} {color: @@accent-color-name !important;}
 
         .generate-sub-colors(@accent, @j + 1);
     }
@@ -37,9 +38,10 @@
         @accent-name: extract(@color-accent-list-short, @j);
         @colors-lst: '@{name}-color-list';
         @accent-color: extract(@@colors-lst, @j);
+        @accent-color-name: "@{name}@{accent-name}";
 
-        .bg-@{name}-@{accent-name} {background-color: @accent-color !important;}
-        .fg-@{name}-@{accent-name} {color: @@name !important;}
+        .bg-@{name}-@{accent-name} {background-color: @@accent-color-name !important;}
+        .fg-@{name}-@{accent-name} {color: @@accent-color-name !important;}
 
         .generate-sub-colors-short(@accent, @j + 1);
     }

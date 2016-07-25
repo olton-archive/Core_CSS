@@ -15,7 +15,6 @@
 
 .menu {
     li {
-
         font-size: 14px;
         display: block;
         color: @gray800;
@@ -132,5 +131,24 @@
 .menu:not(.compact-dropdown) {
     .menu {
         left: 100%;
+    }
+}
+
+.menu {
+    &.dropdown {
+        display: none;
+        position: absolute;
+        z-index: @zIndexDropdown;
+        top: 100%;
+        left: 0;
+
+        &.drop-left {
+            left: -100%;
+        }
+
+        &.drop-up {
+            top: auto;
+            bottom: 0;
+        }
     }
 }

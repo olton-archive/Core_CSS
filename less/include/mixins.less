@@ -1,3 +1,5 @@
+@import (once) "variables";
+
 .clear() {
     &:before,
     &:after {
@@ -127,8 +129,6 @@
     margin: 0;
     padding: 0;
     list-style: none inside;
-    width: 100%;
-    height: 100%;
 }
 
 .perspective(@perspective) {
@@ -177,6 +177,10 @@
 
 .transition(@target: all, @time: 1s, @func: ease){
     transition: @target @time @func;
+}
+
+.animate(@params){
+    animation: @params;
 }
 
 .box(@size: 16px) {
@@ -240,6 +244,83 @@
     box-shadow: 0 40px 77px 0 rgba(0, 0, 0, 0.22), 0 27px 24px 0 rgba(0, 0, 0, 0.2);
 }
 
+.shadow-right() {
+    box-shadow: 10px 0 5px -2px rgba(8,8,8,.22);
+}
+
+/**
+* Less Long Shadow v2.1.0
+* Long shadow generator mixins for inline, block and SVG elements.
+*
+* Source: https://github.com/zensimilia/less-long-shadow
+* Author: Di M Dub
+* License: MIT
+*
+* #long-shadow.inline(@color, @angle, @size);
+* #long-shadow.block(@color, @angle, @size, @prefix);
+*/
+
+#long-shadow {
+    .inline(@color: @gray800, @angle: 45, @size: 10, @flag: 1, @temp: "") when (@size > 0) {
+        @angle360: @angle * (pi() / 180);
+        @x: round(@flag * cos(@angle360));
+        @y: round(@flag * sin(@angle360));
+        @shadow: ~"@{x}px @{y}px 0px @{color}";
+        @close: ~"@{shadow}, @{temp}";
+        @alltogether: ~"@{close} 0px 0px 0px @{color}";
+
+        .loop(@string, @index) when (@index < 1) {
+            text-shadow: @string;
+        }
+
+        .loop(@alltogether, @size - 1);
+        .inline(@color, @angle, @size - 1,@flag + 1, @close);
+    }
+
+    .block(@color: @gray800, @angle: 45, @size: 10, @prefix: 1, @flag: 1, @temp: "") when (@size > 0) {
+        @angle360: @angle * (pi() / 180);
+        @x: round(@flag * cos(@angle360));
+        @y: round(@flag * sin(@angle360));
+        @shadow: ~"@{x}px @{y}px 0px @{color}";
+        @close: ~"@{shadow}, @{temp}";
+        @alltogether: ~"@{close} 0px 0px 0px @{color}";
+
+        .loop(@string, @index) when (@index < 1) {
+            box-shadow: @string;
+        }
+
+        .loopPrefix(@string, @index) when (@index < 1) and (@prefix > 0) {
+            -webkit-box-shadow: @string;
+            -moz-box-shadow: @string;
+        }
+
+        .loop(@alltogether, @size - 1);
+        .loopPrefix(@alltogether, @size - 1);
+        .block(@color, @angle, @size - 1, @prefix, @flag + 1, @close);
+    }
+
+    .svg(@color: @gray800, @angle: 45, @size: 10, @prefix: 1, @flag: 1, @temp: "") when (@size > 0) {
+        @angle360: @angle * (pi() / 180);
+        @x: round(@flag * cos(@angle360));
+        @y: round(@flag * sin(@angle360));
+        @shadow: ~"@{x}px @{y}px 0px @{color}";
+        @close: ~"@{shadow}) drop-shadow(@{temp}";
+        @alltogether: ~"drop-shadow(@{close} 0px 0px 0px @{color})";
+
+        .loop(@string, @index) when (@index < 1) {
+            filter: @string;
+        }
+
+        .loopPrefix(@string, @index) when (@index < 1) and (@prefix > 0) {
+            -webkit-filter: @string;
+        }
+
+        .loop(@alltogether, @size - 1);
+        .loopPrefix(@alltogether, @size - 1);
+        .svg(@color, @angle, @size - 1, @prefix, @flag + 1, @close);
+    }
+}
+
 .generate-indent(@size, @i: 1) when (@i =< @indentIndexLength) {
     @size: extract(@indentIndexes, @i);
     @indentID: @size / 8;
@@ -248,4 +329,13 @@
     * .margin@{indentID} {margin: unit(@size, px);}
 
     .generate-indent(@size, @i + 1);
+}
+
+.set-border(@size: 1px, @color: @gray200, @type: solid) {
+    border: @size @color @type;
+}
+
+.enableGPU() {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
 }

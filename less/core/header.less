@@ -13,21 +13,30 @@ header, .header {
     z-index: @zIndexHeader;
     padding: 0 4px;
     .shadow(1);
-}
-
-.app-title {
-    font-weight: 300;
-    height: 48px;
-    display: inline-block;
-    vertical-align: middle;
-    margin: 4px 0;
-    line-height: 48px;
-    color: inherit;
-    font-size: 20px;
+    .enableGPU();
 }
 
 header, .header {
-    & > .tool-button {
+    .app-title {
+        font-weight: 300;
+        height: 48px;
+        display: inline-block;
+        vertical-align: middle;
+        margin: 4px 0;
+        line-height: 48px;
+        color: inherit;
+        font-size: 20px;
+    }
+}
+
+header, .header {
+    .header-container {
+        height: 100%;
+    }
+}
+
+header, .header {
+    .tool-button {
         margin: 4px 0;
     }
 }
@@ -35,5 +44,23 @@ header, .header {
 header, .header {
     &.more {
         height: @headerSize * 2;
+    }
+}
+
+header, .header {
+    .header-container {
+        .input-control {
+            float: left;
+            margin-left: 20px;
+            width: ~"calc(100% - 80px)";
+
+            input {
+                border: none;
+            }
+
+            input, input::-webkit-input-placeholder {
+                color: white;
+            }
+        }
     }
 }

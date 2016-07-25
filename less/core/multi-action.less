@@ -1,0 +1,90 @@
+@import (once) "../include/variables";
+@import (once) "../include/mixins";
+
+.multi-action {
+    display: inline-block;
+    position: relative;
+    .square(56px);
+}
+
+.multi-action {
+    .action-button {
+        position: absolute;
+        z-index: 2;
+        margin: 0 !important;
+    }
+
+    .actions {
+        position: absolute;
+        list-style: none inside none;
+        margin: 0 0 0 0;
+        padding: 0;
+        width: auto;
+        float: left;
+        background-color: transparent;
+        top: 8px;
+        left: 8px;
+        z-index: 1;
+        .circle(40px);
+    }
+
+    .actions {
+        li {
+            position: absolute;
+            display: block;
+            .circle(40px);
+            .shadow(1);
+            margin: 0;
+            background: @gray900;
+            color: @white;
+            .scale(.2);
+            line-height: 40px;
+            font-size: 20px;
+            transition: all .3s;
+
+            a {
+                background: inherit;
+                color: inherit;
+                display: block;
+                .circle(40px);
+                line-height: 40px;
+                text-align: center;
+            }
+
+            &:active {
+                .shadow(2);
+            }
+        }
+    }
+
+    .action-button {
+        &.active ~ .actions {
+            //display: block;
+            li {
+                transition: all .3s;
+                .scale(1);
+
+                &:nth-child(1) {margin-top: -56px;}
+                &:nth-child(2) {margin-top: -104px;}
+                &:nth-child(3) {margin-top: -152px;}
+                &:nth-child(4) {margin-top: -200px;}
+                &:nth-child(5) {margin-top: -248px;}
+                &:nth-child(6) {margin-top: -296px;}
+                &:nth-child(7) {margin-top: -344px;}
+                &:nth-child(8) {margin-top: -392px;}
+                &:nth-child(9) {margin-top: -440px;}
+                &:nth-child(10) {margin-top: -488px;}
+            }
+        }
+    }
+
+    .action-button span {
+        transition: all .3s;
+    }
+
+    .action-button {
+        &.active:not(.no-rotate) span {
+            transform: scale(1.5) rotate(-45deg);
+        }
+    }
+}

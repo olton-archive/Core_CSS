@@ -6,7 +6,7 @@
     border: 0;
     outline: 0;
     display: inline-block;
-    line-height: 100%;
+    line-height: 1;
     vertical-align: middle;
     height: 36px;
     margin: 0 8px;
@@ -15,10 +15,13 @@
     background-color: @white;
     color: @black;
     border-radius: 2px;
+    position: relative;
+    overflow: visible;
 
     &:active, &:focus {
         outline: none;
     }
+
 }
 
 .flat-button, .raised-button, .action-button, .tool-button {
@@ -88,9 +91,11 @@
 .tool-button {
     height: 48px;
     width: 48px;
-    display: inline-block;
+    display: block;
+    float: left;
     background-color: @lightBlue700;
     color: @white;
+
 
     .icon {
         width: 24px;
@@ -99,3 +104,8 @@
     }
 }
 
+.flat-button, .raised-button {
+    [class*=mif-] {
+        //line-height: 36px;
+    }
+}

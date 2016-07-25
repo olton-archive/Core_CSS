@@ -1,0 +1,217 @@
+@import (once) "../include/variables";
+@import (once) "../include/mixins";
+
+@sliderMarkerSize: 12px;
+@sliderLineHeight: 3px;
+@sliderHeight: 34px;
+
+.slider {
+    height: @sliderHeight;
+    line-height: 1;
+    width: auto;
+    position: relative;
+
+    .marker {
+        .circle(@sliderMarkerSize);
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        margin-top: -8px;
+        left: 0;
+        background-color: @blue900;
+        z-index: 2;
+
+        &:before {
+            display: none;
+        }
+
+        &.focus {
+            &:before {
+                display: block;
+                content: "";
+                position: absolute;
+                .circle(50px);
+                background-color: @blue900;
+                opacity: .3;
+                top: 50%;
+                left: 50%;
+                margin-top: -25px;
+                margin-left: -25px;
+            }
+        }
+    }
+
+    .slider-backside, .complete {
+        height: @sliderLineHeight;
+        background: @gray300;
+        width: 100%;
+        line-height: @sliderHeight;
+        top: 50%;
+        margin-top: -.25rem;
+        position: absolute;
+    }
+
+    .complete {
+        width: auto;
+        background-color: @blue900;
+        z-index: 2;
+        transition: background .3s ease;
+        left: 0;
+    }
+
+    .buffer {
+        height: 4px;
+        width: auto;
+        background-color: @white;
+        z-index: 1;
+        transition: background .3s ease;
+        position: absolute;
+        top: 50%;
+        margin-top: -2px;
+        left: 0;
+    }
+
+    .slider-hint {
+        min-width: 1.8rem;
+        width: auto;
+        height: auto;
+        position: absolute;
+        z-index: 3;
+        border: 1px #ccc solid;
+        padding: .25rem;
+        top: -1.2rem;
+        text-align: center;
+        font-size: .625rem;
+        display: none;
+        background: @amber100;
+
+        &:before {
+            border: 1px #ccc solid;
+            border-left: 0;
+            border-top: 0;
+            content: "";
+            width: .25rem;
+            height: .25rem;
+            display: block;
+            position: absolute;
+            background-color: inherit;
+            margin-top: -0.125rem;
+            margin-left: -0.15625rem;
+            top: 100%;
+            left: 50%;
+            .rotate(45deg);
+        }
+    }
+
+    &.hint-bottom {
+        .slider-hint {
+            top: 100%;
+            margin-top: -.125rem;
+            &:before {
+                top: -.0625rem;
+                .rotate(-135deg);
+            }
+        }
+    }
+
+    &.permanent-hint {
+        & > .slider-hint {
+            display: block;
+        }
+    }
+
+    &:hover {
+        .complete {
+            background-color: @blue900;
+        }
+    }
+
+    &:active, &:active + .marker:active {
+        .complete {
+            background-color: @blue800;
+        }
+    }
+
+    &.place-left {
+        margin-right: 20px;
+    }
+    &.place-right {
+        margin-left: 20px;
+    }
+
+    &.ani {
+        .complete {
+            .animate(ani-bg-stripes 2s linear infinite);
+        }
+    }
+}
+
+.slider {
+    &.vertical {
+        min-height: 100px;
+        width: 2.125rem;
+        display: inline-block;
+
+        .slider-backside, .complete {
+            position: absolute;
+            height: 100%;
+            width: .5rem;
+            bottom: 0;
+            left: 50%;
+            margin-left: -.25rem;
+            top: auto;
+        }
+
+        .marker {
+            left: 50%;
+            top: auto;
+            margin-left: -.5rem;
+        }
+
+        .complete {
+        }
+
+        .buffer {
+            position: absolute;
+            height: auto;
+            width: 6px ;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            top: auto;
+        }
+
+        .slider-hint {
+            left: 100%;
+            margin-top: 0;
+
+            &:before {
+                height: .25rem;
+                width: .25rem;
+                .rotate(135deg);
+                left: -1px;
+                top: 50%;
+                margin-top: -.125rem;
+                margin-left: -.135rem;
+            }
+        }
+
+        &.hint-left {
+            .slider-hint {
+                left: -100%;
+                margin-left: .25rem;
+
+                &:before {
+                    left: 100%;
+                    .rotate(-45deg);
+                }
+            }
+        }
+    }
+}
+
+.slider.cycle-marker {
+    .marker {
+        border-radius: 50%;
+    }
+}

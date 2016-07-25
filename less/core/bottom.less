@@ -1,6 +1,10 @@
 @import (once) "../include/variables";
 @import (once) "../include/mixins";
 
+footer, .footer {
+    .enableGPU();
+}
+
 .bottom-nav {
     display: flex;
     flex-wrap: nowrap;
@@ -36,7 +40,6 @@
 }
 
 .bottom-sheet {
-    .fix-to-bottom();
     .clear();
     background-color: @white;
     display: block;
@@ -47,6 +50,9 @@
     padding: 0;
     margin: 0 0 0 -180px;
     width: 100%;
+    top: 100%;
+    position: fixed;
+    .shadow(2);
 }
 
 .bottom-sheet {
@@ -91,14 +97,14 @@
         background-color: @menuHoverBackground;
     }
 
-    height: 0;
-    .transition();
+//    .transition();
 }
 
 .bottom-sheet {
     &.opened {
-        height: auto;
-        .transition();
+        top: auto;
+        bottom: 0;
+//        .transition();
     }
 }
 

@@ -4,17 +4,17 @@
 .tabs {
     margin: 0;
     padding: 0;
-    //border-width: 2px;
     text-align: center;
     position: relative;
     height: 48px;
+    display: flex;
+    justify-content: center;
 
     .tab {
         position: relative;
         display: inline-block;
         height: 48px;
-        //line-height: 48px;
-        padding: 16px 12px 20px;
+        padding: 16px 12px;
         border-bottom: 2px solid;
         cursor: pointer;
         opacity: .6;
@@ -22,6 +22,10 @@
         text-align: center;
         text-transform: uppercase;
         margin: 0;
+        //flex-grow: 1;
+        flex-grow: 0;
+        //flex-basis: 0;
+        flex-basis: auto;
     }
 
     .tab {
@@ -89,6 +93,27 @@
             &:before {
                 content: "\203A";
             }
+        }
+    }
+}
+
+.tabs-content {
+
+    width: 100%;
+    position: relative;
+    overflow: auto;
+
+    & > div {
+        //position: absolute;
+        display: none;
+    }
+}
+
+@media screen and (max-width: 640px){
+    .tabs {
+        .tab {
+            flex-basis: 0;
+            flex-grow: 1;
         }
     }
 }

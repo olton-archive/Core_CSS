@@ -23,8 +23,7 @@
 .checkbox, .radio {
     .check {
         display: inline-block;
-        width: 16px;
-        height: 16px;
+        .square(16px);
         border: 2px rgba(0,0,0,.54) solid;
         border-radius: 2px;
         position: relative;
@@ -67,6 +66,39 @@
     .check + .title, .title + .check {
         margin-left: 5px;
         margin-right: 0;
+    }
+
+
+    &:focus, &:active {
+        .check {
+            &:after {
+                display: block;
+                content: "";
+                position: absolute;
+                .circle(50px);
+                background-color: rgba(0, 150, 136, 0.5);
+                opacity: .3;
+                top: 50%;
+                left: 50%;
+                margin-top: -25px;
+                margin-left: -25px;
+            }
+        }
+    }
+
+    &.disabled {
+        .check {
+            &:after {
+                background-color: rgba(0, 0, 0, 0.24);
+            }
+        }
+    }
+    input:disabled {
+        & ~ .check {
+            &:after {
+                background-color: rgba(0, 0, 0, 0.24);
+            }
+        }
     }
 }
 

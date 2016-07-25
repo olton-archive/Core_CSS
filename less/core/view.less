@@ -12,7 +12,7 @@
 }
 
 header ~ .view-content, .header ~ .view-content {
-    padding-top: @headerSize;
+    padding-top: @headerSize + 8;
 }
 
 header.more ~ .view-content, .header.more ~ .view-content {
@@ -21,4 +21,23 @@ header.more ~ .view-content, .header.more ~ .view-content {
 
 .bottom-nav ~ .view-content {
     padding-bottom: @unitSize;
+}
+
+.page {
+    position: relative;
+    display: none;
+
+    &.current-page {
+        display: block;
+    }
+
+    &.modal-page {
+        position: fixed;
+        z-index: @zIndexModalPage;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: @white;
+    }
 }

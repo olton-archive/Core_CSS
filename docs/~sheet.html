@@ -1,29 +1,4 @@
 <h2 class="headline fg-teal">Bottom sheet</h2>
-<h4 class="subheading fg-teal">Menu style</h4>
 
-<div>
-    <ul class="bottom-sheet opened shadow-1" style="position: relative">
-        <li class="ripple"><span class="icon mif-envelop"></span>Mail</li>
-        <li class="ripple"><span class="icon mif-command"></span>Message</li>
-        <li class="ripple"><span class="icon mif-location"></span>Location</li>
-        <li class="ripple"><span class="icon mif-voicemail"></span>Voice</li>
-        <li class="ripple"><span class="icon mif-phone"></span>Dialer</li>
-        <li class="divider"></li>
-        <li class="ripple"><span class="icon mif-upload"></span>Upload</li>
-        <li class="ripple"><span class="icon mif-security"></span>Security</li>
-    </ul>
-</div>
-
-<h4 class="subheading fg-teal">Grid style</h4>
-<div>
-    <ul class="bottom-sheet grid-style opened shadow-1" style="position: relative;">
-        <li class="ripple"><span class="icon mif-envelop"></span>Mail</li>
-        <li class="ripple"><span class="icon mif-command"></span>Message</li>
-        <li class="ripple"><span class="icon mif-location"></span>Location</li>
-        <li class="ripple"><span class="icon mif-voicemail"></span>Voice</li>
-        <li class="ripple"><span class="icon mif-phone"></span>Dialer</li>
-        <li class="divider"></li>
-        <li class="ripple"><span class="icon mif-upload"></span>Upload</li>
-        <li class="ripple"><span class="icon mif-security"></span>Security</li>
-    </ul>
-</div>
+<button class="raised-button" onclick="toggleBottomSheet('#bottom-sheet', 'list')">List Style</button>
+<button class="raised-button" onclick="toggleBottomSheet('#bottom-sheet', 'grid')">Grid Style</button>

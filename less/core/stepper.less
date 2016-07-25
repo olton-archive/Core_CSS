@@ -1,0 +1,86 @@
+@import (once) "../include/variables";
+@import (once) "../include/mixins";
+
+.stepper {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    list-style: none inside;
+    height: 72px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    counter-reset: stepper-counter;
+    position: relative;
+    .set-border();
+
+    &:before {
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        border-bottom: 1px @gray200 solid;
+        content: "";
+        top: 50%;
+    }
+
+}
+
+.stepper {
+    li {
+        line-height: 72px;
+        padding: 0 12px 0 44px;
+        text-align: left;
+        position: relative;
+        background-color: @white;
+    }
+
+    li {
+        &:before {
+            counter-increment: stepper-counter;
+            content: counter(stepper-counter);
+            background-color: @gray500;
+            color: @white;
+            text-align: center;
+            line-height: 24px;
+            .circle(24px);
+            margin-right: 8px;
+            display: block;
+            float: left;
+            top: 50%;
+            margin-top: -12px;
+            left: 12px;
+            position: absolute;
+        }
+    }
+
+    li {
+        &.current:before {
+            background-color: @blue;
+            color: @white;
+        }
+        &.complete:before {
+            background-color: @green;
+            color: @white;
+        }
+        &.error:before {
+            background-color: @redA700;
+            color: @white;
+        }
+        &.warning:before {
+            content: "";
+            background-color: transparent;
+            color: @black;
+            .square(0);
+            border-radius: 0;
+            border-style: inset;
+            border-width: 0 12px 24px 12px;
+            border-color: transparent transparent @deepOrange transparent;
+        }
+        &.warning:after {
+            content: "!";
+            position: absolute;
+            left: 22px;
+            top: 2px;
+            color: @white;
+        }
+    }
+}

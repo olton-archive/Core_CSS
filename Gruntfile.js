@@ -28,8 +28,8 @@ module.exports = function(grunt) {
 
         concat: {
             options: {
-                banner: '<%= banner %>',
-                footer: "",
+                banner: '<%= banner %>' + '<%= requirejs_banner%>',
+                footer: "\n\n return CoreCss.init();\n\n}));",
                 stripBanners: true,
                 process: function(src, filepath) {
                     return '// Source: ' + filepath + '\n' +

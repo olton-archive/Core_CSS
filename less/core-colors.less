@@ -2,7 +2,6 @@
 
 /* Full color scheme*/
 
-
 .generate-colors(@colors-names-length);
 .generate-colors(@name, @i: 1) when (@i =< @colors-names-length) {
     @name: extract(@color-names-list-full, @i);
@@ -12,25 +11,28 @@
         @accent-name: extract(@color-accent-list, @j);
         @colors-lst: '@{name}-color-list';
         @accent-color: extract(@@colors-lst, @j);
+        @accent-color-name: "@{name}@{accent-name}";
 
-        .bd-@{name}-@{accent-name} {border-color: @@name !important;}
-        .ol-@{name}-@{accent-name} {outline-color: @@name !important;}
+        .bd-@{name}-@{accent-name} {border-color: @@accent-color-name !important;}
+        .ol-@{name}-@{accent-name} {outline-color: @@accent-color-name !important;}
+        .st-@{name}-@{accent-name} {stroke: @@accent-color-name !important;}
 
-        .fg-@{name}-@{accent-name}-active:active {color: @@name !important;}
-        .bg-@{name}-@{accent-name}-active:active {background-color: @@name !important;}
-        .bd-@{name}-@{accent-name}-active:active {border-color: @@name !important;}
-        .ol-@{name}-@{accent-name}-active:active {outline-color: @@name !important;}
+        .fg-@{name}-@{accent-name}-active:active {color: @@accent-color-name !important;}
+        .bg-@{name}-@{accent-name}-active:active {background-color: @@accent-color-name !important;}
+        .bd-@{name}-@{accent-name}-active:active {border-color: @@accent-color-name !important;}
+        .ol-@{name}-@{accent-name}-active:active {outline-color: @@accent-color-name !important;}
 
-        .fg-@{name}-@{accent-name}-focus:focus {color: @@name !important;}
-        .bg-@{name}-@{accent-name}-focus:focus {background-color: @@name !important;}
-        .bd-@{name}-@{accent-name}-focus:focus {border-color: @@name !important;}
-        .ol-@{name}-@{accent-name}-focus:focus {outline-color: @@name !important;}
+        .fg-@{name}-@{accent-name}-focus:focus {color: @@accent-color-name !important;}
+        .bg-@{name}-@{accent-name}-focus:focus {background-color: @@accent-color-name !important;}
+        .bd-@{name}-@{accent-name}-focus:focus {border-color: @@accent-color-name !important;}
+        .ol-@{name}-@{accent-name}-focus:focus {outline-color: @@accent-color-name !important;}
 
         .generate-sub-colors(@accent, @j + 1);
     }
 
     .bd-@{name} {border-color: @@name !important;}
     .ol-@{name} {outline-color: @@name !important;}
+    .st-@{name} {stroke: @@name !important;}
 
     .fg-@{name}-active:active {color: @@name !important;}
     .bg-@{name}-active:active {background-color: @@name !important;}
@@ -57,25 +59,28 @@
         @accent-name: extract(@color-accent-list-short, @j);
         @colors-lst: '@{name}-color-list';
         @accent-color: extract(@@colors-lst, @j);
+        @accent-color-name: "@{name}@{accent-name}";
 
-        .bd-@{name}-@{accent-name} {border-color: @@name !important;}
-        .ol-@{name}-@{accent-name} {outline-color: @@name !important;}
+        .bd-@{name}-@{accent-name} {border-color: @@accent-color-name !important;}
+        .ol-@{name}-@{accent-name} {outline-color: @@accent-color-name !important;}
+        .st-@{name}-@{accent-name} {stroke: @@accent-color-name !important;}
 
-        .fg-@{name}-@{accent-name}-active:active {color: @@name !important;}
-        .bg-@{name}-@{accent-name}-active:active {background-color: @@name !important;}
-        .bd-@{name}-@{accent-name}-active:active {border-color: @@name !important;}
-        .ol-@{name}-@{accent-name}-active:active {outline-color: @@name !important;}
+        .fg-@{name}-@{accent-name}-active:active {color: @@accent-color-name !important;}
+        .bg-@{name}-@{accent-name}-active:active {background-color: @@accent-color-name !important;}
+        .bd-@{name}-@{accent-name}-active:active {border-color: @@accent-color-name !important;}
+        .ol-@{name}-@{accent-name}-active:active {outline-color: @@accent-color-name !important;}
 
-        .fg-@{name}-@{accent-name}-focus:focus {color: @@name !important;}
-        .bg-@{name}-@{accent-name}-focus:focus {background-color: @@name !important;}
-        .bd-@{name}-@{accent-name}-focus:focus {border-color: @@name !important;}
-        .ol-@{name}-@{accent-name}-focus:focus {outline-color: @@name !important;}
+        .fg-@{name}-@{accent-name}-focus:focus {color: @@accent-color-name !important;}
+        .bg-@{name}-@{accent-name}-focus:focus {background-color: @@accent-color-name !important;}
+        .bd-@{name}-@{accent-name}-focus:focus {border-color: @@accent-color-name !important;}
+        .ol-@{name}-@{accent-name}-focus:focus {outline-color: @@accent-color-name !important;}
 
         .generate-sub-colors-short(@accent, @j + 1);
     }
 
     .bd-@{name} {border-color: @@name !important;}
     .ol-@{name} {outline-color: @@name !important;}
+    .st-@{name} {stroke: @@name !important;}
 
     .fg-@{name}-active:active {color: @@name !important;}
     .bg-@{name}-active:active {background-color: @@name !important;}
@@ -92,27 +97,29 @@
 
 .bd-white {border-color: @white !important;}
 .ol-white {outline-color: @white !important;}
+.st-white {stroke: @white !important;}
 
 .bd-black {border-color: @black !important;}
 .ol-black {outline-color: @black !important;}
+.st-black {stroke: @black !important;}
 
-.fg-white:active {color: @white !important;}
-.bg-white:active {background-color: @white !important;}
-.bd-white:active {border-color: @white !important;}
-.ol-white:active {outline-color: @white !important;}
+.fg-white-active:active {color: @white !important;}
+.bg-white-active:active {background-color: @white !important;}
+.bd-white-active:active {border-color: @white !important;}
+.ol-white-active:active {outline-color: @white !important;}
 
-.fg-black:active {color: @black !important;}
-.bg-black:active {background-color: @black !important;}
-.bd-black:active {border-color: @black !important;}
-.ol-black:active {outline-color: @black !important;}
+.fg-black-active:active {color: @black !important;}
+.bg-black-active:active {background-color: @black !important;}
+.bd-black-active:active {border-color: @black !important;}
+.ol-black-active:active {outline-color: @black !important;}
 
-.fg-white:focus {color: @white !important;}
-.bg-white:focus {background-color: @white !important;}
-.bd-white:focus {border-color: @white !important;}
-.ol-white:focus {outline-color: @white !important;}
+.fg-white-focus:focus {color: @white !important;}
+.bg-white-focus:focus {background-color: @white !important;}
+.bd-white-focus:focus {border-color: @white !important;}
+.ol-white-focus:focus {outline-color: @white !important;}
 
-.fg-black:focus {color: @black !important;}
-.bg-black:focus {background-color: @black !important;}
-.bd-black:focus {border-color: @black !important;}
-.ol-black:focus {outline-color: @black !important;}
+.fg-black-focus:focus {color: @black !important;}
+.bg-black-focus:focus {background-color: @black !important;}
+.bd-black-focus:focus {border-color: @black !important;}
+.ol-black-focus:focus {outline-color: @black !important;}
 
