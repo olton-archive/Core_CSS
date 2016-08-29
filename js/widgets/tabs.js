@@ -4,6 +4,7 @@ $.widget( "corecss.tabs" , {
 
     options: {
         openTarget: false,
+        duration: CORE_ANIMATION_DURATION,
         onTabClick: function(tab){return true;},
         onTabChange: function(tab){}
     },
@@ -19,10 +20,23 @@ $.widget( "corecss.tabs" , {
 
         this._setOptionsFromDOM();
 
+        this._createTabs();
         this._createEvents();
         this._openTab(tab, null);
 
         element.data('tabs', this);
+    },
+
+    _createTabs: function(){
+        var element = this.element, o = this.options;
+        var tabs_container = element.children('.tabs');
+        var tabs = element.children('.tabs').find('li:not(.tab-marker)');
+        var tab_marker = element.children('.tabs').find('li.tab-marker');
+
+        if (tab_marker.length == 0) {
+            tab_marker = $("<li>").addClass("tab-marker");
+            tab_marker.appendTo(tabs_container);
+        }
     },
 
     _openTab: function(tab, direction){
@@ -30,12 +44,20 @@ $.widget( "corecss.tabs" , {
         var tabs = element.children('.tabs').find('li');
         var frames = element.children('.tabs-content').children('div');
         var frame = '#'+tab.data('target');
+        var marker = element.children('.tabs').find('li.tab-marker');
+        var tab_width = tab.outerWidth();
 
         tabs.removeClass('active');
         frames.hide();
 
         tab.addClass('active');
         $(frame).show();
+
+        marker.animate({
+            width: tab_width,
+            top: '100%',
+            left: tab.position().left
+        }, o.duration);
     },
 
     _createEvents: function(){
@@ -44,6 +66,9 @@ $.widget( "corecss.tabs" , {
         var frames = element.children('.frames').children('div');
 
         element.on('click', '.tabs > li', function(e){
+
+            if ($(this).hasClass('tab-marker')) return;
+
             var result;
             var tab = $(this), target = tab.data('target'), frame = $(target);
             var tab_active = element.children(".tabs").find("li.active");

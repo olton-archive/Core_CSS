@@ -4,6 +4,7 @@ $.widget( "corecss.panel" , {
 
     options: {
         collapseMode: 'full',
+        duration: CORE_ANIMATION_DURATION,
         open: true
     },
 
@@ -55,9 +56,9 @@ $.widget( "corecss.panel" , {
         var that = this, element = this.element, o = this.options;
 
 
-        element.find(".panel-content").slideDown('fast');
+        element.find(".panel-content").slideDown(o.duration);
         if (o.collapseMode === 'full') {
-            element.find(".panel-footer").slideDown('fast');
+            element.find(".panel-footer").slideDown(o.duration);
         }
 
         element.removeClass("collapsed");
@@ -67,9 +68,9 @@ $.widget( "corecss.panel" , {
     close: function(){
         var that = this, element = this.element, o = this.options;
 
-        element.find(".panel-content").slideUp('fast');
+        element.find(".panel-content").slideUp(o.duration);
         if (o.collapseMode === 'full') {
-            element.find(".panel-footer").slideUp('fast');
+            element.find(".panel-footer").slideUp(o.duration);
         }
 
         element.addClass("collapsed");

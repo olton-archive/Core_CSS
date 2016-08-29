@@ -6,7 +6,7 @@ $.widget("corecss.sidebar", {
         toggle: null,
         shift: null,
         overlay: false,
-        duration: 200
+        duration: CORE_ANIMATION_DURATION
     },
 
     _create: function () {

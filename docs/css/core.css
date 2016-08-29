@@ -345,12 +345,70 @@ header.more ~ .view-content,
 }
 .page.modal-page {
   position: fixed;
-  z-index: 5001;
+  z-index: 5200;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
   background-color: #ffffff;
+}
+.grid {
+  display: block;
+  padding: 4px;
+}
+.grid:before,
+.grid:after {
+  display: table;
+  content: "";
+}
+.grid:after {
+  clear: both;
+}
+.grid:before,
+.grid:after {
+  display: table;
+  content: "";
+}
+.grid:after {
+  clear: both;
+}
+.grid .row {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.grid .row:before,
+.grid .row:after {
+  display: table;
+  content: "";
+}
+.grid .row:after {
+  clear: both;
+}
+.grid .row:before,
+.grid .row:after {
+  display: table;
+  content: "";
+}
+.grid .row:after {
+  clear: both;
+}
+.grid .cell {
+  display: block;
+  float: left;
+  margin: 4px;
+  height: auto;
+  width: auto;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+.tile {
+  width: 56px;
+  height: 56px;
 }
 .overlay {
   position: fixed;
@@ -1011,6 +1069,18 @@ footer,
 }
 .list-item + .list-item {
   border-top: 1px #eeeeee solid;
+}
+.list-item-custom {
+  position: relative;
+  margin: 4px;
+  display: block;
+  padding: 0;
+  font-size: 16px;
+  font-weight: normal;
+  overflow: hidden;
+  background: #ffffff;
+  color: #000000;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.26);
 }
 .input-control {
   position: relative;
@@ -2941,7 +3011,6 @@ footer,
   display: inline-block;
   height: 48px;
   padding: 16px 12px;
-  border-bottom: 2px solid;
   cursor: pointer;
   opacity: .6;
   font-weight: 400;
@@ -2958,8 +3027,6 @@ footer,
 .tabs .tab.active,
 .tabs .tab:hover {
   opacity: 1;
-  border-bottom: 2px solid;
-  border-color: inherit !important;
   transition: .3s linear;
 }
 .tabs .tab:not(.active),
@@ -2978,6 +3045,14 @@ footer,
 }
 .tabs .tabs-container {
   margin: 0 auto;
+}
+.tabs .tab-marker {
+  position: absolute;
+  height: 4px;
+  background: #f44336;
+  margin-top: -4px;
+  top: 100%;
+  left: 0;
 }
 .tabs.overflow {
   padding: 0 32px;
@@ -3130,8 +3205,10 @@ footer,
 .dialog {
   font-size: 14px;
   padding: 24px 24px 76px;
-  z-index: 2000;
+  z-index: 5100;
   max-width: 90%;
+  background: #ffffff;
+  position: fixed !important;
   box-shadow: 0 17px 50px 0 rgba(0, 0, 0, 0.19), 0 12px 15px 0 rgba(0, 0, 0, 0.24);
 }
 .dialog-title {
@@ -4120,143 +4197,155 @@ footer,
 .logo-shadow {
   text-shadow: 71px 71px 0px #424242, 70px 70px 0px #424242, 69px 69px 0px #424242, 69px 69px 0px #424242, 68px 68px 0px #424242, 67px 67px 0px #424242, 66px 66px 0px #424242, 66px 66px 0px #424242, 65px 65px 0px #424242, 64px 64px 0px #424242, 64px 64px 0px #424242, 63px 63px 0px #424242, 62px 62px 0px #424242, 62px 62px 0px #424242, 61px 61px 0px #424242, 60px 60px 0px #424242, 59px 59px 0px #424242, 59px 59px 0px #424242, 58px 58px 0px #424242, 57px 57px 0px #424242, 57px 57px 0px #424242, 56px 56px 0px #424242, 55px 55px 0px #424242, 54px 54px 0px #424242, 54px 54px 0px #424242, 53px 53px 0px #424242, 52px 52px 0px #424242, 52px 52px 0px #424242, 51px 51px 0px #424242, 50px 50px 0px #424242, 49px 49px 0px #424242, 49px 49px 0px #424242, 48px 48px 0px #424242, 47px 47px 0px #424242, 47px 47px 0px #424242, 46px 46px 0px #424242, 45px 45px 0px #424242, 45px 45px 0px #424242, 44px 44px 0px #424242, 43px 43px 0px #424242, 42px 42px 0px #424242, 42px 42px 0px #424242, 41px 41px 0px #424242, 40px 40px 0px #424242, 40px 40px 0px #424242, 39px 39px 0px #424242, 38px 38px 0px #424242, 37px 37px 0px #424242, 37px 37px 0px #424242, 36px 36px 0px #424242, 35px 35px 0px #424242, 35px 35px 0px #424242, 34px 34px 0px #424242, 33px 33px 0px #424242, 33px 33px 0px #424242, 32px 32px 0px #424242, 31px 31px 0px #424242, 30px 30px 0px #424242, 30px 30px 0px #424242, 29px 29px 0px #424242, 28px 28px 0px #424242, 28px 28px 0px #424242, 27px 27px 0px #424242, 26px 26px 0px #424242, 25px 25px 0px #424242, 25px 25px 0px #424242, 24px 24px 0px #424242, 23px 23px 0px #424242, 23px 23px 0px #424242, 22px 22px 0px #424242, 21px 21px 0px #424242, 21px 21px 0px #424242, 20px 20px 0px #424242, 19px 19px 0px #424242, 18px 18px 0px #424242, 18px 18px 0px #424242, 17px 17px 0px #424242, 16px 16px 0px #424242, 16px 16px 0px #424242, 15px 15px 0px #424242, 14px 14px 0px #424242, 13px 13px 0px #424242, 13px 13px 0px #424242, 12px 12px 0px #424242, 11px 11px 0px #424242, 11px 11px 0px #424242, 10px 10px 0px #424242, 9px 9px 0px #424242, 8px 8px 0px #424242, 8px 8px 0px #424242, 7px 7px 0px #424242, 6px 6px 0px #424242, 6px 6px 0px #424242, 5px 5px 0px #424242, 4px 4px 0px #424242, 4px 4px 0px #424242, 3px 3px 0px #424242, 2px 2px 0px #424242, 1px 1px 0px #424242, 1px 1px 0px #424242,  0px 0px 0px #424242;
 }
-* .size1 {
+.size1 {
   width: 56px;
 }
-* .size2 {
+.size2 {
   width: 112px;
 }
-* .size3 {
+.size3 {
   width: 168px;
 }
-* .size4 {
+.size4 {
   width: 224px;
 }
-* .size5 {
+.size5 {
   width: 280px;
 }
-* .size6 {
+.size6 {
   width: 336px;
 }
-* .size7 {
+.size7 {
   width: 392px;
 }
-* .size0,
-* .full-width {
+.size0,
+.full-width {
   width: 100%;
 }
-* .full-height {
+.full-height {
   height: 100%;
 }
-* .fixed-bottom,
-* .fixed-top {
+.fixed-bottom,
+.fixed-top {
   position: fixed;
   left: 0;
   right: 0;
 }
-* .fixed-top {
+.fixed-top {
   top: 0;
   bottom: auto;
 }
-* .fixed-bottom {
+.fixed-bottom {
   top: auto;
   bottom: 0;
 }
-* .pos-static {
+.pos-static {
   position: static;
 }
-* .pos-relative {
+.pos-relative {
   position: relative;
 }
-* .pos-absolute {
+.pos-absolute {
   position: absolute;
 }
-* .pos-fixed {
+.pos-fixed {
   position: fixed;
 }
-* .block {
+.block {
   display: block;
 }
-* .inline-block {
+.inline-block {
   display: inline-block;
 }
-* .place-right {
+.place-right {
   float: right;
 }
-* .place-left {
+.place-left {
   float: left;
 }
-* .no-display {
-  display: none;
+.no-display {
+  display: none !important;
 }
-* .no-margin {
-  margin: 0;
+.no-margin {
+  margin: 0 !important;
 }
-* .no-margin-right {
-  margin-right: 0;
+.no-margin-right {
+  margin-right: 0 !important;
 }
-* .no-margin-left {
-  margin-left: 0;
+.no-margin-left {
+  margin-left: 0 !important;
 }
-* .no-margin-top {
-  margin-top: 0;
+.no-margin-top {
+  margin-top: 0 !important;
 }
-* .no-margin-bottom {
-  margin-bottom: 0;
+.no-margin-bottom {
+  margin-bottom: 0 !important;
 }
-* .no-padding {
-  padding: 0;
+.no-padding {
+  padding: 0 !important;
 }
-* .no-padding-left {
-  padding-left: 0;
+.no-padding-left {
+  padding-left: 0 !important;
 }
-* .no-padding-right {
-  padding-right: 0;
+.no-padding-right {
+  padding-right: 0 !important;
 }
-* .no-padding-top {
-  padding-top: 0;
+.no-padding-top {
+  padding-top: 0 !important;
 }
-* .no-padding-bottom {
-  padding-bottom: 0;
+.no-padding-bottom {
+  padding-bottom: 0 !important;
 }
-* .no-float {
-  float: none;
+.no-float {
+  float: none !important;
 }
-* .no-visible {
-  visibility: hidden;
+.no-visible {
+  visibility: hidden !important;
 }
-* .no-border {
-  border: 0;
+.no-border {
+  border: 0 !important;
 }
-* .no-overflow {
-  overflow: hidden;
+.no-border-top {
+  border-top: 0 !important;
 }
-* .no-scroll {
-  overflow: hidden;
+.no-border-left {
+  border-left: 0 !important;
 }
-* .no-scroll-x {
-  overflow-x: hidden;
+.no-border-right {
+  border-right: 0 !important;
 }
-* .no-scroll-y {
-  overflow-y: hidden;
+.no-border-bottom {
+  border-bottom: 0 !important;
 }
-* .no-wrap {
-  white-space: nowrap;
+.no-overflow {
+  overflow: hidden !important;
 }
-* .no-border-left {
-  border-left: none;
+.no-scroll {
+  overflow: hidden !important;
 }
-* .no-border-right {
-  border-right: none;
+.no-scroll-x {
+  overflow-x: hidden !important;
 }
-* .no-border-top {
-  border-top: none;
+.no-scroll-y {
+  overflow-y: hidden !important;
 }
-* .no-border-bottom {
-  border-bottom: none;
+.no-wrap {
+  white-space: nowrap !important;
 }
-* .no-border-visible {
-  border-color: transparent;
+.no-border-left {
+  border-left: none !important;
+}
+.no-border-right {
+  border-right: none !important;
+}
+.no-border-top {
+  border-top: none !important;
+}
+.no-border-bottom {
+  border-bottom: none !important;
+}
+.no-border-visible {
+  border-color: transparent !important;
 }
 .set-border {
   border: 2px solid #eeeeee;

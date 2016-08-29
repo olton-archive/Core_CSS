@@ -1,0 +1,34 @@
+@import (once) "../include/variables";
+@import (once) "../include/mixins";
+
+@tileSize: 56px;
+
+.grid {
+    display: block;
+    padding: 4px;
+    .clear();
+}
+
+.grid {
+    .row {
+        display: flex;
+        justify-content: space-between;
+        .clear();
+    }
+}
+
+.grid {
+    .cell {
+        display: block;
+        float: left;
+        margin: 4px;
+        height: auto;
+        width: auto;
+        flex-grow: 1;
+    }
+}
+
+.tile {
+    width: @tileSize;
+    height: @tileSize;
+}

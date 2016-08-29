@@ -1,5 +1,6 @@
 if (window.CALENDAR_WEEK_START == undefined) {window.CALENDAR_WEEK_START = 1;}
 if (window.CALENDAR_LOCALE == undefined) {window.CALENDAR_LOCALE = 'en';}
+if (window.CORE_ANIMATION_DURATION == undefined) {window.CORE_ANIMATION_DURATION = 200;}
 
 var CoreCss = {
     uniqueId: function (prefix) {

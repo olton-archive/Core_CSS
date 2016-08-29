@@ -15,7 +15,6 @@
         display: inline-block;
         height: 48px;
         padding: 16px 12px;
-        border-bottom: 2px solid;
         cursor: pointer;
         opacity: .6;
         font-weight: 400;
@@ -31,8 +30,6 @@
     .tab {
         &.active, &:hover {
             opacity: 1;
-            border-bottom: 2px solid;
-            border-color: inherit !important;
             transition: .3s linear;
         }
 
@@ -55,6 +52,15 @@
 
     .tabs-container {
         margin: 0 auto;
+    }
+
+    .tab-marker {
+        position: absolute;
+        height: 4px;
+        background: @red500;
+        margin-top: -4px;
+        top: 100%;
+        left: 0;
     }
 }
 

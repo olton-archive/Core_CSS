@@ -1,6 +1,8 @@
 <h2 class="heading">Dialogs</h2>
 
-<div class="dialog">
+<button class="raised-button bg-red fg-white" onclick="coreDialog.open('#dialog1')">Open Dialog</button>
+
+<div id="dialog1" data-role="dialog" data-close-button="true" data-overlay="true">
     <div class="dialog-title">
         Use Google's location service?
     </div>
@@ -8,7 +10,7 @@
         Bassus abactors ducunt ad triticum. A fraternal form of manifestation is the bliss.
     </div>
     <div class="dialog-actions">
-        <button class="flat-button">disagree</button>
-        <button class="flat-button">agree</button>
+        <button class="flat-button" onclick="coreDialog.close('#dialog1')">disagree</button>
+        <button class="flat-button" onclick="coreDialog.close('#dialog1')">agree</button>
     </div>
 </div>
