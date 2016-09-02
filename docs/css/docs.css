@@ -37,3 +37,7 @@ body {
     position: relative;
     line-height: 1;
 }
+
+.view-content {
+    padding-top: 112px !important;
+}

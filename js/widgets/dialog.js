@@ -211,6 +211,10 @@ $.widget( "corecss.dialog" , {
         }
     },
 
+    setPosition: function(){
+        return this._setPosition();
+    },
+
     open: function(){
         var that = this, element = this.element, o = this.options;
         var overlay;
@@ -372,3 +376,16 @@ var dialog = {
 };
 
 window.coreDialog = dialog;
+
+$(window).on('resize', function(){
+    var dialogs = $('[data-role=dialog]');
+    $.each(dialogs, function(){
+        var dialog = this, $dialog = $(this), dlg = $dialog.data('dialog');
+
+        if (dlg.element.data('opened') !== true) {
+            return false;
+        }
+
+        dlg.setPosition();
+    });
+});

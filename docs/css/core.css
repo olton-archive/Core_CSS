@@ -3117,6 +3117,16 @@ footer,
 .tabs.overflow .scroll-control-right:before {
   content: "\203A";
 }
+.tabs-container.fixed {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  z-index: 3999;
+}
+.tabs-container.fixed.z-index-header {
+  z-index: 4000;
+}
 .tabs-content {
   width: 100%;
   position: relative;
@@ -3671,12 +3681,12 @@ footer,
   z-index: 6000;
   -webkit-transform: translate3d(-100%, 0, 0);
           transform: translate3d(-100%, 0, 0);
-  transition: -webkit-transform .4s;
-  transition: transform .4s;
+  transition: -webkit-transform .3s;
+  transition: transform .3s;
 }
 .sidebar.active {
-  transition: -webkit-transform .4s;
-  transition: transform .4s;
+  transition: -webkit-transform .3s;
+  transition: transform .3s;
   -webkit-transform: translate3d(0, 0, 0);
           transform: translate3d(0, 0, 0);
 }
