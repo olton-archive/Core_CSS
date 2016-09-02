@@ -3053,6 +3053,7 @@ footer,
   margin-top: -4px;
   top: 100%;
   left: 0;
+  color: transparent;
 }
 .tabs.overflow {
   padding: 0 32px;
