@@ -5,6 +5,8 @@ $.widget( "corecss.tabs" , {
     options: {
         openTarget: false,
         duration: CORE_ANIMATION_DURATION,
+        target: 'self',
+        markerColor: 'bg-white',
         onTabClick: function(tab){return true;},
         onTabChange: function(tab){}
     },
@@ -37,12 +39,18 @@ $.widget( "corecss.tabs" , {
             tab_marker = $("<li>").addClass("tab-marker");
             tab_marker.appendTo(tabs_container);
         }
+
+        if (o.markerColor.isColor()) {
+            tab_marker.css('background', o.markerColor);
+        } else {
+            tab_marker.addClass(o.markerColor);
+        }
     },
 
     _openTab: function(tab, direction){
         var element = this.element, o = this.options;
         var tabs = element.children('.tabs').find('li');
-        var frames = element.children('.tabs-content').children('div');
+        var frames = o.target === 'self' ? element.children('.tabs-content').children('div') : $(o.target).children('div');
         var frame = '#'+tab.data('target');
         var marker = element.children('.tabs').find('li.tab-marker');
         var tab_width = tab.outerWidth();
@@ -63,11 +71,13 @@ $.widget( "corecss.tabs" , {
     _createEvents: function(){
         var that = this, element = this.element, o = this.options;
         var tabs = element.children('.tabs').find('li');
-        var frames = element.children('.frames').children('div');
+        var frames = o.target === 'self' ? element.children('.tabs-content').children('div') : $(o.target).children('div');
 
         element.on('click', '.tabs > li', function(e){
 
             if ($(this).hasClass('tab-marker')) return;
+            if ($(this).hasClass('scroll-control-left')) return;
+            if ($(this).hasClass('scroll-control-right')) return;
 
             var result;
             var tab = $(this), target = tab.data('target'), frame = $(target);
@@ -89,7 +99,7 @@ $.widget( "corecss.tabs" , {
                 }
             }
 
-            if (target.isUrl()) {
+            if (target !=undefined && target.isUrl()) {
                 window.location.href = target;
                 return true;
             }

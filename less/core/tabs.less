@@ -4,11 +4,10 @@
 .tabs {
     margin: 0;
     padding: 0;
-    text-align: center;
+    //text-align: center;
     position: relative;
     height: 48px;
-    display: flex;
-    justify-content: center;
+    display: block;
 
     .tab {
         position: relative;
@@ -21,10 +20,16 @@
         text-align: center;
         text-transform: uppercase;
         margin: 0;
-        //flex-grow: 1;
-        flex-grow: 0;
-        //flex-basis: 0;
-        flex-basis: auto;
+    }
+
+    &.flex {
+        display: flex;
+        justify-content: center;
+
+        .tab {
+            flex-grow: 0;
+            flex-basis: auto;
+        }
     }
 
     .tab {
@@ -117,7 +122,7 @@
 }
 
 @media screen and (max-width: 640px){
-    .tabs {
+    .tabs.flex {
         .tab {
             flex-basis: 0;
             flex-grow: 1;

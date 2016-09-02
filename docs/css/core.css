@@ -1,3 +1,27 @@
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 100;
+  src: local('Roboto Light'), local('Roboto-Light'), url('../fonts/Roboto-light.woff') format('woff');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Regular'), local('Roboto-Regular'), url('../fonts/Roboto-regular.woff') format('woff');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Roboto Medium'), local('Roboto-Medium'), url('../fonts/Roboto-medium.woff') format('woff');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Roboto Bold'), local('Roboto-Bold'), url('../fonts/Roboto-bold.woff') format('woff');
+}
 /**
 * Less Long Shadow v2.1.0
 * Long shadow generator mixins for inline, block and SVG elements.
@@ -163,7 +187,7 @@ body {
   font-weight: 400;
 }
 .text-light {
-  font-weight: 300;
+  font-weight: 200;
 }
 .text-light-ultra {
   font-weight: 100;
@@ -209,7 +233,7 @@ body {
 .display4 {
   font-size: 112px;
   margin-bottom: 20px;
-  font-weight: 300;
+  font-weight: 200;
   line-height: 1.2;
   color: #757575;
 }
@@ -296,6 +320,12 @@ body {
 p + p {
   margin-top: 10px;
 }
+p {
+  line-height: 1.2;
+}
+.indent:first-letter {
+  margin-left: 16px;
+}
 .avatar {
   width: 48px;
   height: 48px;
@@ -338,10 +368,6 @@ header.more ~ .view-content,
 }
 .page {
   position: relative;
-  display: none;
-}
-.page.current-page {
-  display: block;
 }
 .page.modal-page {
   position: fixed;
@@ -437,7 +463,6 @@ header,
 }
 header .app-title,
 .header .app-title {
-  font-weight: 300;
   height: 48px;
   display: inline-block;
   vertical-align: middle;
@@ -2996,15 +3021,9 @@ footer,
 .tabs {
   margin: 0;
   padding: 0;
-  text-align: center;
   position: relative;
   height: 48px;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  display: block;
 }
 .tabs .tab {
   position: relative;
@@ -3017,6 +3036,16 @@ footer,
   text-align: center;
   text-transform: uppercase;
   margin: 0;
+}
+.tabs.flex {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.tabs.flex .tab {
   -webkit-flex-grow: 0;
       -ms-flex-positive: 0;
           flex-grow: 0;
@@ -3097,7 +3126,7 @@ footer,
   display: none;
 }
 @media screen and (max-width: 640px) {
-  .tabs .tab {
+  .tabs.flex .tab {
     -webkit-flex-basis: 0;
         -ms-flex-preferred-size: 0;
             flex-basis: 0;
@@ -3173,13 +3202,18 @@ footer,
 .panel .panel-header .toggle {
   display: block;
   float: right;
+  height: 32px;
+  width: 32px;
+  text-align: center;
+  margin-top: 8px;
+  margin-right: -12px;
 }
 .panel .panel-header .toggle:before {
   content: "\276E";
   display: block;
   position: absolute;
   top: 50%;
-  margin-top: -20px;
+  margin-top: -22px;
   right: 24px;
   color: inherit;
   vertical-align: middle;
