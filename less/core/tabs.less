@@ -109,16 +109,16 @@
     }
 }
 
-.tabs-container {
-    &.fixed {
+.tabs {
+    &.fixed-tabs {
         position: fixed;
         top: 56px;
         left: 0;
         right: 0;
-        z-index: @zIndexHeader - 1;
+        z-index: @zIndexHeader;
 
-        &.z-index-header {
-            z-index: @zIndexHeader;
+        &.deep {
+            z-index: @zIndexHeader - 1;
         }
     }
 }
