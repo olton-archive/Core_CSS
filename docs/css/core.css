@@ -3040,6 +3040,13 @@ footer,
   position: relative;
   height: 48px;
   display: block;
+  overflow-y: hidden;
+  overflow-x: auto;
+  width: auto;
+  white-space: nowrap;
+}
+.tabs::-webkit-scrollbar {
+  display: none;
 }
 .tabs .tab {
   position: relative;

@@ -3423,6 +3423,11 @@ $.widget( "corecss.tabs" , {
         var frame = '#'+tab.data('target');
         var marker = element.find('li.tab-marker');
         var tab_width = tab.outerWidth();
+        var tab_left = tab.position().left;
+        var tab_left_off = tab.offset().left;
+        var shift = tab.position().left + tab.outerWidth();
+        var width = element.outerWidth();
+        var scroll = element.scrollLeft();
 
         tabs.removeClass('active');
         frames.hide();
@@ -3433,8 +3438,20 @@ $.widget( "corecss.tabs" , {
         marker.animate({
             width: tab_width,
             top: '100%',
-            left: tab.position().left
+            left: tab_left + scroll
         }, o.duration);
+
+        if (shift > width) {
+            element.animate({
+                scrollLeft: scroll + (shift - width)
+            }, CORE_ANIMATION_DURATION);
+        }
+
+        if (tab.position().left < 0) {
+            element.animate({
+                scrollLeft: tab_left + scroll
+            }, CORE_ANIMATION_DURATION);
+        }
     },
 
     _createEvents: function(){
