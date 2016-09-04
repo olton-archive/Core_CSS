@@ -8,6 +8,14 @@
     position: relative;
     height: 48px;
     display: block;
+    overflow-y: hidden;
+    overflow-x: auto;
+    width: auto;
+    white-space: nowrap;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 
     .tab {
         position: relative;
