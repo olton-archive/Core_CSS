@@ -3133,15 +3133,15 @@ footer,
 .tabs.overflow .scroll-control-right:before {
   content: "\203A";
 }
-.tabs-container.fixed {
+.tabs.fixed-tabs {
   position: fixed;
   top: 56px;
   left: 0;
   right: 0;
-  z-index: 3999;
-}
-.tabs-container.fixed.z-index-header {
   z-index: 4000;
+}
+.tabs.fixed-tabs.deep {
+  z-index: 3999;
 }
 .tabs-content {
   width: 100%;
