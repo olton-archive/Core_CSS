@@ -1,7 +1,7 @@
 /*!
- * Core CSS v0.0.1 (https://github.com/olton/CoreCSS)
+ * Core CSS v1.0.0 (https://github.com/imena/core-css)
  * Copyright 2016 Sergey Pimenov
- * Licensed under MIT (https://github.com/olton/CoreCSS/blob/master/LICENSE)
+ * Licensed under  ()
  */
 
 (function( factory ) {
@@ -2117,7 +2117,6 @@ $.widget( "corecss.dialog" , {
         overlayColor: 'default',
         overlayClickClose: false,
         type: 'default', // success, alert, warning, info
-        position: 'default',
         content: false,
         hide: false,
         width: '320',
@@ -2227,10 +2226,8 @@ $.widget( "corecss.dialog" , {
     },
 
     _show: function(){
-        var that = this, element = this.element, o = this.options;
-
+        var element = this.element;
         this._setContent();
-
         element.css({
             visibility: "visible"
         });
@@ -2262,10 +2259,6 @@ $.widget( "corecss.dialog" , {
         if (o.content === false && o.href === false) {
             return false;
         }
-
-        //element.children(":not(.dialog-close-button)").remove();
-        //element.find('.set-dialog-content').remove();
-        //content.appendTo(element);
 
         if (o.content) {
 
@@ -2320,10 +2313,6 @@ $.widget( "corecss.dialog" , {
         }
     },
 
-    setPosition: function(){
-        return this._setPosition();
-    },
-
     open: function(){
         var that = this, element = this.element, o = this.options;
         var overlay;
@@ -2342,7 +2331,6 @@ $.widget( "corecss.dialog" , {
             }
         }
 
-        //element.fadeIn();
         this._show();
 
         if (typeof o.onDialogOpen === 'function') {
@@ -2389,10 +2377,7 @@ $.widget( "corecss.dialog" , {
         }
     },
 
-    reset: function(place){
-        if (place !== undefined) {
-            this.options.place = place;
-        }
+    reset: function(){
         this._setPosition();
     },
 
@@ -2495,7 +2480,7 @@ $(window).on('resize', function(){
             return false;
         }
 
-        dlg.setPosition();
+        dlg.reset();
     });
 });
 // Source: js/widgets/dropdown.js

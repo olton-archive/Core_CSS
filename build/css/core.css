@@ -317,14 +317,29 @@ body {
   font-weight: 400;
   color: #212121;
 }
-p + p {
+p + p,
+* + p,
+* + h1,
+* + h2,
+* + h3,
+* + h4,
+* + h5 {
   margin-top: 10px;
 }
-p {
-  line-height: 1.2;
+p,
+.paragraph {
+  line-height: 1.4;
 }
 .indent:first-letter {
-  margin-left: 16px;
+  margin-left: 24px;
+}
+.letter:first-letter {
+  font-size: 3em;
+  display: inline-block;
+  float: left;
+  padding: 0;
+  margin: 0 4px 0 0;
+  line-height: 38px;
 }
 .avatar {
   width: 48px;
@@ -3276,6 +3291,29 @@ footer,
 .dialog-actions .flat-button {
   margin: 0 4px;
   min-width: 64px;
+}
+.dialog.success,
+.dialog.alert,
+.dialog.info,
+.dialog.warning {
+  color: #ffffff;
+}
+.dialog.success {
+  background: #4CAF50;
+}
+.dialog.alert {
+  background: #F44336;
+}
+.dialog.info {
+  background: #03A9F4;
+}
+.dialog.warning {
+  background: #FF9800;
+}
+.dialog.animate {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  transition: all .3s;
 }
 .progress {
   display: block;

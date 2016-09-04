@@ -39,3 +39,28 @@
         min-width: 64px;
     }
 }
+
+.dialog {
+    &.success, &.alert, &.info, &.warning {
+        color: @white;
+    }
+    &.success {
+        background: @green;
+    }
+    &.alert {
+        background: @red;
+    }
+    &.info {
+        background: @lightBlue;
+    }
+    &.warning {
+        background: @orange;
+    }
+}
+
+.dialog {
+    &.animate {
+        transform: scale(1);
+        transition: all .3s;
+    }
+}
