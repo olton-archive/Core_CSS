@@ -72,13 +72,13 @@ $.widget( "corecss.tabs" , {
 
         if (shift > width) {
             element.animate({
-                scrollLeft: scroll + (shift - width)
+                scrollLeft: scroll + (shift - width) + (tab_width / 2)
             }, CORE_ANIMATION_DURATION);
         }
 
         if (tab.position().left < 0) {
             element.animate({
-                scrollLeft: tab_left + scroll
+                scrollLeft: tab_left + scroll - (tab_width / 2)
             }, CORE_ANIMATION_DURATION);
         }
     },
