@@ -53,10 +53,10 @@ $.widget( "corecss.tabs" , {
         var marker = element.find('li.tab-marker');
         var tab_width = tab.outerWidth();
         var tab_left = tab.position().left;
-        var tab_left_off = tab.offset().left;
         var shift = tab.position().left + tab.outerWidth();
         var width = element.outerWidth();
         var scroll = element.scrollLeft();
+        var magic = 32;
 
         tabs.removeClass('active');
         frames.hide();
@@ -70,13 +70,13 @@ $.widget( "corecss.tabs" , {
             left: tab_left + scroll
         }, o.duration);
 
-        if (shift > width) {
+        if (shift + magic > width) {
             element.animate({
                 scrollLeft: scroll + (shift - width) + (tab_width / 2)
             }, CORE_ANIMATION_DURATION);
         }
 
-        if (tab.position().left < 0) {
+        if (tab_left - magic < 0) {
             element.animate({
                 scrollLeft: tab_left + scroll - (tab_width / 2)
             }, CORE_ANIMATION_DURATION);
@@ -86,7 +86,6 @@ $.widget( "corecss.tabs" , {
     _createEvents: function(){
         var that = this, element = this.element, o = this.options;
         var tabs = element.find('li');
-        var frames = o.target === 'self' ? element.siblings('.tabs-content').children('div') : $(o.target).children('div');
 
         element.on('click', 'li', function(e){
 
