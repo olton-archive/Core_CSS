@@ -1,7 +1,7 @@
 {
   "author": "Sergey Pimenov",
   "name": "core",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "The front-end framework for developing responsive, mobile projects on the phonegap",
   "keywords": [
     "core",
@@ -16,15 +16,12 @@
     "cordova",
     "phonegap"
   ],
-  "homepage": "https://github.com/olton/CoreCSS",
+  "homepage": "https://github.com/imena/core-css",
   "repository": {
     "type": "git",
-    "url": "https://github.com/olton/CoreCSS.git"
+    "url": "https://github.com/imena/core-css.git"
   },
-  "license": {
-    "type": "MIT",
-    "url": "https://github.com/olton/CoreCSS/blob/master/LICENSE"
-  },
+  "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^5.1.11",
     "grunt": "^0.4.5",
@@ -38,6 +35,7 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-postcss": "^0.3.0",
     "grunt-replace": "^0.9.1",
+    "grunt-stripcomments": "^0.6.0",
     "load-grunt-tasks": "^3.1.0"
   }
 }

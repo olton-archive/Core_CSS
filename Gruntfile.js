@@ -50,7 +50,8 @@ module.exports = function(grunt) {
             options: {
                 banner: '<%= banner %>',
                 stripBanners: false,
-                sourceMap: false
+                sourceMap: false,
+                preserveComments: false
             },
             core: {
                 src: '<%= concat.core.dest %>',
