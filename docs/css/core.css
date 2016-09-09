@@ -141,9 +141,7 @@ input[type="checkbox"] {
 }
 input[type="search"] {
   box-sizing: content-box;
-  -webkit-appearance: textfield;
-     -moz-appearance: textfield;
-          appearance: textfield;
+  appearance: textfield;
 }
 input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button {
@@ -416,9 +414,11 @@ header.more ~ .view-content,
   clear: both;
 }
 .grid .row {
-  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
           justify-content: space-between;
 }
 .grid .row:before,
@@ -443,7 +443,8 @@ header.more ~ .view-content,
   margin: 4px;
   height: auto;
   width: auto;
-  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
           flex-grow: 1;
 }
 .tile {
@@ -519,9 +520,12 @@ footer,
   transform: translateZ(0);
 }
 .bottom-nav {
-  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  flex-wrap: nowrap;
+  -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
   height: 56px;
   width: 100%;
   position: fixed;
@@ -535,7 +539,8 @@ footer,
   min-width: 80px;
   width: auto;
   height: 100%;
-  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
           flex-grow: 1;
   text-align: center;
   text-transform: capitalize;
@@ -838,7 +843,6 @@ footer,
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  -webkit-transition: all 1s ease;
   transition: all 1s ease;
 }
 .checkbox input,
@@ -1015,7 +1019,6 @@ footer,
 }
 .switch input:not(:checked) ~ .check:before {
   background-color: #ffffff;
-  -webkit-transition: all 0.2s linear;
   transition: all 0.2s linear;
 }
 .switch input:checked ~ .check {
@@ -1024,7 +1027,6 @@ footer,
 .switch input:checked ~ .check:before {
   -webkit-transform: translateX(22px);
           transform: translateX(22px);
-  -webkit-transition: all 0.2s linear;
   transition: all 0.2s linear;
 }
 .switch input:disabled ~ .check {
@@ -1156,7 +1158,6 @@ footer,
   background-color: #9e9e9e;
   bottom: -4px;
   z-index: 2;
-  -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear;
 }
 .input-control .label,
@@ -1171,14 +1172,12 @@ footer,
   opacity: 0;
   top: 16px;
   left: 0;
-  -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear;
 }
 .input-control .informer {
   opacity: 0;
   bottom: 12px;
   font-size: 12px;
-  -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear;
 }
 .input-control input::-webkit-input-placeholder {
@@ -1188,7 +1187,6 @@ footer,
   z-index: 1;
   opacity: 1;
   color: #9e9e9e;
-  -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear;
 }
 .input-control .helper-button {
@@ -1211,7 +1209,6 @@ footer,
   margin-top: -8px;
   display: block;
   opacity: .2;
-  -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear;
 }
 .input-control.with-icon .icon img {
@@ -1229,31 +1226,26 @@ footer,
 .input-control input:focus ~ hr {
   opacity: 1;
   width: 100%;
-  -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear;
 }
 .input-control input:focus ~ .label {
   opacity: 1;
   top: 0;
-  -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear;
 }
 .input-control input:focus::-webkit-input-placeholder {
   opacity: 0;
   -webkit-transform: translateX(100%);
           transform: translateX(100%);
-  -webkit-transition: all 0.2s linear;
   transition: all 0.2s linear;
 }
 .input-control input:focus ~ .informer {
   opacity: 1;
   bottom: -0.75rem;
-  -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear;
 }
 .input-control input:focus ~ .icon {
   opacity: 1;
-  -webkit-transition: all 0.3s linear;
   transition: all 0.3s linear;
 }
 .input-control.permanent-label input:not(:placeholder-shown) + .label {
@@ -1264,7 +1256,6 @@ footer,
 .input-control input:-webkit-autofill:hover,
 .input-control input:-webkit-autofill:focus,
 .input-control input:-webkit-autofill:active {
-  -webkit-transition: background-color 5000s ease-in-out 0s;
   transition: background-color 5000s ease-in-out 0s;
   -webkit-text-fill-color: #fff !important;
 }
@@ -3082,20 +3073,24 @@ footer,
   margin: 0;
 }
 .tabs.flex {
-  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
           justify-content: center;
 }
 .tabs.flex .tab {
-  -webkit-box-flex: 0;
+  -webkit-flex-grow: 0;
+      -ms-flex-positive: 0;
           flex-grow: 0;
-  flex-basis: auto;
+  -webkit-flex-basis: auto;
+      -ms-flex-preferred-size: auto;
+          flex-basis: auto;
 }
 .tabs .tab.active,
 .tabs .tab:hover {
   opacity: 1;
-  -webkit-transition: .3s linear;
   transition: .3s linear;
 }
 .tabs .tab:not(.active),
@@ -3177,8 +3172,11 @@ footer,
 }
 @media screen and (max-width: 640px) {
   .tabs.flex .tab {
-    flex-basis: 0;
-    -webkit-box-flex: 1;
+    -webkit-flex-basis: 0;
+        -ms-flex-preferred-size: 0;
+            flex-basis: 0;
+    -webkit-flex-grow: 1;
+        -ms-flex-positive: 1;
             flex-grow: 1;
   }
 }
@@ -3335,7 +3333,6 @@ footer,
 .dialog.animate {
   -webkit-transform: scale(1);
           transform: scale(1);
-  -webkit-transition: all .3s;
   transition: all .3s;
 }
 .progress {
@@ -3376,7 +3373,6 @@ footer,
   z-index: 1;
   -webkit-animation: buffer 3s infinite linear;
           animation: buffer 3s infinite linear;
-  background: -webkit-radial-gradient(#a9c0e9 0%, #a9c0e9 16%, transparent 42%);
   background: radial-gradient(#a9c0e9 0%, #a9c0e9 16%, transparent 42%);
   background-size: 10px 10px !important;
 }
@@ -3394,7 +3390,8 @@ footer,
 }
 .progress-line {
   background-color: #b3d4fc;
-  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
 }
 .progress-line:before {
@@ -3601,7 +3598,6 @@ footer,
   width: auto;
   background-color: #0d47a1;
   z-index: 2;
-  -webkit-transition: background .3s ease;
   transition: background .3s ease;
   left: 0;
 }
@@ -3610,7 +3606,6 @@ footer,
   width: auto;
   background-color: #ffffff;
   z-index: 1;
-  -webkit-transition: background .3s ease;
   transition: background .3s ease;
   position: absolute;
   top: 50%;
@@ -3745,16 +3740,12 @@ footer,
   z-index: 6000;
   -webkit-transform: translate3d(-100%, 0, 0);
           transform: translate3d(-100%, 0, 0);
-  -webkit-transition: -webkit-transform .3s;
   transition: -webkit-transform .3s;
   transition: transform .3s;
-  transition: transform .3s, -webkit-transform .3s;
 }
 .sidebar.active {
-  -webkit-transition: -webkit-transform .3s;
   transition: -webkit-transform .3s;
   transition: transform .3s;
-  transition: transform .3s, -webkit-transform .3s;
   -webkit-transform: translate3d(0, 0, 0);
           transform: translate3d(0, 0, 0);
 }
@@ -3866,12 +3857,16 @@ footer,
 .stepper {
   margin: 0;
   padding: 0;
-  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
   list-style: none inside;
   height: 72px;
-  flex-wrap: nowrap;
-  -webkit-box-pack: justify;
+  -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
           justify-content: space-between;
   counter-reset: stepper-counter;
   position: relative;
@@ -4177,7 +4172,6 @@ footer,
           transform: scale(0.2);
   line-height: 40px;
   font-size: 20px;
-  -webkit-transition: all .3s;
   transition: all .3s;
 }
 .multi-action .actions li a {
@@ -4194,7 +4188,6 @@ footer,
   box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19), 0 8px 17px 0 rgba(0, 0, 0, 0.2);
 }
 .multi-action .action-button.active ~ .actions li {
-  -webkit-transition: all .3s;
   transition: all .3s;
   -webkit-transform: scale(1);
           transform: scale(1);
@@ -4230,7 +4223,6 @@ footer,
   margin-top: -488px;
 }
 .multi-action .action-button span {
-  -webkit-transition: all .3s;
   transition: all .3s;
 }
 .multi-action .action-button.active:not(.no-rotate) span {

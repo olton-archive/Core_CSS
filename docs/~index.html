@@ -150,6 +150,34 @@
             });
         }, 500);
 
+        $("body").swipe({
+            allowPageScroll:"vertical",
+            swipe: function(event, direction, distance, duration, fingerCount, fingerData){
+                var sb = $(".sidebar").data('sidebar');
+
+                if (direction == 'right' && fingerData[0].start.x < 24) {
+                    if (sb.element.data('opened') === false) {
+                        sb.open();
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                } else if (sb.element.data('opened') === true && direction == 'left') {
+                    sb.close();
+                    event.preventDefault();
+                    event.stopPropagation();
+                } else {
+                    // Swipe on screen
+                }
+            },
+            hold: function(event, target){
+                //console.log(event);
+                //console.log(target);
+            },
+            tap: function(event, target){
+                //console.log(event);
+                //console.log(target);
+            }
+        });
 
     </script>
 

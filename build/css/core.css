@@ -1252,6 +1252,13 @@ footer,
   top: 0;
   opacity: 1;
 }
+.input-control input:-webkit-autofill,
+.input-control input:-webkit-autofill:hover,
+.input-control input:-webkit-autofill:focus,
+.input-control input:-webkit-autofill:active {
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-text-fill-color: #fff !important;
+}
 .menu {
   margin: 0;
   padding: 8px 0;
