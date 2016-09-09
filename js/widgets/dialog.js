@@ -374,3 +374,7 @@ $(window).on('resize', function(){
         dlg.reset();
     });
 });
+
+$.Dialog = function(content, title, actions){
+    var dlg = $("<div>").data('role', 'dialog');
+};

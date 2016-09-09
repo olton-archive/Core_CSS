@@ -24,7 +24,14 @@
     <div class="app">
         <div class="view">
 
-            <div class="sidebar" data-role="sidebar" data-shift="header, footer, .view-content" data-toggle="#sidebar-toggle" data-overlay="true">
+            <div class="sidebar" data-role="sidebar" data-shift="header, footer, .view-content, #main-tabs" data-toggle="#sidebar-toggle" data-overlay="true">
+                <div class="sidebar-header">
+                    <span class="avatar">
+                        <img src="images/avatar.png">
+                    </span>
+                    <span class="title fg-white">Имя клиента</span>
+                    <span class="subtitle fg-gray-400">sergey@pimenov.com.ua</span>
+                </div>
                 <ul class="sidebar-menu">
                     <li class="divider"></li>
                     <li><a href="#about">About</a></li>
@@ -34,12 +41,17 @@
             <header class="header fix-slow-animation">
                 <button class="tool-button ripple" id="sidebar-toggle"><span class="mif-menu icon"></span></button>
                 <span class="app-title">Core CSS</span>
-                <button class="tool-button place-right ripple"><span class="mif-more-vert icon"></span></button>
+                <span>
+                    <button class="tool-button place-right ripple" id="optionMenu"><span class="mif-more-vert icon"></span></button>
+                    <ul class="menu dropdown" data-role="dropdown" data-toggle-element="#optionMenu">
+                        <li><a href="#">Параметры</a></li>
+                    </ul>
+                </span>
                 <button class="tool-button place-right ripple"><span class="mif-bookmark icon"></span></button>
                 <button class="tool-button place-right ripple"><span class="mif-share icon"></span></button>
             </header>
 
-            <ul class="tabs bg-lightBlue-700 fg-white fixed-tabs deep" data-role="tabs" data-marker-color="bg-yellow" >
+            <ul class="tabs bg-lightBlue-700 fg-white fixed-tabs deep noSwipe" data-role="tabs" data-marker-color="bg-yellow" id="main-tabs">
                 <li class="tab ripple">One</li>
                 <li class="tab ripple">Two Item</li>
                 <li class="tab ripple">Three</li>
@@ -138,6 +150,34 @@
             });
         }, 500);
 
+        $("body").swipe({
+            allowPageScroll:"vertical",
+            swipe: function(event, direction, distance, duration, fingerCount, fingerData){
+                var sb = $(".sidebar").data('sidebar');
+
+                if (direction == 'right' && fingerData[0].start.x < 24) {
+                    if (sb.element.data('opened') === false) {
+                        sb.open();
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                } else if (sb.element.data('opened') === true && direction == 'left') {
+                    sb.close();
+                    event.preventDefault();
+                    event.stopPropagation();
+                } else {
+                    // Swipe on screen
+                }
+            },
+            hold: function(event, target){
+                //console.log(event);
+                //console.log(target);
+            },
+            tap: function(event, target){
+                //console.log(event);
+                //console.log(target);
+            }
+        });
 
     </script>
 

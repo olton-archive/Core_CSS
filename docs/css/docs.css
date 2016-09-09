@@ -41,3 +41,13 @@ body {
 .view-content {
     padding-top: 112px !important;
 }
+
+.sidebar .sidebar-header {
+    background: #000 url(../images/menu-back.jpg) top left no-repeat;
+    background-size: cover;
+
+}
+
+.view-content {
+    padding: 10px;
+}

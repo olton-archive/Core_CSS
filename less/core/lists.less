@@ -90,7 +90,7 @@
 
 .list-item-custom {
     position: relative;
-    margin: 4px;
+    margin: 0;
     display: block;
     padding: 0;
     font-size: 16px;
@@ -98,6 +98,8 @@
     overflow: hidden;
     background: @white;
     color: @black;
+}
 
-    .shadow(1);
+.list-item-custom + .list-item-custom {
+    border-top: 1px @gray200 solid;
 }
