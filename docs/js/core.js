@@ -429,7 +429,7 @@ var token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g,
 
 // Some common format strings
 dateFormat.masks = {
-    "default": "ddd mmm dd yyyy HH:MM:ss",
+    default: "ddd mmm dd yyyy HH:MM:ss",
     shortDate: "m/d/yy",
     mediumDate: "mmm d, yyyy",
     longDate: "mmmm d, yyyy",
@@ -2483,6 +2483,10 @@ $(window).on('resize', function(){
         dlg.reset();
     });
 });
+
+$.Dialog = function(content, title, actions){
+    var dlg = $("<div>").data('role', 'dialog');
+};
 // Source: js/widgets/dropdown.js
 $.widget("corecss.dropdown", {
 
@@ -2560,8 +2564,8 @@ $.widget("corecss.dropdown", {
         var toggle = o.toggleElement ? $(o.toggleElement) : parent.children('.dropdown-toggle').length > 0 ? parent.children('.dropdown-toggle') : parent.children('a:nth-child(1)');
 
         switch (this.options.effect) {
-            case 'fade': $(el).fadeIn('fast'); break;
-            case 'slide': $(el).slideDown('fast'); break;
+            case 'fade': $(el).fadeIn(CORE_ANIMATION_DURATION); break;
+            case 'slide': $(el).slideDown(CORE_ANIMATION_DURATION); break;
             default: $(el).show();
         }
         this._trigger("onOpen", null, el);
@@ -2584,8 +2588,8 @@ $.widget("corecss.dropdown", {
         var toggle = o.toggleElement ? $(o.toggleElement) : parent.children('.dropdown-toggle').length > 0 ? parent.children('.dropdown-toggle') : parent.children('a:nth-child(1)');
 
         switch (this.options.effect) {
-            case 'fade': $(el).fadeOut('fast'); break;
-            case 'slide': $(el).slideUp('fast'); break;
+            case 'fade': $(el).fadeOut(CORE_ANIMATION_DURATION); break;
+            case 'slide': $(el).slideUp(CORE_ANIMATION_DURATION); break;
             default: $(el).hide();
         }
         this._trigger("onClose", null, el);

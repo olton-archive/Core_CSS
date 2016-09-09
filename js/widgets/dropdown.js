@@ -74,8 +74,8 @@ $.widget("corecss.dropdown", {
         var toggle = o.toggleElement ? $(o.toggleElement) : parent.children('.dropdown-toggle').length > 0 ? parent.children('.dropdown-toggle') : parent.children('a:nth-child(1)');
 
         switch (this.options.effect) {
-            case 'fade': $(el).fadeIn('fast'); break;
-            case 'slide': $(el).slideDown('fast'); break;
+            case 'fade': $(el).fadeIn(CORE_ANIMATION_DURATION); break;
+            case 'slide': $(el).slideDown(CORE_ANIMATION_DURATION); break;
             default: $(el).show();
         }
         this._trigger("onOpen", null, el);
@@ -98,8 +98,8 @@ $.widget("corecss.dropdown", {
         var toggle = o.toggleElement ? $(o.toggleElement) : parent.children('.dropdown-toggle').length > 0 ? parent.children('.dropdown-toggle') : parent.children('a:nth-child(1)');
 
         switch (this.options.effect) {
-            case 'fade': $(el).fadeOut('fast'); break;
-            case 'slide': $(el).slideUp('fast'); break;
+            case 'fade': $(el).fadeOut(CORE_ANIMATION_DURATION); break;
+            case 'slide': $(el).slideUp(CORE_ANIMATION_DURATION); break;
             default: $(el).hide();
         }
         this._trigger("onClose", null, el);
