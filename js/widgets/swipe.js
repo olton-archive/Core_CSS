@@ -106,7 +106,7 @@ $.widget( "corecss.swipe" , {
 
         this._setOptionsFromDOM();
 
-        if (o.pageScroll === undefined && (o.swipe !== undefined || o.swipeStatus !== undefined)) {
+        if (o.allowPageScroll === undefined && (o.swipe !== undefined || o.swipeStatus !== undefined)) {
             o.allowPageScroll = NONE;
         }
 
@@ -200,7 +200,7 @@ $.widget( "corecss.swipe" , {
 
     touchStart: function(jqEvent) {
 
-        console.log(this);
+        //console.log(this);
 
         var that = this, $element = this.element, options = this.options;
 
