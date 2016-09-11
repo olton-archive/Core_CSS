@@ -3,12 +3,13 @@ $.widget( "corecss.dialog" , {
     version: "1.0.0",
 
     options: {
-        modal: false,
-        overlay: false,
+        modal: true,
+        overlay: true,
         overlayColor: 'default',
         overlayClickClose: false,
         type: 'default', // success, alert, warning, info
         content: false,
+        contentFull: false,
         hide: false,
         width: '320',
         height: 'auto',
@@ -105,20 +106,21 @@ $.widget( "corecss.dialog" , {
 
         element.css({
             width: o.width,
-            height: o.height
+            height: o.height,
+            visibility: "hidden",
+            top: '100%'
         });
 
-        this._hide();
     },
 
     _hide: function(){
         var element = this.element, o = this.options;
         element.animate({
-            top: "100%"
+            top: "100%",
+            opacity: 0
         }, o.duration, function(){
             element.css({
-                visibility: "hidden"
-            });
+                visibility: "hidden"            });
         });
     },
 
@@ -130,6 +132,7 @@ $.widget( "corecss.dialog" , {
             top: "100%"
         }).animate({
             top: $(window).height()/2-(element.outerHeight()/2),
+            opacity: 1
         }, o.duration, o.easing);
     },
 
@@ -148,7 +151,7 @@ $.widget( "corecss.dialog" , {
         var that = this, element = this.element, o = this.options;
         var content = element.find('.dialog-content');
 
-        if (content.length === 0) {
+        if (o.contentFull !== false && content.length === 0) {
             content = $("<div>").addClass("dialog-content").appendTo(element);
         }
 
@@ -156,7 +159,7 @@ $.widget( "corecss.dialog" , {
             content.addClass('video-container');
         }
 
-        if (o.content === false && o.href === false) {
+        if (o.content === false && o.contentFull === false && o.href === false) {
             return false;
         }
 
@@ -171,6 +174,17 @@ $.widget( "corecss.dialog" , {
             this._setPosition();
         }
 
+        if (o.contentFull) {
+
+            if (o.contentFull instanceof jQuery) {
+                o.contentFull.appendTo(element);
+            } else {
+                element.html(o.contentFull);
+            }
+
+            this._setPosition();
+        }
+
         if (o.href) {
             $.get(
                 o.href,
@@ -180,7 +194,6 @@ $.widget( "corecss.dialog" , {
                 }
             );
         }
-
     },
 
     setContent: function(content){
@@ -232,6 +245,8 @@ $.widget( "corecss.dialog" , {
         }
 
         this._show();
+
+        console.log('after show');
 
         if (typeof o.onDialogOpen === 'function') {
             o.onDialogOpen(element);
@@ -290,7 +305,7 @@ $.widget( "corecss.dialog" , {
 });
 
 var dialog = {
-    open: function (el, place, content, contentType){
+    open: function (el, content, contentType){
         var dialog = $(el), dialog_obj;
         if (dialog.length == 0) {
             console.log('Dialog ' + el + ' not found!');
@@ -310,10 +325,6 @@ var dialog = {
                 case 'video': dialog_obj.setContentVideo(content); break;
                 default: dialog_obj.setContent(content);
             }
-        }
-
-        if (place !== undefined) {
-            dialog_obj.options.place = place;
         }
 
         dialog_obj.open();
@@ -336,7 +347,7 @@ var dialog = {
         dialog_obj.close();
     },
 
-    toggle: function(el, place, content, contentType){
+    toggle: function(el, content, contentType){
         var dialog = $(el), dialog_obj;
         if (dialog.length == 0) {
             console.log('Dialog ' + el + ' not found!');
@@ -361,9 +372,6 @@ var dialog = {
         if (dialog_obj.element.data('opened') === true) {
             dialog_obj.close();
         } else {
-            if (place !== undefined) {
-                dialog_obj.options.place = place;
-            }
             dialog_obj.open();
         }
     }
@@ -385,5 +393,48 @@ $(window).on('resize', function(){
 });
 
 $.Dialog = function(content, title, actions){
-    var dlg = $("<div>").data('role', 'dialog');
+    var dlg, id, html, buttons;
+
+    id = "dialog_id_" + (new Date()).getTime();
+    dlg = $("<div id='"+id+"'></div>");
+
+    if (title !== undefined) {
+        $("<div class='dialog-title'>"+title+"</div>").appendTo(dlg);
+    }
+    if (content !== undefined) {
+        $("<div class='dialog-content'>"+content+"</div>").appendTo(dlg);
+    }
+    if (actions !== undefined && typeof actions == 'object') {
+
+        buttons = $("<div class='dialog-actions'></div>").appendTo(dlg);
+
+        $.each(actions, function(){
+            var item = this;
+            $("<button class='flat-button'>"+item.title+"</button>").on("click", function(){
+                if (typeof item.onclick === 'function') {
+                    item.onclick(dlg);
+                } else {
+                    if (typeof window[item.onclick] === 'function') {
+                        window[item.onclick](dlg);
+                    } else {
+                        var result = eval("(function(){"+item.onclick+"})");
+                        result.call(dlg);
+                    }
+                }
+            }).appendTo(buttons);
+        });
+    }
+
+    dlg.appendTo($("body"));
+    dlg.dialog({
+        contentFull: html,
+        show: true,
+        closeOnAction: true,
+        onDialogClose: function(el){
+            setTimeout(function(){
+                el.remove();
+            }, CORE_ANIMATION_DURATION);
+        }
+    });
+
 };
