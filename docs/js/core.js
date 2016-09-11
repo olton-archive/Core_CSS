@@ -2126,6 +2126,8 @@ $.widget( "corecss.dialog" , {
         show: false,
         href: false,
         contentType: 'default', // video
+        duration: CORE_ANIMATION_DURATION,
+        easing: 'swing',
 
         _interval: undefined,
         _overlay: undefined,
@@ -2219,18 +2221,25 @@ $.widget( "corecss.dialog" , {
     },
 
     _hide: function(){
-        var element = this.element;
-        element.css({
-            visibility: "hidden"
+        var element = this.element, o = this.options;
+        element.animate({
+            top: "100%"
+        }, o.duration, function(){
+            element.css({
+                visibility: "hidden"
+            });
         });
     },
 
     _show: function(){
-        var element = this.element;
+        var element = this.element, o = this.options;
         this._setContent();
         element.css({
-            visibility: "visible"
-        });
+            visibility: "visible",
+            top: "100%"
+        }).animate({
+            top: $(window).height()/2-(element.outerHeight()/2),
+        }, o.duration, o.easing);
     },
 
     _setPosition: function(){
@@ -2496,6 +2505,7 @@ $.widget("corecss.dropdown", {
         effect: 'slide',
         toggleElement: false,
         noClose: false,
+        duration: CORE_ANIMATION_DURATION,
         onDrop: function(object){},
         onUp: function(object){}
     },
@@ -2564,8 +2574,8 @@ $.widget("corecss.dropdown", {
         var toggle = o.toggleElement ? $(o.toggleElement) : parent.children('.dropdown-toggle').length > 0 ? parent.children('.dropdown-toggle') : parent.children('a:nth-child(1)');
 
         switch (this.options.effect) {
-            case 'fade': $(el).fadeIn(CORE_ANIMATION_DURATION); break;
-            case 'slide': $(el).slideDown(CORE_ANIMATION_DURATION); break;
+            case 'fade': $(el).fadeIn(o.duration); break;
+            case 'slide': $(el).slideDown(o.duration); break;
             default: $(el).show();
         }
         this._trigger("onOpen", null, el);
@@ -2588,8 +2598,8 @@ $.widget("corecss.dropdown", {
         var toggle = o.toggleElement ? $(o.toggleElement) : parent.children('.dropdown-toggle').length > 0 ? parent.children('.dropdown-toggle') : parent.children('a:nth-child(1)');
 
         switch (this.options.effect) {
-            case 'fade': $(el).fadeOut(CORE_ANIMATION_DURATION); break;
-            case 'slide': $(el).slideUp(CORE_ANIMATION_DURATION); break;
+            case 'fade': $(el).fadeOut(o.duration); break;
+            case 'slide': $(el).slideUp(o.duration); break;
             default: $(el).hide();
         }
         this._trigger("onClose", null, el);
@@ -4582,13 +4592,13 @@ $.widget( "corecss.tabs" , {
         if (shift + magic > width) {
             element.animate({
                 scrollLeft: scroll + (shift - width) + (tab_width / 2)
-            }, CORE_ANIMATION_DURATION);
+            }, o.duration);
         }
 
         if (tab_left - magic < 0) {
             element.animate({
                 scrollLeft: tab_left + scroll - (tab_width / 2)
-            }, CORE_ANIMATION_DURATION);
+            }, o.duration);
         }
     },
 

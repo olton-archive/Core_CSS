@@ -17,6 +17,8 @@ $.widget( "corecss.dialog" , {
         show: false,
         href: false,
         contentType: 'default', // video
+        duration: CORE_ANIMATION_DURATION,
+        easing: 'swing',
 
         _interval: undefined,
         _overlay: undefined,
@@ -110,18 +112,25 @@ $.widget( "corecss.dialog" , {
     },
 
     _hide: function(){
-        var element = this.element;
-        element.css({
-            visibility: "hidden"
+        var element = this.element, o = this.options;
+        element.animate({
+            top: "100%"
+        }, o.duration, function(){
+            element.css({
+                visibility: "hidden"
+            });
         });
     },
 
     _show: function(){
-        var element = this.element;
+        var element = this.element, o = this.options;
         this._setContent();
         element.css({
-            visibility: "visible"
-        });
+            visibility: "visible",
+            top: "100%"
+        }).animate({
+            top: $(window).height()/2-(element.outerHeight()/2),
+        }, o.duration, o.easing);
     },
 
     _setPosition: function(){

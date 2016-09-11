@@ -73,13 +73,13 @@ $.widget( "corecss.tabs" , {
         if (shift + magic > width) {
             element.animate({
                 scrollLeft: scroll + (shift - width) + (tab_width / 2)
-            }, CORE_ANIMATION_DURATION);
+            }, o.duration);
         }
 
         if (tab_left - magic < 0) {
             element.animate({
                 scrollLeft: tab_left + scroll - (tab_width / 2)
-            }, CORE_ANIMATION_DURATION);
+            }, o.duration);
         }
     },
 
