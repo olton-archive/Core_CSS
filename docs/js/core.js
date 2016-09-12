@@ -2129,9 +2129,12 @@ $.widget( "corecss.dialog" , {
         contentType: 'default', // video
         duration: CORE_ANIMATION_DURATION,
         easing: 'swing',
+        closeAction: true,
+        closeElement: ".js-dialog-close",
+        removeOnClose: false,
 
-        _interval: undefined,
-        _overlay: undefined,
+        // _interval: undefined,
+        // _overlay: undefined,
 
         onDialogOpen: function(dialog){},
         onDialogClose: function(dialog){}
@@ -2150,10 +2153,20 @@ $.widget( "corecss.dialog" , {
             }
         });
 
+        this._interval = undefined;
+        this._overlay = undefined;
+
+
         if (o.overlay) {
             this._createOverlay();
         }
         this._createDialog();
+
+        if (o.closeAction === true) {
+            element.on("click", ".dialog-actions > button" + o.closeElement, function(){
+                that.close();
+            });
+        }
 
         element.appendTo($('body'));
         element.data('dialog', this);
@@ -2181,7 +2194,7 @@ $.widget( "corecss.dialog" , {
             }
         }
 
-        o._overlay = overlay;
+        this._overlay = overlay;
     },
 
     _createDialog: function(){
@@ -2229,7 +2242,11 @@ $.widget( "corecss.dialog" , {
             opacity: 0
         }, o.duration, function(){
             element.css({
-                visibility: "hidden"            });
+                visibility: "hidden"
+            });
+            if (o.removeOnClose === true) {
+                element.remove();
+            }
         });
     },
 
@@ -2344,7 +2361,7 @@ $.widget( "corecss.dialog" , {
         element.data('opened', true);
 
         if (o.overlay) {
-            overlay = o._overlay;
+            overlay = this._overlay;
             overlay.appendTo('body').show();
             if (o.overlayClickClose) {
                 overlay.on('click', function(){
@@ -2355,7 +2372,7 @@ $.widget( "corecss.dialog" , {
 
         this._show();
 
-        console.log('after show');
+        //console.log('after show');
 
         if (typeof o.onDialogOpen === 'function') {
             o.onDialogOpen(element);
@@ -2369,7 +2386,7 @@ $.widget( "corecss.dialog" , {
         }
 
         if (o.hide && parseInt(o.hide) > 0) {
-            o._interval = setTimeout(function(){
+            this._interval = setTimeout(function(){
                 that.close();
             }, parseInt(o.hide));
         }
@@ -2378,7 +2395,7 @@ $.widget( "corecss.dialog" , {
     close: function(){
         var that = this, element = this.element, o = this.options;
 
-        clearInterval(o._interval);
+        clearInterval(this._interval);
 
         if (o.overlay) {
             $('body').find('.overlay').remove();
@@ -2494,32 +2511,34 @@ $(window).on('resize', function(){
         var dialog = this, $dialog = $(this), dlg = $dialog.data('dialog');
 
         if (dlg.element.data('opened') !== true) {
-            return false;
+            return;
         }
 
         dlg.reset();
     });
 });
 
-$.Dialog = function(content, title, actions){
+$.Dialog = function(data){
     var dlg, id, html, buttons;
 
     id = "dialog_id_" + (new Date()).getTime();
     dlg = $("<div id='"+id+"'></div>");
 
-    if (title !== undefined) {
-        $("<div class='dialog-title'>"+title+"</div>").appendTo(dlg);
+    if (data.title !== undefined) {
+        $("<div class='dialog-title'>"+data.title+"</div>").appendTo(dlg);
     }
-    if (content !== undefined) {
-        $("<div class='dialog-content'>"+content+"</div>").appendTo(dlg);
+    if (data.content !== undefined) {
+        $("<div class='dialog-content'>"+data.content+"</div>").appendTo(dlg);
     }
-    if (actions !== undefined && typeof actions == 'object') {
+    if (data.actions !== undefined && typeof data.actions == 'object') {
 
         buttons = $("<div class='dialog-actions'></div>").appendTo(dlg);
 
-        $.each(actions, function(){
+        $.each(data.actions, function(){
             var item = this;
-            $("<button class='flat-button'>"+item.title+"</button>").on("click", function(){
+            var button = $("<button class='flat-button'>"+item.title+"</button>");
+
+            if (item.onclick != undefined) button.on("click", function(){
                 if (typeof item.onclick === 'function') {
                     item.onclick(dlg);
                 } else {
@@ -2530,22 +2549,25 @@ $.Dialog = function(content, title, actions){
                         result.call(dlg);
                     }
                 }
-            }).appendTo(buttons);
+            });
+
+            if (item.cls !== undefined) {
+                button.addClass(item.cls);
+            }
+
+            button.appendTo(buttons);
         });
     }
 
     dlg.appendTo($("body"));
-    dlg.dialog({
-        contentFull: html,
-        show: true,
-        closeOnAction: true,
-        onDialogClose: function(el){
-            setTimeout(function(){
-                el.remove();
-            }, CORE_ANIMATION_DURATION);
-        }
-    });
 
+    var dlg_options = $.extend({}, {
+        show: true,
+        closeAction: true,
+        removeOnClose: true
+    }, (data.options != undefined ? data.options : {}));
+
+    dlg.dialog(dlg_options);
 };
 // Source: js/widgets/dropdown.js
 $.widget("corecss.dropdown", {
