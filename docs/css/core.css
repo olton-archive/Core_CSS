@@ -3318,6 +3318,20 @@ footer,
 .dialog.warning {
   color: #ffffff;
 }
+.dialog.success .dialog-title,
+.dialog.alert .dialog-title,
+.dialog.info .dialog-title,
+.dialog.warning .dialog-title,
+.dialog.success .dialog-content,
+.dialog.alert .dialog-content,
+.dialog.info .dialog-content,
+.dialog.warning .dialog-content,
+.dialog.success .dialog-actions button,
+.dialog.alert .dialog-actions button,
+.dialog.info .dialog-actions button,
+.dialog.warning .dialog-actions button {
+  color: #ffffff;
+}
 .dialog.success {
   background: #4CAF50;
 }
