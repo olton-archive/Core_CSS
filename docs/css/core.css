@@ -3162,6 +3162,10 @@ footer,
 .tabs.fixed-tabs.deep {
   z-index: 3999;
 }
+header.more ~ .fixed-tabs,
+.header.more ~ .fixed-tabs {
+  top: 112px;
+}
 .tabs-content {
   width: 100%;
   position: relative;

@@ -2500,15 +2500,67 @@ var dialog = {
         } else {
             dialog_obj.open();
         }
+    },
+
+    create: function(data){
+        var dlg, id, html, buttons;
+
+        id = "dialog_id_" + (new Date()).getTime();
+        dlg = $("<div id='"+id+"'></div>");
+
+        if (data.title !== undefined) {
+            $("<div class='dialog-title'>"+data.title+"</div>").appendTo(dlg);
+        }
+        if (data.content !== undefined) {
+            $("<div class='dialog-content'>"+data.content+"</div>").appendTo(dlg);
+        }
+        if (data.actions !== undefined && typeof data.actions == 'object') {
+
+            buttons = $("<div class='dialog-actions'></div>").appendTo(dlg);
+
+            $.each(data.actions, function(){
+                var item = this;
+                var button = $("<button class='flat-button'>"+item.title+"</button>");
+
+                if (item.onclick != undefined) button.on("click", function(){
+                    if (typeof item.onclick === 'function') {
+                        item.onclick(dlg);
+                    } else {
+                        if (typeof window[item.onclick] === 'function') {
+                            window[item.onclick](dlg);
+                        } else {
+                            var result = eval("(function(){"+item.onclick+"})");
+                            result.call(dlg);
+                        }
+                    }
+                });
+
+                if (item.cls !== undefined) {
+                    button.addClass(item.cls);
+                }
+
+                button.appendTo(buttons);
+            });
+        }
+
+        dlg.appendTo($("body"));
+
+        var dlg_options = $.extend({}, {
+            show: true,
+            closeAction: true,
+            removeOnClose: true
+        }, (data.options != undefined ? data.options : {}));
+
+        dlg.dialog(dlg_options);
     }
 };
 
 window.coreDialog = dialog;
 
 $(window).on('resize', function(){
-    var dialogs = $('[data-role=dialog]');
+    var dialogs = $('.dialog');
     $.each(dialogs, function(){
-        var dialog = this, $dialog = $(this), dlg = $dialog.data('dialog');
+        var dlg = $(this).data('dialog');
 
         if (dlg.element.data('opened') !== true) {
             return;
@@ -2519,55 +2571,7 @@ $(window).on('resize', function(){
 });
 
 $.Dialog = function(data){
-    var dlg, id, html, buttons;
-
-    id = "dialog_id_" + (new Date()).getTime();
-    dlg = $("<div id='"+id+"'></div>");
-
-    if (data.title !== undefined) {
-        $("<div class='dialog-title'>"+data.title+"</div>").appendTo(dlg);
-    }
-    if (data.content !== undefined) {
-        $("<div class='dialog-content'>"+data.content+"</div>").appendTo(dlg);
-    }
-    if (data.actions !== undefined && typeof data.actions == 'object') {
-
-        buttons = $("<div class='dialog-actions'></div>").appendTo(dlg);
-
-        $.each(data.actions, function(){
-            var item = this;
-            var button = $("<button class='flat-button'>"+item.title+"</button>");
-
-            if (item.onclick != undefined) button.on("click", function(){
-                if (typeof item.onclick === 'function') {
-                    item.onclick(dlg);
-                } else {
-                    if (typeof window[item.onclick] === 'function') {
-                        window[item.onclick](dlg);
-                    } else {
-                        var result = eval("(function(){"+item.onclick+"})");
-                        result.call(dlg);
-                    }
-                }
-            });
-
-            if (item.cls !== undefined) {
-                button.addClass(item.cls);
-            }
-
-            button.appendTo(buttons);
-        });
-    }
-
-    dlg.appendTo($("body"));
-
-    var dlg_options = $.extend({}, {
-        show: true,
-        closeAction: true,
-        removeOnClose: true
-    }, (data.options != undefined ? data.options : {}));
-
-    dlg.dialog(dlg_options);
+    return coreDialog.create(data);
 };
 // Source: js/widgets/dropdown.js
 $.widget("corecss.dropdown", {

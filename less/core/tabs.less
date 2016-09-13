@@ -120,7 +120,7 @@
 .tabs {
     &.fixed-tabs {
         position: fixed;
-        top: 56px;
+        top: @headerSize;
         left: 0;
         right: 0;
         z-index: @zIndexHeader;
@@ -131,8 +131,11 @@
     }
 }
 
-.tabs-content {
+header.more ~ .fixed-tabs, .header.more ~ .fixed-tabs {
+    top: @headerSize * 2;
+}
 
+.tabs-content {
     width: 100%;
     position: relative;
     overflow: auto;
