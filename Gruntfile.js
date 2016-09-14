@@ -72,6 +72,10 @@ module.exports = function(grunt) {
             compileCoreColors: {
                 src: 'less/<%= pkg.name %>-colors.less',
                 dest: 'build/css/<%= pkg.name %>-colors.css'
+            },
+            compileCoreIcons: {
+                src: 'less/<%= pkg.name %>-icons.less',
+                dest: 'build/css/<%= pkg.name %>-icons.css'
             }
         },
 
@@ -97,6 +101,10 @@ module.exports = function(grunt) {
             minCoreColors: {
                 src: 'build/css/<%= pkg.name %>-colors.css',
                 dest: 'build/css/<%= pkg.name %>-colors.min.css'
+            },
+            minCoreIcons: {
+                src: 'build/css/<%= pkg.name %>-icons.css',
+                dest: 'build/css/<%= pkg.name %>-icons.min.css'
             }
         },
 
@@ -108,6 +116,18 @@ module.exports = function(grunt) {
             docs_css_core_colors: {
                 src: 'build/css/<%= pkg.name %>-colors.css',
                 dest: 'docs/css/<%= pkg.name %>-colors.css'
+            },
+            docs_css_core_icons: {
+                src: 'build/css/<%= pkg.name %>-icons.css',
+                dest: 'docs/css/<%= pkg.name %>-icons.css'
+            },
+            docs_css_core_fonts: {
+                src: 'fonts/*',
+                dest: 'build/'
+            },
+            docs_css_core_fonts_2: {
+                src: 'fonts/*',
+                dest: 'docs/'
             },
             docs_js: {
                 src: 'build/js/<%= pkg.name %>.js',

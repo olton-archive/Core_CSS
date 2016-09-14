@@ -4764,6 +4764,13 @@ $.widget( "corecss.tabs" , {
     }
 });
 
+$(window).on('resize', function(){
+    var tabs = $('.tabs');
+    $.each(tabs, function(){
+
+        //dlg.reset();
+    });
+});
 // Source: js/widgets/widget.js
 $.widget( "corecss.widget" , {
 

@@ -167,3 +167,11 @@ $.widget( "corecss.tabs" , {
         this._super('_setOption', key, value);
     }
 });
+
+$(window).on('resize', function(){
+    var tabs = $('.tabs');
+    $.each(tabs, function(){
+
+        //dlg.reset();
+    });
+});
