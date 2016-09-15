@@ -58,17 +58,15 @@ $.widget( "corecss.tabs" , {
         var scroll = element.scrollLeft();
         var magic = 32;
 
-        tabs.removeClass('active');
-        frames.hide();
+        var current_tab = $(element.find('li.active')[0]);
 
-        tab.addClass('active');
-        $(frame).show();
+        if (current_tab != tab) {
+            tabs.removeClass('active');
+            frames.hide();
 
-        marker.animate({
-            width: tab_width,
-            top: '100%',
-            left: tab_left + scroll
-        }, o.duration);
+            tab.addClass('active');
+            $(frame).show();
+        }
 
         if (shift + magic > width) {
             element.animate({
@@ -81,6 +79,23 @@ $.widget( "corecss.tabs" , {
                 scrollLeft: tab_left + scroll - (tab_width / 2)
             }, o.duration);
         }
+
+        this._setMarker();
+    },
+
+    _setMarker: function(){
+        var that = this, element = this.element, o = this.options;
+        var tab = element.find("li.active");
+        var marker = element.find("li.tab-marker");
+        var tab_width = tab.outerWidth();
+        var tab_left = tab.position().left;
+        var scroll = element.scrollLeft();
+
+        marker.animate({
+            width: tab_width,
+            top: '100%',
+            left: tab_left + scroll
+        }, o.duration);
     },
 
     _createEvents: function(){
@@ -146,6 +161,10 @@ $.widget( "corecss.tabs" , {
 
     },
 
+    reset: function(tab){
+        this._openTab(tab)
+    },
+
     _setOptionsFromDOM: function(){
         var that = this, element = this.element, o = this.options;
 
@@ -171,7 +190,7 @@ $.widget( "corecss.tabs" , {
 $(window).on('resize', function(){
     var tabs = $('.tabs');
     $.each(tabs, function(){
-
-        //dlg.reset();
+        var el = $(this), _tabs = el.data("tabs"), tab = el.find("li.active");
+        _tabs.reset(tab);
     });
 });
