@@ -4,7 +4,6 @@
 .tabs {
     margin: 0;
     padding: 0;
-    //text-align: center;
     position: relative;
     height: 48px;
     display: block;
@@ -17,7 +16,7 @@
         display: none;
     }
 
-    .tab {
+    & > li, .tab {
         position: relative;
         display: inline-block;
         height: 48px;
@@ -34,13 +33,13 @@
         display: flex;
         justify-content: center;
 
-        .tab {
+        & > li, .tab {
             flex-grow: 0;
             flex-basis: auto;
         }
     }
 
-    .tab {
+    & > li, .tab {
         &.active, &:hover {
             opacity: 1;
             transition: .3s linear;
@@ -53,7 +52,7 @@
 
     &.compact {
         height: auto;
-        .tab {
+        & > li, .tab {
             display: block;
             border-bottom: 0 #ccc solid;
 
@@ -75,6 +74,7 @@
         top: 100%;
         left: 0;
         color: transparent;
+        opacity: 1;
     }
 }
 
@@ -131,6 +131,22 @@
     }
 }
 
+.tabs {
+    &.icons {
+        height: 64px;
+
+        & > li, .tab {
+            height: 64px;
+            font-size: 11px;
+
+            [class*=i-] {
+                display: block;
+                font-size: 28px;
+            }
+        }
+    }
+}
+
 header.more ~ .fixed-tabs, .header.more ~ .fixed-tabs {
     top: @headerSize * 2;
 }
@@ -148,7 +164,7 @@ header.more ~ .fixed-tabs, .header.more ~ .fixed-tabs {
 
 @media screen and (max-width: 640px){
     .tabs.flex {
-        .tab {
+        & > li, .tab {
             flex-basis: 0;
             flex-grow: 1;
         }

@@ -3062,6 +3062,7 @@ footer,
 .tabs::-webkit-scrollbar {
   display: none;
 }
+.tabs > li,
 .tabs .tab {
   position: relative;
   display: inline-block;
@@ -3082,6 +3083,7 @@ footer,
       -ms-flex-pack: center;
           justify-content: center;
 }
+.tabs.flex > li,
 .tabs.flex .tab {
   -webkit-flex-grow: 0;
       -ms-flex-positive: 0;
@@ -3090,22 +3092,28 @@ footer,
       -ms-flex-preferred-size: auto;
           flex-basis: auto;
 }
+.tabs > li.active,
 .tabs .tab.active,
+.tabs > li:hover,
 .tabs .tab:hover {
   opacity: 1;
   transition: .3s linear;
 }
+.tabs > li:not(.active),
 .tabs .tab:not(.active),
+.tabs > li:not(:hover),
 .tabs .tab:not(:hover) {
   border-bottom-color: transparent;
 }
 .tabs.compact {
   height: auto;
 }
+.tabs.compact > li,
 .tabs.compact .tab {
   display: block;
   border-bottom: 0 #ccc solid;
 }
+.tabs.compact > li:active,
 .tabs.compact .tab:active {
   border-bottom: inherit;
 }
@@ -3120,6 +3128,7 @@ footer,
   top: 100%;
   left: 0;
   color: transparent;
+  opacity: 1;
 }
 .tabs.overflow {
   padding: 0 32px;
@@ -3164,6 +3173,19 @@ footer,
 .tabs.fixed-tabs.deep {
   z-index: 3999;
 }
+.tabs.icons {
+  height: 64px;
+}
+.tabs.icons > li,
+.tabs.icons .tab {
+  height: 64px;
+  font-size: 11px;
+}
+.tabs.icons > li [class*=i-],
+.tabs.icons .tab [class*=i-] {
+  display: block;
+  font-size: 28px;
+}
 header.more ~ .fixed-tabs,
 .header.more ~ .fixed-tabs {
   top: 112px;
@@ -3177,6 +3199,7 @@ header.more ~ .fixed-tabs,
   display: none;
 }
 @media screen and (max-width: 640px) {
+  .tabs.flex > li,
   .tabs.flex .tab {
     -webkit-flex-basis: 0;
         -ms-flex-preferred-size: 0;

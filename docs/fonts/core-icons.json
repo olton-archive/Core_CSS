@@ -76,7 +76,7 @@
         "id": 13,
         "prevSize": 24,
         "code": 58425,
-        "name": "add_a_photo"
+        "name": "photo_add"
       },
       "setIdx": 0,
       "setId": 2,
@@ -211,7 +211,7 @@
         "id": 64,
         "prevSize": 24,
         "code": 57895,
-        "name": "attach_money"
+        "name": "money"
       },
       "setIdx": 0,
       "setId": 2,
@@ -481,7 +481,7 @@
         "id": 147,
         "prevSize": 24,
         "code": 57547,
-        "name": "chat_bubble_outline"
+        "name": "chat_bubble_light"
       },
       "setIdx": 0,
       "setId": 2,
@@ -1129,7 +1129,7 @@
         "id": 362,
         "prevSize": 24,
         "code": 59448,
-        "name": "star2"
+        "name": "star_fill"
       },
       "setIdx": 0,
       "setId": 2,
@@ -3181,7 +3181,7 @@
         "id": 841,
         "prevSize": 24,
         "code": 59642,
-        "name": "youtube_searched_for"
+        "name": "search_next"
       },
       "setIdx": 0,
       "setId": 2,

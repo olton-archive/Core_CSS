@@ -15,7 +15,8 @@ $.widget( "corecss.tabs" , {
     _create: function () {
         var that = this, element = this.element, o = this.options;
         var tabs = element.find('li:not(.tab-marker)');
-        var tab = $(tabs[0]);
+        var tab_active = $(element.find('li.active:not(.tab-marker)')[0]);
+        var tab = tab_active.length > 0 ? tab_active : $(tabs[0]);
 
         //console.log(tab);
 
