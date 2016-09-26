@@ -57,6 +57,9 @@ $.widget( "corecss.dialog" , {
             element.on("click", ".dialog-actions > button" + o.closeElement, function(){
                 that.close();
             });
+            element.on("click", ".js-dialog-close", function(){
+                that.close();
+            });
         }
 
         element.appendTo($('body'));

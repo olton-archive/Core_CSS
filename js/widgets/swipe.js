@@ -99,7 +99,7 @@ $.widget( "corecss.swipe" , {
         fallbackToMouseEvents: true,
         excludedElements: ".noSwipe",
         preventDefaultEvents: true
-        },
+    },
 
     _create: function () {
         var that = this, element = this.element, o = this.options;

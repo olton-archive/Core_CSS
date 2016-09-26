@@ -323,6 +323,22 @@ String.prototype.isColor = function () {
 return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(this);
 };
 
+window.secondsToTime = function(secs)
+{
+    var hours = Math.floor(secs / (60 * 60));
+
+    var divisor_for_minutes = secs % (60 * 60);
+    var minutes = Math.floor(divisor_for_minutes / 60);
+
+    var divisor_for_seconds = divisor_for_minutes % 60;
+    var seconds = Math.ceil(divisor_for_seconds);
+
+    return {
+        "h": hours,
+        "m": minutes,
+        "s": seconds
+    };
+};
 
 /*
  * Date Format 1.2.3
@@ -4077,6 +4093,9 @@ $.widget( "corecss.dialog" , {
             element.on("click", ".dialog-actions > button" + o.closeElement, function(){
                 that.close();
             });
+            element.on("click", ".js-dialog-close", function(){
+                that.close();
+            });
         }
 
         element.appendTo($('body'));
@@ -5548,7 +5567,7 @@ $.widget( "corecss.swipe" , {
         fallbackToMouseEvents: true,
         excludedElements: ".noSwipe",
         preventDefaultEvents: true
-        },
+    },
 
     _create: function () {
         var that = this, element = this.element, o = this.options;

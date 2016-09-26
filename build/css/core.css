@@ -1056,7 +1056,6 @@ footer,
   position: relative;
   display: block;
   height: 56px;
-  line-height: 56px;
   padding: 8px 16px;
   vertical-align: middle;
   font-size: 16px;
@@ -3165,7 +3164,7 @@ footer,
 }
 .tabs.fixed-tabs {
   position: fixed;
-  top: 56px;
+  top: 0;
   left: 0;
   right: 0;
   z-index: 4000;
@@ -3185,6 +3184,16 @@ footer,
 .tabs.icons .tab [class*=i-] {
   display: block;
   font-size: 28px;
+}
+.tabs .tab-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 4px;
+}
+header ~ .fixed-tabs,
+.header ~ .fixed-tabs {
+  top: 56px;
 }
 header.more ~ .fixed-tabs,
 .header.more ~ .fixed-tabs {
@@ -4392,6 +4401,13 @@ header.more ~ .fixed-tabs,
 .fixed-bottom {
   top: auto;
   bottom: 0;
+}
+.full-screen {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: fixed;
 }
 .pos-static {
   position: static;

@@ -120,7 +120,7 @@
 .tabs {
     &.fixed-tabs {
         position: fixed;
-        top: @headerSize;
+        top: 0;
         left: 0;
         right: 0;
         z-index: @zIndexHeader;
@@ -145,6 +145,19 @@
             }
         }
     }
+}
+
+.tabs {
+    .tab-badge {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        padding: 4px;
+    }
+}
+
+header ~ .fixed-tabs, .header ~ .fixed-tabs {
+    top: @headerSize;
 }
 
 header.more ~ .fixed-tabs, .header.more ~ .fixed-tabs {
