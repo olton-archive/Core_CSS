@@ -1,0 +1,53 @@
+body {
+    background: #fff;
+}
+
+#colors-list {
+    list-style: none inside;
+    margin: 0;
+    padding: 0;
+}
+
+#colors-list li {
+    display: inline-block;
+    width: 10%;
+    height: 10px;
+}
+
+#colors-list-schemas {
+    list-style: none inside;
+    margin: 0;
+    padding: 0;
+}
+
+#colors-list-schemas li {
+    display: block;
+    padding: 4px 10px;
+    color: #fff;
+}
+
+#colors-list-schemas li.color-title {
+    color: #000;
+    font-size: 18px;
+    padding: 4px;
+    text-align: right;
+}
+
+[class^="mif-"]:before, [class*=" mif-"]:before {
+    position: relative;
+    line-height: 1;
+}
+
+.view-content {
+    padding-top: 112px !important;
+}
+
+.sidebar .sidebar-header {
+    background: #000 url(../images/menu-back.jpg) top left no-repeat;
+    background-size: cover;
+
+}
+
+.view-content {
+    padding: 10px;
+}

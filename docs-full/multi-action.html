@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link href="css/restyle.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/docs.css">
+    <link rel="stylesheet" type="text/css" href="css/phone.css">
+    <title>CoreCSS</title>
+
+    <script src="js/jquery/jquery-2.2.4.min.js"></script>
+    <script src="js/restyle.js"></script>
+
+    <link rel="stylesheet" href="highlight/styles/default.css">
+    <script src="highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <style>
+        body > .container {
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .demo .cell {
+            background-color: antiquewhite;
+            border: 1px gray dotted;
+        }
+        .demo2 .cell {
+            border: 0 gray solid;
+            text-align: center;
+            font-size: .8em;
+            padding: 4px 0;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar dark fixed-top block-shadow-impact">
+    <div class="navbar-content container">
+        <a href="/" class="navbar-item fg-white">CoreCSS</a>
+        <span class="navbar-divider"></span>
+        <div class="navbar-item">
+            <a href="#" class="dropdown-toggle fg-white">Basic</a>
+            <ul class="d-menu context" data-role="dropdown">
+                <li><a href="/">Начало</a></li>
+                <li><a href="typography.html">Типографика</a></li>
+                <li><a href="colors.html">Цвета</a></li>
+                <li><a href="tables.html">Таблицы</a></li>
+                <li><a href="buttons.html">Кнопки</a></li>
+                <li><a href="form.html">Форма и ее элементы</a></li>
+            </ul>
+        </div>
+        <div class="navbar-item">
+            <a href="#" class="dropdown-toggle fg-white">Компоненты</a>
+            <ul class="d-menu context" data-role="dropdown">
+                <li><h6 class="indent-paragraph">Без JS</h6></li>
+                <li class="divider"></li>
+                <li><a href="progress.html">Прогрессбар</a></li>
+                <li><a href="gravatar.html">Граватар</a></li>
+                <li><a href="stepper.html">Пошаговость</a></li>
+                <li><a href="chips.html">Chips</a></li>
+
+                <li class="divider"></li>
+                <li><h6 class="indent-paragraph">С JS</h6></li>
+                <li class="divider"></li>
+                <li><a href="tabs.html">Табы</a></li>
+                <li><a href="dialogs.html">Диалоговые окна</a></li>
+                <li><a href="multi-action.html">Многозадачные кнопки</a></li>
+                <li><a href="calendar.html">Календарь</a></li>
+                <li><a href="slider.html">Слайдер</a></li>
+                <li><a href="panels.html">Панели</a></li>
+                <li><a href="sheet.html">Доп. навигация</a></li>
+                <li><a href="menus.html">Меню</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <h1>Многозадачные кнопки</h1>
+
+    <p></p>
+    <div class="example" data-text="пример">
+<pre><code class="html">
+    &lt;div class="multi-action" style="margin-top: 200px; margin-left: calc(50% - 28px);"&gt;
+        &lt;button class="action-button bg-red fg-white" onclick="$(this).toggleClass('active')"&gt;&lt;span class="i-add icon"&gt;&lt;/span&gt;&lt;/button&gt;
+        &lt;ul class="actions"&gt;
+            &lt;li class="bg-blue"&gt;&lt;a href="#"&gt;&lt;span class="i-user_add"&gt;&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+            &lt;li class="bg-teal"&gt;&lt;a href="#"&gt;&lt;span class="i-library"&gt;&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+            &lt;li class="bg-pink"&gt;&lt;a href="#"&gt;&lt;span class="i-alarm"&gt;&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+            &lt;li class="bg-orange"&gt;&lt;a href="#"&gt;&lt;span class="i-lock"&gt;&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+
+</code></pre>
+    </div>
+    <div class="phone android" style="margin-left: auto; margin-right: auto; float: none; -webkit-box-sizing: content-box;-moz-box-sizing: content-box;box-sizing: content-box;">
+        <iframe src="frame-multi-action.html" frameborder="0" scrolling="no"></iframe>
+        <div class="statusbar"></div>
+    </div>
+
+</div>
+</body>
+</html>

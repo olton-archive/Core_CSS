@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />-->
+    <meta http-equiv="Content-Security-Policy" content="" />
+
+    <link rel="stylesheet" type="text/css" href="css/core.css">
+    <link rel="stylesheet" type="text/css" href="css/core-colors.css">
+    <link rel="stylesheet" type="text/css" href="css/core-icons.css">
+    <link rel="stylesheet" type="text/css" href="css/docs.css">
+    <title>CoreCSS</title>
+</head>
+<body>
+
+<div class="app">
+    <div class="view">
+
+        <div class="sidebar" data-role="sidebar" data-shift="header, footer, .view-content, #main-tabs" data-toggle="#sidebar-toggle" data-overlay="true">
+            <div class="sidebar-header">
+                    <span class="avatar">
+                        <img id="avatar_image">
+                    </span>
+                <span class="title fg-white">Имя клиента</span>
+                <span class="subtitle fg-gray-400">sergey@pimenov.com.ua</span>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="divider"></li>
+                <li><a href="#about">Some</a></li>
+                <li><a href="#about">Menu</a></li>
+                <li><a href="#about">Items</a></li>
+            </ul>
+        </div>
+
+        <header class="header fix-slow-animation">
+            <button class="tool-button ripple" id="sidebar-toggle"><span class="i-menu icon"></span></button>
+            <span class="app-title">Core CSS</span>
+                <span style="position: relative" class=" place-right">
+                    <button class="tool-button ripple" id="optionMenu"><span class="i-more_vert icon"></span></button>
+                    <ul class="menu dropdown place-right" data-role="dropdown" data-toggle-element="#optionMenu">
+                        <li><a href="#">Параметры</a></li>
+                    </ul>
+                </span>
+            <button class="tool-button place-right ripple"><span class="i-comment icon"></span></button>
+            <button class="tool-button place-right ripple"><span class="i-share icon"></span></button>
+        </header>
+
+        <footer class="footer bottom-nav fix-slow-animation">
+            <button class="button bg-pink fg-white ripple"><span class="i-add icon"></span><span class="label">Add</span></button>
+            <button class="button bg-pink fg-white ripple"><span class="i-favorite icon"></span><span class="label">Favorites</span></button>
+            <button class="button bg-pink fg-white ripple"><span class="i-timer icon"></span><span class="label">history</span></button>
+        </footer>
+
+        <ul class="bottom-sheet" id="bottom-sheet" data-role="bottomsheet">
+            <li class="ripple"><span class="icon mif-envelop"></span>Mail</li>
+            <li class="ripple"><span class="icon mif-command"></span>Message</li>
+            <li class="ripple"><span class="icon mif-location"></span>Location</li>
+            <li class="ripple"><span class="icon mif-voicemail"></span>Voice</li>
+            <li class="ripple"><span class="icon mif-phone"></span>Dialer</li>
+            <li class="divider"></li>
+            <li class="ripple"><span class="icon mif-upload"></span>Upload</li>
+            <li class="ripple"><span class="icon mif-security"></span>Security</li>
+        </ul>
+
+        <div class="view-content fix-slow-animation" style="padding-top: 50px !important;">
+            <h2 class="headline fg-teal">Colors Schemas</h2>
+            <ul class="list" id="colors-list-schemas">
+                <li class="color-title">red</li>
+                <li class="bg-red-50">red-50</li>
+                <li class="bg-red-100">red-100</li>
+                <li class="bg-red-200">red-200</li>
+                <li class="bg-red-300">red-300</li>
+                <li class="bg-red-400">red-400</li>
+                <li class="bg-red-500">red-500</li>
+                <li class="bg-red-600">red-600</li>
+                <li class="bg-red-700">red-700</li>
+                <li class="bg-red-800">red-800</li>
+                <li class="bg-red-900">red-900</li>
+                <li class="bg-red-A100">red-A100</li>
+                <li class="bg-red-A200">red-A200</li>
+                <li class="bg-red-A400">red-A400</li>
+                <li class="bg-red-A700">red-A700</li>
+                <li class="color-title">pink</li>
+                <li class="bg-pink-50">pink-50</li>
+                <li class="bg-pink-100">pink-100</li>
+                <li class="bg-pink-200">pink-200</li>
+                <li class="bg-pink-300">pink-300</li>
+                <li class="bg-pink-400">pink-400</li>
+                <li class="bg-pink-500">pink-500</li>
+                <li class="bg-pink-600">pink-600</li>
+                <li class="bg-pink-700">pink-700</li>
+                <li class="bg-pink-800">pink-800</li>
+                <li class="bg-pink-900">pink-900</li>
+                <li class="bg-pink-A100">pink-A100</li>
+                <li class="bg-pink-A200">pink-A200</li>
+                <li class="bg-pink-A400">pink-A400</li>
+                <li class="bg-pink-A700">pink-A700</li>
+                <li class="color-title">purple</li>
+                <li class="bg-purple-50">purple-50</li>
+                <li class="bg-purple-100">purple-100</li>
+                <li class="bg-purple-200">purple-200</li>
+                <li class="bg-purple-300">purple-300</li>
+                <li class="bg-purple-400">purple-400</li>
+                <li class="bg-purple-500">purple-500</li>
+                <li class="bg-purple-600">purple-600</li>
+                <li class="bg-purple-700">purple-700</li>
+                <li class="bg-purple-800">purple-800</li>
+                <li class="bg-purple-900">purple-900</li>
+                <li class="bg-purple-A100">purple-A100</li>
+                <li class="bg-purple-A200">purple-A200</li>
+                <li class="bg-purple-A400">purple-A400</li>
+                <li class="bg-purple-A700">purple-A700</li>
+                <li class="color-title">deepPurple</li>
+                <li class="bg-deepPurple-50">deepPurple-50</li>
+                <li class="bg-deepPurple-100">deepPurple-100</li>
+                <li class="bg-deepPurple-200">deepPurple-200</li>
+                <li class="bg-deepPurple-300">deepPurple-300</li>
+                <li class="bg-deepPurple-400">deepPurple-400</li>
+                <li class="bg-deepPurple-500">deepPurple-500</li>
+                <li class="bg-deepPurple-600">deepPurple-600</li>
+                <li class="bg-deepPurple-700">deepPurple-700</li>
+                <li class="bg-deepPurple-800">deepPurple-800</li>
+                <li class="bg-deepPurple-900">deepPurple-900</li>
+                <li class="bg-deepPurple-A100">deepPurple-A100</li>
+                <li class="bg-deepPurple-A200">deepPurple-A200</li>
+                <li class="bg-deepPurple-A400">deepPurple-A400</li>
+                <li class="bg-deepPurple-A700">deepPurple-A700</li>
+                <li class="color-title">indigo</li>
+                <li class="bg-indigo-50">indigo-50</li>
+                <li class="bg-indigo-100">indigo-100</li>
+                <li class="bg-indigo-200">indigo-200</li>
+                <li class="bg-indigo-300">indigo-300</li>
+                <li class="bg-indigo-400">indigo-400</li>
+                <li class="bg-indigo-500">indigo-500</li>
+                <li class="bg-indigo-600">indigo-600</li>
+                <li class="bg-indigo-700">indigo-700</li>
+                <li class="bg-indigo-800">indigo-800</li>
+                <li class="bg-indigo-900">indigo-900</li>
+                <li class="bg-indigo-A100">indigo-A100</li>
+                <li class="bg-indigo-A200">indigo-A200</li>
+                <li class="bg-indigo-A400">indigo-A400</li>
+                <li class="bg-indigo-A700">indigo-A700</li>
+                <li class="color-title">blue</li>
+                <li class="bg-blue-50">blue-50</li>
+                <li class="bg-blue-100">blue-100</li>
+                <li class="bg-blue-200">blue-200</li>
+                <li class="bg-blue-300">blue-300</li>
+                <li class="bg-blue-400">blue-400</li>
+                <li class="bg-blue-500">blue-500</li>
+                <li class="bg-blue-600">blue-600</li>
+                <li class="bg-blue-700">blue-700</li>
+                <li class="bg-blue-800">blue-800</li>
+                <li class="bg-blue-900">blue-900</li>
+                <li class="bg-blue-A100">blue-A100</li>
+                <li class="bg-blue-A200">blue-A200</li>
+                <li class="bg-blue-A400">blue-A400</li>
+                <li class="bg-blue-A700">blue-A700</li>
+                <li class="color-title">lightBlue</li>
+                <li class="bg-lightBlue-50">lightBlue-50</li>
+                <li class="bg-lightBlue-100">lightBlue-100</li>
+                <li class="bg-lightBlue-200">lightBlue-200</li>
+                <li class="bg-lightBlue-300">lightBlue-300</li>
+                <li class="bg-lightBlue-400">lightBlue-400</li>
+                <li class="bg-lightBlue-500">lightBlue-500</li>
+                <li class="bg-lightBlue-600">lightBlue-600</li>
+                <li class="bg-lightBlue-700">lightBlue-700</li>
+                <li class="bg-lightBlue-800">lightBlue-800</li>
+                <li class="bg-lightBlue-900">lightBlue-900</li>
+                <li class="bg-lightBlue-A100">lightBlue-A100</li>
+                <li class="bg-lightBlue-A200">lightBlue-A200</li>
+                <li class="bg-lightBlue-A400">lightBlue-A400</li>
+                <li class="bg-lightBlue-A700">lightBlue-A700</li>
+                <li class="color-title">cyan</li>
+                <li class="bg-cyan-50">cyan-50</li>
+                <li class="bg-cyan-100">cyan-100</li>
+                <li class="bg-cyan-200">cyan-200</li>
+                <li class="bg-cyan-300">cyan-300</li>
+                <li class="bg-cyan-400">cyan-400</li>
+                <li class="bg-cyan-500">cyan-500</li>
+                <li class="bg-cyan-600">cyan-600</li>
+                <li class="bg-cyan-700">cyan-700</li>
+                <li class="bg-cyan-800">cyan-800</li>
+                <li class="bg-cyan-900">cyan-900</li>
+                <li class="bg-cyan-A100">cyan-A100</li>
+                <li class="bg-cyan-A200">cyan-A200</li>
+                <li class="bg-cyan-A400">cyan-A400</li>
+                <li class="bg-cyan-A700">cyan-A700</li>
+                <li class="color-title">teal</li>
+                <li class="bg-teal-50">teal-50</li>
+                <li class="bg-teal-100">teal-100</li>
+                <li class="bg-teal-200">teal-200</li>
+                <li class="bg-teal-300">teal-300</li>
+                <li class="bg-teal-400">teal-400</li>
+                <li class="bg-teal-500">teal-500</li>
+                <li class="bg-teal-600">teal-600</li>
+                <li class="bg-teal-700">teal-700</li>
+                <li class="bg-teal-800">teal-800</li>
+                <li class="bg-teal-900">teal-900</li>
+                <li class="bg-teal-A100">teal-A100</li>
+                <li class="bg-teal-A200">teal-A200</li>
+                <li class="bg-teal-A400">teal-A400</li>
+                <li class="bg-teal-A700">teal-A700</li>
+                <li class="color-title">green</li>
+                <li class="bg-green-50">green-50</li>
+                <li class="bg-green-100">green-100</li>
+                <li class="bg-green-200">green-200</li>
+                <li class="bg-green-300">green-300</li>
+                <li class="bg-green-400">green-400</li>
+                <li class="bg-green-500">green-500</li>
+                <li class="bg-green-600">green-600</li>
+                <li class="bg-green-700">green-700</li>
+                <li class="bg-green-800">green-800</li>
+                <li class="bg-green-900">green-900</li>
+                <li class="bg-green-A100">green-A100</li>
+                <li class="bg-green-A200">green-A200</li>
+                <li class="bg-green-A400">green-A400</li>
+                <li class="bg-green-A700">green-A700</li>
+                <li class="color-title">lightGreen</li>
+                <li class="bg-lightGreen-50">lightGreen-50</li>
+                <li class="bg-lightGreen-100">lightGreen-100</li>
+                <li class="bg-lightGreen-200">lightGreen-200</li>
+                <li class="bg-lightGreen-300">lightGreen-300</li>
+                <li class="bg-lightGreen-400">lightGreen-400</li>
+                <li class="bg-lightGreen-500">lightGreen-500</li>
+                <li class="bg-lightGreen-600">lightGreen-600</li>
+                <li class="bg-lightGreen-700">lightGreen-700</li>
+                <li class="bg-lightGreen-800">lightGreen-800</li>
+                <li class="bg-lightGreen-900">lightGreen-900</li>
+                <li class="bg-lightGreen-A100">lightGreen-A100</li>
+                <li class="bg-lightGreen-A200">lightGreen-A200</li>
+                <li class="bg-lightGreen-A400">lightGreen-A400</li>
+                <li class="bg-lightGreen-A700">lightGreen-A700</li>
+                <li class="color-title">lime</li>
+                <li class="bg-lime-50">lime-50</li>
+                <li class="bg-lime-100">lime-100</li>
+                <li class="bg-lime-200">lime-200</li>
+                <li class="bg-lime-300">lime-300</li>
+                <li class="bg-lime-400">lime-400</li>
+                <li class="bg-lime-500">lime-500</li>
+                <li class="bg-lime-600">lime-600</li>
+                <li class="bg-lime-700">lime-700</li>
+                <li class="bg-lime-800">lime-800</li>
+                <li class="bg-lime-900">lime-900</li>
+                <li class="bg-lime-A100">lime-A100</li>
+                <li class="bg-lime-A200">lime-A200</li>
+                <li class="bg-lime-A400">lime-A400</li>
+                <li class="bg-lime-A700">lime-A700</li>
+                <li class="color-title">yellow</li>
+                <li class="bg-yellow-50">yellow-50</li>
+                <li class="bg-yellow-100">yellow-100</li>
+                <li class="bg-yellow-200">yellow-200</li>
+                <li class="bg-yellow-300">yellow-300</li>
+                <li class="bg-yellow-400">yellow-400</li>
+                <li class="bg-yellow-500">yellow-500</li>
+                <li class="bg-yellow-600">yellow-600</li>
+                <li class="bg-yellow-700">yellow-700</li>
+                <li class="bg-yellow-800">yellow-800</li>
+                <li class="bg-yellow-900">yellow-900</li>
+                <li class="bg-yellow-A100">yellow-A100</li>
+                <li class="bg-yellow-A200">yellow-A200</li>
+                <li class="bg-yellow-A400">yellow-A400</li>
+                <li class="bg-yellow-A700">yellow-A700</li>
+                <li class="color-title">amber</li>
+                <li class="bg-amber-50">amber-50</li>
+                <li class="bg-amber-100">amber-100</li>
+                <li class="bg-amber-200">amber-200</li>
+                <li class="bg-amber-300">amber-300</li>
+                <li class="bg-amber-400">amber-400</li>
+                <li class="bg-amber-500">amber-500</li>
+                <li class="bg-amber-600">amber-600</li>
+                <li class="bg-amber-700">amber-700</li>
+                <li class="bg-amber-800">amber-800</li>
+                <li class="bg-amber-900">amber-900</li>
+                <li class="bg-amber-A100">amber-A100</li>
+                <li class="bg-amber-A200">amber-A200</li>
+                <li class="bg-amber-A400">amber-A400</li>
+                <li class="bg-amber-A700">amber-A700</li>
+                <li class="color-title">orange</li>
+                <li class="bg-orange-50">orange-50</li>
+                <li class="bg-orange-100">orange-100</li>
+                <li class="bg-orange-200">orange-200</li>
+                <li class="bg-orange-300">orange-300</li>
+                <li class="bg-orange-400">orange-400</li>
+                <li class="bg-orange-500">orange-500</li>
+                <li class="bg-orange-600">orange-600</li>
+                <li class="bg-orange-700">orange-700</li>
+                <li class="bg-orange-800">orange-800</li>
+                <li class="bg-orange-900">orange-900</li>
+                <li class="bg-orange-A100">orange-A100</li>
+                <li class="bg-orange-A200">orange-A200</li>
+                <li class="bg-orange-A400">orange-A400</li>
+                <li class="bg-orange-A700">orange-A700</li>
+                <li class="color-title">deepOrange</li>
+                <li class="bg-deepOrange-50">deepOrange-50</li>
+                <li class="bg-deepOrange-100">deepOrange-100</li>
+                <li class="bg-deepOrange-200">deepOrange-200</li>
+                <li class="bg-deepOrange-300">deepOrange-300</li>
+                <li class="bg-deepOrange-400">deepOrange-400</li>
+                <li class="bg-deepOrange-500">deepOrange-500</li>
+                <li class="bg-deepOrange-600">deepOrange-600</li>
+                <li class="bg-deepOrange-700">deepOrange-700</li>
+                <li class="bg-deepOrange-800">deepOrange-800</li>
+                <li class="bg-deepOrange-900">deepOrange-900</li>
+                <li class="bg-deepOrange-A100">deepOrange-A100</li>
+                <li class="bg-deepOrange-A200">deepOrange-A200</li>
+                <li class="bg-deepOrange-A400">deepOrange-A400</li>
+                <li class="bg-deepOrange-A700">deepOrange-A700</li>
+                <li class="color-title">brown</li>
+                <li class="bg-brown-50">brown-50</li>
+                <li class="bg-brown-100">brown-100</li>
+                <li class="bg-brown-200">brown-200</li>
+                <li class="bg-brown-300">brown-300</li>
+                <li class="bg-brown-400">brown-400</li>
+                <li class="bg-brown-500">brown-500</li>
+                <li class="bg-brown-600">brown-600</li>
+                <li class="bg-brown-700">brown-700</li>
+                <li class="bg-brown-800">brown-800</li>
+                <li class="bg-brown-900">brown-900</li>
+                <li class="color-title">gray</li>
+                <li class="bg-gray-50">gray-50</li>
+                <li class="bg-gray-100">gray-100</li>
+                <li class="bg-gray-200">gray-200</li>
+                <li class="bg-gray-300">gray-300</li>
+                <li class="bg-gray-400">gray-400</li>
+                <li class="bg-gray-500">gray-500</li>
+                <li class="bg-gray-600">gray-600</li>
+                <li class="bg-gray-700">gray-700</li>
+                <li class="bg-gray-800">gray-800</li>
+                <li class="bg-gray-900">gray-900</li>
+                <li class="color-title">blueGray</li>
+                <li class="bg-blueGray-50">blueGray-50</li>
+                <li class="bg-blueGray-100">blueGray-100</li>
+                <li class="bg-blueGray-200">blueGray-200</li>
+                <li class="bg-blueGray-300">blueGray-300</li>
+                <li class="bg-blueGray-400">blueGray-400</li>
+                <li class="bg-blueGray-500">blueGray-500</li>
+                <li class="bg-blueGray-600">blueGray-600</li>
+                <li class="bg-blueGray-700">blueGray-700</li>
+                <li class="bg-blueGray-800">blueGray-800</li>
+                <li class="bg-blueGray-900">blueGray-900</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="js/jquery-3.0.0.min.js"></script>
+<script src="js/core.js"></script>
+
+</body>
+</html>

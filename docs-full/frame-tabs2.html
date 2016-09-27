@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />-->
+    <meta http-equiv="Content-Security-Policy" content="" />
+
+    <link rel="stylesheet" type="text/css" href="css/core.css">
+    <link rel="stylesheet" type="text/css" href="css/core-colors.css">
+    <link rel="stylesheet" type="text/css" href="css/core-icons.css">
+    <link rel="stylesheet" type="text/css" href="css/docs.css">
+    <title>CoreCSS</title>
+</head>
+<body>
+
+<div class="app">
+    <div class="view">
+
+        <div class="sidebar" data-role="sidebar" data-shift="header, footer, .view-content, #main-tabs" data-toggle="#sidebar-toggle" data-overlay="true">
+            <div class="sidebar-header">
+                    <span class="avatar">
+                        <img id="avatar_image">
+                    </span>
+                <span class="title fg-white">Имя клиента</span>
+                <span class="subtitle fg-gray-400">sergey@pimenov.com.ua</span>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="divider"></li>
+                <li><a href="#about">Some</a></li>
+                <li><a href="#about">Menu</a></li>
+                <li><a href="#about">Items</a></li>
+            </ul>
+        </div>
+
+        <header class="header fix-slow-animation">
+            <button class="tool-button ripple" id="sidebar-toggle"><span class="i-menu icon"></span></button>
+            <span class="app-title">Core CSS</span>
+                <span style="position: relative" class=" place-right">
+                    <button class="tool-button ripple" id="optionMenu"><span class="i-more_vert icon"></span></button>
+                    <ul class="menu dropdown place-right" data-role="dropdown" data-toggle-element="#optionMenu">
+                        <li><a href="#">Параметры</a></li>
+                    </ul>
+                </span>
+            <button class="tool-button place-right ripple"><span class="i-comment icon"></span></button>
+            <button class="tool-button place-right ripple"><span class="i-share icon"></span></button>
+        </header>
+
+        <footer class="footer bottom-nav fix-slow-animation">
+            <button class="button bg-pink fg-white ripple"><span class="i-add icon"></span><span class="label">Add</span></button>
+            <button class="button bg-pink fg-white ripple"><span class="i-favorite icon"></span><span class="label">Favorites</span></button>
+            <button class="button bg-pink fg-white ripple"><span class="i-timer icon"></span><span class="label">history</span></button>
+        </footer>
+
+        <ul class="bottom-sheet" id="bottom-sheet" data-role="bottomsheet">
+            <li class="ripple"><span class="icon mif-envelop"></span>Mail</li>
+            <li class="ripple"><span class="icon mif-command"></span>Message</li>
+            <li class="ripple"><span class="icon mif-location"></span>Location</li>
+            <li class="ripple"><span class="icon mif-voicemail"></span>Voice</li>
+            <li class="ripple"><span class="icon mif-phone"></span>Dialer</li>
+            <li class="divider"></li>
+            <li class="ripple"><span class="icon mif-upload"></span>Upload</li>
+            <li class="ripple"><span class="icon mif-security"></span>Security</li>
+        </ul>
+
+        <div class="view-content fix-slow-animation" style="padding-top: 50px !important;">
+            <h2 class="heading">Tabs</h2>
+
+            <ul class="tabs bg-lightBlue-700 fg-white bd-red" data-role="tabs">
+                <li class="tab ripple">One</li>
+                <li class="tab ripple">Two Item</li>
+                <li class="tab ripple">Three</li>
+            </ul>
+
+            <br/>
+
+            <ul class="tabs bg-lightBlue-700 fg-white bd-red align-center" data-role="tabs">
+                <li class="tab ripple">One</li>
+                <li class="tab ripple">Two</li>
+                <li class="tab ripple">Three</li>
+            </ul>
+
+            <br/>
+
+            <ul class="tabs bg-lightBlue-700 fg-white bd-red align-right" data-role="tabs">
+                <li class="tab ripple">One</li>
+                <li class="tab ripple">Two</li>
+                <li class="tab ripple">Three</li>
+            </ul>
+
+            <br/>
+
+            <ul class="tabs bg-lightBlue-700 fg-white bd-red flex" data-role="tabs">
+                <li class="tab ripple">One</li>
+                <li class="tab ripple">Two</li>
+                <li class="tab ripple">Three</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="js/jquery-3.0.0.min.js"></script>
+<script src="js/core.js"></script>
+
+</body>
+</html>
