@@ -10,7 +10,9 @@ $.widget( "corecss.progress" , {
         bufferColor: 'bg-yellow',
         color: 'bg-gray-600',
         size: '64',
-        radius: '20'
+        radius: '20',
+        onChange: $.noop(),
+        onEnd: $.noop()
     },
 
     value: 0,
@@ -70,9 +72,6 @@ $.widget( "corecss.progress" , {
             if (o.barColor.isColor()) {
                 bar.css('stroke', o.barColor);
             } else {
-                if (o.barColor.indexOf('bg-') != -1) {
-                    o.barColor = 'st-' + o.barColor.substring(o.barColor.indexOf('bg-')+3);
-                }
                 bar.addClass(o.barColor);
             }
         } else {
@@ -95,7 +94,7 @@ $.widget( "corecss.progress" , {
     },
 
     val: function(val){
-        var element = this.element;
+        var element = this.element, o = this.options;
 
         if (val == undefined) {
             return this.value;
@@ -107,6 +106,12 @@ $.widget( "corecss.progress" , {
         element.find(".bar").css({
             width: val + '%'
         });
+
+        $.CoreCss.callback(o.onChange, val);
+
+        if (val == 100) {
+            $.CoreCss.callback(o.onEnd);
+        }
 
         return this;
     },

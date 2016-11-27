@@ -3329,6 +3329,91 @@ $.each( { show: "fadeIn", hide: "fadeOut" }, function( method, defaultEffect ) {
 
 var widget = $.widget;
 
+// Source: js/widgets/accordion.js
+$.widget( "corecss.accordion" , {
+
+    version: "1.0.0",
+
+    options: {
+        closeAny: true,
+        onOpen: $.noop(),
+        onClose: $.noop()
+    },
+
+    _create: function () {
+        var that = this, element = this.element, o = this.options;
+
+        this._setOptionsFromDOM();
+
+        this._createEvents();
+
+        element.data('accordion', this);
+    },
+
+    _createEvents: function(){
+        var that = this, element = this.element, o = this.options;
+
+        element.on("click", ".accordion-item > a.item-header", function(){
+            var frame = $(this).parent();
+            if  (!frame.hasClass('active')) {
+                that._openFrame(frame);
+            } else {
+                that._closeFrame(frame);
+            }
+        });
+    },
+
+    _closeAllFrames: function(){
+        var that = this;
+        var frames = this.element.children('.accordion-item.active');
+        $.each(frames, function(){
+            that._closeFrame($(this));
+        });
+    },
+
+    _openFrame: function(frame){
+        var o = this.options;
+        var content = frame.children('.item-content');
+
+        if (o.closeAny) this._closeAllFrames();
+
+        content.slideDown(o.speed);
+        frame.addClass('active');
+
+        $.CoreCss.callback(o.onOpen, frame);
+    },
+
+    _closeFrame: function(frame){
+        var o = this.options;
+        var content = frame.children('.item-content');
+        content.slideUp(o.speed,function(){
+            frame.removeClass("active");
+        });
+        $.CoreCss.callback(o.onClose, frame);
+    },
+
+    _setOptionsFromDOM: function(){
+        var element = this.element, o = this.options;
+
+        $.each(element.data(), function(key, value){
+            if (key in o) {
+                try {
+                    o[key] = $.parseJSON(value);
+                } catch (e) {
+                    o[key] = value;
+                }
+            }
+        });
+    },
+
+    _destroy: function () {
+    },
+
+    _setOption: function ( key, value ) {
+        this._super('_setOption', key, value);
+    }
+});
+
 // Source: js/widgets/bottomsheet.js
 $.widget("corecss.bottomsheet", {
 
@@ -5022,7 +5107,9 @@ $.widget( "corecss.progress" , {
         bufferColor: 'bg-yellow',
         color: 'bg-gray-600',
         size: '64',
-        radius: '20'
+        radius: '20',
+        onChange: $.noop(),
+        onEnd: $.noop()
     },
 
     value: 0,
@@ -5082,9 +5169,6 @@ $.widget( "corecss.progress" , {
             if (o.barColor.isColor()) {
                 bar.css('stroke', o.barColor);
             } else {
-                if (o.barColor.indexOf('bg-') != -1) {
-                    o.barColor = 'st-' + o.barColor.substring(o.barColor.indexOf('bg-')+3);
-                }
                 bar.addClass(o.barColor);
             }
         } else {
@@ -5107,7 +5191,7 @@ $.widget( "corecss.progress" , {
     },
 
     val: function(val){
-        var element = this.element;
+        var element = this.element, o = this.options;
 
         if (val == undefined) {
             return this.value;
@@ -5119,6 +5203,12 @@ $.widget( "corecss.progress" , {
         element.find(".bar").css({
             width: val + '%'
         });
+
+        $.CoreCss.callback(o.onChange, val);
+
+        if (val == 100) {
+            $.CoreCss.callback(o.onEnd);
+        }
 
         return this;
     },
