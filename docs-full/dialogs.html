@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link href="css/restyle.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/docs.css">
+    <link rel="stylesheet" type="text/css" href="css/phone.css">
+    <title>CoreCSS</title>
+
+    <script src="js/jquery/jquery-2.2.4.min.js"></script>
+    <script src="js/restyle.js"></script>
+
+    <link rel="stylesheet" href="highlight/styles/default.css">
+    <script src="highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <style>
+        body > .container {
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .demo .cell {
+            background-color: antiquewhite;
+            border: 1px gray dotted;
+        }
+        .demo2 .cell {
+            border: 0 gray solid;
+            text-align: center;
+            font-size: .8em;
+            padding: 4px 0;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar dark fixed-top block-shadow-impact">
+    <div class="navbar-content container">
+        <a href="/" class="navbar-item fg-white">CoreCSS</a>
+        <span class="navbar-divider"></span>
+        <div class="navbar-item">
+            <a href="#" class="dropdown-toggle fg-white">Basic</a>
+            <ul class="d-menu context" data-role="dropdown">
+                <li><a href="/">Начало</a></li>
+                <li><a href="typography.html">Типографика</a></li>
+                <li><a href="colors.html">Цвета</a></li>
+                <li><a href="tables.html">Таблицы</a></li>
+                <li><a href="buttons.html">Кнопки</a></li>
+                <li><a href="form.html">Форма и ее элементы</a></li>
+            </ul>
+        </div>
+        <div class="navbar-item">
+            <a href="#" class="dropdown-toggle fg-white">Компоненты</a>
+            <ul class="d-menu context" data-role="dropdown">
+                <li><h6 class="indent-paragraph">Без JS</h6></li>
+                <li class="divider"></li>
+                <li><a href="progress.html">Прогрессбар</a></li>
+                <li><a href="gravatar.html">Граватар</a></li>
+                <li><a href="stepper.html">Пошаговость</a></li>
+                <li><a href="chips.html">Chips</a></li>
+
+                <li class="divider"></li>
+                <li><h6 class="indent-paragraph">С JS</h6></li>
+                <li class="divider"></li>
+                <li><a href="tabs.html">Табы</a></li>
+                <li><a href="dialogs.html">Диалоговые окна</a></li>
+                <li><a href="multi-action.html">Многозадачные кнопки</a></li>
+                <li><a href="calendar.html">Календарь</a></li>
+                <li><a href="slider.html">Слайдер</a></li>
+                <li><a href="panels.html">Панели</a></li>
+                <li><a href="sheet.html">Доп. навигация</a></li>
+                <li><a href="menus.html">Меню</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <h1>Диалоговые окна</h1>
+
+    <p></p>
+    <h4 class="text-bold">HTML</h4>
+    <div class="example" data-text="пример">
+<pre><code class="html">
+    &lt;div class="align-center"&gt;
+        &lt;button class="raised-button bg-green fg-white" onclick="coreDialog.open('#dialog1')"&gt;Predefined&lt;/button&gt;
+        &lt;button class="raised-button bg-orange fg-white" onclick="openCustom()"&gt;$.Dialog&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;div id="dialog1" data-role="dialog" data-close-button="true" data-overlay="true"&gt;
+        &lt;div class="dialog-title"&gt;
+            Use Google's location service?
+        &lt;/div&gt;
+        &lt;div class="dialog-content"&gt;
+            Bassus abactors ducunt ad triticum. A fraternal form of manifestation is the bliss.
+        &lt;/div&gt;
+        &lt;div class="dialog-actions"&gt;
+            &lt;button class="flat-button" onclick="coreDialog.close('#dialog1')"&gt;disagree&lt;/button&gt;
+            &lt;button class="flat-button" onclick="coreDialog.close('#dialog1')"&gt;agree&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+</code></pre>
+    </div>
+    <h4 class="text-bold">JS</h4>
+    <div class="example" data-text="пример">
+<pre><code class="javascript">
+    function openCustom(){
+        $.Dialog({
+            title: "Dialog title",
+            content: "This is a dialog content",
+            actions: [
+                {
+                    title: "Ok",
+                    onclick: function(el){
+                        alert("You pressed OK button");
+                    }
+                },
+                {
+                    title: "Cancel",
+                    cls: "js-dialog-close"
+                }
+            ],
+            options: {
+                type: "warning"
+            }
+        });
+    }
+
+</code></pre>
+    </div>
+    <div class="phone android" style="margin-left: auto; margin-right: auto; float: none; -webkit-box-sizing: content-box;-moz-box-sizing: content-box;box-sizing: content-box;">
+        <iframe src="frame-dialogs.html" frameborder="0" scrolling="no"></iframe>
+        <div class="statusbar"></div>
+    </div>
+
+</div>
+</body>
+</html>

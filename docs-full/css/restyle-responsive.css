@@ -1,0 +1,50 @@
+@media only screen and (min-width: 320px) {
+  html {
+    font-size: 70%;
+  }
+}
+@media only screen and (min-width: 480px) {
+  html {
+    font-size: 80%;
+  }
+}
+@media only screen and (min-width: 640px) {
+  html {
+    font-size: 90%;
+  }
+}
+@media only screen and (max-width: 640px) {
+  .grid .row {
+    margin: 0;
+  }
+  .grid .cell {
+    width: 100% !important;
+    float: none !important;
+    margin-left: 0 !important;
+    margin-bottom: 10px !important;
+  }
+}
+@media only screen and (min-width: 800px) {
+  html {
+    font-size: 100%;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .container {
+    width: 100%;
+    padding: 1% 5%;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  html {
+    font-size: 100%;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  html {
+    font-size: 200%;
+  }
+  .container {
+    width: 90%;
+  }
+}
