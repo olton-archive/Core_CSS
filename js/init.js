@@ -3,6 +3,22 @@ if (window.CALENDAR_LOCALE == undefined) {window.CALENDAR_LOCALE = 'en';}
 if (window.CORE_ANIMATION_DURATION == undefined) {window.CORE_ANIMATION_DURATION = 200;}
 
 var CoreCss = {
+
+    callback: function(cb, args){
+        if (cb != undefined) {
+            if (typeof cb === 'function') {
+                cb(args);
+            } else {
+                if (typeof window[cb] === 'function') {
+                    window[cb](args);
+                } else {
+                    var result = eval("(function(){"+cb+"})");
+                    result.call(args);
+                }
+            }
+        }
+    },
+
     uniqueId: function (prefix) {
         "use strict";
         var d = new Date().getTime();
@@ -100,3 +116,4 @@ var CoreCss = {
     }
 };
 
+$.CoreCss = CoreCss;

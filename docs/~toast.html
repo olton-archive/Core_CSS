@@ -1,0 +1,5 @@
+<h2 class="heading" id="~toast">Toasts</h2>
+
+<button class="raised-button" onclick="$.Toast('This is a toast with message and default timeout')">Default</button>
+<button class="raised-button" onclick="$.Toast('This is a toast with custom timeout eq 5000', null, 5000)">Timeout</button>
+<button class="raised-button" onclick="$.Toast('This is a toast with callback', function(){alert('Ku from toast callback')})">Callback</button>

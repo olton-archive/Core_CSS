@@ -9,7 +9,7 @@
     line-height: 1;
     vertical-align: middle;
     height: 36px;
-    margin: 0 8px;
+    //margin: 0 8px;
     padding: 0 8px;
     font-size: 14px;
     background-color: @white;
@@ -22,6 +22,10 @@
         outline: none;
     }
 
+}
+
+.raised-button + .raised-button {
+    margin: 0 8px;
 }
 
 .flat-button, .raised-button, .action-button, .tool-button {
@@ -96,6 +100,7 @@
     float: left;
     background-color: @lightBlue700;
     color: @white;
+    position: relative;
 
 
     .icon {
@@ -108,5 +113,86 @@
 .flat-button, .raised-button {
     [class*=mif-] {
         //line-height: 36px;
+    }
+}
+
+.nav-button {
+    width: 48px;
+    height: 48px;
+    margin: 4px 0;
+    background-size: 1rem 1rem;
+    background: center center no-repeat;
+    text-indent: -9999px;
+    border: 0;
+    display: inline-block;
+    cursor: pointer;
+    z-index: 2;
+    position: relative;
+
+    &:active, &:focus, &:hover {
+        outline: none;
+    }
+
+    &:hover {
+        //background: rgba(255,255,255, .1);
+    }
+
+    span {
+        position: absolute;
+        //top: 1.2rem;
+        left: 50%;
+        width: 20px;
+        height: 2px;
+        margin: 0 0 0 -10px;
+        background: @white;
+        .rotate(0);
+        .transition(transform, .3s, linear);
+
+        &:before, &:after {
+            content: '';
+            position: absolute;
+            top: -8px;
+            right: 0;
+            width: 20px;
+            height: 2px;
+            background: @white;
+            .rotate(0);
+            .transition(transform, .3s, linear);
+        }
+
+        &:after {
+            top: 8px;
+        }
+    }
+
+    &.transform {
+        span {
+            .transition(transform, .3s, linear);
+            .rotate(180deg);
+            background: @white;
+
+            &:before, &:after {
+                content: '';
+                top: -5px;
+                right: 0;
+                width: .75rem;
+                .rotate(45deg);
+                .transition(transform, .3s, linear);
+            }
+
+            &:after {
+                top: 5px;
+                .rotate(-45deg);
+            }
+        }
+    }
+
+    &.light {
+        span {
+            background-color: @gray900;
+            &:before, &:after {
+                background-color: @gray900;
+            }
+        }
     }
 }

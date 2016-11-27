@@ -41,6 +41,10 @@ $.widget("corecss.sidebar", {
         var that = this, element = this.element, o = this.options;
         var overlay;
 
+        // if ($(o.toggle).hasClass("nav-button")) {
+        //     $(o.toggle).addClass("transform");
+        // }
+
         element.data('opened', true);
 
         if (o.overlay === true) {
@@ -66,6 +70,10 @@ $.widget("corecss.sidebar", {
     close: function(){
         var that = this, element = this.element, o = this.options;
         var overlay = $("#js-sidebar-overlay");
+
+        // if ($(o.toggle).hasClass("nav-button")) {
+        //     $(o.toggle).removeClass("transform");
+        // }
 
         element.data('opened', false);
 

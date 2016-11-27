@@ -679,6 +679,33 @@
     {
       "icon": {
         "paths": [
+          "M598 618l148-148-148-150v106h-214c-24 0-42 20-42 44v170h84v-128h172v106zM926 482c16 18 16 44 0 60l-384 384c-16 16-44 16-60 0l-384-384c-16-16-16-44 0-60l384-384c16-16 44-16 60 0z"
+        ],
+        "attrs": [],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "tags": [
+          "directions"
+        ],
+        "defaultCode": 58670,
+        "grid": 24
+      },
+      "attrs": [],
+      "properties": {
+        "order": 148,
+        "ligatures": "directions",
+        "id": 216,
+        "prevSize": 24,
+        "code": 58670,
+        "name": "directions"
+      },
+      "setIdx": 0,
+      "setId": 2,
+      "iconIdx": 216
+    },
+    {
+      "icon": {
+        "paths": [
           "M512 854c188 0 342-154 342-342 0-76-28-150-74-210l-478 478c60 46 134 74 210 74zM170 512c0 76 28 150 74 210l478-478c-60-46-134-74-210-74-188 0-342 154-342 342zM512 86c234 0 426 192 426 426s-192 426-426 426-426-192-426-426 192-426 426-426z"
         ],
         "attrs": [],
@@ -918,6 +945,33 @@
       "setIdx": 0,
       "setId": 2,
       "iconIdx": 273
+    },
+    {
+      "icon": {
+        "paths": [
+          "M170 512c0-188 154-342 342-342s342 154 342 342-154 342-342 342-342-154-342-342z"
+        ],
+        "attrs": [],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "tags": [
+          "fiber_manual_record"
+        ],
+        "defaultCode": 57441,
+        "grid": 24
+      },
+      "attrs": [],
+      "properties": {
+        "order": 147,
+        "ligatures": "fiber_manual_record",
+        "id": 275,
+        "prevSize": 24,
+        "code": 57441,
+        "name": "record"
+      },
+      "setIdx": 0,
+      "setId": 2,
+      "iconIdx": 275
     },
     {
       "icon": {
@@ -2758,6 +2812,33 @@
     {
       "icon": {
         "paths": [
+          "M256 256h512v512h-512v-512z"
+        ],
+        "attrs": [],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "tags": [
+          "stop"
+        ],
+        "defaultCode": 57415,
+        "grid": 24
+      },
+      "attrs": [],
+      "properties": {
+        "order": 146,
+        "ligatures": "stop",
+        "id": 720,
+        "prevSize": 24,
+        "code": 57415,
+        "name": "stop"
+      },
+      "setIdx": 0,
+      "setId": 2,
+      "iconIdx": 720
+    },
+    {
+      "icon": {
+        "paths": [
           "M810 128h172v512h-172v-512zM640 128c46 0 86 40 86 86v426c0 24-10 44-26 60l-280 282-46-46c-12-12-18-26-18-44v-14l42-196h-270c-46 0-86-38-86-84l2-4h-2v-82c0-12 2-22 6-32l130-300c12-30 42-52 78-52h384z"
         ],
         "attrs": [],
@@ -3190,7 +3271,7 @@
   ],
   "height": 1024,
   "metadata": {
-    "name": "mydomain"
+    "name": "core-icons"
   },
   "preferences": {
     "showGlyphs": true,
@@ -3201,7 +3282,7 @@
     "fontPref": {
       "prefix": "i-",
       "metadata": {
-        "fontFamily": "mydomain",
+        "fontFamily": "core-icons",
         "majorVersion": 1,
         "minorVersion": 0
       },
@@ -3216,7 +3297,8 @@
       "showSelector": true,
       "selector": "class",
       "classSelector": ".icon",
-      "showMetrics": false
+      "showMetrics": false,
+      "autoHost": true
     },
     "imagePref": {
       "prefix": "icon-",
@@ -3227,6 +3309,9 @@
       "classSelector": ".icon"
     },
     "historySize": 100,
-    "gridSize": 16
+    "gridSize": 16,
+    "quickUsageToken": {
+      "CoreIcons": "NDZlZGVjZTUxNmI2MjhkMjMwOWUwYTBhN2M2MjkwYzgjMSMxNDc1MTU2OTUyIyMj"
+    }
   }
 }

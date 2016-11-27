@@ -67,7 +67,7 @@ $.fn.swipe.fingers = {
 };
 */
 
-$.widget( "corecss.swipe" , {
+$.widget( "corecss.touch" , {
 
     version: "1.0.0",
 
@@ -85,7 +85,7 @@ $.widget( "corecss.swipe" , {
         swipeRight: null,
         swipeUp: null,
         swipeDown: null,
-        swipeStatus: null,
+        swipeStatus: null, // params: phase, direction, distance, duration, fingerCount, fingerData, currentDirection
         pinchIn: null,
         pinchOut: null,
         pinchStatus: null,
@@ -160,7 +160,7 @@ $.widget( "corecss.swipe" , {
             $.error('events not supported ' + this.START_EV + ',' + this.CANCEL_EV + ' on jQuery.swipe');
         }
 
-        element.data('swipe', this);
+        element.data('touch', this);
     },
 
     _setOptionsFromDOM: function(){

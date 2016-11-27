@@ -36,46 +36,47 @@
             </div>
 
             <header class="header fix-slow-animation">
-                <button class="tool-button ripple" id="sidebar-toggle"><span class="i-menu icon"></span></button>
+                <button class="nav-button" id="sidebar-toggle"><span></span></button>
                 <span class="app-title">Core CSS</span>
                 <span style="position: relative" class=" place-right">
-                    <button class="tool-button ripple" id="optionMenu"><span class="i-more_vert icon"></span></button>
+                    <button class="tool-button " id="optionMenu"><span class="i-more_vert icon"></span></button>
                     <ul class="menu dropdown place-right" data-role="dropdown" data-toggle-element="#optionMenu">
                         <li><a href="#">Параметры</a></li>
                     </ul>
                 </span>
-                <button class="tool-button place-right ripple"><span class="i-comment icon"></span></button>
-                <button class="tool-button place-right ripple"><span class="i-share icon"></span></button>
+                <button class="tool-button place-right " data-role="ripple"><span class="i-comment icon"></span></button>
+                <button class="tool-button place-right " data-role="ripple"><span class="i-share icon"></span></button>
             </header>
 
             <ul class="tabs bg-lightBlue-700 fg-white fixed-tabs deep noSwipe" data-role="tabs" data-marker-color="bg-yellow" id="main-tabs" data-on-tab-change="onTabOpen">
-                <li class="tab ripple">One</li>
-                <li class="tab ripple">Two Item</li>
-                <li class="tab ripple">Three</li>
-                <li class="tab ripple active">Tab Four</li>
-                <li class="tab ripple">Tab Five</li>
-                <li class="tab ripple">Tab Six</li>
-                <li class="tab ripple">Tab Seven</li>
+                <li class="tab " data-role="ripple">One</li>
+                <li class="tab " data-role="ripple">Two Item</li>
+                <li class="tab " data-role="ripple">Three</li>
+                <li class="tab  active" data-role="ripple">Tab Four</li>
+                <li class="tab " data-role="ripple">Tab Five</li>
+                <li class="tab " data-role="ripple">Tab Six</li>
+                <li class="tab " data-role="ripple">Tab Seven</li>
             </ul>
 
-            <footer class="footer bottom-nav fix-slow-animation">
-                <button class="button bg-pink fg-white ripple"><span class="i-add icon"></span><span class="label">Add</span></button>
-                <button class="button bg-pink fg-white ripple"><span class="i-favorite icon"></span><span class="label">Favorites</span></button>
-                <button class="button bg-pink fg-white ripple"><span class="i-timer icon"></span><span class="label">history</span></button>
+            <footer class="footer bottom-nav fix-slow-animation" data-role="ripple" data-ripple-target=".button">
+                <button class="button bg-pink fg-white "><span class="i-add icon"></span><span class="label">Add</span></button>
+                <button class="button bg-pink fg-white "><span class="i-favorite icon"></span><span class="label">Favorites</span></button>
+                <button class="button bg-pink fg-white "><span class="i-timer icon"></span><span class="label">history</span></button>
             </footer>
 
             <ul class="bottom-sheet" id="bottom-sheet" data-role="bottomsheet">
-                <li class="ripple"><span class="icon mif-envelop"></span>Mail</li>
-                <li class="ripple"><span class="icon mif-command"></span>Message</li>
-                <li class="ripple"><span class="icon mif-location"></span>Location</li>
-                <li class="ripple"><span class="icon mif-voicemail"></span>Voice</li>
-                <li class="ripple"><span class="icon mif-phone"></span>Dialer</li>
+                <li class=""><span class="icon mif-envelop"></span>Mail</li>
+                <li class=""><span class="icon mif-command"></span>Message</li>
+                <li class=""><span class="icon mif-location"></span>Location</li>
+                <li class=""><span class="icon mif-voicemail"></span>Voice</li>
+                <li class=""><span class="icon mif-phone"></span>Dialer</li>
                 <li class="divider"></li>
-                <li class="ripple"><span class="icon mif-upload"></span>Upload</li>
-                <li class="ripple"><span class="icon mif-security"></span>Security</li>
+                <li class=""><span class="icon mif-upload"></span>Upload</li>
+                <li class=""><span class="icon mif-security"></span>Security</li>
             </ul>
 
-            <div class="view-content fix-slow-animation"></div>
+            <div class="view-content fix-slow-animation">
+            </div>
         </div>
     </div>
 
@@ -89,11 +90,11 @@
     <script>
 
         var parts = [
-            'gravatar', 'dialogs', 'tabs-control', 'multi-action', 'calendar', 'stepper', 'slider', 'progress', 'lists', 'tables', 'panels', 'chips', 'tabs', 'buttons', 'sheet', 'inputs', 'switches', 'menus', 'colors', 'typo'
+            'toast', 'gravatar', 'dialogs', 'tabs-control', 'multi-action', 'calendar', 'stepper', 'slider', 'progress', 'lists', 'tables', 'panels', 'chips', 'tabs', 'buttons', 'sheet', 'inputs', 'switches', 'menus', 'colors', 'typo'
         ];
 
         var sidebar_menu = $(".sidebar-menu"), sidebar_menu_point = sidebar_menu.find(".divider");
-        var li, a;
+        var li, a, view = $(".view-content");
 
         $.each(parts, function(){
             li = $("<li>");
@@ -101,17 +102,18 @@
             li.insertBefore(sidebar_menu_point);
 
             var file = '~'+this+'.html';
-            var target = $("<div>");
+            var target = $("<div>").appendTo(view);
 
             target
                     .attr("id", this)
+                    .attr("name", this)
                     .addClass("clear")
-                    .appendTo($(".view-content"));
+                    ;
 
             $('#'+this).load(file);
         });
 
-        sidebar_menu.on("click", "a", function(){
+        sidebar_menu.on("click", "a", function(e){
             $(".sidebar").data("sidebar").close();
         });
 
@@ -147,7 +149,7 @@
             });
         }, 500);
 
-        $("body").swipe({
+        $("body").touch({
             allowPageScroll:"vertical",
             swipe: function(event, direction, distance, duration, fingerCount, fingerData){
                 var sb = $(".sidebar").data('sidebar');
@@ -181,9 +183,13 @@
         $("#avatar_image").attr("src", gravatar.getImageSrc('sergey@pimenov.com.ua'));
 
         function onTabOpen(tab){
-            console.log('Tab opened');
-            console.log(tab);
+//            console.log('Tab opened');
+//            console.log(tab);
         }
+
+        //coreStorage.setItem("TEST_ITEM", "as;ldkfjasd;ldkfjasd;lkfjal;sdkjf");
+        coreStorage.getItem("TEST_ITEM_1");
+        coreStorage.getItem("TEST_ITEM_1", "123");
 
     </script>
 

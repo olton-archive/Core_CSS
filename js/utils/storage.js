@@ -6,16 +6,23 @@ var storage = {
     },
 
     setItem: function(key, value){
-        window.localStorage.setItem(storage.key + ":" + key, value);
+        window.localStorage.setItem(storage.key + ":" + key, JSON.stringify(value));
     },
 
-    getItem: function(key, default_value){
-        return window.localStorage.getItem(storage.key + ":" + key) || (default_value || null);
+    getItem: function(key, default_value, reviver){
+        var result,
+            value = window.localStorage.getItem(storage.key + ":" + key) || (default_value || null);
+        try {
+            result = JSON.parse(value, reviver);
+        } catch (e) {
+            result = null;
+        }
+        return result;
     },
 
-    getItemPart: function(key, sub_key, default_value){
-        var val = this.getItem(key, default_value);
-        return val !== null && val[sub_key] !== undefined ? val[sub_key] : null;
+    getItemPart: function(key, sub_key, default_value, reviver){
+        var val = this.getItem(key, default_value, reviver);
+        return val !== null && typeof val === 'object' && val[sub_key] !== undefined ? val[sub_key] : null;
     },
 
     delItem: function(key){

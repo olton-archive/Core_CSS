@@ -445,7 +445,8 @@ var dialog = {
             removeOnClose: true
         }, (data.options != undefined ? data.options : {}));
 
-        dlg.dialog(dlg_options);
+        return dlg.dialog(dlg_options);
+
     }
 };
 

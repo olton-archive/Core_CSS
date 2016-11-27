@@ -103,3 +103,77 @@
 .list-item-custom + .list-item-custom {
     border-top: 1px @gray200 solid;
 }
+
+.feed-item {
+    display: block;
+    position: relative;
+    height: 104px;
+    padding: 16px 0;
+
+    .avatar {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        width: 96px;
+        height: 72px;
+    }
+
+    .label {
+        position: relative;
+        font-weight: normal;
+        font-size: 14px;
+        display: block;
+        overflow: hidden;
+        line-height: 1.2;
+        color: @gray900;
+        height: 62px;
+    }
+
+    .avatar ~ .label, .avatar ~ .additional  {
+        margin-left: 128px;
+        margin-right: 16px;
+    }
+
+    .additional {
+        position: relative;
+        display: block;
+        width: ~"calc(100% - 90px)";
+        font-size: 10px;
+        z-index: 2;
+    }
+
+    .date {
+        float: left;
+    }
+
+    .author {
+        float: right;
+    }
+
+    .link {
+
+    }
+
+    .avatar {
+        &.place-right {
+            float: none;
+            left: auto;
+            right: 16px;
+        }
+    }
+
+    .avatar.place-right ~ .label,.avatar.place-right ~ .additional {
+        margin-left: 16px;
+        margin-right: 128px;
+    }
+
+    &.read {
+        .label {
+            color: @gray500;
+        }
+    }
+}
+
+.feed-item + .feed-item {
+    border-top: 1px @gray200 solid;
+}

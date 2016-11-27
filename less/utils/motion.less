@@ -1,25 +1,25 @@
 @import (once) "../include/variables";
 @import (once) "../include/mixins";
 
-.ripple {
-    overflow: hidden;
-}
-
-.ripple-ink {
-    display: block;
-    position: absolute;
-    background:rgba(255, 255, 255, 0.3);
-    border-radius: 100%;
-    transform:scale(0);
-}
-
-.ripple-animate {
-    animation:ripple 0.65s linear;
-}
-
-@keyframes ripple {
-    100% {opacity: 0; transform: scale(2.5);}
-}
+//.ripple {
+//    overflow: hidden;
+//}
+//
+//.ripple-ink {
+//    display: block;
+//    position: absolute;
+//    background:rgba(255, 255, 255, 0.3);
+//    border-radius: 100%;
+//    transform:scale(0);
+//}
+//
+//.ripple-animate {
+//    animation:ripple 0.65s linear;
+//}
+//
+//@keyframes ripple {
+//    100% {opacity: 0; transform: scale(2.5);}
+//}
 
 .fix-slow-animation {
     .enableGPU();
