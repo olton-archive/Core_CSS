@@ -254,7 +254,7 @@ $.widget( "corecss.dialog" , {
 
         element.data('opened', true);
 
-        if (o.overlay) {
+        if (o.modal || o.overlay) {
             overlay = this._overlay;
             overlay.appendTo('body').show();
             if (o.overlayClickClose) {
@@ -268,16 +268,7 @@ $.widget( "corecss.dialog" , {
 
         //console.log('after show');
 
-        if (typeof o.onDialogOpen === 'function') {
-            o.onDialogOpen(element);
-        } else {
-            if (typeof window[o.onDialogOpen] === 'function') {
-                window[o.onDialogOpen](element);
-            } else {
-                var result = eval("(function(){"+o.onDialogOpen+"})");
-                result.call(element);
-            }
-        }
+        $.CoreCss.callback(o.onDialogOpen, element);
 
         if (o.hide && parseInt(o.hide) > 0) {
             this._interval = setTimeout(function(){
@@ -300,16 +291,8 @@ $.widget( "corecss.dialog" , {
         //element.fadeOut();
         this._hide();
 
-        if (typeof o.onDialogClose === 'function') {
-            o.onDialogClose(element);
-        } else {
-            if (typeof window[o.onDialogClose] === 'function') {
-                window[o.onDialogClose](element);
-            } else {
-                var result = eval("(function(){"+o.onDialogClose+"})");
-                result.call(element);
-            }
-        }
+        $.CoreCss.callback(o.onDialogClose, element);
+
     },
 
     reset: function(){
@@ -417,16 +400,9 @@ var dialog = {
                 var button = $("<button class='flat-button'>"+item.title+"</button>");
 
                 if (item.onclick != undefined) button.on("click", function(){
-                    if (typeof item.onclick === 'function') {
-                        item.onclick(dlg);
-                    } else {
-                        if (typeof window[item.onclick] === 'function') {
-                            window[item.onclick](dlg);
-                        } else {
-                            var result = eval("(function(){"+item.onclick+"})");
-                            result.call(dlg);
-                        }
-                    }
+
+                    $.CoreCss.callback(item.onclick, dlg);
+
                 });
 
                 if (item.cls !== undefined) {

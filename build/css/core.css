@@ -3199,6 +3199,71 @@ footer,
 .bg-black {
   background-color: #000000 !important;
 }
+.card {
+  display: block;
+  position: relative;
+  font-size: 14px;
+}
+.card-header {
+  border-bottom: 1px #eee solid;
+  padding: 16px;
+  font-size: 16px;
+  border-radius: 2px 2px 0 0;
+  display: block;
+}
+.card-header .avatar {
+  float: left;
+  width: 34px;
+  height: 34px;
+}
+.card-header .avatar img {
+  width: 100%;
+  height: 100%;
+}
+.card-header .name {
+  margin-left: 44px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.card-header .date {
+  margin-left: 44px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #9E9E9E;
+}
+.card-content {
+  padding: 16px;
+}
+.card-footer {
+  border-top: 1px #eee solid;
+  padding: 4px 16px;
+  border-radius: 0 0 2px 2px;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-height: 48px;
+}
+.card.image-header .card-header {
+  height: 40vw;
+  vertical-align: bottom;
+  background-size: cover;
+  background-position: center;
+  -webkit-align-items: flex-end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+* + .card {
+  margin-top: 8px;
+}
 .tabs {
   margin: 0;
   padding: 0;

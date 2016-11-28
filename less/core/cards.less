@@ -2,5 +2,68 @@
 @import (once) "../include/mixins";
 
 .card {
+    display: block;
+    position: relative;
+    font-size: 14px;
+}
 
+.card-header {
+    border-bottom: 1px #eee solid;
+    padding: 16px;
+    font-size: 16px;
+    border-radius: 2px 2px 0 0;
+    display: block;
+}
+
+.card-header {
+    .avatar {
+        float: left;
+        .square(34px);
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .name {
+        margin-left: 44px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+    .date {
+        margin-left: 44px;
+        font-size: 13px;
+        font-weight: 500;
+        color: @gray;
+    }
+}
+
+.card-content {
+    padding: 16px;
+}
+
+.card-footer {
+    border-top: 1px #eee solid;
+    padding: 4px 16px;
+    border-radius: 0 0 2px 2px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 48px;
+}
+
+.card {
+    &.image-header {
+        .card-header {
+            height: 40vw;
+            vertical-align: bottom;
+            background-size: cover;
+            background-position: center;
+            align-items: flex-end;
+            display: flex;
+        }
+    }
+}
+
+* + .card {
+    margin-top: 8px;
 }
