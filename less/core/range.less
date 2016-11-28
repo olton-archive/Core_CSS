@@ -1,18 +1,18 @@
 @import (once) "../include/variables";
 @import (once) "../include/mixins";
 
-@sliderMarkerSize: 12px;
-@sliderLineHeight: 3px;
-@sliderHeight: 34px;
+@rangeMarkerSize: 12px;
+@rangeLineHeight: 3px;
+@rangeHeight: 34px;
 
-.slider {
-    height: @sliderHeight;
+.range {
+    height: @rangeHeight;
     line-height: 1;
     width: auto;
     position: relative;
 
     .marker {
-        .circle(@sliderMarkerSize);
+        .circle(@rangeMarkerSize);
         cursor: pointer;
         position: absolute;
         top: 50%;
@@ -25,7 +25,7 @@
             display: none;
         }
 
-        &.focus {
+        &.focus, &:focus, &:active {
             &:before {
                 display: block;
                 content: "";
@@ -41,11 +41,11 @@
         }
     }
 
-    .slider-backside, .complete {
-        height: @sliderLineHeight;
+    .range-backside, .complete {
+        height: @rangeLineHeight;
         background: @gray300;
         width: 100%;
-        line-height: @sliderHeight;
+        line-height: @rangeHeight;
         top: 50%;
         margin-top: -.25rem;
         position: absolute;
@@ -71,7 +71,7 @@
         left: 0;
     }
 
-    .slider-hint {
+    .range-hint {
         min-width: 1.8rem;
         width: auto;
         height: auto;
@@ -104,7 +104,7 @@
     }
 
     &.hint-bottom {
-        .slider-hint {
+        .range-hint {
             top: 100%;
             margin-top: -.125rem;
             &:before {
@@ -115,7 +115,7 @@
     }
 
     &.permanent-hint {
-        & > .slider-hint {
+        & > .range-hint {
             display: block;
         }
     }
@@ -146,13 +146,13 @@
     }
 }
 
-.slider {
+.range {
     &.vertical {
         min-height: 100px;
         width: 2.125rem;
         display: inline-block;
 
-        .slider-backside, .complete {
+        .range-backside, .complete {
             position: absolute;
             height: 100%;
             width: .5rem;
@@ -181,7 +181,7 @@
             top: auto;
         }
 
-        .slider-hint {
+        .range-hint {
             left: 100%;
             margin-top: 0;
 
@@ -197,7 +197,7 @@
         }
 
         &.hint-left {
-            .slider-hint {
+            .range-hint {
                 left: -100%;
                 margin-left: .25rem;
 
@@ -210,7 +210,7 @@
     }
 }
 
-.slider.cycle-marker {
+.range.cycle-marker {
     .marker {
         border-radius: 50%;
     }

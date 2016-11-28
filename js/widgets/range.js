@@ -1,4 +1,4 @@
-$.widget("corecss.slider", {
+$.widget("corecss.range", {
 
     version: "1.0.1",
 
@@ -25,11 +25,11 @@ $.widget("corecss.slider", {
         target: false,
 
         onStartChange: function(){},
-        onChange: function(value, slider){},
-        onChanged: function(value, slider){},
-        onBufferChange: function(value, slider){},
+        onChange: function(value, range){},
+        onChanged: function(value, range){},
+        onBufferChange: function(value, range){},
 
-        _slider : {
+        _range : {
             vertical: false,
             offset: 0,
             length: 0,
@@ -46,7 +46,7 @@ $.widget("corecss.slider", {
 
 
         var o = this.options,
-            s = o._slider;
+            s = o._range;
 
         $.each(element.data(), function(key, value){
             if (key in o) {
@@ -83,7 +83,7 @@ $.widget("corecss.slider", {
             element.addClass('hint-left');
         }
 
-        this._createSlider();
+        this._createRange();
         this._initPoints();
         this._placeMarker(o.position);
         this._showBuffer(o.buffer);
@@ -121,11 +121,11 @@ $.widget("corecss.slider", {
             that._startMoveMarker(e);
         });
 
-        element.data('slider', this);
+        element.data('range', this);
     },
 
     _startMoveMarker: function(e){
-        var element = this.element, o = this.options, that = this, hint = element.children('.slider-hint');
+        var element = this.element, o = this.options, that = this, hint = element.children('.range-hint');
         var returnedValue;
 
         var event_move = CoreCss.isTouchDevice() ? 'touchmove' : 'mousemove';
@@ -175,31 +175,31 @@ $.widget("corecss.slider", {
             percents,
             valuePix,
 
-            vertical = o._slider.vertical,
-            sliderOffset = o._slider.offset,
-            sliderStart = o._slider.start,
-            sliderEnd = o._slider.stop,
-            sliderLength = o._slider.length,
-            markerSize = o._slider.marker;
+            vertical = o._range.vertical,
+            rangeOffset = o._range.offset,
+            rangeStart = o._range.start,
+            rangeEnd = o._range.stop,
+            rangeLength = o._range.length,
+            markerSize = o._range.marker;
 
         var event = !CoreCss.isTouchDevice() ? ev.originalEvent : ev.originalEvent.touches[0];
 
         //console.log(event);
 
         if (vertical) {
-            cursorPos = event.pageY - sliderOffset;
+            cursorPos = event.pageY - rangeOffset;
         } else {
-            cursorPos = event.pageX - sliderOffset;
+            cursorPos = event.pageX - rangeOffset;
         }
 
-        if (cursorPos < sliderStart) {
-            cursorPos = sliderStart;
-        } else if (cursorPos > sliderEnd) {
-            cursorPos = sliderEnd;
+        if (cursorPos < rangeStart) {
+            cursorPos = rangeStart;
+        } else if (cursorPos > rangeEnd) {
+            cursorPos = rangeEnd;
         }
 
         if (vertical) {
-            valuePix = sliderLength - cursorPos - markerSize / 2;
+            valuePix = rangeLength - cursorPos - markerSize / 2;
         } else {
             valuePix = cursorPos - markerSize / 2;
         }
@@ -238,17 +238,17 @@ $.widget("corecss.slider", {
         var size, size2, o = this.options, colorParts, colorIndex = 0, colorDelta, element = this.element,
             marker = this.element.children('.marker'),
             complete = this.element.children('.complete'),
-            hint = this.element.children('.slider-hint'), hintValue,
+            hint = this.element.children('.range-hint'), hintValue,
             oldPos = this._percToPix(o.position);
 
         colorParts = o.colors.length;
-        colorDelta = o._slider.length / colorParts;
+        colorDelta = o._range.length / colorParts;
 
-        if (o._slider.vertical) {
-            var oldSize = this._percToPix(o.position) + o._slider.marker,
-                oldSize2 = o._slider.length - oldSize;
-            size = this._percToPix(value) + o._slider.marker / 2;
-            size2 = o._slider.length - size;
+        if (o._range.vertical) {
+            var oldSize = this._percToPix(o.position) + o._range.marker,
+                oldSize2 = o._range.length - oldSize;
+            size = this._percToPix(value) + o._range.marker / 2;
+            size2 = o._range.length - size;
             this._animate(marker.css('top', oldSize2),{top: size2});
             this._animate(complete.css('height', oldSize),{height: size});
 
@@ -305,16 +305,16 @@ $.widget("corecss.slider", {
 
     _pixToPerc: function (valuePix) {
         var valuePerc;
-        valuePerc = (valuePix < 0 ? 0 : valuePix )* this.options._slider.ppp;
+        valuePerc = (valuePix < 0 ? 0 : valuePix )* this.options._range.ppp;
         return Math.round(this._correctValue(valuePerc));
     },
 
     _percToPix: function (value) {
-        ///console.log(this.options._slider.ppp, value);
-        if (this.options._slider.ppp === 0) {
+        ///console.log(this.options._range.ppp, value);
+        if (this.options._range.ppp === 0) {
             return 0;
         }
-        return Math.round(value / this.options._slider.ppp);
+        return Math.round(value / this.options._range.ppp);
     },
 
     _correctValue: function (value) {
@@ -342,7 +342,7 @@ $.widget("corecss.slider", {
     },
 
     _initPoints: function(){
-        var o = this.options, s = o._slider, element = this.element;
+        var o = this.options, s = o._range, element = this.element;
 
         if (s.vertical) {
             s.offset = element.offset().top;
@@ -359,20 +359,20 @@ $.widget("corecss.slider", {
         s.stop = s.length - s.marker / 2;
     },
 
-    _createSlider: function(){
+    _createRange: function(){
         var element = this.element,
             o = this.options,
             complete, marker, hint, buffer, back;
 
         element.html('');
 
-        back = $("<div/>").addClass("slider-backside").appendTo(element);
+        back = $("<div/>").addClass("range-backside").appendTo(element);
         complete = $("<div/>").addClass("complete").appendTo(element);
         buffer = $("<div/>").addClass("buffer").appendTo(element);
         marker = $("<a/>").addClass("marker").appendTo(element);
 
         if (o.showHint) {
-            hint = $("<span/>").addClass("slider-hint").appendTo(element);
+            hint = $("<span/>").addClass("range-hint").appendTo(element);
         }
 
         if (o.color !== 'default') {
@@ -452,7 +452,7 @@ $.widget("corecss.slider", {
         oldSize = o.buffer;
         size = value == 100 ? 99.9 : value;
 
-        if (o._slider.vertical) {
+        if (o._range.vertical) {
             this._animate(buffer.css('height', oldSize+'%'),{height: size+'%'});
 
         } else {

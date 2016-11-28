@@ -4964,7 +4964,7 @@ $.widget("corecss.sidebar", {
 });
 
 
-// Source: js/widgets/slider.js
+// Source: js/widgets/range.js
 $.widget("corecss.slider", {
 
     version: "1.0.1",
