@@ -48,14 +48,14 @@
                 <button class="tool-button place-right " data-role="ripple"><span class="i-share icon"></span></button>
             </header>
 
-            <ul class="tabs bg-lightBlue-700 fg-white fixed-tabs deep noSwipe" data-role="tabs" data-marker-color="bg-yellow" id="main-tabs" data-on-tab-change="onTabOpen">
-                <li class="tab " data-role="ripple">One</li>
-                <li class="tab " data-role="ripple">Two Item</li>
-                <li class="tab " data-role="ripple">Three</li>
-                <li class="tab  active" data-role="ripple">Tab Four</li>
-                <li class="tab " data-role="ripple">Tab Five</li>
-                <li class="tab " data-role="ripple">Tab Six</li>
-                <li class="tab " data-role="ripple">Tab Seven</li>
+            <ul class="tabs bg-lightBlue-700 fg-white fixed-tabs deep noSwipe" data-role="tabs,ripple" data-ripple-target=".tab" data-marker-color="bg-yellow" id="main-tabs" data-on-tab-change="onTabOpen">
+                <li class="tab ">One</li>
+                <li class="tab ">Two Item</li>
+                <li class="tab ">Three</li>
+                <li class="tab active">Tab Four</li>
+                <li class="tab ">Tab Five</li>
+                <li class="tab ">Tab Six</li>
+                <li class="tab ">Tab Seven</li>
             </ul>
 
             <footer class="footer bottom-nav fix-slow-animation" data-role="ripple" data-ripple-target=".button">
@@ -64,15 +64,15 @@
                 <button class="button bg-pink fg-white "><span class="i-timer icon"></span><span class="label">history</span></button>
             </footer>
 
-            <ul class="bottom-sheet" id="bottom-sheet" data-role="bottomsheet">
-                <li class=""><span class="icon mif-envelop"></span>Mail</li>
-                <li class=""><span class="icon mif-command"></span>Message</li>
-                <li class=""><span class="icon mif-location"></span>Location</li>
-                <li class=""><span class="icon mif-voicemail"></span>Voice</li>
-                <li class=""><span class="icon mif-phone"></span>Dialer</li>
+            <ul class="bottom-sheet" id="bottom-sheet" data-role="bottomsheet,ripple" data-ripple-target="li">
+                <li class=""><span class="icon i-contact_mail"></span>Mail</li>
+                <li class=""><span class="icon i-comment"></span>Message</li>
+                <li class=""><span class="icon i-power"></span>Location</li>
+                <li class=""><span class="icon i-keyboard_voice"></span>Voice</li>
+                <li class=""><span class="icon i-phone"></span>Dialer</li>
                 <li class="divider"></li>
-                <li class=""><span class="icon mif-upload"></span>Upload</li>
-                <li class=""><span class="icon mif-security"></span>Security</li>
+                <li class=""><span class="icon i-file_upload"></span>Upload</li>
+                <li class=""><span class="icon i-security"></span>Security</li>
             </ul>
 
             <div class="view-content fix-slow-animation">

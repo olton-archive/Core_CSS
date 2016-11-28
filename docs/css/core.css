@@ -627,6 +627,7 @@ footer,
   text-align: center;
   top: 50%;
   margin-top: -12px;
+  opacity: .8;
 }
 .bottom-sheet > li:hover,
 .bottom-sheet > .item:hover,
@@ -3290,6 +3291,7 @@ footer,
   text-align: center;
   text-transform: uppercase;
   margin: 0;
+  overflow: hidden;
 }
 .tabs.flex {
   display: -webkit-flex;
