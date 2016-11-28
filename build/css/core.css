@@ -3828,6 +3828,9 @@ header.more ~ .fixed-tabs,
     stroke: #FFEB3B;
   }
 }
+.dialog.preloader {
+  padding: 0;
+}
 .slider {
   height: 34px;
   line-height: 1;

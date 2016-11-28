@@ -154,3 +154,21 @@ $.widget( "corecss.progress" , {
         this._super('_setOption', key, value);
     }
 });
+
+var progress = {
+    showPreloader: function(size, timeout){
+        size = size || 64;
+        timeout = timeout || false;
+        return coreDialog.create({
+            content: "<div data-role='progress' data-type='circle' data-size='"+size+"' data-radius='"+size/3+"'></div>",
+            options: {
+                width: size,
+                height: size,
+                cls: "preloader",
+                hide: timeout
+            }
+        });
+    }
+};
+
+$.Progress = window.coreProgress = progress;

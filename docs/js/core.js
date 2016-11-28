@@ -4309,6 +4309,7 @@ $.widget( "corecss.dialog" , {
         closeAction: true,
         closeElement: ".js-dialog-close",
         removeOnClose: false,
+        cls: "",
 
         // _interval: undefined,
         // _overlay: undefined,
@@ -4413,6 +4414,9 @@ $.widget( "corecss.dialog" , {
             top: '100%'
         });
 
+        if (o.cls !== "") {
+            element.addClass(o.cls);
+        }
     },
 
     _hide: function(){
@@ -5228,6 +5232,23 @@ $.widget( "corecss.progress" , {
     }
 });
 
+var progress = {
+    showPreloader: function(size, timeout){
+        size = size || 64;
+        timeout = timeout || false;
+        return coreDialog.create({
+            content: "<div data-role='progress' data-type='circle' data-size='"+size+"' data-radius='"+size/3+"'></div>",
+            options: {
+                width: size,
+                height: size,
+                cls: "preloader",
+                hide: timeout
+            }
+        });
+    }
+};
+
+$.Progress = window.coreProgress = progress;
 // Source: js/widgets/ripple.js
 $.widget( "corecss.ripple" , {
 

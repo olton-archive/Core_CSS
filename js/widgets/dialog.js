@@ -23,6 +23,7 @@ $.widget( "corecss.dialog" , {
         closeAction: true,
         closeElement: ".js-dialog-close",
         removeOnClose: false,
+        cls: "",
 
         // _interval: undefined,
         // _overlay: undefined,
@@ -127,6 +128,9 @@ $.widget( "corecss.dialog" , {
             top: '100%'
         });
 
+        if (o.cls !== "") {
+            element.addClass(o.cls);
+        }
     },
 
     _hide: function(){
