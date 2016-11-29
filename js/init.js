@@ -1,5 +1,5 @@
-if (window.CALENDAR_WEEK_START == undefined) {window.CALENDAR_WEEK_START = 1;}
-if (window.CALENDAR_LOCALE == undefined) {window.CALENDAR_LOCALE = 'en';}
+if (window.CORE_CALENDAR_WEEK_START == undefined) {window.CORE_CALENDAR_WEEK_START = 1;}
+if (window.CORE_LOCALE == undefined) {window.CORE_LOCALE = 'en-US';}
 if (window.CORE_ANIMATION_DURATION == undefined) {window.CORE_ANIMATION_DURATION = 200;}
 
 var CoreCss = {

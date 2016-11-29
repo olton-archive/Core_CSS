@@ -2,212 +2,147 @@
 @import (once) "../include/mixins";
 
 .calendar {
-    max-width: 340px;
-    width: 340px;
-    border: 1px @gray200 solid;
-    font-size: 12px;
-    padding: 0;
-    background-color: @white;
-    margin: auto;
-    .shadow(3);
+    display: block;
+    width: 330px;
+    margin: 0 auto;
+    border-radius: 2px;
+}
 
-    .calendar-header {
-        background-color: @teal;
-        color: @white;
-        padding: 20px;
+.calendar-header, .calendar-content, .calendar-footer {
+    position: relative;
+    display: block;
+}
 
-        * {
-            color: @white;
-        }
+.calendar-header {
+    background-size: cover;
+    padding: 16px;
+    color: @white;
+    background: @lightBlue700 center;
 
-        div.header-year {
-            font-size: 14px;
-        }
-        div.header-month {
-            font-size: 32px;
-            margin-top: 5px;
-        }
-    }
-
-    .calendar-grid {
-        margin: 10px 0 0;
-        padding: 10px 10px 0 10px;
-    }
-
-    .calendar-row {
-        margin: 0 0 5px;
-        width: 100%;
-        .clear();
-
-        &:last-child {
-            margin-bottom: 0;
-        }
-    }
-
-    .calendar-cell {
-        width: 12.46201429%;
-        margin: 0 0 0 2.12765%;
-        display: block;
-        float: left;
-
-        &:first-child {
-            margin-left: 0;
-        }
-
-        &.sel-month {
-            width: 41.64134286%;
-        }
-
-        &.sel-year {
-            width: 48.936175%;
-        }
-
-        &.sel-plus, &.sel-minus {
-            width: 23.4042625%;
-        }
-
-        &.month-cell, &.year-cell {
-            width: 23.4042625%;
-        }
-    }
-
-    .calendar-actions {
-        border-top: 1px @gray200 solid;
-        .button {
-            margin: 2.5px;
-        }
-    }
-
-    .day-of-week {
-        padding: 5px;
-        cursor: default;
-    }
-
-    a {
-        display: block;
-        padding: 5px 0;
-        color: @gray900;
-        border-radius: 50%;
-
-        &:hover {
-            background-color: @cyan200;
-            color: @white;
-        }
-    }
-
-    .calendar-subheader {
-
-        margin-bottom: 10px;
-
-        a {
-            font-size: 16px;
-            padding: 5px;
-
-            &:hover {
-
-            }
-        }
-    }
-
-    .week-days {
-    }
-
-    .calendar-actions {
-        .clear();
-    }
-
-    .today {
-        text-align: center;
-
-        a {
-            //background-color: @green;
-            color: @green;
-            border-radius: 50%;
-            font-size: 1.5em;
-        }
-    }
-
-    .selected {
-        border-radius: 50%;
-        a {
-            border-radius: 50%;
-        }
+    .year {
+        font-size: 14px;
     }
 
     .day {
-        text-align: center;
+        font-size: 28px;
+    }
+}
 
-        a {
-            display: block;
-            position: relative;
+.calendar-content {
+    padding: 0 8px;
+}
+
+.calendar-content {
+    .toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .toolbar {
+        .prev_year, .next_year, .prev_month, .next_month {
+            min-width: 0;
+            padding: 8px 16px;
+            flex-grow: 1;
             text-align: center;
-            height: 42px;
-            min-height: 42px;
-            line-height: 42px;
-            padding: 0;
+            &:after {
+                line-height: 24px;
+                position: relative;
+                content: "\203A";
+                font-size: 28px;
+            }
         }
 
-        a.selected {
-
+        .prev_year, .prev_month {
+            &:after {
+                content: "\2039";
+            }
         }
 
-        & > div {
-            height: 100%;
-        }
-    }
-
-    .month, .year {
-        //.set-border();
-
-        a {
-            padding-top: 21px;
-            padding-bottom: 21px;
-            min-height: 64px;
-            height: 64px;
-        }
-    }
-
-    .empty {
-        cursor: default;
-    }
-
-    .other-day {
-        display: block;
-        text-align: center;
-        color: @gray200;
-        padding: 0;
-        height: 42px;
-        min-height: 42px;
-        line-height: 42px;
-    }
-
-    .exclude {
-        background-color: @red;
-        a {
-            cursor: not-allowed;
-            background-color: @red;
-            color: @white;
-        }
-    }
-    .stored {
-        background-color: @pink200;
-        a {
-            cursor: pointer;
-            background-color: @pink200;
-            color: @white;
-        }
-    }
-    .selected {
-        background-color: @teal;
-
-        a {
-            background-color: @teal;
-            color: @white;
+        .current_year, .current_month {
+            text-align: center;
+            padding: 8px 16px;
+            flex-grow: 10;
         }
     }
 }
 
-.calendar-dropdown {
-    border: 0;
-    .shadow(1);
+.calendar-content {
+    .week-days {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-top: #eee solid 1px;
+        border-bottom: #eee solid 1px;
+        color: @gray600;
+        font-size: 12px;
+
+        & > .day {
+            text-align: center;
+            width: ~"calc(100% / 7)";
+        }
+    }
+
+    .month-days {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0;
+        font-size: 12px;
+
+        & > .day {
+            text-align: center;
+            width: ~"calc(100% / 7)";
+            padding: 8px 0;
+            position: relative;
+        }
+
+        & > .today {
+            color: @lightBlue700;
+            font-weight: bolder;
+        }
+
+        & > .day {
+            &.selected {
+                color: @white;
+                background-color: @lightBlue700;
+                border-radius: 4px;
+            }
+        }
+    }
+}
+
+.calendar-footer {
+    padding: 4px 8px;
+    border-top: 1px #eee solid;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .flat-button {
+        color: @lightBlue700;
+    }
+}
+
+@media screen and (min-width: 640px) {
+    .calendar {
+        width: 512px;
+        height: 312px;
+    }
+
+    .calendar-header {
+        width: 180px;
+        float: left;
+        height: 100%;
+    }
+
+    .calendar-content {
+        margin-left: 180px;
+        height: ~"calc(100% - 45px)";
+    }
+
+    .calendar-footer {
+        margin-left: 180px;
+    }
 }

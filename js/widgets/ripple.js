@@ -51,6 +51,9 @@ $.widget( "corecss.ripple" , {
                 top: y + 'px',
                 left: x + 'px'
             }).addClass("rippleEffect");
+            setTimeout(function(){
+                $(".ripple").remove();
+            }, 400);
         });
 
         element.data('ripple', this);
