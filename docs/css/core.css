@@ -4337,7 +4337,6 @@ header.more ~ .fixed-tabs,
 .calendar-content .month-days > .day.selected {
   color: #ffffff;
   background-color: #0288d1;
-  border-radius: 4px;
 }
 .calendar-footer {
   padding: 4px 8px;

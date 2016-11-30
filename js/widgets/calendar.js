@@ -11,7 +11,13 @@ $.widget( "corecss.calendar" , {
         format: "dd-mm-yyyy",
         locale: CORE_LOCALE,
         toolbar: true,
-        onDone: $.noop()
+        footer: true,
+
+        onCreate: $.noop(),
+        onDone: $.noop(),
+        onToday: $.noop(),
+        onClear: $.noop(),
+        onDay: $.noop()
     },
 
     current: new Date(),
@@ -27,6 +33,8 @@ $.widget( "corecss.calendar" , {
         this._createEvents();
 
         element.data('calendar', this);
+
+        $.CoreCss.callback(o.onCreate, element);
     },
 
     _drawHeader: function(){
@@ -68,13 +76,19 @@ $.widget( "corecss.calendar" , {
     },
 
     _drawFooter: function(){
-        var o = this.options,
-            footer = "";
+        var element = this.element, o = this.options,
+            footer = element.find(".calendar-footer"),
+            html = "";
 
-        footer += "<button class='flat-button js-button-today'>"+coreLocales[o.locale].buttons.today+"</button>";
-        footer += "<button class='flat-button js-button-done'>"+coreLocales[o.locale].buttons.done+"</button>";
+        html += "<button class='flat-button js-button-today'>"+coreLocales[o.locale].buttons.today+"</button>";
+        html += "<button class='flat-button js-button-clear'>"+coreLocales[o.locale].buttons.clear+"</button>";
+        html += "<button class='flat-button js-button-done'>"+coreLocales[o.locale].buttons.done+"</button>";
 
-        return $(footer);
+        if (o.footer !== true) {
+            footer.hide();
+        }
+
+        return $(html);
     },
 
     _drawDays: function(distance){
@@ -91,7 +105,7 @@ $.widget( "corecss.calendar" , {
             month = this.current.getMonth() - distance,
             year = this.current.getFullYear(),
             firstDay = new Date(year, month, 1),
-            i, j, md, dd, total = 0, days,
+            i, j, md, dd, total = 0, days, stored_day,
             p_month_days,
             days_inner = $("<div>");
 
@@ -115,15 +129,22 @@ $.widget( "corecss.calendar" , {
 
         md = $("<div>").addClass("month-days").appendTo(days);
 
+        /* Draw prev month days */
         for(i = 0; i < getDay(firstDay); i++) {
+            stored_day = new Date(year, month - 1, p_month_days - i);
             dd = $("<div>").addClass("day fg-gray-400 prev-month-day").html(p_month_days - i).appendTo(md);
-            dd.data('day', new Date(year, month - 1, p_month_days - i));
+            dd.data('day', stored_day);
+            if (this.selected.indexOf(stored_day.getTime()) > -1) {
+                dd.addClass("selected");
+            }
             total++;
         }
 
+        /* Draw current month days */
         while(firstDay.getMonth() == month) {
+            stored_day = new Date(firstDay.getFullYear(), firstDay.getMonth(), firstDay.getDate());
             dd = $("<div>").addClass("day").html(firstDay.getDate()).appendTo(md);
-            dd.data('day', new Date(firstDay.getFullYear(), firstDay.getMonth(), firstDay.getDate()));
+            dd.data('day', stored_day);
             if (
                 this.today.getFullYear() == firstDay.getFullYear() &&
                 this.today.getMonth() == firstDay.getMonth() &&
@@ -132,6 +153,9 @@ $.widget( "corecss.calendar" , {
                 dd.addClass("today");
             }
 
+            if (this.selected.indexOf(stored_day.getTime()) > -1) {
+                dd.addClass("selected");
+            }
             total++;
             if (getDay(firstDay) % 7 == 6) {
                 md = $("<div>").addClass("month-days").appendTo(days);
@@ -139,9 +163,14 @@ $.widget( "corecss.calendar" , {
             firstDay.setDate(firstDay.getDate() + 1);
         }
 
+        /* Draw next month days */
         while(total < 42) {
+            stored_day = new Date(firstDay.getFullYear(), firstDay.getMonth(), firstDay.getDate());
             dd = $("<div>").addClass("day fg-gray-400 next-month-day").html(firstDay.getDate()).appendTo(md);
-            dd.data('day', new Date(firstDay.getFullYear(), firstDay.getMonth(), firstDay.getDate()));
+            dd.data('day', stored_day);
+            if (this.selected.indexOf(stored_day.getTime()) > -1) {
+                dd.addClass("selected");
+            }
             if (getDay(firstDay) % 7 == 6) {
                 md = $("<div>").addClass("month-days").appendTo(days);
             }
@@ -185,7 +214,7 @@ $.widget( "corecss.calendar" , {
     },
 
     _createEvents: function(){
-        var that = this, element = this.element;
+        var that = this, element = this.element, o = this.options;
 
         element.on("click", ".js-control", function(){
 
@@ -227,6 +256,16 @@ $.widget( "corecss.calendar" , {
             that.current = that.today;
             setTimeout(function(){
                 that._drawCalendar();
+                $.CoreCss.callback(o.onToday, element);
+            }, 300);
+        });
+
+        element.on("click", ".js-button-clear", function(){
+            that.current = that.today;
+            that.selected = [];
+            setTimeout(function(){
+                that._drawCalendar();
+                $.CoreCss.callback(o.onClear, element);
             }, 300);
         });
 
@@ -240,29 +279,63 @@ $.widget( "corecss.calendar" , {
                     default: result = that.selected[0];
                 }
 
-                CoreCss.callback(o.onDone, result);
+                $.CoreCss.callback(o.onDone, result);
             }, 300);
         });
 
         element.on("click", ".month-days .day", function(){
-            var el = $(this), day = el.data('day');
+            var el = $(this), day = el.data('day'), index = that.selected.indexOf(day.getTime());
 
-            if (el.hasClass("prev-month-day") || el.hasClass("next-month-day")) {
-                that.current = el.data('day');
-                that._drawCalendar();
-                $.each(element.find(".month-days .day"), function(){
-                    var day2 = $(this).data('day');
-                    if (day.getTime() == day2.getTime()) {
-                        that.selected[0] = $(this).data('day');
-                        element.find(".selected").removeClass("selected");
-                        $(this).addClass("selected");
-                    }
-                });
-            } else {
-                that.selected[0] = day;
+            if (o.mode == 'default') {
+
                 element.find(".selected").removeClass("selected");
-                el.addClass("selected");
+
+                if (el.hasClass("prev-month-day") || el.hasClass("next-month-day")) {
+                    that.current = el.data('day');
+                    that._drawCalendar();
+                    $.each(element.find(".month-days .day"), function () {
+                        var day2 = $(this).data('day');
+                        if (day.getTime() == day2.getTime()) {
+                            that.selected[0] = $(this).data('day');
+                            $(this).addClass("selected");
+                        }
+                    });
+                } else {
+                    that.selected[0] = day;
+                    el.addClass("selected");
+                }
+
             }
+
+            if (o.mode == 'multi') {
+
+                if (el.hasClass("prev-month-day") || el.hasClass("next-month-day")) {
+                    that.current = el.data('day');
+                    that._drawCalendar();
+                    $.each(element.find(".month-days .day"), function () {
+                        var day2 = $(this).data('day');
+                        if (day.getTime() == day2.getTime()) {
+                            if (index == -1) {
+                                that.selected.push(day.getTime());
+                            } else {
+                                delete that.selected[index];
+                            }
+
+                            $(this).toggleClass("selected");
+                        }
+                    });
+                } else {
+                    if (index == -1) {
+                        that.selected.push(day.getTime());
+                    } else {
+                        delete that.selected[index];
+                    }
+                    el.toggleClass("selected");
+                }
+
+            }
+
+            $.CoreCss.callback(o.onDay, day);
         });
     },
 

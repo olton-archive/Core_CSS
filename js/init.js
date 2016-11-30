@@ -116,4 +116,4 @@ var CoreCss = {
     }
 };
 
-$.CoreCss = CoreCss;
+$.CoreCss = window.coreCss = CoreCss;
