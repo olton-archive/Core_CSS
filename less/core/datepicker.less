@@ -1,0 +1,115 @@
+@import (once) "../include/variables";
+@import (once) "../include/mixins";
+
+.datepicker {
+    display: block;
+    width: 330px;
+    margin: 0 auto;
+    border-radius: 2px;
+    position: relative;
+}
+
+.datepicker {
+
+    .picker-header, .picker-content, .picker-footer {
+        position: relative;
+        display: block;
+    }
+
+    .picker-header {
+        padding: 8px 16px;
+        font-size: 24px;
+        background: @lightBlue700;
+        color: @white;
+    }
+
+    .picker-content {
+        padding: 16px;
+        position: relative;
+
+        //&:before, &:after {
+        //    content: "";
+        //    position: absolute;
+        //    height: 40px;
+        //    width: 100%;
+        //    left: 0;
+        //    top: 16px;
+        //    background: @white;
+        //    opacity: .6;
+        //    z-index: 2;
+        //}
+        //
+        //&:after {
+        //    top: 96px;
+        //}
+    }
+
+    .picker-footer {
+        padding: 4px 8px;
+        border-top: 1px #eee solid;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .flat-button {
+            color: @lightBlue700;
+        }
+    }
+}
+
+.datepicker {
+    .picker-content-inner {
+        display: flex;
+        flex-grow: 1;
+        justify-content: space-between;
+        align-items: center;
+
+        &:before, &:after {
+            background: @lightBlue700;
+            height: 2px;
+            width: 100%;
+            content: "";
+            position: absolute;
+            top: 40px;
+            z-index: 2;
+            left: 0;
+        }
+
+        &:after {
+            top: 78px;
+        }
+
+        .d-list, .m-list, .y-list {
+            padding: 0;
+            margin: 0;
+            list-style: inside none;
+            width: ~"calc((100% - 48px) / 3)";
+            height: 120px;
+            overflow-y: scroll;
+            text-align: center;
+            position: relative;
+
+            li {
+                padding: 4px;
+                font-size: 14px;
+                line-height: 30px;
+                color: @gray;
+
+                &.active {
+                    color: @black;
+                    font-weight: bolder;
+                    font-size: 16px;
+                }
+            }
+
+            li {
+                border: 1px transparent solid;
+            }
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+        }
+    }
+}

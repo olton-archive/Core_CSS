@@ -20,7 +20,8 @@ var locales = {
             clear: "Clear",
             help: "Help",
             yes: "Yes",
-            no: "No"
+            no: "No",
+            rand: "Random"
         }
     },
 
@@ -44,7 +45,8 @@ var locales = {
             clear: "Очистити",
             help: "Допомога",
             yes: "Так",
-            no: "Ні"
+            no: "Ні",
+            rand: "Випадково"
         }
     },
 
@@ -68,7 +70,8 @@ var locales = {
             clear: "Очистить",
             help: "Помощь",
             yes: "Да",
-            no: "Нет"
+            no: "Нет",
+            rand: "Случайно"
         }
     }
 };
