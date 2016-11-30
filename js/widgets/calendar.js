@@ -12,6 +12,8 @@ $.widget( "corecss.calendar" , {
         locale: CORE_LOCALE,
         toolbar: true,
         footer: true,
+        preset: [],
+        current: null,
 
         onCreate: $.noop(),
         onDone: $.noop(),
@@ -29,6 +31,22 @@ $.widget( "corecss.calendar" , {
 
         this._setOptionsFromDOM();
 
+        if (typeof o.preset !== 'object') {
+            o.preset = o.preset.split(",").map(function(v){
+                return v.trim();
+            });
+        }
+
+        this.selected = o.preset.map(function(v){
+            var d = new Date(v);
+            d.setHours(0,0,0,0);
+            return d.getTime();
+        });
+
+        if (o.current != null && typeof o.current == 'string') {
+            this.current = new Date(o.current);
+        }
+
         this._createCalendar();
         this._createEvents();
 
@@ -38,12 +56,11 @@ $.widget( "corecss.calendar" , {
     },
 
     _drawHeader: function(){
-        var element = this.element,
-            day = this.today.getDate(),
-            dayWeek = this.today.getDay(),
-            month = this.today.getMonth(),
-            year = this.today.getFullYear(),
-            //header = element.find(".calendar-header").html(""),
+        var element = this.element, target = this.today,
+            day = target.getDate(),
+            dayWeek = target.getDay(),
+            month = target.getMonth(),
+            year = target.getFullYear(),
             html = "", header,
             o = this.options;
 
@@ -156,7 +173,9 @@ $.widget( "corecss.calendar" , {
             if (this.selected.indexOf(stored_day.getTime()) > -1) {
                 dd.addClass("selected");
             }
+
             total++;
+
             if (getDay(firstDay) % 7 == 6) {
                 md = $("<div>").addClass("month-days").appendTo(days);
             }

@@ -136,7 +136,7 @@ var dateFormat = function () {
 
         //console.log(locale);
 
-        var locale = window.CALENDAR_LOCALE || 'en';
+        var locale = CORE_LOCALE || 'en-US';
 
         var _ = utc ? "getUTC" : "get",
             d = date[_ + "Date"](),
@@ -151,12 +151,12 @@ var dateFormat = function () {
             flags = {
                 d: d,
                 dd: pad(d),
-                ddd: window.CALENDAR_LOCALES[locale].days[D],
-                dddd: window.CALENDAR_LOCALES[locale].days[D + 7],
+                ddd: coreLocales[locale].calendar.days[D],
+                dddd: coreLocales[locale].calendar.days[D + 7],
                 m: m + 1,
                 mm: pad(m + 1),
-                mmm: window.CALENDAR_LOCALES[locale].months[m],
-                mmmm: window.CALENDAR_LOCALES[locale].months[m + 12],
+                mmm: coreLocales[locale].calendar.months[m],
+                mmmm: coreLocales[locale].calendar.months[m + 12],
                 yy: String(y).slice(2),
                 yyyy: y,
                 h: H % 12 || 12,

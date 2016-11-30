@@ -425,7 +425,7 @@ var token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g,
 
         //console.log(locale);
 
-        var locale = window.CALENDAR_LOCALE || 'en';
+        var locale = CORE_LOCALE || 'en-US';
 
         var _ = utc ? "getUTC" : "get",
             d = date[_ + "Date"](),
@@ -440,12 +440,12 @@ var token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g,
             flags = {
                 d: d,
                 dd: pad(d),
-                ddd: window.CALENDAR_LOCALES[locale].days[D],
-                dddd: window.CALENDAR_LOCALES[locale].days[D + 7],
+                ddd: coreLocales[locale].calendar.days[D],
+                dddd: coreLocales[locale].calendar.days[D + 7],
                 m: m + 1,
                 mm: pad(m + 1),
-                mmm: window.CALENDAR_LOCALES[locale].months[m],
-                mmmm: window.CALENDAR_LOCALES[locale].months[m + 12],
+                mmm: coreLocales[locale].calendar.months[m],
+                mmmm: coreLocales[locale].calendar.months[m + 12],
                 yy: String(y).slice(2),
                 yyyy: y,
                 h: H % 12 || 12,
@@ -3597,6 +3597,8 @@ $.widget( "corecss.calendar" , {
         locale: CORE_LOCALE,
         toolbar: true,
         footer: true,
+        preset: [],
+        current: null,
 
         onCreate: $.noop(),
         onDone: $.noop(),
@@ -3614,6 +3616,22 @@ $.widget( "corecss.calendar" , {
 
         this._setOptionsFromDOM();
 
+        if (typeof o.preset !== 'object') {
+            o.preset = o.preset.split(",").map(function(v){
+                return v.trim();
+            });
+        }
+
+        this.selected = o.preset.map(function(v){
+            var d = new Date(v);
+            d.setHours(0,0,0,0);
+            return d.getTime();
+        });
+
+        if (o.current != null && typeof o.current == 'string') {
+            this.current = new Date(o.current);
+        }
+
         this._createCalendar();
         this._createEvents();
 
@@ -3623,12 +3641,11 @@ $.widget( "corecss.calendar" , {
     },
 
     _drawHeader: function(){
-        var element = this.element,
-            day = this.today.getDate(),
-            dayWeek = this.today.getDay(),
-            month = this.today.getMonth(),
-            year = this.today.getFullYear(),
-            //header = element.find(".calendar-header").html(""),
+        var element = this.element, target = this.today,
+            day = target.getDate(),
+            dayWeek = target.getDay(),
+            month = target.getMonth(),
+            year = target.getFullYear(),
             html = "", header,
             o = this.options;
 
@@ -3741,7 +3758,9 @@ $.widget( "corecss.calendar" , {
             if (this.selected.indexOf(stored_day.getTime()) > -1) {
                 dd.addClass("selected");
             }
+
             total++;
+
             if (getDay(firstDay) % 7 == 6) {
                 md = $("<div>").addClass("month-days").appendTo(days);
             }
