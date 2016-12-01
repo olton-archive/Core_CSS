@@ -4040,10 +4040,17 @@ $.widget( "corecss.datepicker" , {
     version: "1.0.0",
 
     options: {
-        locale: CORE_LOCALE
+        locale: CORE_LOCALE,
+        minYear: 1900,
+        maxYear: new Date().getFullYear(),
+        onDone: $.noop()
     },
 
     current: new Date(),
+
+    day: new Date().getDate(),
+    month: new Date().getMonth(),
+    year: new Date().getFullYear(),
 
     _create: function () {
         var that = this, element = this.element, o = this.options;
@@ -4051,19 +4058,42 @@ $.widget( "corecss.datepicker" , {
         this._setOptionsFromDOM();
 
         this._createPicker();
-        this._createEvents();
+        this._createScrollEvents();
+        this._createButtonsEvents();
 
         this.setPosition();
 
         element.data('datepicker', this);
     },
 
-    setPosition: function(target){
-        target = target || this.current;
-        var element = this.element, date = typeof target == 'object' ? target : new Date(target);
-        var day = date.getDate(),
-            month = date.getMonth() + 1,
-            year = date.getFullYear();
+    _correct: function(){
+        function isDate(y,m,d){
+            var date = new Date(y,m,d);
+            var convertedDate =
+                ""+date.getFullYear() + (date.getMonth()) + date.getDate();
+            var givenDate = "" + y + m + d;
+            return ( givenDate == convertedDate);
+        }
+
+        if (!isDate(this.year, this.month, this.day)) {
+            console.log("bad date! correct it.");
+            var date = new Date(this.year, this.month, this.day);
+            console.log("new date is: " + date);
+            // date.setHours(0,0,0,0);
+            this.year = date.getFullYear();
+            this.month = date.getMonth();
+            this.day = date.getDate();
+            // this._removeScrollEvents();
+            this.setPosition();
+            // this._createScrollEvents();
+        }
+    },
+
+    setPosition: function(){
+        var element = this.element;
+        var day = this.day,
+            month = this.month + 1,
+            year = this.year;
         var d_list = element.find(".d-list"),
             m_list = element.find(".m-list"),
             y_list = element.find(".y-list");
@@ -4082,11 +4112,11 @@ $.widget( "corecss.datepicker" , {
     },
 
     _drawHeader: function(){
-        var element = this.element, target = this.current,
-            day = target.getDate(),
-            dayWeek = target.getDay(),
-            month = target.getMonth(),
-            year = target.getFullYear(),
+        var element = this.element,
+            day = this.day,
+            dayWeek = new Date(this.year, this.month, this.day).getDay(),
+            month = this.month,
+            year = this.year,
             html = "", header,
             o = this.options;
 
@@ -4123,14 +4153,14 @@ $.widget( "corecss.datepicker" , {
         m_list = $("<ul>").addClass("m-list").appendTo(picker_inner);
         $("<li>").html("&nbsp;").appendTo(m_list);
         for(i = 1; i <= 12; i++) {
-            $("<li>").html(coreLocales[o.locale].calendar.months[i-1 + 12]).appendTo(m_list).data('value', i).addClass("js-dm-"+i);
+            $("<li>").html(coreLocales[o.locale].calendar.months[i-1 + 12]).appendTo(m_list).data('value', i - 1).addClass("js-dm-"+i);
         }
         $("<li>").html("&nbsp;").appendTo(m_list);
 
         y_list = $("<ul>").addClass("y-list").appendTo(picker_inner);
         $("<li>").html("&nbsp;").appendTo(y_list);
         var j = 1;
-        for(i = 1900; i <= 2100; i++) {
+        for(i = o.minYear; i <= o.maxYear; i++) {
             $("<li>").html(i).appendTo(y_list).data('value', i).addClass("js-dy-"+j+" js-yy-"+i);
             j++;
         }
@@ -4157,7 +4187,17 @@ $.widget( "corecss.datepicker" , {
         f.append(this._drawFooter());
     },
 
-    _createEvents: function(){
+    _removeScrollEvents: function(){
+        var element = this.element;
+        element.find(".d-list").off('scrollstart');
+        element.find(".d-list").off('scrollstop');
+        element.find(".m-list").off('scrollstart');
+        element.find(".m-list").off('scrollstop');
+        element.find(".y-list").off('scrollstart');
+        element.find(".y-list").off('scrollstop');
+    },
+
+    _createScrollEvents: function(){
         var that = this, element = this.element, o = this.options;
         var d_list = element.find(".d-list"),
             m_list = element.find(".m-list"),
@@ -4176,8 +4216,9 @@ $.widget( "corecss.datepicker" , {
                 scrollTop: scroll_to
             }, CORE_ANIMATION_DURATION, function(){
                 target_element.addClass("active");
-                that.current = new Date(that.current.getFullYear(), that.current.getMonth(), val);
+                that.day = val;
                 element.find(".picker-header").html(that._drawHeader());
+                that._correct();
             });
         });
 
@@ -4194,8 +4235,9 @@ $.widget( "corecss.datepicker" , {
                 scrollTop: scroll_to
             }, CORE_ANIMATION_DURATION, function(){
                 target_element.addClass("active");
-                that.current = new Date(that.current.getFullYear(), val - 1, that.current.getDate());
+                that.month = val;
                 element.find(".picker-header").html(that._drawHeader());
+                that._correct();
             });
         });
 
@@ -4208,15 +4250,40 @@ $.widget( "corecss.datepicker" , {
             var val = target_element.data('value');
             var scroll_to = target_element.position().top - 40 + y_list[0].scrollTop;
 
+            console.log(target);
+            console.log("new year: " + val);
+
             y_list.animate({
                 scrollTop: scroll_to
             }, CORE_ANIMATION_DURATION, function(){
                 target_element.addClass("active");
-                that.current = new Date(val, that.current.getMonth(), that.current.getDate());
+                that.year = val;
                 element.find(".picker-header").html(that._drawHeader());
+                that._correct();
             });
         });
+    },
 
+    _createButtonsEvents: function(){
+        var that = this, element = this.element, o = this.options;
+
+        element.find(".js-button-rand").on("click", function(){
+            function randomInteger(min, max) {
+                var rand = min - 0.5 + Math.random() * (max - min + 1);
+                rand = Math.round(rand);
+                return rand;
+            }
+
+            that.day = randomInteger(1, 31);
+            that.month = randomInteger(0, 11);
+            that.year = randomInteger(o.minYear, o.maxYear);
+
+            that.setPosition();
+        });
+
+        element.find(".js-button-done").on("click", function(){
+            $.CoreCss.callback(o.onDone, new Date(that.year, that.month, that.day));
+        });
     },
 
     _setOptionsFromDOM: function(){
@@ -4234,6 +4301,7 @@ $.widget( "corecss.datepicker" , {
     },
 
     _destroy: function () {
+        this._removeScrollEvents();
     },
 
     _setOption: function ( key, value ) {
