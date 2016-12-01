@@ -4043,19 +4043,26 @@ $.widget( "corecss.datepicker" , {
         locale: CORE_LOCALE,
         minYear: 1900,
         maxYear: new Date().getFullYear(),
+        day: (new Date()).getDate(),
+        month: (new Date()).getMonth(),
+        year: (new Date()).getFullYear(),
         onDone: $.noop()
     },
 
     current: new Date(),
 
-    day: new Date().getDate(),
-    month: new Date().getMonth(),
-    year: new Date().getFullYear(),
+    day: null,
+    month: null,
+    year: null,
 
     _create: function () {
         var that = this, element = this.element, o = this.options;
 
         this._setOptionsFromDOM();
+
+        this.day = o.day;
+        this.month = o.month;
+        this.year = o.year;
 
         this._createPicker();
         this._createScrollEvents();
@@ -4076,16 +4083,17 @@ $.widget( "corecss.datepicker" , {
         }
 
         if (!isDate(this.year, this.month, this.day)) {
-            console.log("bad date! correct it.");
             var date = new Date(this.year, this.month, this.day);
-            console.log("new date is: " + date);
             // date.setHours(0,0,0,0);
             this.year = date.getFullYear();
             this.month = date.getMonth();
             this.day = date.getDate();
-            // this._removeScrollEvents();
+            this._removeScrollEvents();
             this.setPosition();
-            // this._createScrollEvents();
+            this._createScrollEvents();
+
+            console.log("bad date! correct it.");
+            console.log("new date is: " + date);
         }
     },
 
@@ -4098,23 +4106,33 @@ $.widget( "corecss.datepicker" , {
             m_list = element.find(".m-list"),
             y_list = element.find(".y-list");
 
-        d_list.animate({
+        console.log(year+"-"+month+"-"+day);
+
+        this._removeScrollEvents();
+
+        d_list.scrollTop(0).animate({
             scrollTop: element.find(".js-dd-"+day).addClass("active").position().top - 40
         });
+        console.log(day);
 
-        m_list.animate({
+        m_list.scrollTop(0).animate({
             scrollTop: element.find(".js-dm-"+month).addClass("active").position().top - 40
         });
+        console.log(month);
 
-        y_list.animate({
+        y_list.scrollTop(0).animate({
             scrollTop: element.find(".js-yy-"+year).addClass("active").position().top - 40
         });
+        console.log(year);
+
+        this._createScrollEvents();
     },
 
     _drawHeader: function(){
         var element = this.element,
             day = this.day,
-            dayWeek = new Date(this.year, this.month, this.day).getDay(),
+            dd = new Date(this.year, this.month, this.day),
+            dayWeek = dd.getDay(),
             month = this.month,
             year = this.year,
             html = "", header,
@@ -4132,6 +4150,7 @@ $.widget( "corecss.datepicker" , {
             html = "";
 
         html += "<button class='flat-button js-button-rand'>"+coreLocales[o.locale].buttons.rand+"</button>";
+        html += "<button class='flat-button js-button-today'>"+coreLocales[o.locale].buttons.today+"</button>";
         html += "<button class='flat-button js-button-done'>"+coreLocales[o.locale].buttons.done+"</button>";
 
         return $(html);
@@ -4250,9 +4269,6 @@ $.widget( "corecss.datepicker" , {
             var val = target_element.data('value');
             var scroll_to = target_element.position().top - 40 + y_list[0].scrollTop;
 
-            console.log(target);
-            console.log("new year: " + val);
-
             y_list.animate({
                 scrollTop: scroll_to
             }, CORE_ANIMATION_DURATION, function(){
@@ -4283,6 +4299,16 @@ $.widget( "corecss.datepicker" , {
 
         element.find(".js-button-done").on("click", function(){
             $.CoreCss.callback(o.onDone, new Date(that.year, that.month, that.day));
+        });
+
+        element.find(".js-button-today").on("click", function(){
+            var d = new Date(); d.setHours(0,0,0,0);
+
+            that.day = d.getDate();
+            that.month = d.getMonth();
+            that.year = d.getFullYear();
+
+            that.setPosition();
         });
     },
 
