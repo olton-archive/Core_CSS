@@ -69,24 +69,19 @@ $.widget( "corecss.datepicker" , {
             m_list = element.find(".m-list"),
             y_list = element.find(".y-list");
 
-        console.log(year+"-"+month+"-"+day);
-
         this._removeScrollEvents();
 
         d_list.scrollTop(0).animate({
             scrollTop: element.find(".js-dd-"+day).addClass("active").position().top - 40
         });
-        console.log(day);
 
         m_list.scrollTop(0).animate({
             scrollTop: element.find(".js-dm-"+month).addClass("active").position().top - 40
         });
-        console.log(month);
 
         y_list.scrollTop(0).animate({
             scrollTop: element.find(".js-yy-"+year).addClass("active").position().top - 40
         });
-        console.log(year);
 
         this._createScrollEvents();
     },

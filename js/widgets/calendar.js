@@ -148,8 +148,8 @@ $.widget( "corecss.calendar" , {
 
         /* Draw prev month days */
         for(i = 0; i < getDay(firstDay); i++) {
-            stored_day = new Date(year, month - 1, p_month_days - i);
-            dd = $("<div>").addClass("day fg-gray-400 prev-month-day").html(p_month_days - i).appendTo(md);
+            stored_day = new Date(year, month - 1, p_month_days - getDay(firstDay) + 1 + i);
+            dd = $("<div>").addClass("day fg-gray-400 prev-month-day").html(p_month_days - getDay(firstDay) + 1 + i).appendTo(md);
             dd.data('day', stored_day);
             if (this.selected.indexOf(stored_day.getTime()) > -1) {
                 dd.addClass("selected");

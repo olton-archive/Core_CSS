@@ -3802,8 +3802,8 @@ $.widget( "corecss.calendar" , {
 
         /* Draw prev month days */
         for(i = 0; i < getDay(firstDay); i++) {
-            stored_day = new Date(year, month - 1, p_month_days - i);
-            dd = $("<div>").addClass("day fg-gray-400 prev-month-day").html(p_month_days - i).appendTo(md);
+            stored_day = new Date(year, month - 1, p_month_days - getDay(firstDay) + 1 + i);
+            dd = $("<div>").addClass("day fg-gray-400 prev-month-day").html(p_month_days - getDay(firstDay) + 1 + i).appendTo(md);
             dd.data('day', stored_day);
             if (this.selected.indexOf(stored_day.getTime()) > -1) {
                 dd.addClass("selected");
@@ -4106,24 +4106,19 @@ $.widget( "corecss.datepicker" , {
             m_list = element.find(".m-list"),
             y_list = element.find(".y-list");
 
-        console.log(year+"-"+month+"-"+day);
-
         this._removeScrollEvents();
 
         d_list.scrollTop(0).animate({
             scrollTop: element.find(".js-dd-"+day).addClass("active").position().top - 40
         });
-        console.log(day);
 
         m_list.scrollTop(0).animate({
             scrollTop: element.find(".js-dm-"+month).addClass("active").position().top - 40
         });
-        console.log(month);
 
         y_list.scrollTop(0).animate({
             scrollTop: element.find(".js-yy-"+year).addClass("active").position().top - 40
         });
-        console.log(year);
 
         this._createScrollEvents();
     },
