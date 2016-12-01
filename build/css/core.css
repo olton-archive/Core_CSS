@@ -4249,6 +4249,28 @@ header.more ~ .fixed-tabs,
 .calendar-content {
   padding: 0 8px;
 }
+.calendar-content .days-inner {
+  width: 314px;
+  height: 226px;
+  position: relative;
+  display: block;
+  overflow: hidden;
+}
+.calendar-content .days-inner > .days-frame {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.calendar-content .days-inner > .days-frame.next-month-frame {
+  left: 100%;
+}
+.calendar-content .days-inner > .days-frame.prev-month-frame {
+  left: -100%;
+}
 .calendar-content .toolbar {
   display: -webkit-flex;
   display: -ms-flexbox;

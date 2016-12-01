@@ -56,13 +56,12 @@ $.widget( "corecss.calendar" , {
     },
 
     _drawHeader: function(){
-        var element = this.element, target = this.today,
+        var o = this.options, target = this.today,
             day = target.getDate(),
             dayWeek = target.getDay(),
             month = target.getMonth(),
             year = target.getFullYear(),
-            html = "", header,
-            o = this.options;
+            html = "", header;
 
         html += "<div class='year'>"+year+"</div>";
         html += "<div class='day'>"+coreLocales[o.locale].calendar.days[dayWeek]+", "+coreLocales[o.locale].calendar.months[month + 12]+' '+day+"</div>";
@@ -119,13 +118,23 @@ $.widget( "corecss.calendar" , {
         distance = distance || 0;
         var o = this.options,
             day = this.current.getDate(),
-            month = this.current.getMonth() - distance,
+            month = this.current.getMonth() + distance,
             year = this.current.getFullYear(),
             firstDay = new Date(year, month, 1),
             i, j, md, dd, total = 0, days, stored_day,
             p_month_days,
-            days_inner = $("<div>");
+            days_inner = $("<div>").addClass("days-frame");
 
+
+        if (month < 0) {
+            month = 11;
+            year--;
+        }
+
+        if (month > 11) {
+            month = 0;
+            year++;
+        }
 
         /* Draw days of week*/
         var weekDays = $("<div>").addClass("week-days").appendTo(days_inner);
@@ -203,17 +212,21 @@ $.widget( "corecss.calendar" , {
     },
 
     _drawCalendar: function(){
-        var h, c, f, element = this.element;
+        var h, c, f, d, element = this.element;
 
         element.html("");
 
         h = $("<div>").addClass("calendar-header").appendTo(element);
         c = $("<div>").addClass("calendar-content").appendTo(element);
         f = $("<div>").addClass("calendar-footer").appendTo(element);
+        d = $("<div>").addClass("days-inner");
 
         h.append(this._drawHeader());
         c.append(this._drawToolbar());
-        c.append(this._drawDays());
+
+        c.append(d);
+        d.append(this._drawDays());
+
         f.append(this._drawFooter());
     },
 
@@ -272,7 +285,9 @@ $.widget( "corecss.calendar" , {
         });
 
         element.on("click", ".js-button-today", function(){
-            that.current = that.today;
+            that.current = that.today = new Date();
+            that.today.setHours(0,0,0,0);
+            that.selected[0] = that.today.getTime();
             setTimeout(function(){
                 that._drawCalendar();
                 $.CoreCss.callback(o.onToday, element);
@@ -280,7 +295,7 @@ $.widget( "corecss.calendar" , {
         });
 
         element.on("click", ".js-button-clear", function(){
-            that.current = that.today;
+            that.current = that.today = new Date();
             that.selected = [];
             setTimeout(function(){
                 that._drawCalendar();
@@ -308,9 +323,10 @@ $.widget( "corecss.calendar" , {
             if (o.mode == 'default') {
 
                 element.find(".selected").removeClass("selected");
+                that.current = that.today = el.data('day');
+                element.find(".calendar-header").html("").append(that._drawHeader());
 
                 if (el.hasClass("prev-month-day") || el.hasClass("next-month-day")) {
-                    that.current = el.data('day');
                     that._drawCalendar();
                     $.each(element.find(".month-days .day"), function () {
                         var day2 = $(this).data('day');
