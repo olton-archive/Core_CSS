@@ -4390,6 +4390,7 @@ header.more ~ .fixed-tabs,
   .calendar:not(.no-rotate) .calendar-content {
     margin-left: 180px;
     height: calc(100% - 45px);
+    width: calc(100% - 180px);
   }
   .calendar:not(.no-rotate) .calendar-footer {
     margin-left: 180px;
@@ -4498,6 +4499,226 @@ header.more ~ .fixed-tabs,
 .datepicker .picker-content-inner .m-list::-webkit-scrollbar,
 .datepicker .picker-content-inner .y-list::-webkit-scrollbar {
   display: none;
+}
+.timepicker {
+  display: block;
+  position: relative;
+  width: 330px;
+  margin: 0 auto;
+  border-radius: 2px;
+}
+.timepicker .picker-header,
+.timepicker .picker-content,
+.timepicker .picker-footer {
+  display: block;
+  position: relative;
+}
+.timepicker .picker-header {
+  background-size: cover;
+  padding: 8px 16px;
+  color: #ffffff;
+  background: #0288d1 center;
+  text-align: center;
+  font-size: 56px;
+}
+.timepicker .picker-header .am,
+.timepicker .picker-header .pm {
+  position: absolute;
+  font-size: 24px;
+  top: 50%;
+  left: 32px;
+  margin-top: -12px;
+  text-transform: uppercase;
+  color: #4fc3f7;
+}
+.timepicker .picker-header .am.active,
+.timepicker .picker-header .pm.active {
+  color: #ffffff;
+}
+.timepicker .picker-header .pm {
+  left: auto;
+  right: 32px;
+}
+.timepicker .picker-header .js-hours,
+.timepicker .picker-header .js-minutes {
+  color: #4fc3f7;
+}
+.timepicker .picker-header .js-hours.active,
+.timepicker .picker-header .js-minutes.active {
+  color: #ffffff;
+}
+.timepicker .picker-content {
+  width: 100%;
+  height: 330px;
+  padding: 16px;
+}
+.timepicker .picker-footer {
+  padding: 4px 8px;
+  border-top: 1px #eee solid;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.timepicker .picker-footer .flat-button {
+  color: #0288d1;
+}
+.timepicker .picker-inner {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  background: #f5f5f5;
+}
+.timepicker .picker-item {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #000000;
+  top: 50%;
+  left: 50%;
+  margin: -20px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 14px;
+  z-index: 2;
+}
+.timepicker .picker-item.active {
+  background: #0288d1;
+  color: #ffffff;
+}
+.timepicker .picker-line {
+  position: absolute;
+  height: 149px;
+  width: 1px;
+  background: #0288d1;
+  left: 50%;
+  z-index: 1;
+}
+.timepicker .picker-item:nth-of-type(1) {
+  -webkit-transform: rotate(0deg) translateY(-120px) rotate(0deg);
+          transform: rotate(0deg) translateY(-120px) rotate(0deg);
+}
+.timepicker .picker-item:nth-of-type(2) {
+  -webkit-transform: rotate(30deg) translateY(-120px) rotate(-30deg);
+          transform: rotate(30deg) translateY(-120px) rotate(-30deg);
+}
+.timepicker .picker-item:nth-of-type(3) {
+  -webkit-transform: rotate(60deg) translateY(-120px) rotate(-60deg);
+          transform: rotate(60deg) translateY(-120px) rotate(-60deg);
+}
+.timepicker .picker-item:nth-of-type(4) {
+  -webkit-transform: rotate(90deg) translateY(-120px) rotate(-90deg);
+          transform: rotate(90deg) translateY(-120px) rotate(-90deg);
+}
+.timepicker .picker-item:nth-of-type(5) {
+  -webkit-transform: rotate(120deg) translateY(-120px) rotate(-120deg);
+          transform: rotate(120deg) translateY(-120px) rotate(-120deg);
+}
+.timepicker .picker-item:nth-of-type(6) {
+  -webkit-transform: rotate(150deg) translateY(-120px) rotate(-150deg);
+          transform: rotate(150deg) translateY(-120px) rotate(-150deg);
+}
+.timepicker .picker-item:nth-of-type(7) {
+  -webkit-transform: rotate(180deg) translateY(-120px) rotate(-180deg);
+          transform: rotate(180deg) translateY(-120px) rotate(-180deg);
+}
+.timepicker .picker-item:nth-of-type(8) {
+  -webkit-transform: rotate(210deg) translateY(-120px) rotate(-210deg);
+          transform: rotate(210deg) translateY(-120px) rotate(-210deg);
+}
+.timepicker .picker-item:nth-of-type(9) {
+  -webkit-transform: rotate(240deg) translateY(-120px) rotate(-240deg);
+          transform: rotate(240deg) translateY(-120px) rotate(-240deg);
+}
+.timepicker .picker-item:nth-of-type(10) {
+  -webkit-transform: rotate(270deg) translateY(-120px) rotate(-270deg);
+          transform: rotate(270deg) translateY(-120px) rotate(-270deg);
+}
+.timepicker .picker-item:nth-of-type(11) {
+  -webkit-transform: rotate(300deg) translateY(-120px) rotate(-300deg);
+          transform: rotate(300deg) translateY(-120px) rotate(-300deg);
+}
+.timepicker .picker-item:nth-of-type(12) {
+  -webkit-transform: rotate(330deg) translateY(-120px) rotate(-330deg);
+          transform: rotate(330deg) translateY(-120px) rotate(-330deg);
+}
+@media screen and (min-width: 640px) {
+  .timepicker:not(.no-rotate) {
+    width: 512px;
+    height: 312px;
+  }
+  .timepicker:not(.no-rotate) .picker-header {
+    width: 180px;
+    float: left;
+    height: 100%;
+  }
+  .timepicker:not(.no-rotate) .picker-content {
+    margin-left: 180px;
+    height: calc(100% - 45px);
+    width: calc(100% - 180px);
+  }
+  .timepicker:not(.no-rotate) .picker-content .picker-inner {
+    width: 235px;
+    margin: 0 auto;
+  }
+  .timepicker:not(.no-rotate) .picker-footer {
+    margin-left: 180px;
+  }
+  .timepicker:not(.no-rotate) .picker-item:nth-of-type(1) {
+    -webkit-transform: rotate(0deg) translateY(-90px) rotate(0deg);
+            transform: rotate(0deg) translateY(-90px) rotate(0deg);
+  }
+  .timepicker:not(.no-rotate) .picker-item:nth-of-type(2) {
+    -webkit-transform: rotate(30deg) translateY(-90px) rotate(-30deg);
+            transform: rotate(30deg) translateY(-90px) rotate(-30deg);
+  }
+  .timepicker:not(.no-rotate) .picker-item:nth-of-type(3) {
+    -webkit-transform: rotate(60deg) translateY(-90px) rotate(-60deg);
+            transform: rotate(60deg) translateY(-90px) rotate(-60deg);
+  }
+  .timepicker:not(.no-rotate) .picker-item:nth-of-type(4) {
+    -webkit-transform: rotate(90deg) translateY(-90px) rotate(-90deg);
+            transform: rotate(90deg) translateY(-90px) rotate(-90deg);
+  }
+  .timepicker:not(.no-rotate) .picker-item:nth-of-type(5) {
+    -webkit-transform: rotate(120deg) translateY(-90px) rotate(-120deg);
+            transform: rotate(120deg) translateY(-90px) rotate(-120deg);
+  }
+  .timepicker:not(.no-rotate) .picker-item:nth-of-type(6) {
+    -webkit-transform: rotate(150deg) translateY(-90px) rotate(-150deg);
+            transform: rotate(150deg) translateY(-90px) rotate(-150deg);
+  }
+  .timepicker:not(.no-rotate) .picker-item:nth-of-type(7) {
+    -webkit-transform: rotate(180deg) translateY(-90px) rotate(-180deg);
+            transform: rotate(180deg) translateY(-90px) rotate(-180deg);
+  }
+  .timepicker:not(.no-rotate) .picker-item:nth-of-type(8) {
+    -webkit-transform: rotate(210deg) translateY(-90px) rotate(-210deg);
+            transform: rotate(210deg) translateY(-90px) rotate(-210deg);
+  }
+  .timepicker:not(.no-rotate) .picker-item:nth-of-type(9) {
+    -webkit-transform: rotate(240deg) translateY(-90px) rotate(-240deg);
+            transform: rotate(240deg) translateY(-90px) rotate(-240deg);
+  }
+  .timepicker:not(.no-rotate) .picker-item:nth-of-type(10) {
+    -webkit-transform: rotate(270deg) translateY(-90px) rotate(-270deg);
+            transform: rotate(270deg) translateY(-90px) rotate(-270deg);
+  }
+  .timepicker:not(.no-rotate) .picker-item:nth-of-type(11) {
+    -webkit-transform: rotate(300deg) translateY(-90px) rotate(-300deg);
+            transform: rotate(300deg) translateY(-90px) rotate(-300deg);
+  }
+  .timepicker:not(.no-rotate) .picker-item:nth-of-type(12) {
+    -webkit-transform: rotate(330deg) translateY(-90px) rotate(-330deg);
+            transform: rotate(330deg) translateY(-90px) rotate(-330deg);
+  }
 }
 .multi-action {
   display: inline-block;

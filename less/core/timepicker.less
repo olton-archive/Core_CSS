@@ -1,0 +1,167 @@
+@import (once) "../include/variables";
+@import (once) "../include/mixins";
+
+.timepicker {
+    display: block;
+    position: relative;
+    width: 330px;
+    margin: 0 auto;
+    border-radius: 2px;
+}
+
+.timepicker {
+    .picker-header, .picker-content, .picker-footer {
+        display: block;
+        position: relative;
+    }
+
+    .picker-header {
+        background-size: cover;
+        padding: 8px 16px;
+        color: @white;
+        background: @lightBlue700 center;
+        text-align: center;
+        font-size: 56px;
+
+        .am, .pm {
+            position: absolute;
+            font-size: 24px;
+            top: 50%;
+            left: 32px;
+            margin-top: -12px;
+            text-transform: uppercase;
+            color: @lightBlue300;
+
+            &.active {
+                color: @white;
+            }
+        }
+
+        .pm {
+            left: auto;
+            right: 32px;
+        }
+
+        .js-hours, .js-minutes {
+            color: @lightBlue300;
+
+            &.active {
+                color: @white;
+            }
+        }
+    }
+
+    .picker-content {
+        width: 100%;
+        height: 330px;
+        padding: 16px;
+    }
+
+    .picker-footer {
+        padding: 4px 8px;
+        border-top: 1px #eee solid;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .flat-button {
+            color: @lightBlue700;
+        }
+    }
+
+    .picker-inner {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        background: @gray100;
+    }
+}
+
+.timepicker {
+    .picker-item {
+        position: absolute;
+        .square(40px);
+        border-radius: 50%;
+        color: @black;
+        top: 50%;
+        left: 50%;
+        margin: -20px;
+        line-height: 40px;
+        text-align: center;
+        font-size: 14px;
+        z-index: 2;
+
+        &.active {
+            background: @lightBlue700;
+            color: @white;
+        }
+    }
+
+    .picker-line {
+        position: absolute;
+        height: 149px;
+        width: 1px;
+        background: @lightBlue700;
+        left: 50%;
+        z-index: 1;
+    }
+}
+
+@timePickerItemsCount: 12;
+
+.generate-timepicker-items(@timePickerItemsCount);
+
+.generate-timepicker-items(@n, @i: 1) when (@i <= @n) {
+
+    .timepicker {
+
+        @rotate: @i * 30 - 30;
+
+        .picker-item:nth-of-type(@{i}) {
+            transform: rotate(@rotate * 1deg) translateY(-120px) rotate(@rotate * -1deg);
+        }
+    }
+
+    .generate-timepicker-items(@n, (@i + 1));
+}
+
+@media screen and (min-width: 640px) {
+    .timepicker:not(.no-rotate) {
+        width: 512px;
+        height: 312px;
+
+        .picker-header {
+            width: 180px;
+            float: left;
+            height: 100%;
+        }
+
+        .picker-content {
+            margin-left: 180px;
+            height: ~"calc(100% - 45px)";
+            width: ~"calc(100% - 180px)";
+
+            .picker-inner {
+                width: 235px;
+                margin: 0 auto;
+            }
+        }
+
+        .picker-footer {
+            margin-left: 180px;
+        }
+
+        .generate-timepicker-items(@timePickerItemsCount);
+
+        .generate-timepicker-items(@n, @i: 1) when (@i <= @n) {
+            @rotate: @i * 30 - 30;
+
+            .picker-item:nth-of-type(@{i}) {
+                transform: rotate(@rotate * 1deg) translateY(-90px) rotate(@rotate * -1deg);
+            }
+
+            .generate-timepicker-items(@n, (@i + 1));
+        }
+    }
+}
