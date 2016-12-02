@@ -4719,6 +4719,9 @@ header.more ~ .fixed-tabs,
     -webkit-transform: rotate(330deg) translateY(-90px) rotate(-330deg);
             transform: rotate(330deg) translateY(-90px) rotate(-330deg);
   }
+  .timepicker:not(.no-rotate) .picker-line {
+    height: 117.50788644px;
+  }
 }
 .multi-action {
   display: inline-block;
