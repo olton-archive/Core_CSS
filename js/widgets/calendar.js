@@ -14,9 +14,12 @@ $.widget( "corecss.calendar" , {
         footer: true,
         preset: [],
         current: null,
+        buttons: ['cancel', 'today', 'clear', 'done'],
+        isDialog: false,
 
         onCreate: $.noop,
         onDone: $.noop,
+        onCancel: $.noop,
         onToday: $.noop,
         onClear: $.noop,
         onDay: $.noop
@@ -96,9 +99,14 @@ $.widget( "corecss.calendar" , {
             footer = element.find(".calendar-footer"),
             html = "";
 
-        html += "<button class='flat-button js-button-today'>"+coreLocales[o.locale].buttons.today+"</button>";
-        html += "<button class='flat-button js-button-clear'>"+coreLocales[o.locale].buttons.clear+"</button>";
-        html += "<button class='flat-button js-button-done'>"+coreLocales[o.locale].buttons.done+"</button>";
+        $.each(o.buttons, function(){
+            html += "<button class='flat-button js-button-"+this+" "+(o.isDialog && (this == 'cancel' || this == 'done') ? 'js-dialog-close' : '')+"'>"+coreLocales[o.locale].buttons[this]+"</button>";
+        });
+
+        // html += "<button class='flat-button js-button-cancel'>"+coreLocales[o.locale].buttons.cancel+"</button>";
+        // html += "<button class='flat-button js-button-today'>"+coreLocales[o.locale].buttons.today+"</button>";
+        // html += "<button class='flat-button js-button-clear'>"+coreLocales[o.locale].buttons.clear+"</button>";
+        // html += "<button class='flat-button js-button-done'>"+coreLocales[o.locale].buttons.done+"</button>";
 
         if (o.footer !== true) {
             footer.hide();
@@ -323,7 +331,7 @@ $.widget( "corecss.calendar" , {
             if (o.mode == 'default') {
 
                 element.find(".selected").removeClass("selected");
-                that.current = that.today = el.data('day');
+                that.current = that.today = day;
                 element.find(".calendar-header").html("").append(that._drawHeader());
 
                 if (el.hasClass("prev-month-day") || el.hasClass("next-month-day")) {
@@ -331,12 +339,12 @@ $.widget( "corecss.calendar" , {
                     $.each(element.find(".month-days .day"), function () {
                         var day2 = $(this).data('day');
                         if (day.getTime() == day2.getTime()) {
-                            that.selected[0] = $(this).data('day');
+                            that.selected[0] = $(this).data('day').getTime();
                             $(this).addClass("selected");
                         }
                     });
                 } else {
-                    that.selected[0] = day;
+                    that.selected[0] = day.getTime();
                     el.addClass("selected");
                 }
 

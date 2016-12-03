@@ -9,6 +9,8 @@ $.widget( "corecss.datepicker" , {
         day: (new Date()).getDate(),
         month: (new Date()).getMonth(),
         year: (new Date()).getFullYear(),
+        isDialog: false,
+        buttons: ['cancel', 'random', 'today', 'done'],
         onDone: $.noop
     },
 
@@ -31,7 +33,8 @@ $.widget( "corecss.datepicker" , {
         this._createScrollEvents();
         this._createButtonsEvents();
 
-        this.setPosition();
+        this.today();
+        //this.setPosition();
 
         element.data('datepicker', this);
     },
@@ -54,9 +57,9 @@ $.widget( "corecss.datepicker" , {
             this._removeScrollEvents();
             this.setPosition();
             this._createScrollEvents();
-
-            console.log("bad date! correct it.");
-            console.log("new date is: " + date);
+            //
+            // console.log("bad date! correct it.");
+            // console.log("new date is: " + date);
         }
     },
 
@@ -71,6 +74,10 @@ $.widget( "corecss.datepicker" , {
 
         this._removeScrollEvents();
 
+        // console.log(day);
+        // console.log(month);
+        // console.log(year);
+        //
         d_list.scrollTop(0).animate({
             scrollTop: element.find(".js-dd-"+day).addClass("active").position().top - 40
         });
@@ -84,6 +91,16 @@ $.widget( "corecss.datepicker" , {
         });
 
         this._createScrollEvents();
+    },
+
+    today: function(){
+        var d = new Date(); d.setHours(0,0,0,0);
+
+        this.day = d.getDate();
+        this.month = d.getMonth();
+        this.year = d.getFullYear();
+
+        this.setPosition();
     },
 
     _drawHeader: function(){
@@ -107,9 +124,13 @@ $.widget( "corecss.datepicker" , {
         var element = this.element, o = this.options,
             html = "";
 
-        html += "<button class='flat-button js-button-rand'>"+coreLocales[o.locale].buttons.rand+"</button>";
-        html += "<button class='flat-button js-button-today'>"+coreLocales[o.locale].buttons.today+"</button>";
-        html += "<button class='flat-button js-button-done'>"+coreLocales[o.locale].buttons.done+"</button>";
+        $.each(o.buttons, function(){
+            html += "<button class='flat-button js-button-"+this+" "+(o.isDialog && (this == 'cancel' || this == 'done') ? 'js-dialog-close' : '')+"'>"+coreLocales[o.locale].buttons[this]+"</button>";
+        });
+
+        // html += "<button class='flat-button js-button-rand'>"+coreLocales[o.locale].buttons.rand+"</button>";
+        // html += "<button class='flat-button js-button-today'>"+coreLocales[o.locale].buttons.today+"</button>";
+        // html += "<button class='flat-button js-button-done'>"+coreLocales[o.locale].buttons.done+"</button>";
 
         return $(html);
     },
@@ -241,7 +262,7 @@ $.widget( "corecss.datepicker" , {
     _createButtonsEvents: function(){
         var that = this, element = this.element, o = this.options;
 
-        element.find(".js-button-rand").on("click", function(){
+        element.find(".js-button-random").on("click", function(){
             function randomInteger(min, max) {
                 var rand = min - 0.5 + Math.random() * (max - min + 1);
                 rand = Math.round(rand);
@@ -256,7 +277,8 @@ $.widget( "corecss.datepicker" , {
         });
 
         element.find(".js-button-done").on("click", function(){
-            $.CoreCss.callback(o.onDone, new Date(that.year, that.month, that.day));
+            var result = new Date(that.year, that.month, that.day);
+            $.CoreCss.callback(o.onDone, result);
         });
 
         element.find(".js-button-today").on("click", function(){

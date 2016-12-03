@@ -21,7 +21,7 @@ var locales = {
             help: "Help",
             yes: "Yes",
             no: "No",
-            rand: "Random"
+            random: "Random"
         }
     },
 
@@ -46,7 +46,7 @@ var locales = {
             help: "Допомога",
             yes: "Так",
             no: "Ні",
-            rand: "Випадково"
+            random: "Випадково"
         }
     },
 
@@ -71,7 +71,7 @@ var locales = {
             help: "Помощь",
             yes: "Да",
             no: "Нет",
-            rand: "Случайно"
+            random: "Случайно"
         }
     }
 };

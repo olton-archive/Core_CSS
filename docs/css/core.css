@@ -750,9 +750,6 @@ footer,
 .button:focus {
   outline: none;
 }
-.raised-button + .raised-button {
-  margin: 0 8px;
-}
 .flat-button,
 .raised-button,
 .action-button,
@@ -4396,6 +4393,19 @@ header.more ~ .fixed-tabs,
     margin-left: 180px;
   }
 }
+.calendar-dialog {
+  padding: 0;
+  width: 330px !important;
+  max-width: none;
+}
+.calendar-dialog .dialog-content {
+  width: 100%;
+}
+@media screen and (min-width: 640px) {
+  .calendar-dialog {
+    width: 512px !important;
+  }
+}
 .datepicker {
   display: block;
   width: 330px;
@@ -4499,6 +4509,16 @@ header.more ~ .fixed-tabs,
 .datepicker .picker-content-inner .m-list::-webkit-scrollbar,
 .datepicker .picker-content-inner .y-list::-webkit-scrollbar {
   display: none;
+}
+.datepicker-dialog {
+  padding: 0;
+  width: 330px !important;
+  max-width: none;
+}
+.datepicker-dialog .dialog-content {
+  width: 100%;
+}
+@media screen and (min-width: 640px) {
 }
 .timepicker {
   display: block;

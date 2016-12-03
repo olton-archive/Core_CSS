@@ -23,7 +23,7 @@ $.widget( "corecss.timepicker" , {
         this._setOptionsFromDOM();
 
         this.mode = 'hours';
-        this.am = date.getHours() < 13;
+        this.am = date.getHours() < 12;
         this.hour = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
         this.minute = new Date(Math.round(date.getTime() / c) * c).getMinutes();
 
@@ -110,7 +110,7 @@ $.widget( "corecss.timepicker" , {
         });
 
         element.on("click", ".js-hours, .js-minutes", function(){
-            var el = $(this), rotate = el.data('rotate');
+            var el = $(this);
             element.find(".picker-item.active").removeClass("active");
             if (el.hasClass("js-hours")) {
                 that.mode = "hours";
@@ -121,7 +121,7 @@ $.widget( "corecss.timepicker" , {
                     el.text(el.data("hour"));
                     if (el.data("hour") == that.hour) {
                         el.addClass("active");
-                        element.find(".picker-line").css({"transform": "rotate("+rotate+"deg)"});
+                        element.find(".picker-line").css({"transform": "rotate("+el.data('rotate')+"deg)"});
                     }
                 });
             } else {
@@ -133,7 +133,7 @@ $.widget( "corecss.timepicker" , {
                     el.text(el.data("minute"));
                     if (el.data("minute") == that.minute) {
                         el.addClass("active");
-                        element.find(".picker-line").css({"transform": "rotate("+rotate+"deg)"});
+                        element.find(".picker-line").css({"transform": "rotate("+el.data('rotate')+"deg)"});
                     }
                 });
             }

@@ -525,7 +525,7 @@ var locales = {
             help: "Help",
             yes: "Yes",
             no: "No",
-            rand: "Random"
+            random: "Random"
         }
     },
 
@@ -550,7 +550,7 @@ var locales = {
             help: "Допомога",
             yes: "Так",
             no: "Ні",
-            rand: "Випадково"
+            random: "Випадково"
         }
     },
 
@@ -575,7 +575,7 @@ var locales = {
             help: "Помощь",
             yes: "Да",
             no: "Нет",
-            rand: "Случайно"
+            random: "Случайно"
         }
     }
 };
@@ -3675,9 +3675,12 @@ $.widget( "corecss.calendar" , {
         footer: true,
         preset: [],
         current: null,
+        buttons: ['cancel', 'today', 'clear', 'done'],
+        isDialog: false,
 
         onCreate: $.noop,
         onDone: $.noop,
+        onCancel: $.noop,
         onToday: $.noop,
         onClear: $.noop,
         onDay: $.noop
@@ -3757,9 +3760,14 @@ $.widget( "corecss.calendar" , {
             footer = element.find(".calendar-footer"),
             html = "";
 
-        html += "<button class='flat-button js-button-today'>"+coreLocales[o.locale].buttons.today+"</button>";
-        html += "<button class='flat-button js-button-clear'>"+coreLocales[o.locale].buttons.clear+"</button>";
-        html += "<button class='flat-button js-button-done'>"+coreLocales[o.locale].buttons.done+"</button>";
+        $.each(o.buttons, function(){
+            html += "<button class='flat-button js-button-"+this+" "+(o.isDialog && (this == 'cancel' || this == 'done') ? 'js-dialog-close' : '')+"'>"+coreLocales[o.locale].buttons[this]+"</button>";
+        });
+
+        // html += "<button class='flat-button js-button-cancel'>"+coreLocales[o.locale].buttons.cancel+"</button>";
+        // html += "<button class='flat-button js-button-today'>"+coreLocales[o.locale].buttons.today+"</button>";
+        // html += "<button class='flat-button js-button-clear'>"+coreLocales[o.locale].buttons.clear+"</button>";
+        // html += "<button class='flat-button js-button-done'>"+coreLocales[o.locale].buttons.done+"</button>";
 
         if (o.footer !== true) {
             footer.hide();
@@ -3984,7 +3992,7 @@ $.widget( "corecss.calendar" , {
             if (o.mode == 'default') {
 
                 element.find(".selected").removeClass("selected");
-                that.current = that.today = el.data('day');
+                that.current = that.today = day;
                 element.find(".calendar-header").html("").append(that._drawHeader());
 
                 if (el.hasClass("prev-month-day") || el.hasClass("next-month-day")) {
@@ -3992,12 +4000,12 @@ $.widget( "corecss.calendar" , {
                     $.each(element.find(".month-days .day"), function () {
                         var day2 = $(this).data('day');
                         if (day.getTime() == day2.getTime()) {
-                            that.selected[0] = $(this).data('day');
+                            that.selected[0] = $(this).data('day').getTime();
                             $(this).addClass("selected");
                         }
                     });
                 } else {
-                    that.selected[0] = day;
+                    that.selected[0] = day.getTime();
                     el.addClass("selected");
                 }
 
@@ -4069,6 +4077,8 @@ $.widget( "corecss.datepicker" , {
         day: (new Date()).getDate(),
         month: (new Date()).getMonth(),
         year: (new Date()).getFullYear(),
+        isDialog: false,
+        buttons: ['cancel', 'random', 'today', 'done'],
         onDone: $.noop
     },
 
@@ -4091,7 +4101,8 @@ $.widget( "corecss.datepicker" , {
         this._createScrollEvents();
         this._createButtonsEvents();
 
-        this.setPosition();
+        this.today();
+        //this.setPosition();
 
         element.data('datepicker', this);
     },
@@ -4114,9 +4125,9 @@ $.widget( "corecss.datepicker" , {
             this._removeScrollEvents();
             this.setPosition();
             this._createScrollEvents();
-
-            console.log("bad date! correct it.");
-            console.log("new date is: " + date);
+            //
+            // console.log("bad date! correct it.");
+            // console.log("new date is: " + date);
         }
     },
 
@@ -4131,6 +4142,10 @@ $.widget( "corecss.datepicker" , {
 
         this._removeScrollEvents();
 
+        // console.log(day);
+        // console.log(month);
+        // console.log(year);
+        //
         d_list.scrollTop(0).animate({
             scrollTop: element.find(".js-dd-"+day).addClass("active").position().top - 40
         });
@@ -4144,6 +4159,16 @@ $.widget( "corecss.datepicker" , {
         });
 
         this._createScrollEvents();
+    },
+
+    today: function(){
+        var d = new Date(); d.setHours(0,0,0,0);
+
+        this.day = d.getDate();
+        this.month = d.getMonth();
+        this.year = d.getFullYear();
+
+        this.setPosition();
     },
 
     _drawHeader: function(){
@@ -4167,9 +4192,13 @@ $.widget( "corecss.datepicker" , {
         var element = this.element, o = this.options,
             html = "";
 
-        html += "<button class='flat-button js-button-rand'>"+coreLocales[o.locale].buttons.rand+"</button>";
-        html += "<button class='flat-button js-button-today'>"+coreLocales[o.locale].buttons.today+"</button>";
-        html += "<button class='flat-button js-button-done'>"+coreLocales[o.locale].buttons.done+"</button>";
+        $.each(o.buttons, function(){
+            html += "<button class='flat-button js-button-"+this+" "+(o.isDialog && (this == 'cancel' || this == 'done') ? 'js-dialog-close' : '')+"'>"+coreLocales[o.locale].buttons[this]+"</button>";
+        });
+
+        // html += "<button class='flat-button js-button-rand'>"+coreLocales[o.locale].buttons.rand+"</button>";
+        // html += "<button class='flat-button js-button-today'>"+coreLocales[o.locale].buttons.today+"</button>";
+        // html += "<button class='flat-button js-button-done'>"+coreLocales[o.locale].buttons.done+"</button>";
 
         return $(html);
     },
@@ -4301,7 +4330,7 @@ $.widget( "corecss.datepicker" , {
     _createButtonsEvents: function(){
         var that = this, element = this.element, o = this.options;
 
-        element.find(".js-button-rand").on("click", function(){
+        element.find(".js-button-random").on("click", function(){
             function randomInteger(min, max) {
                 var rand = min - 0.5 + Math.random() * (max - min + 1);
                 rand = Math.round(rand);
@@ -4316,7 +4345,8 @@ $.widget( "corecss.datepicker" , {
         });
 
         element.find(".js-button-done").on("click", function(){
-            $.CoreCss.callback(o.onDone, new Date(that.year, that.month, that.day));
+            var result = new Date(that.year, that.month, that.day);
+            $.CoreCss.callback(o.onDone, result);
         });
 
         element.find(".js-button-today").on("click", function(){
@@ -5146,10 +5176,9 @@ $.widget( "corecss.panel" , {
 
 // Source: js/widgets/pickers.js
 var picker = {
-    timePicker: function(cb_done, cb_cancel, cb_change){
+    timePicker: function(cb_done, cb_change){
         var picker = $("<div>").timepicker({
             onDone: cb_done,
-            onCancel: cb_cancel,
             onChange: cb_change,
             isDialog: true
         });
@@ -5157,6 +5186,36 @@ var picker = {
             content: picker,
             options: {
                 cls: "timepicker-dialog"
+            }
+        });
+    },
+
+    calendarPicker: function(cb_done, options){
+        var picker_options = $.extend({}, {
+            isDialog: true,
+            onDone: cb_done
+        }, (options != undefined ? options : {}));
+
+        var picker = $("<div>").calendar(picker_options);
+        return coreDialog.create({
+            content: picker,
+            options: {
+                cls: "calendar-dialog"
+            }
+        });
+    },
+
+    datePicker: function(cb_done, options){
+        var picker_options = $.extend({}, {
+            isDialog: true,
+            onDone: cb_done
+        }, (options != undefined ? options : {}));
+
+        var picker = $("<div>").datepicker(picker_options);
+        return coreDialog.create({
+            content: picker,
+            options: {
+                cls: "datepicker-dialog"
             }
         });
     }
@@ -6314,7 +6373,7 @@ $.widget( "corecss.timepicker" , {
         this._setOptionsFromDOM();
 
         this.mode = 'hours';
-        this.am = date.getHours() < 13;
+        this.am = date.getHours() < 12;
         this.hour = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
         this.minute = new Date(Math.round(date.getTime() / c) * c).getMinutes();
 
@@ -6401,7 +6460,7 @@ $.widget( "corecss.timepicker" , {
         });
 
         element.on("click", ".js-hours, .js-minutes", function(){
-            var el = $(this), rotate = el.data('rotate');
+            var el = $(this);
             element.find(".picker-item.active").removeClass("active");
             if (el.hasClass("js-hours")) {
                 that.mode = "hours";
@@ -6412,7 +6471,7 @@ $.widget( "corecss.timepicker" , {
                     el.text(el.data("hour"));
                     if (el.data("hour") == that.hour) {
                         el.addClass("active");
-                        element.find(".picker-line").css({"transform": "rotate("+rotate+"deg)"});
+                        element.find(".picker-line").css({"transform": "rotate("+el.data('rotate')+"deg)"});
                     }
                 });
             } else {
@@ -6424,7 +6483,7 @@ $.widget( "corecss.timepicker" , {
                     el.text(el.data("minute"));
                     if (el.data("minute") == that.minute) {
                         el.addClass("active");
-                        element.find(".picker-line").css({"transform": "rotate("+rotate+"deg)"});
+                        element.find(".picker-line").css({"transform": "rotate("+el.data('rotate')+"deg)"});
                     }
                 });
             }
