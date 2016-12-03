@@ -331,6 +331,7 @@ $.widget( "corecss.calendar" , {
             if (o.mode == 'default') {
 
                 element.find(".selected").removeClass("selected");
+                that.selected = [];
                 that.current = that.today = day;
                 element.find(".calendar-header").html("").append(that._drawHeader());
 
