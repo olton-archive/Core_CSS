@@ -4,8 +4,8 @@ $.widget( "corecss.accordion" , {
 
     options: {
         closeAny: true,
-        onOpen: $.noop(),
-        onClose: $.noop()
+        onOpen: $.noop,
+        onClose: $.noop
     },
 
     _create: function () {

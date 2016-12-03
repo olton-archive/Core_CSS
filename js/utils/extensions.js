@@ -205,3 +205,4 @@ Date.prototype.format = function (mask, utc) {
     "use strict";
     return dateFormat(this, mask, utc);
 };
+

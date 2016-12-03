@@ -11,8 +11,8 @@ $.widget( "corecss.progress" , {
         color: 'bg-gray-600',
         size: '64',
         radius: '20',
-        onChange: $.noop(),
-        onEnd: $.noop()
+        onChange: $.noop,
+        onEnd: $.noop
     },
 
     value: 0,

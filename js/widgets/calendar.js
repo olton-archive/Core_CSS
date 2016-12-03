@@ -15,11 +15,11 @@ $.widget( "corecss.calendar" , {
         preset: [],
         current: null,
 
-        onCreate: $.noop(),
-        onDone: $.noop(),
-        onToday: $.noop(),
-        onClear: $.noop(),
-        onDay: $.noop()
+        onCreate: $.noop,
+        onDone: $.noop,
+        onToday: $.noop,
+        onClear: $.noop,
+        onDay: $.noop
     },
 
     current: new Date(),

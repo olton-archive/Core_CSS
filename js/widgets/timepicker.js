@@ -4,9 +4,10 @@ $.widget( "corecss.timepicker" , {
 
     options: {
         locale: CORE_LOCALE,
-        onDone: $.noop(),
-        onChange: $.noop(),
-        onCancel: $.noop()
+        isDialog: false,
+        onDone: $.noop,
+        onChange: $.noop,
+        onCancel: $.noop
     },
 
     mode: 'hours',
@@ -25,8 +26,6 @@ $.widget( "corecss.timepicker" , {
         this.am = date.getHours() < 13;
         this.hour = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
         this.minute = new Date(Math.round(date.getTime() / c) * c).getMinutes();
-
-        console.log(this.hour);
 
         this._createPicker();
         this._createEvents();
@@ -55,8 +54,8 @@ $.widget( "corecss.timepicker" , {
         var element = this.element, o = this.options,
             html = "";
 
-        html += "<button class='flat-button js-button-cancel'>"+coreLocales[o.locale].buttons.cancel+"</button>";
-        html += "<button class='flat-button js-button-done'>"+coreLocales[o.locale].buttons.done+"</button>";
+        html += "<button class='flat-button js-button-cancel "+(o.isDialog === true ? 'js-dialog-close' : '')+"'>"+coreLocales[o.locale].buttons.cancel+"</button>";
+        html += "<button class='flat-button js-button-done "+(o.isDialog === true ? 'js-dialog-close' : '')+"'>"+coreLocales[o.locale].buttons.done+"</button>";
 
         return $(html);
     },
@@ -87,10 +86,7 @@ $.widget( "corecss.timepicker" , {
         }
 
         line = $("<div>").addClass("picker-line").appendTo(pi);
-        line.css({
-            "transform": "rotate("+rotate+"deg)",
-            "transform-origin": "0% 100%"
-        });
+        line.css({"transform": "rotate("+rotate+"deg)"});
 
     },
 
@@ -98,7 +94,7 @@ $.widget( "corecss.timepicker" , {
         var that = this, element = this.element, o = this.options;
 
         element.on("click", ".picker-item", function(){
-            var el = $(this);
+            var el = $(this), rotate = el.data('rotate');
             element.find(".picker-item.active").removeClass("active");
             el.addClass("active");
 
@@ -110,14 +106,11 @@ $.widget( "corecss.timepicker" , {
                 that.minute = el.data('minute');
             }
 
-            element.find(".picker-line").css({
-                "transform": "rotate("+el.data('rotate')+"deg)",
-                "transform-origin": "0% 100%"
-            });
+            element.find(".picker-line").css({"transform": "rotate("+rotate+"deg)"});
         });
 
         element.on("click", ".js-hours, .js-minutes", function(){
-            var el = $(this);
+            var el = $(this), rotate = el.data('rotate');
             element.find(".picker-item.active").removeClass("active");
             if (el.hasClass("js-hours")) {
                 that.mode = "hours";
@@ -128,10 +121,7 @@ $.widget( "corecss.timepicker" , {
                     el.text(el.data("hour"));
                     if (el.data("hour") == that.hour) {
                         el.addClass("active");
-                        element.find(".picker-line").css({
-                            "transform": "rotate("+el.data('rotate')+"deg)",
-                            "transform-origin": "0% 100%"
-                        });
+                        element.find(".picker-line").css({"transform": "rotate("+rotate+"deg)"});
                     }
                 });
             } else {
@@ -143,10 +133,7 @@ $.widget( "corecss.timepicker" , {
                     el.text(el.data("minute"));
                     if (el.data("minute") == that.minute) {
                         el.addClass("active");
-                        element.find(".picker-line").css({
-                            "transform": "rotate("+el.data('rotate')+"deg)",
-                            "transform-origin": "0% 100%"
-                        });
+                        element.find(".picker-line").css({"transform": "rotate("+rotate+"deg)"});
                     }
                 });
             }

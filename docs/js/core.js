@@ -31,7 +31,13 @@ var CoreCss = {
                     window[cb](args);
                 } else {
                     var result = eval("(function(){"+cb+"})");
-                    result.call(args);
+                    var _arguments = [];
+                    if (args instanceof Array) {
+                        _arguments = args;
+                    } else {
+                        _arguments.push(args);
+                    }
+                    result.apply(null, _arguments);
                 }
             }
         }
@@ -493,6 +499,7 @@ dateFormat.masks = {
 Date.prototype.format = function (mask, utc) {
 return dateFormat(this, mask, utc);
 };
+
 
 // Source: js/utils/locales.js
 var locales = {
@@ -3456,8 +3463,8 @@ $.widget( "corecss.accordion" , {
 
     options: {
         closeAny: true,
-        onOpen: $.noop(),
-        onClose: $.noop()
+        onOpen: $.noop,
+        onClose: $.noop
     },
 
     _create: function () {
@@ -3669,11 +3676,11 @@ $.widget( "corecss.calendar" , {
         preset: [],
         current: null,
 
-        onCreate: $.noop(),
-        onDone: $.noop(),
-        onToday: $.noop(),
-        onClear: $.noop(),
-        onDay: $.noop()
+        onCreate: $.noop,
+        onDone: $.noop,
+        onToday: $.noop,
+        onClear: $.noop,
+        onDay: $.noop
     },
 
     current: new Date(),
@@ -4062,7 +4069,7 @@ $.widget( "corecss.datepicker" , {
         day: (new Date()).getDate(),
         month: (new Date()).getMonth(),
         year: (new Date()).getFullYear(),
-        onDone: $.noop()
+        onDone: $.noop
     },
 
     current: new Date(),
@@ -4742,7 +4749,7 @@ var dialog = {
             $("<div class='dialog-title'>"+data.title+"</div>").appendTo(dlg);
         }
         if (data.content !== undefined) {
-            $("<div class='dialog-content'>"+data.content+"</div>").appendTo(dlg);
+            $("<div class='dialog-content'>").append($(data.content)).appendTo(dlg);
         }
         if (data.actions !== undefined && typeof data.actions == 'object') {
 
@@ -5137,6 +5144,25 @@ $.widget( "corecss.panel" , {
     }
 });
 
+// Source: js/widgets/pickers.js
+var picker = {
+    timePicker: function(cb_done, cb_cancel, cb_change){
+        var picker = $("<div>").timepicker({
+            onDone: cb_done,
+            onCancel: cb_cancel,
+            onChange: cb_change,
+            isDialog: true
+        });
+        return coreDialog.create({
+            content: picker,
+            options: {
+                cls: "timepicker-dialog"
+            }
+        });
+    }
+};
+
+$.Picker = window.corePicker = picker;
 // Source: js/widgets/progress.js
 $.widget( "corecss.progress" , {
 
@@ -5151,8 +5177,8 @@ $.widget( "corecss.progress" , {
         color: 'bg-gray-600',
         size: '64',
         radius: '20',
-        onChange: $.noop(),
-        onEnd: $.noop()
+        onChange: $.noop,
+        onEnd: $.noop
     },
 
     value: 0,
@@ -6269,9 +6295,10 @@ $.widget( "corecss.timepicker" , {
 
     options: {
         locale: CORE_LOCALE,
-        onDone: $.noop(),
-        onChange: $.noop(),
-        onCancel: $.noop()
+        isDialog: false,
+        onDone: $.noop,
+        onChange: $.noop,
+        onCancel: $.noop
     },
 
     mode: 'hours',
@@ -6290,8 +6317,6 @@ $.widget( "corecss.timepicker" , {
         this.am = date.getHours() < 13;
         this.hour = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
         this.minute = new Date(Math.round(date.getTime() / c) * c).getMinutes();
-
-        console.log(this.hour);
 
         this._createPicker();
         this._createEvents();
@@ -6320,8 +6345,8 @@ $.widget( "corecss.timepicker" , {
         var element = this.element, o = this.options,
             html = "";
 
-        html += "<button class='flat-button js-button-cancel'>"+coreLocales[o.locale].buttons.cancel+"</button>";
-        html += "<button class='flat-button js-button-done'>"+coreLocales[o.locale].buttons.done+"</button>";
+        html += "<button class='flat-button js-button-cancel "+(o.isDialog === true ? 'js-dialog-close' : '')+"'>"+coreLocales[o.locale].buttons.cancel+"</button>";
+        html += "<button class='flat-button js-button-done "+(o.isDialog === true ? 'js-dialog-close' : '')+"'>"+coreLocales[o.locale].buttons.done+"</button>";
 
         return $(html);
     },
@@ -6352,10 +6377,7 @@ $.widget( "corecss.timepicker" , {
         }
 
         line = $("<div>").addClass("picker-line").appendTo(pi);
-        line.css({
-            "transform": "rotate("+rotate+"deg)",
-            "transform-origin": "0% 100%"
-        });
+        line.css({"transform": "rotate("+rotate+"deg)"});
 
     },
 
@@ -6363,7 +6385,7 @@ $.widget( "corecss.timepicker" , {
         var that = this, element = this.element, o = this.options;
 
         element.on("click", ".picker-item", function(){
-            var el = $(this);
+            var el = $(this), rotate = el.data('rotate');
             element.find(".picker-item.active").removeClass("active");
             el.addClass("active");
 
@@ -6375,14 +6397,11 @@ $.widget( "corecss.timepicker" , {
                 that.minute = el.data('minute');
             }
 
-            element.find(".picker-line").css({
-                "transform": "rotate("+el.data('rotate')+"deg)",
-                "transform-origin": "0% 100%"
-            });
+            element.find(".picker-line").css({"transform": "rotate("+rotate+"deg)"});
         });
 
         element.on("click", ".js-hours, .js-minutes", function(){
-            var el = $(this);
+            var el = $(this), rotate = el.data('rotate');
             element.find(".picker-item.active").removeClass("active");
             if (el.hasClass("js-hours")) {
                 that.mode = "hours";
@@ -6393,10 +6412,7 @@ $.widget( "corecss.timepicker" , {
                     el.text(el.data("hour"));
                     if (el.data("hour") == that.hour) {
                         el.addClass("active");
-                        element.find(".picker-line").css({
-                            "transform": "rotate("+el.data('rotate')+"deg)",
-                            "transform-origin": "0% 100%"
-                        });
+                        element.find(".picker-line").css({"transform": "rotate("+rotate+"deg)"});
                     }
                 });
             } else {
@@ -6408,10 +6424,7 @@ $.widget( "corecss.timepicker" , {
                     el.text(el.data("minute"));
                     if (el.data("minute") == that.minute) {
                         el.addClass("active");
-                        element.find(".picker-line").css({
-                            "transform": "rotate("+el.data('rotate')+"deg)",
-                            "transform-origin": "0% 100%"
-                        });
+                        element.find(".picker-line").css({"transform": "rotate("+rotate+"deg)"});
                     }
                 });
             }

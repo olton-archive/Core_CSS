@@ -4590,16 +4590,28 @@ header.more ~ .fixed-tabs,
   z-index: 2;
 }
 .timepicker .picker-item.active {
-  background: #0288d1;
   color: #ffffff;
 }
 .timepicker .picker-line {
   position: absolute;
-  height: 149px;
+  height: 140px;
   width: 1px;
   background: #0288d1;
+  top: 9px;
   left: 50%;
   z-index: 1;
+  -webkit-transform-origin: 0 100%;
+          transform-origin: 0 100%;
+}
+.timepicker .picker-line:after {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  top: 0;
+  left: -20px;
+  background: #0288d1;
+  border-radius: 50%;
+  content: "";
 }
 .timepicker .picker-item:nth-of-type(1) {
   -webkit-transform: rotate(0deg) translateY(-120px) rotate(0deg);
@@ -4721,6 +4733,19 @@ header.more ~ .fixed-tabs,
   }
   .timepicker:not(.no-rotate) .picker-line {
     height: 117.50788644px;
+  }
+}
+.timepicker-dialog {
+  padding: 0;
+  width: 330px !important;
+  max-width: none;
+}
+.timepicker-dialog .dialog-content {
+  width: 100%;
+}
+@media screen and (min-width: 640px) {
+  .timepicker-dialog {
+    width: 512px !important;
   }
 }
 .multi-action {

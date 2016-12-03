@@ -9,7 +9,7 @@ $.widget( "corecss.datepicker" , {
         day: (new Date()).getDate(),
         month: (new Date()).getMonth(),
         year: (new Date()).getFullYear(),
-        onDone: $.noop()
+        onDone: $.noop
     },
 
     current: new Date(),

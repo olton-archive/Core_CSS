@@ -393,7 +393,7 @@ var dialog = {
             $("<div class='dialog-title'>"+data.title+"</div>").appendTo(dlg);
         }
         if (data.content !== undefined) {
-            $("<div class='dialog-content'>"+data.content+"</div>").appendTo(dlg);
+            $("<div class='dialog-content'>").append($(data.content)).appendTo(dlg);
         }
         if (data.actions !== undefined && typeof data.actions == 'object') {
 

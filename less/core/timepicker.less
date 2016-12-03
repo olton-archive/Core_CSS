@@ -93,18 +93,30 @@
         z-index: 2;
 
         &.active {
-            background: @lightBlue700;
+            //background: @lightBlue700;
             color: @white;
         }
     }
 
     .picker-line {
         position: absolute;
-        height: 149px;
+        height: 140px;
         width: 1px;
         background: @lightBlue700;
+        top: 9px;
         left: 50%;
         z-index: 1;
+        transform-origin: 0 100%;
+
+        &:after {
+            position: absolute;
+            .square(40px);
+            top: 0;
+            left: -20px;
+            background: @lightBlue700;
+            border-radius: 50%;
+            content: "";
+        }
     }
 }
 
@@ -168,5 +180,19 @@
         .picker-line {
             height: 149px / 1.268;
         }
+    }
+}
+
+.timepicker-dialog {
+    padding: 0;
+    width: 330px !important;
+    max-width: none;
+
+    .dialog-content {
+        width: 100%;
+    }
+
+    @media screen and (min-width: 640px) {
+        width: 512px !important;
     }
 }

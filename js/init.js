@@ -13,7 +13,13 @@ var CoreCss = {
                     window[cb](args);
                 } else {
                     var result = eval("(function(){"+cb+"})");
-                    result.call(args);
+                    var _arguments = [];
+                    if (args instanceof Array) {
+                        _arguments = args;
+                    } else {
+                        _arguments.push(args);
+                    }
+                    result.apply(null, _arguments);
                 }
             }
         }
