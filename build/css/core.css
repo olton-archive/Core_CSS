@@ -4608,8 +4608,10 @@ header.more ~ .fixed-tabs,
   text-align: center;
   font-size: 14px;
   z-index: 2;
+  cursor: pointer;
 }
 .timepicker .picker-item.active {
+  background: #0288d1;
   color: #ffffff;
 }
 .timepicker .picker-line {
@@ -4752,7 +4754,8 @@ header.more ~ .fixed-tabs,
             transform: rotate(330deg) translateY(-90px) rotate(-330deg);
   }
   .timepicker:not(.no-rotate) .picker-line {
-    height: 117.50788644px;
+    height: 110px;
+    top: 8px;
   }
 }
 .timepicker-dialog {
