@@ -4101,8 +4101,9 @@ $.widget( "corecss.datepicker" , {
         this._createScrollEvents();
         this._createButtonsEvents();
 
-        this.today();
-        //this.setPosition();
+        setTimeout(function(){
+            that.today();
+        }, 100);
 
         element.data('datepicker', this);
     },
@@ -4142,12 +4143,12 @@ $.widget( "corecss.datepicker" , {
 
         this._removeScrollEvents();
 
-        // console.log(day);
-        // console.log(month);
-        // console.log(year);
+        // console.log(element.find(".js-dd-"+day).offset());
+        // console.log(element.find(".js-dm-"+month));
+        // console.log(element.find(".js-yy-"+year));
         //
         d_list.scrollTop(0).animate({
-            scrollTop: element.find(".js-dd-"+day).addClass("active").position().top - 40
+           scrollTop: element.find(".js-dd-"+day).addClass("active").position().top - 40
         });
 
         m_list.scrollTop(0).animate({
@@ -6354,6 +6355,7 @@ $.widget( "corecss.timepicker" , {
 
     options: {
         locale: CORE_LOCALE,
+        time: new Date(),
         isDialog: false,
         onDone: $.noop,
         onChange: $.noop,
@@ -6368,9 +6370,20 @@ $.widget( "corecss.timepicker" , {
     _create: function () {
         var that = this, element = this.element, o = this.options;
         var c = 1000 * 60 * 5;
-        var date = new Date();
+        var date, h, m;
 
         this._setOptionsFromDOM();
+
+        if (typeof o.time == 'string') {
+            date = new Date();
+            h = o.time.split(":")[0];
+            m = o.time.split(":")[1];
+            date.setHours(h, m);
+        } else {
+            date = o.time;
+        }
+
+        //date = o.date;
 
         this.mode = 'hours';
         this.am = date.getHours() < 12;

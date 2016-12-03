@@ -33,8 +33,9 @@ $.widget( "corecss.datepicker" , {
         this._createScrollEvents();
         this._createButtonsEvents();
 
-        this.today();
-        //this.setPosition();
+        setTimeout(function(){
+            that.today();
+        }, 100);
 
         element.data('datepicker', this);
     },
@@ -74,12 +75,12 @@ $.widget( "corecss.datepicker" , {
 
         this._removeScrollEvents();
 
-        // console.log(day);
-        // console.log(month);
-        // console.log(year);
+        // console.log(element.find(".js-dd-"+day).offset());
+        // console.log(element.find(".js-dm-"+month));
+        // console.log(element.find(".js-yy-"+year));
         //
         d_list.scrollTop(0).animate({
-            scrollTop: element.find(".js-dd-"+day).addClass("active").position().top - 40
+           scrollTop: element.find(".js-dd-"+day).addClass("active").position().top - 40
         });
 
         m_list.scrollTop(0).animate({

@@ -4,6 +4,7 @@ $.widget( "corecss.timepicker" , {
 
     options: {
         locale: CORE_LOCALE,
+        time: new Date(),
         isDialog: false,
         onDone: $.noop,
         onChange: $.noop,
@@ -18,9 +19,20 @@ $.widget( "corecss.timepicker" , {
     _create: function () {
         var that = this, element = this.element, o = this.options;
         var c = 1000 * 60 * 5;
-        var date = new Date();
+        var date, h, m;
 
         this._setOptionsFromDOM();
+
+        if (typeof o.time == 'string') {
+            date = new Date();
+            h = o.time.split(":")[0];
+            m = o.time.split(":")[1];
+            date.setHours(h, m);
+        } else {
+            date = o.time;
+        }
+
+        //date = o.date;
 
         this.mode = 'hours';
         this.am = date.getHours() < 12;
