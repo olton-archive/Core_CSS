@@ -1,34 +1,156 @@
 @import (once) "../include/variables";
 @import (once) "../include/mixins";
 
-@tileSize: 56px;
-
-.grid {
+.grid-list {
     display: block;
-    padding: 4px;
-    .clear();
+    padding: 2px;
 }
 
-.grid {
+.grid-list {
     .row {
         display: flex;
         justify-content: space-between;
-        .clear();
+        align-items: center;
     }
 }
 
-.grid {
+.grid-list {
     .cell {
         display: block;
-        float: left;
-        margin: 4px;
-        height: auto;
-        width: auto;
-        flex-grow: 1;
+        position: relative;
+        padding: 2px;
+        flex: 1 1 auto;
+    }
+
+    &.condensed {
+        padding: 1px;
+        .cell {
+            padding: 1px;
+        }
     }
 }
 
-.tile {
-    width: @tileSize;
-    height: @tileSize;
+.grid-list {
+    .cell {
+        img {
+            width: 100%;
+        }
+    }
+}
+
+@gridMargin: 4;
+
+.grid {
+    display: block;
+    position: relative;
+    padding: 2px;
+    .clear();
+
+    .row {
+        width: 100%;
+        display: block;
+        .clear();
+
+        & > .cell {
+            display: block;
+            position: relative;
+            float: left;
+            width: 100%;
+            min-height: 10px;
+            padding: 2px;
+        }
+
+        .generate-cell(@gridColumns);
+
+        .generate-cell(@n, @i: 2) when (@i =< @n){
+
+            //@width: ~"calc(100% / @{i})";
+
+            &.cells@{i} {
+                & > .cell {
+                    width: ~"calc(100% / @{i})";
+
+                    .generate-colspan(@i);
+                    .generate-colspan(@j, @k: 2) when (@k =< @j){
+                        &.colspan@{k} {
+                            width: ~"calc(100% / @{i} * @{k})";
+                        }
+                        .generate-colspan(@j, (@k + 1));
+                    }
+
+                    .generate-offset(@i);
+                    .generate-offset(@j, @k: 1) when (@k =< @j){
+                        &.offset@{k} {
+                            margin-left: ~"calc(100% / @{i} * @{k})";
+                        }
+                        .generate-offset(@j, (@k + 1));
+                    }
+                }
+            }
+
+            .generate-cell(@n, (@i + 1));
+        }
+    }
+
+    .row:empty {
+        display: none;
+    }
+
+    &.condensed {
+        padding: 1px;
+
+        .cell {
+            padding: 1px;
+        }
+    }
+}
+
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+    .grid {
+        .row {
+            .cell {
+                width: ~"calc(100% / 6)" !important;
+            }
+        }
+    }
+}
+
+@media only screen and (min-device-width : 640px) and (max-device-width : 768px) {
+    .grid {
+        .row {
+            .cell {
+                width: ~"calc(100% / 4)" !important;
+            }
+        }
+    }
+}
+
+@media only screen and (max-device-width : 360px) {
+    .grid {
+        .row {
+            .cell {
+                width: ~"calc(100% / 3)" !important;
+            }
+        }
+    }
+}
+
+@media only screen and (max-device-width : 320px) {
+    .grid {
+        .row {
+            .cell {
+                width: ~"calc(100% / 2)" !important;
+            }
+        }
+    }
+}
+
+@media only screen and (max-device-width : 240px) {
+    .grid {
+        .row {
+            .cell {
+                width: ~"calc(100% / 1)" !important;
+            }
+        }
+    }
 }
