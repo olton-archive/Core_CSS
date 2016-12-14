@@ -960,27 +960,27 @@ header.more ~ .view-content,
   padding: 1px;
 }
 @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
-  .grid .row .cell {
+  .grid:not(.no-transform) .row .cell {
     width: calc(100% / 6) !important;
   }
 }
 @media only screen and (min-device-width: 640px) and (max-device-width: 768px) {
-  .grid .row .cell {
+  .grid:not(.no-transform) .row .cell {
     width: calc(100% / 4) !important;
   }
 }
 @media only screen and (max-device-width: 360px) {
-  .grid .row .cell {
+  .grid:not(.no-transform) .row .cell {
     width: calc(100% / 3) !important;
   }
 }
 @media only screen and (max-device-width: 320px) {
-  .grid .row .cell {
+  .grid:not(.no-transform) .row .cell {
     width: calc(100% / 2) !important;
   }
 }
 @media only screen and (max-device-width: 240px) {
-  .grid .row .cell {
+  .grid:not(.no-transform) .row .cell {
     width: calc(100% / 1) !important;
   }
 }
@@ -3711,6 +3711,30 @@ footer,
 }
 .bg-black {
   background-color: #000000 !important;
+}
+.fg-mirohost-red {
+  color: #B00015 !important;
+}
+.fg-mirohost-dark {
+  color: #212121 !important;
+}
+.fg-mirohost-light {
+  color: #f3f3f3 !important;
+}
+.fg-mirohost-gray {
+  color: #F9F9F9 !important;
+}
+.bg-mirohost-red {
+  background-color: #B00015 !important;
+}
+.bg-mirohost-dark {
+  background-color: #212121 !important;
+}
+.bg-mirohost-light {
+  background-color: #f3f3f3 !important;
+}
+.bg-mirohost-gray {
+  background-color: #F9F9F9 !important;
 }
 .card {
   display: block;

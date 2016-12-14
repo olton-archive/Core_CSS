@@ -38,7 +38,7 @@
     }
 }
 
-@gridMargin: 4;
+//@gridMargin: 4;
 
 .grid {
     display: block;
@@ -106,7 +106,7 @@
 }
 
 @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
-    .grid {
+    .grid:not(.no-transform) {
         .row {
             .cell {
                 width: ~"calc(100% / 6)" !important;
@@ -116,7 +116,7 @@
 }
 
 @media only screen and (min-device-width : 640px) and (max-device-width : 768px) {
-    .grid {
+    .grid:not(.no-transform) {
         .row {
             .cell {
                 width: ~"calc(100% / 4)" !important;
@@ -126,7 +126,7 @@
 }
 
 @media only screen and (max-device-width : 360px) {
-    .grid {
+    .grid:not(.no-transform) {
         .row {
             .cell {
                 width: ~"calc(100% / 3)" !important;
@@ -136,7 +136,7 @@
 }
 
 @media only screen and (max-device-width : 320px) {
-    .grid {
+    .grid:not(.no-transform) {
         .row {
             .cell {
                 width: ~"calc(100% / 2)" !important;
@@ -146,7 +146,7 @@
 }
 
 @media only screen and (max-device-width : 240px) {
-    .grid {
+    .grid:not(.no-transform) {
         .row {
             .cell {
                 width: ~"calc(100% / 1)" !important;
