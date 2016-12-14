@@ -9075,3 +9075,39 @@
 .ol-black-focus:focus {
   outline-color: #000000 !important;
 }
+.bd-mirohost-red {
+  border-color: #B00015 !important;
+}
+.bd-mirohost-dark {
+  border-color: #212121 !important;
+}
+.bd-mirohost-light {
+  border-color: #f3f3f3 !important;
+}
+.bd-mirohost-gray {
+  border-color: #F9F9F9 !important;
+}
+.ol-mirohost-red {
+  outline-color: #B00015 !important;
+}
+.ol-mirohost-dark {
+  outline-color: #212121 !important;
+}
+.ol-mirohost-light {
+  outline-color: #f3f3f3 !important;
+}
+.ol-mirohost-gray {
+  outline-color: #F9F9F9 !important;
+}
+.st-mirohost-red {
+  stroke: #B00015 !important;
+}
+.st-mirohost-dark {
+  stroke: #212121 !important;
+}
+.st-mirohost-light {
+  stroke: #f3f3f3 !important;
+}
+.st-mirohost-gray {
+  stroke: #F9F9F9 !important;
+}
