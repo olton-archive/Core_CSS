@@ -5503,6 +5503,14 @@ header.more ~ .fixed-tabs,
   transition: -webkit-transform 0.3s;
   transition: transform 0.3s;
 }
+.donut {
+  display: block;
+  position: relative;
+}
+.donut > svg {
+  width: 100%;
+  height: 100%;
+}
 .fix-slow-animation {
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
