@@ -41,13 +41,13 @@ $.widget( "corecss.progress" , {
             buffer  = $("<div class='buffer'></div>").appendTo(element);
             load  = $("<div class='load'></div>").appendTo(element);
 
-            if (o.barColor.isColor()) {
+            if (Utils.isColor(o.barColor)) {
                 bar.css('background', o.barColor);
             } else {
                 bar.addClass(o.barColor);
             }
 
-            if (o.bufferColor.isColor()) {
+            if (Utils.isColor(o.bufferColor)) {
                 buffer.css('background', o.bufferColor);
             } else {
                 buffer.addClass(o.bufferColor);
@@ -69,13 +69,13 @@ $.widget( "corecss.progress" , {
             circle = $('<svg class="circular"><circle class="path" cx="'+o.size/2+'" cy="'+o.size/2+'" r="'+o.radius+'" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg>').appendTo(element);
             bar = element.find(".path");
 
-            if (o.barColor.isColor()) {
+            if (Utils.isColor(o.barColor)) {
                 bar.css('stroke', o.barColor);
             } else {
                 bar.addClass(o.barColor);
             }
         } else {
-            if (o.color.isColor()) {
+            if (Utils.isColor(o.color)) {
                 element.css('background', o.color);
             } else {
                 element.addClass(o.color);
@@ -83,7 +83,7 @@ $.widget( "corecss.progress" , {
 
             bar = $("<div class='bar'>").appendTo(element);
 
-            if (o.barColor.isColor()) {
+            if (Utils.isColor(o.barColor)) {
                 bar.css('background', o.barColor);
             } else {
                 bar.addClass(o.barColor);

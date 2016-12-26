@@ -80,7 +80,7 @@ $.widget( "corecss.dialog" , {
         }
 
         if (o.overlayColor) {
-            if (o.overlayColor.isColor()) {
+            if (Utils.isColor(o.overlayColor)) {
                 overlay.css({
                     background: o.overlayColor
                 });
@@ -102,7 +102,7 @@ $.widget( "corecss.dialog" , {
         }
 
         if (o.background !== 'default') {
-            if (o.background.isColor()) {
+            if (Utils.isColor(o.background)) {
                 element.css({
                     background: o.background
                 });
@@ -112,7 +112,7 @@ $.widget( "corecss.dialog" , {
         }
 
         if (o.color !== 'default') {
-            if (o.color.isColor()) {
+            if (Utils.isColor(o.color)) {
                 element.css({
                     color: o.color
                 });

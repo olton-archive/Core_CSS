@@ -1,3 +1,16 @@
 <h2 class="heading">Donut chart</h2>
 
-<div data-role="donut" data-value="35"></div>
+<div data-role="donut" data-value="35" id="donut1"></div>
+
+<br />
+
+<button class="raised-button" onclick="genNewDonutValue()">New Value</button>
+
+<script>
+    function genNewDonutValue(){
+        var donut_value = coreUtils.random(0,100);
+        var donut = $('#donut1').data('donut');
+
+        donut.val(donut_value);
+    }
+</script>

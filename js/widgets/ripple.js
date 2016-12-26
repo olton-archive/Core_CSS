@@ -45,7 +45,7 @@ $.widget( "corecss.ripple" , {
 
             // Add the ripples CSS and start the animation
             ripple.css({
-                background: hex2rgba(o.rippleColor, o.rippleAlpha),
+                background: Utils.hex2rgba(o.rippleColor, o.rippleAlpha),
                 width: size,
                 height: size,
                 top: y + 'px',
