@@ -376,28 +376,28 @@ $.widget("corecss.range", {
         }
 
         if (o.color !== 'default') {
-            if (o.color.isColor()) {
+            if (Utils.isColor(o.color)) {
                 back.css('background-color', o.color);
             } else {
                 back.addClass(o.color);
             }
         }
         if (o.completeColor !== 'default') {
-            if (o.completeColor.isColor()) {
+            if (Utils.isColor(o.completeColor)) {
                 complete.css('background-color', o.completeColor);
             } else {
                 complete.addClass(o.completeColor);
             }
         }
         if (o.bufferColor !== 'default') {
-            if (o.bufferColor.isColor()) {
+            if (Utils.isColor(o.bufferColor)) {
                 buffer.css('background-color', o.bufferColor);
             } else {
                 buffer.addClass(o.bufferColor);
             }
         }
         if (o.markerColor !== 'default') {
-            if (o.markerColor.isColor()) {
+            if (Utils.isColor(o.markerColor)) {
                 marker.css('background-color', o.markerColor);
             } else {
                 marker.addClass(o.markerColor);

@@ -336,46 +336,6 @@ Number.prototype.format = function(n, x, s, c) {
     return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
 };
 
-String.prototype.isUrl = function () {
-var regexp = /^(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-    return regexp.test(this);
-};
-
-String.prototype.isColor = function () {
-return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(this);
-};
-
-window.secondsToTime = function(secs)
-{
-    var hours = Math.floor(secs / (60 * 60));
-
-    var divisor_for_minutes = secs % (60 * 60);
-    var minutes = Math.floor(divisor_for_minutes / 60);
-
-    var divisor_for_seconds = divisor_for_minutes % 60;
-    var seconds = Math.ceil(divisor_for_seconds);
-
-    return {
-        "h": hours,
-        "m": minutes,
-        "s": seconds
-    };
-};
-
-window.hex2rgba = function(hex, alpha){
-    var c;
-    alpha = isNaN(alpha) ? 1 : alpha;
-    if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
-        c= hex.substring(1).split('');
-        if(c.length== 3){
-            c= [c[0], c[0], c[1], c[1], c[2], c[2]];
-        }
-        c= '0x'+c.join('');
-        return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+','+alpha+')';
-    }
-    throw new Error('Hex2rgba error. Bad Hex value');
-};
-
 /*
  * Date Format 1.2.3
  * (c) 2007-2009 Steven Levithan <stevenlevithan.com>
@@ -2747,6 +2707,53 @@ var TemplateEngine = function(html, options) {
 window.coreTemplate = TemplateEngine;
 
 $.Template = TemplateEngine;
+// Source: js/utils/utilities.js
+var Utils = {
+    isUrl: function (val) {
+var regexp = /^(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+        return regexp.test(val);
+    },
+
+    isColor: function (val) {
+return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(val);
+    },
+
+    secondsToTime: function(secs) {
+        var hours = Math.floor(secs / (60 * 60));
+
+        var divisor_for_minutes = secs % (60 * 60);
+        var minutes = Math.floor(divisor_for_minutes / 60);
+
+        var divisor_for_seconds = divisor_for_minutes % 60;
+        var seconds = Math.ceil(divisor_for_seconds);
+
+        return {
+            "h": hours,
+            "m": minutes,
+            "s": seconds
+        };
+    },
+
+    hex2rgba: function(hex, alpha){
+        var c;
+        alpha = isNaN(alpha) ? 1 : alpha;
+        if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+            c= hex.substring(1).split('');
+            if(c.length== 3){
+                c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+            }
+            c= '0x'+c.join('');
+            return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+','+alpha+')';
+        }
+        throw new Error('Hex2rgba error. Bad Hex value');
+    },
+
+    random: function(from, to){
+        return Math.floor(Math.random()*(to-from+1)+from);
+    }
+};
+
+window.coreUtils = Utils;
 // Source: js/utils/widget_factory.js
 $.ui = $.ui || {};
 
@@ -4468,7 +4475,7 @@ $.widget( "corecss.dialog" , {
         }
 
         if (o.overlayColor) {
-            if (o.overlayColor.isColor()) {
+            if (Utils.isColor(o.overlayColor)) {
                 overlay.css({
                     background: o.overlayColor
                 });
@@ -4490,7 +4497,7 @@ $.widget( "corecss.dialog" , {
         }
 
         if (o.background !== 'default') {
-            if (o.background.isColor()) {
+            if (Utils.isColor(o.background)) {
                 element.css({
                     background: o.background
                 });
@@ -4500,7 +4507,7 @@ $.widget( "corecss.dialog" , {
         }
 
         if (o.color !== 'default') {
-            if (o.color.isColor()) {
+            if (Utils.isColor(o.color)) {
                 element.css({
                     color: o.color
                 });
@@ -4852,13 +4859,12 @@ $.widget( "corecss.donut" , {
         fontSize: 24,
         hole: .8,
         total: 100,
-        cap: "%"
+        cap: "%",
+        animate: false
     },
 
     _create: function () {
         var that = this, element = this.element, o = this.options;
-
-        console.log("ku from donut");
 
         this._setOptionsFromDOM();
 
@@ -4886,12 +4892,38 @@ $.widget( "corecss.donut" , {
         });
 
         html += "<svg>";
-        html += "   <circle r='"+(r)+"px' cx='"+(o.radius)+"px' cy='"+(o.radius)+"px' transform='"+(transform)+"' fill='none' stroke='"+(o.stroke)+"' stroke-width='"+(width)+"'/>";
-        html += "   <circle r='"+(r)+"px' cx='"+(o.radius)+"px' cy='"+(o.radius)+"px' transform='"+(transform)+"' fill='none' stroke='"+(o.fill)+"' stroke-width='"+(width)+"' stroke-dasharray='"+strokeDasharray+"'/>";
-        html += "   <text x='"+(o.radius)+"px' y='"+(o.radius)+"px' dy='"+(fontSize/3)+"px' text-anchor='middle' fill='"+(o.fill)+"' font-size='"+(fontSize)+"px'>"+((o.value * 1000 / o.total) / 10)+(o.cap)+"</text>";
+        html += "   <circle class='donut-back' r='"+(r)+"px' cx='"+(o.radius)+"px' cy='"+(o.radius)+"px' transform='"+(transform)+"' fill='none' stroke='"+(o.stroke)+"' stroke-width='"+(width)+"'/>";
+        html += "   <circle class='donut-fill' r='"+(r)+"px' cx='"+(o.radius)+"px' cy='"+(o.radius)+"px' transform='"+(transform)+"' fill='none' stroke='"+(o.fill)+"' stroke-width='"+(width)+"' stroke-dasharray='"+strokeDasharray+"'/>";
+        html += "   <text   class='donut-title' x='"+(o.radius)+"px' y='"+(o.radius)+"px' dy='"+(fontSize/3)+"px' text-anchor='middle' fill='"+(o.fill)+"' font-size='"+(fontSize)+"px'>"+((o.value * 1000 / o.total) / 10)+(o.cap)+"</text>";
         html += "</svg>";
 
         element.html(html);
+    },
+
+    _setValue: function(v){
+        var that = this, element = this.element, o = this.options;
+
+        var fill = element.find(".donut-fill");
+        var title = element.find(".donut-title");
+        var r = o.radius  * (1 - (1 - o.hole) / 2);
+        var circumference = 2 * Math.PI * r;
+        var title_value = ((o.value * 1000 / o.total) / 10)+(o.cap);
+        var fill_value = ((o.value * circumference) / o.total) + ' ' + circumference;
+
+        o.value = v;
+
+        fill.attr("stroke-dasharray", fill_value);
+        title.html(title_value);
+    },
+
+    val: function(v){
+        var o = this.options;
+
+        if (v === undefined) {
+            return o.value
+        }
+
+        this._setValue(v);
     },
 
     _setOptionsFromDOM: function(){
@@ -5348,13 +5380,13 @@ $.widget( "corecss.progress" , {
             buffer  = $("<div class='buffer'></div>").appendTo(element);
             load  = $("<div class='load'></div>").appendTo(element);
 
-            if (o.barColor.isColor()) {
+            if (Utils.isColor(o.barColor)) {
                 bar.css('background', o.barColor);
             } else {
                 bar.addClass(o.barColor);
             }
 
-            if (o.bufferColor.isColor()) {
+            if (Utils.isColor(o.bufferColor)) {
                 buffer.css('background', o.bufferColor);
             } else {
                 buffer.addClass(o.bufferColor);
@@ -5376,13 +5408,13 @@ $.widget( "corecss.progress" , {
             circle = $('<svg class="circular"><circle class="path" cx="'+o.size/2+'" cy="'+o.size/2+'" r="'+o.radius+'" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg>').appendTo(element);
             bar = element.find(".path");
 
-            if (o.barColor.isColor()) {
+            if (Utils.isColor(o.barColor)) {
                 bar.css('stroke', o.barColor);
             } else {
                 bar.addClass(o.barColor);
             }
         } else {
-            if (o.color.isColor()) {
+            if (Utils.isColor(o.color)) {
                 element.css('background', o.color);
             } else {
                 element.addClass(o.color);
@@ -5390,7 +5422,7 @@ $.widget( "corecss.progress" , {
 
             bar = $("<div class='bar'>").appendTo(element);
 
-            if (o.barColor.isColor()) {
+            if (Utils.isColor(o.barColor)) {
                 bar.css('background', o.barColor);
             } else {
                 bar.addClass(o.barColor);
@@ -5858,28 +5890,28 @@ $.widget("corecss.range", {
         }
 
         if (o.color !== 'default') {
-            if (o.color.isColor()) {
+            if (Utils.isColor(o.color)) {
                 back.css('background-color', o.color);
             } else {
                 back.addClass(o.color);
             }
         }
         if (o.completeColor !== 'default') {
-            if (o.completeColor.isColor()) {
+            if (Utils.isColor(o.completeColor)) {
                 complete.css('background-color', o.completeColor);
             } else {
                 complete.addClass(o.completeColor);
             }
         }
         if (o.bufferColor !== 'default') {
-            if (o.bufferColor.isColor()) {
+            if (Utils.isColor(o.bufferColor)) {
                 buffer.css('background-color', o.bufferColor);
             } else {
                 buffer.addClass(o.bufferColor);
             }
         }
         if (o.markerColor !== 'default') {
-            if (o.markerColor.isColor()) {
+            if (Utils.isColor(o.markerColor)) {
                 marker.css('background-color', o.markerColor);
             } else {
                 marker.addClass(o.markerColor);
@@ -6028,7 +6060,7 @@ $.widget( "corecss.ripple" , {
 
             // Add the ripples CSS and start the animation
             ripple.css({
-                background: hex2rgba(o.rippleColor, o.rippleAlpha),
+                background: Utils.hex2rgba(o.rippleColor, o.rippleAlpha),
                 width: size,
                 height: size,
                 top: y + 'px',
@@ -6273,7 +6305,7 @@ $.widget( "corecss.tabs" , {
             tab_marker.appendTo(element);
         }
 
-        if (o.markerColor.isColor()) {
+        if (Utils.isColor(o.markerColor)) {
             tab_marker.css('background', o.markerColor);
         } else {
             tab_marker.addClass(o.markerColor);
@@ -6363,7 +6395,7 @@ $.widget( "corecss.tabs" , {
                 }
             }
 
-            if (target !=undefined && target.isUrl()) {
+            if (target !=undefined && Utils.isUrl(target)) {
                 window.location.href = target;
                 return true;
             }

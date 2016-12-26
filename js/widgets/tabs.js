@@ -39,7 +39,7 @@ $.widget( "corecss.tabs" , {
             tab_marker.appendTo(element);
         }
 
-        if (o.markerColor.isColor()) {
+        if (Utils.isColor(o.markerColor)) {
             tab_marker.css('background', o.markerColor);
         } else {
             tab_marker.addClass(o.markerColor);
@@ -129,7 +129,7 @@ $.widget( "corecss.tabs" , {
                 }
             }
 
-            if (target !=undefined && target.isUrl()) {
+            if (target !=undefined && Utils.isUrl(target)) {
                 window.location.href = target;
                 return true;
             }
