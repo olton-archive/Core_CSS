@@ -42,6 +42,14 @@ var Utils = {
 
     random: function(from, to){
         return Math.floor(Math.random()*(to-from+1)+from);
+    },
+
+    isInt: function(n){
+        return Number(n) === n && n % 1 === 0;
+    },
+
+    isFloat: function(n){
+        return Number(n) === n && n % 1 !== 0;
     }
 };
 

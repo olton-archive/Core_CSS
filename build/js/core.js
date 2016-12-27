@@ -2750,6 +2750,14 @@ return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(val);
 
     random: function(from, to){
         return Math.floor(Math.random()*(to-from+1)+from);
+    },
+
+    isInt: function(n){
+        return Number(n) === n && n % 1 === 0;
+    },
+
+    isFloat: function(n){
+        return Number(n) === n && n % 1 !== 0;
     }
 };
 
@@ -4860,7 +4868,7 @@ $.widget( "corecss.donut" , {
         hole: .8,
         total: 100,
         cap: "%",
-        animate: false
+        animate: 0
     },
 
     _create: function () {
@@ -4893,15 +4901,19 @@ $.widget( "corecss.donut" , {
 
         html += "<svg>";
         html += "   <circle class='donut-back' r='"+(r)+"px' cx='"+(o.radius)+"px' cy='"+(o.radius)+"px' transform='"+(transform)+"' fill='none' stroke='"+(o.stroke)+"' stroke-width='"+(width)+"'/>";
-        html += "   <circle class='donut-fill' r='"+(r)+"px' cx='"+(o.radius)+"px' cy='"+(o.radius)+"px' transform='"+(transform)+"' fill='none' stroke='"+(o.fill)+"' stroke-width='"+(width)+"' stroke-dasharray='"+strokeDasharray+"'/>";
-        html += "   <text   class='donut-title' x='"+(o.radius)+"px' y='"+(o.radius)+"px' dy='"+(fontSize/3)+"px' text-anchor='middle' fill='"+(o.fill)+"' font-size='"+(fontSize)+"px'>"+((o.value * 1000 / o.total) / 10)+(o.cap)+"</text>";
+        html += "   <circle class='donut-fill' r='"+(r)+"px' cx='"+(o.radius)+"px' cy='"+(o.radius)+"px' transform='"+(transform)+"' fill='none' stroke='"+(o.fill)+"' stroke-width='"+(width)+"'/>";
+        html += "   <text   class='donut-title' x='"+(o.radius)+"px' y='"+(o.radius)+"px' dy='"+(fontSize/3)+"px' text-anchor='middle' fill='"+(o.fill)+"' font-size='"+(fontSize)+"px'>0"+(o.cap)+"</text>";
         html += "</svg>";
 
         element.html(html);
+
+        this.val(o.value);
     },
 
     _setValue: function(v){
         var that = this, element = this.element, o = this.options;
+
+        o.value = v;
 
         var fill = element.find(".donut-fill");
         var title = element.find(".donut-title");
@@ -4910,20 +4922,33 @@ $.widget( "corecss.donut" , {
         var title_value = ((o.value * 1000 / o.total) / 10)+(o.cap);
         var fill_value = ((o.value * circumference) / o.total) + ' ' + circumference;
 
-        o.value = v;
-
         fill.attr("stroke-dasharray", fill_value);
         title.html(title_value);
     },
 
     val: function(v){
-        var o = this.options;
+        var that = this, o = this.options;
 
         if (v === undefined) {
             return o.value
         }
 
-        this._setValue(v);
+        console.log(o.animate);
+
+        if (o.animate > 0) {
+            var i = 0;
+            var interval;
+
+            interval = setInterval(function(){
+                that._setValue(++i);
+                if (i == v) {
+                    clearInterval(interval);
+                }
+            }, o.animate)
+
+        } else {
+            this._setValue(v);
+        }
     },
 
     _setOptionsFromDOM: function(){
