@@ -14,7 +14,8 @@ $.widget( "corecss.donut" , {
         hole: .8,
         total: 100,
         cap: "%",
-        animate: 0
+        animate: 0,
+        showTitle: true
     },
 
     _create: function () {
@@ -48,7 +49,9 @@ $.widget( "corecss.donut" , {
         html += "<svg>";
         html += "   <circle class='donut-back' r='"+(r)+"px' cx='"+(o.radius)+"px' cy='"+(o.radius)+"px' transform='"+(transform)+"' fill='none' stroke='"+(o.stroke)+"' stroke-width='"+(width)+"'/>";
         html += "   <circle class='donut-fill' r='"+(r)+"px' cx='"+(o.radius)+"px' cy='"+(o.radius)+"px' transform='"+(transform)+"' fill='none' stroke='"+(o.fill)+"' stroke-width='"+(width)+"'/>";
-        html += "   <text   class='donut-title' x='"+(o.radius)+"px' y='"+(o.radius)+"px' dy='"+(fontSize/3)+"px' text-anchor='middle' fill='"+(o.fill)+"' font-size='"+(fontSize)+"px'>0"+(o.cap)+"</text>";
+        if (o.showTitle === true) {
+            html += "   <text   class='donut-title' x='" + (o.radius) + "px' y='" + (o.radius) + "px' dy='" + (fontSize / 3) + "px' text-anchor='middle' fill='" + (o.fill) + "' font-size='" + (fontSize) + "px'>0" + (o.cap) + "</text>";
+        }
         html += "</svg>";
 
         element.html(html);
@@ -78,8 +81,6 @@ $.widget( "corecss.donut" , {
         if (v === undefined) {
             return o.value
         }
-
-        console.log(o.animate);
 
         if (o.animate > 0) {
             var i = 0;

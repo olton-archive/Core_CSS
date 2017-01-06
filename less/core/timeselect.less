@@ -1,7 +1,7 @@
 @import (once) "../include/variables";
 @import (once) "../include/mixins";
 
-.datepicker {
+.timeselect {
     display: block;
     width: 330px;
     margin: 0 auto;
@@ -10,7 +10,20 @@
     border: 1px #eee solid;
 }
 
-.datepicker {
+.timeselect {
+    .caption {
+        display: flex;
+        flex-grow: 1;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px ;
+        background: @lightBlue700;
+        color: @white;
+        span {
+            text-align: center;
+            width: ~"calc((100% - 48px) / 3)";
+        }
+    }
 
     .picker-header, .picker-content, .picker-footer {
         position: relative;
@@ -25,7 +38,7 @@
     }
 
     .picker-content {
-        padding: 16px;
+        padding: 0 16px;
         position: relative;
     }
 
@@ -42,7 +55,7 @@
     }
 }
 
-.datepicker {
+.timeselect {
     .picker-content-inner {
         display: flex;
         flex-grow: 1;
@@ -64,7 +77,7 @@
             top: 78px;
         }
 
-        .d-list, .m-list, .y-list {
+        .h-list, .m-list, .s-list {
             padding: 0;
             margin: 0;
             list-style: inside none;
@@ -96,10 +109,14 @@
             }
 
         }
+
+        .m-list {
+            //background: #fee;
+        }
     }
 }
 
-.datepicker-dialog {
+.timeselect-dialog {
     padding: 0;
     width: 330px !important;
     max-width: none;
