@@ -1,6 +1,6 @@
 /*!
  * Core CSS v1.0.0 (https://github.com/imena/core-css)
- * Copyright 2016 Sergey Pimenov
+ * Copyright 2017 Sergey Pimenov
  * Licensed under  ()
  */
 
@@ -474,13 +474,15 @@ var locales = {
                 "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
                 "Su", "Mo", "Tu", "We", "Th", "Fr", "Sa",
                 "Sun", "Mon", "Tus", "Wen", "Thu", "Fri", "Sat"
-            ]
+            ],
+            time: ["HOUR", "MIN", "SEC"]
         },
         buttons: {
             ok: "OK",
             cancel: "Cancel",
             done: "Done",
             today: "Today",
+            now: "Now",
             clear: "Clear",
             help: "Help",
             yes: "Yes",
@@ -499,13 +501,15 @@ var locales = {
                 "Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П’ятниця", "Субота",
                 "Нд", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб",
                 "Нед", "Пон", "Вiв", "Сер", "Чет", "Пят", "Суб"
-            ]
+            ],
+            time: ["ГОД", "ХВЛ", "СЕК"]
         },
         buttons: {
             ok: "ОК",
             cancel: "Відміна",
             done: "Готово",
             today: "Сьогодні",
+            now: "Зараз",
             clear: "Очистити",
             help: "Допомога",
             yes: "Так",
@@ -524,13 +528,15 @@ var locales = {
                 "Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота",
                 "Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб",
                 "Вос", "Пон", "Вто", "Сре", "Чет", "Пят", "Суб"
-            ]
+            ],
+            time: ["ЧАС", "МИН", "СЕК"]
         },
         buttons: {
             ok: "ОК",
             cancel: "Отмена",
             done: "Готово",
             today: "Сегодня",
+            now: "Сейчас",
             clear: "Очистить",
             help: "Помощь",
             yes: "Да",
@@ -4868,7 +4874,8 @@ $.widget( "corecss.donut" , {
         hole: .8,
         total: 100,
         cap: "%",
-        animate: 0
+        animate: 0,
+        showTitle: true
     },
 
     _create: function () {
@@ -4902,7 +4909,9 @@ $.widget( "corecss.donut" , {
         html += "<svg>";
         html += "   <circle class='donut-back' r='"+(r)+"px' cx='"+(o.radius)+"px' cy='"+(o.radius)+"px' transform='"+(transform)+"' fill='none' stroke='"+(o.stroke)+"' stroke-width='"+(width)+"'/>";
         html += "   <circle class='donut-fill' r='"+(r)+"px' cx='"+(o.radius)+"px' cy='"+(o.radius)+"px' transform='"+(transform)+"' fill='none' stroke='"+(o.fill)+"' stroke-width='"+(width)+"'/>";
-        html += "   <text   class='donut-title' x='"+(o.radius)+"px' y='"+(o.radius)+"px' dy='"+(fontSize/3)+"px' text-anchor='middle' fill='"+(o.fill)+"' font-size='"+(fontSize)+"px'>0"+(o.cap)+"</text>";
+        if (o.showTitle === true) {
+            html += "   <text   class='donut-title' x='" + (o.radius) + "px' y='" + (o.radius) + "px' dy='" + (fontSize / 3) + "px' text-anchor='middle' fill='" + (o.fill) + "' font-size='" + (fontSize) + "px'>0" + (o.cap) + "</text>";
+        }
         html += "</svg>";
 
         element.html(html);
@@ -4932,8 +4941,6 @@ $.widget( "corecss.donut" , {
         if (v === undefined) {
             return o.value
         }
-
-        console.log(o.animate);
 
         if (o.animate > 0) {
             var i = 0;
@@ -5325,6 +5332,35 @@ var picker = {
             content: picker,
             options: {
                 cls: "timepicker-dialog"
+            }
+        });
+    },
+
+    timeSelect: function(cb_done){
+        var picker = $("<div>").timeselect({
+            onDone: cb_done,
+            isDialog: true
+        });
+        return coreDialog.create({
+            content: picker,
+            options: {
+                cls: "timeselect-dialog"
+            }
+        });
+    },
+
+    wheelSelect: function(values, value, cb_done, title){
+        var picker = $("<div>").wheelselect({
+            title: title,
+            values: values,
+            value: value,
+            onDone: cb_done,
+            isDialog: true
+        });
+        return coreDialog.create({
+            content: picker,
+            options: {
+                cls: "wheelselect-dialog"
             }
         });
     },
@@ -6702,6 +6738,257 @@ $.widget( "corecss.timepicker" , {
     }
 });
 
+// Source: js/widgets/timeselect.js
+$.widget( "corecss.timeselect" , {
+
+    version: "1.0.0",
+
+    options: {
+        locale: CORE_LOCALE,
+        hour: 0,
+        minute: 0,
+        second: 0,
+        isDialog: false,
+        buttons: ['cancel', 'random', 'now', 'done'],
+        onDone: $.noop
+    },
+
+    hour: null,
+    minute: null,
+    second: null,
+
+    _create: function () {
+        var that = this, element = this.element, o = this.options;
+
+        this._setOptionsFromDOM();
+
+        this.hour = o.hour;
+        this.minute = o.minute;
+        this.second = o.second;
+
+        this._createElement();
+        this._createScrollEvents();
+        this._createButtonsEvents();
+
+        setTimeout(function(){
+            that.now();
+        }, 100);
+
+        element.data('timeselect', this);
+    },
+
+    now: function(){
+        var d = new Date();
+
+        this.hour = d.getHours();
+        this.minute = d.getMinutes();
+        this.second = d.getSeconds();
+
+        this.setPosition();
+    },
+
+    setPosition: function(){
+        var element = this.element;
+        var hour = this.hour,
+            minute = this.minute,
+            second = this.second;
+        var h_list = element.find(".h-list"),
+            m_list = element.find(".m-list"),
+            s_list = element.find(".s-list");
+
+        this._removeScrollEvents();
+
+        h_list.scrollTop(0).animate({
+            scrollTop: element.find(".js-hh-"+hour).addClass("active").position().top - 40
+        });
+
+        m_list.scrollTop(0).animate({
+            scrollTop: element.find(".js-mm-"+minute).addClass("active").position().top - 40
+        });
+
+        s_list.scrollTop(0).animate({
+            scrollTop: element.find(".js-ss-"+second).addClass("active").position().top - 40
+        });
+
+        this._createScrollEvents();
+    },
+
+    _drawFooter: function(){
+        var element = this.element, o = this.options,
+            html = "";
+
+        $.each(o.buttons, function(){
+            html += "<button class='flat-button js-button-"+this+" "+(o.isDialog && (this == 'cancel' || this == 'done') ? 'js-dialog-close' : '')+"'>"+coreLocales[o.locale].buttons[this]+"</button>";
+        });
+
+        return $(html);
+    },
+
+    _drawPicker: function(){
+        var element = this.element, o = this.options;
+        var picker_inner = $("<div>").addClass("picker-content-inner");
+        var h_list, m_list, s_list;
+        var i;
+
+        h_list = $("<ul>").addClass("h-list").appendTo(picker_inner);
+        $("<li>").html("&nbsp;").appendTo(h_list);
+        for(i = 0; i <= 23; i++) {
+            $("<li>").html(i).appendTo(h_list).data('value', i).addClass("js-hh-"+i);
+        }
+        $("<li>").html("&nbsp;").appendTo(h_list);
+
+        m_list = $("<ul>").addClass("m-list").appendTo(picker_inner);
+        $("<li>").html("&nbsp;").appendTo(m_list);
+        for(i = 0; i <= 59; i++) {
+            $("<li>").html(i).appendTo(m_list).data('value', i).addClass("js-mm-"+i);
+        }
+        $("<li>").html("&nbsp;").appendTo(m_list);
+
+        s_list = $("<ul>").addClass("s-list").appendTo(picker_inner);
+        $("<li>").html("&nbsp;").appendTo(s_list);
+        for(i = 0; i <= 59; i++) {
+            $("<li>").html(i).appendTo(s_list).data('value', i).addClass("js-ss-"+i);
+        }
+        $("<li>").html("&nbsp;").appendTo(s_list);
+
+        return picker_inner;
+    },
+
+    _createElement: function(){
+        var that = this, element = this.element, o = this.options;
+        var h, c, f;
+
+        if (!element.hasClass("timeselect")) element.addClass("timeselect");
+
+        element.html("");
+
+        h = $("<div>").addClass("caption").html("<span>"+coreLocales[o.locale].calendar.time[0]+"</span><span>"+coreLocales[o.locale].calendar.time[1]+"</span><span>"+coreLocales[o.locale].calendar.time[2]+"</span>").appendTo(element);
+        c = $("<div>").addClass("picker-content").appendTo(element);
+        f = $("<div>").addClass("picker-footer").appendTo(element);
+
+        c.append(this._drawPicker());
+        f.append(this._drawFooter());
+    },
+
+    _createScrollEvents: function(){
+        var that = this, element = this.element, o = this.options;
+        var h_list = element.find(".h-list"),
+            m_list = element.find(".m-list"),
+            s_list = element.find(".s-list");
+
+        h_list.on('scrollstart', function(){
+            h_list.find(".active").removeClass("active");
+        });
+        h_list.on('scrollstop', function(){
+            var target = Math.round((Math.ceil(h_list.scrollTop() + 40) / 40)) - 1;
+            var target_element = h_list.find(".js-hh-"+target);
+            var val = target_element.data('value');
+            var scroll_to = target_element.position().top - 40 + h_list[0].scrollTop;
+
+            h_list.animate({
+                scrollTop: scroll_to
+            }, CORE_ANIMATION_DURATION, function(){
+                target_element.addClass("active");
+            });
+        });
+
+        m_list.on('scrollstart', function(){
+            m_list.find(".active").removeClass("active");
+        });
+        m_list.on('scrollstop', function(){
+            var target = Math.round((Math.ceil(m_list.scrollTop() + 40) / 40)) - 1;
+            var target_element = m_list.find(".js-mm-"+target);
+            var val = target_element.data('value');
+            var scroll_to = target_element.position().top - 40 + m_list[0].scrollTop;
+
+            m_list.animate({
+                scrollTop: scroll_to
+            }, CORE_ANIMATION_DURATION, function(){
+                target_element.addClass("active");
+            });
+        });
+
+        s_list.on('scrollstart', function(){
+            s_list.find(".active").removeClass("active");
+        });
+        s_list.on('scrollstop', function(){
+            var target = Math.round((Math.ceil(s_list.scrollTop() + 40) / 40)) - 1;
+            var target_element = s_list.find(".js-ss-"+target);
+            var val = target_element.data('value');
+            var scroll_to = target_element.position().top - 40 + s_list[0].scrollTop;
+
+            s_list.animate({
+                scrollTop: scroll_to
+            }, CORE_ANIMATION_DURATION, function(){
+                target_element.addClass("active");
+            });
+        });
+    },
+
+    _removeScrollEvents: function(){
+        var element = this.element;
+        element.find(".h-list").off('scrollstart');
+        element.find(".h-list").off('scrollstop');
+        element.find(".m-list").off('scrollstart');
+        element.find(".m-list").off('scrollstop');
+        element.find(".s-list").off('scrollstart');
+        element.find(".s-list").off('scrollstop');
+    },
+
+
+    _createButtonsEvents: function(){
+        var that = this, element = this.element, o = this.options;
+
+        element.find(".js-button-random").on("click", function(){
+            that.hour = Utils.random(0, 23);
+            that.minute = Utils.random(0, 59);
+            that.second = Utils.random(0, 59);
+
+            that.setPosition();
+        });
+
+        element.find(".js-button-done").on("click", function(){
+            var result = {
+                hour: that.hour,
+                minute: that.minute,
+                second: that.second
+            };
+            $.CoreCss.callback(o.onDone, result);
+        });
+
+        element.find(".js-button-now").on("click", function(){
+            var d = new Date();;
+
+            that.hour = d.getHours();
+            that.minute = d.getMinutes();
+            that.second = d.getSeconds();
+
+            that.setPosition();
+        });
+    },
+
+    _setOptionsFromDOM: function(){
+        var element = this.element, o = this.options;
+
+        $.each(element.data(), function(key, value){
+            if (key in o) {
+                try {
+                    o[key] = $.parseJSON(value);
+                } catch (e) {
+                    o[key] = value;
+                }
+            }
+        });
+    },
+
+    _destroy: function () {
+    },
+
+    _setOption: function ( key, value ) {
+        this._super('_setOption', key, value);
+    }
+});
+
 // Source: js/widgets/toast.js
 var Toast = function(message, callback, timeout, cls){
     var toast = $("<div>").addClass("toast").html(message).appendTo($("body")).hide();
@@ -7868,6 +8155,204 @@ $.widget( "corecss.touch" , {
 
     comparePoints: function(pointA, pointB) {
         return (pointA.x == pointB.x && pointA.y == pointB.y);
+    }
+});
+
+// Source: js/widgets/wheelselect.js
+$.widget( "corecss.wheelselect" , {
+
+    version: "1.0.0",
+
+    options: {
+        title: null,
+        locale: CORE_LOCALE,
+        values: null,
+        value: null,
+        isDialog: false,
+        buttons: ['cancel', 'random', 'done'],
+        onDone: $.noop
+    },
+
+    _value: null,
+
+    _create: function () {
+        var that = this, element = this.element, o = this.options;
+
+        this._setOptionsFromDOM();
+
+        if (typeof o.values !== 'object') {
+            o.values = o.values.split(",").map(function(v){
+                return isNaN(v) ? v.trim() : Number(v);
+            });
+        }
+
+        console.log(o.values);
+
+        this._createElement();
+        this._createScrollEvents();
+        this._createButtonsEvents();
+
+        setTimeout(function(){
+            if (o.value !== null) {
+                that.value(o.value);
+            }
+        }, 100);
+
+        element.data('wheelselect', this);
+    },
+
+    value: function(v){
+        if (v === undefined) {
+            return this._value;
+        }
+
+        this._value = v;
+
+        this.setPosition();
+    },
+
+    setPosition: function(){
+        var element = this.element;
+        var value = this.options.values.indexOf(this._value);
+        var v_list = element.find(".v-list");
+
+        this._removeScrollEvents();
+
+        v_list.scrollTop(0).animate({
+            scrollTop: element.find(".js-vv-"+value).addClass("active").position().top - 40
+        });
+
+        this._createScrollEvents();
+    },
+
+    _drawHeader: function(){
+        var element = this.element,
+            html = "", header,
+            o = this.options;
+
+        html += "<span class='day'>"+o.title+"</span>";
+
+        header = $(html);
+
+        return header;
+    },
+
+    _drawFooter: function(){
+        var element = this.element, o = this.options,
+            html = "";
+
+        $.each(o.buttons, function(){
+            html += "<button class='flat-button js-button-"+this+" "+(o.isDialog && (this == 'cancel' || this == 'done') ? 'js-dialog-close' : '')+"'>"+coreLocales[o.locale].buttons[this]+"</button>";
+        });
+
+        return $(html);
+    },
+
+    _drawPicker: function(){
+        var element = this.element, o = this.options;
+        var picker_inner = $("<div>").addClass("picker-content-inner");
+        var v_list;
+        var i;
+
+        v_list = $("<ul>").addClass("v-list").appendTo(picker_inner);
+        $("<li>").html("&nbsp;").appendTo(v_list);
+
+        if ((Object.prototype.toString.call( o.values ) === '[object Array]' || Object.prototype.toString.call( o.values ) === '[object Object]') && o.values.length > 0) {
+            for(i = 0; i < o.values.length; i++) {
+                $("<li>").html(o.values[i]).appendTo(v_list).data('value', o.values[i]).addClass("js-vv-"+i);
+            }
+        } else {
+            $("<li>").html("NO VALUES").data("value", null).appendTo(v_list);
+        }
+
+        $("<li>").html("&nbsp;").appendTo(v_list);
+
+        return picker_inner;
+    },
+
+    _createElement: function(){
+        var that = this, element = this.element, o = this.options;
+        var h, c, f;
+
+        if (!element.hasClass("wheelselect")) element.addClass("wheelselect");
+
+        element.html("");
+
+        if (o.title) {
+            h = $("<div>").addClass("picker-header").appendTo(element);
+            h.append(this._drawHeader());
+        }
+
+        c = $("<div>").addClass("picker-content").appendTo(element);
+        f = $("<div>").addClass("picker-footer").appendTo(element);
+
+        c.append(this._drawPicker());
+        f.append(this._drawFooter());
+    },
+
+    _createScrollEvents: function(){
+        var that = this, element = this.element, o = this.options;
+        var v_list = element.find(".v-list");
+
+        v_list.on('scrollstart', function(){
+            v_list.find(".active").removeClass("active");
+        });
+        v_list.on('scrollstop', function(){
+            var target = Math.round((Math.ceil(v_list.scrollTop() + 40) / 40)) - 1;
+            var target_element = v_list.find(".js-vv-"+target);
+            var val = target_element.data('value');
+            var scroll_to = target_element.position().top - 40 + v_list[0].scrollTop;
+
+            v_list.animate({
+                scrollTop: scroll_to
+            }, CORE_ANIMATION_DURATION, function(){
+                target_element.addClass("active");
+            });
+        });
+    },
+
+    _removeScrollEvents: function(){
+        var element = this.element;
+        element.find(".v-list").off('scrollstart');
+        element.find(".v-list").off('scrollstop');
+    },
+
+
+    _createButtonsEvents: function(){
+        var that = this, element = this.element, o = this.options;
+
+        element.find(".js-button-random").on("click", function(){
+
+            that._value = o.values[Utils.random(0, o.values.length - 1)];
+
+            that.setPosition();
+        });
+
+        element.find(".js-button-done").on("click", function(){
+            var result = that.value();
+            $.CoreCss.callback(o.onDone, result);
+        });
+    },
+
+    _setOptionsFromDOM: function(){
+        var element = this.element, o = this.options;
+
+        $.each(element.data(), function(key, value){
+            if (key in o) {
+                try {
+                    o[key] = $.parseJSON(value);
+                } catch (e) {
+                    o[key] = value;
+                }
+            }
+        });
+    },
+
+    _destroy: function () {
+    },
+
+    _setOption: function ( key, value ) {
+        this._super('_setOption', key, value);
     }
 });
 

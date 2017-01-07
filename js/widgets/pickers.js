@@ -13,6 +13,35 @@ var picker = {
         });
     },
 
+    timeSelect: function(cb_done){
+        var picker = $("<div>").timeselect({
+            onDone: cb_done,
+            isDialog: true
+        });
+        return coreDialog.create({
+            content: picker,
+            options: {
+                cls: "timeselect-dialog"
+            }
+        });
+    },
+
+    wheelSelect: function(values, value, cb_done, title){
+        var picker = $("<div>").wheelselect({
+            title: title,
+            values: values,
+            value: value,
+            onDone: cb_done,
+            isDialog: true
+        });
+        return coreDialog.create({
+            content: picker,
+            options: {
+                cls: "wheelselect-dialog"
+            }
+        });
+    },
+
     calendarPicker: function(cb_done, options){
         var picker_options = $.extend({}, {
             isDialog: true,
