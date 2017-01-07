@@ -148,7 +148,6 @@ $.widget( "corecss.timeselect" , {
                 scrollTop: scroll_to
             }, CORE_ANIMATION_DURATION, function(){
                 target_element.addClass("active");
-                that.day = val;
             });
         });
 
@@ -165,7 +164,6 @@ $.widget( "corecss.timeselect" , {
                 scrollTop: scroll_to
             }, CORE_ANIMATION_DURATION, function(){
                 target_element.addClass("active");
-                that.month = val;
             });
         });
 
@@ -182,7 +180,6 @@ $.widget( "corecss.timeselect" , {
                 scrollTop: scroll_to
             }, CORE_ANIMATION_DURATION, function(){
                 target_element.addClass("active");
-                that.year = val;
             });
         });
     },

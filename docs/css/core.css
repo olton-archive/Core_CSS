@@ -5449,6 +5449,109 @@ header.more ~ .fixed-tabs,
 .timeselect-dialog .dialog-content {
   width: 100%;
 }
+.wheelselect {
+  display: block;
+  width: 330px;
+  margin: 0 auto;
+  border-radius: 2px;
+  position: relative;
+  border: 1px #eee solid;
+}
+.wheelselect .picker-header,
+.wheelselect .picker-content,
+.wheelselect .picker-footer {
+  position: relative;
+  display: block;
+}
+.wheelselect .picker-header {
+  padding: 8px 16px;
+  font-size: 24px;
+  background: #0288d1;
+  color: #ffffff;
+}
+.wheelselect .picker-content {
+  padding: 0 16px;
+  position: relative;
+}
+.wheelselect .picker-footer {
+  padding: 4px 8px;
+  border-top: 1px #eee solid;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.wheelselect .picker-footer .flat-button {
+  color: #0288d1;
+}
+.wheelselect .picker-content-inner {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.wheelselect .picker-content-inner:before,
+.wheelselect .picker-content-inner:after {
+  background: #0288d1;
+  height: 2px;
+  width: 100%;
+  content: "";
+  position: absolute;
+  top: 40px;
+  z-index: 2;
+  left: 0;
+}
+.wheelselect .picker-content-inner:after {
+  top: 78px;
+}
+.wheelselect .picker-content-inner .v-list {
+  padding: 0;
+  margin: 0;
+  list-style: inside none;
+  width: 100%;
+  height: 120px;
+  overflow-y: scroll;
+  text-align: center;
+  position: relative;
+}
+.wheelselect .picker-content-inner .v-list li {
+  padding: 4px;
+  font-size: 14px;
+  line-height: 30px;
+  color: #9E9E9E;
+}
+.wheelselect .picker-content-inner .v-list li.active {
+  color: #000000;
+  font-weight: bolder;
+  font-size: 18px;
+}
+.wheelselect .picker-content-inner .v-list li {
+  border: 1px transparent solid;
+}
+.wheelselect .picker-content-inner .v-list::-webkit-scrollbar {
+  display: none;
+}
+.wheelselect-dialog {
+  padding: 0;
+  width: 330px !important;
+  max-width: none;
+}
+.wheelselect-dialog .dialog-content {
+  width: 100%;
+}
 .multi-action {
   display: inline-block;
   position: relative;
