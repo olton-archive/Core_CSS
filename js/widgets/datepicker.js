@@ -80,15 +80,15 @@ $.widget( "corecss.datepicker" , {
         // console.log(element.find(".js-yy-"+year));
         //
         d_list.scrollTop(0).animate({
-           scrollTop: element.find(".js-dd-"+day).addClass("active").position().top - 40
+           scrollTop: element.find(".js-dd-"+day).addClass("active").position().top - 48
         });
 
         m_list.scrollTop(0).animate({
-            scrollTop: element.find(".js-dm-"+month).addClass("active").position().top - 40
+            scrollTop: element.find(".js-dm-"+month).addClass("active").position().top - 48
         });
 
         y_list.scrollTop(0).animate({
-            scrollTop: element.find(".js-yy-"+year).addClass("active").position().top - 40
+            scrollTop: element.find(".js-yy-"+year).addClass("active").position().top - 48
         });
 
         this._createScrollEvents();
@@ -204,10 +204,10 @@ $.widget( "corecss.datepicker" , {
             d_list.find(".active").removeClass("active");
         });
         d_list.on('scrollstop', function(){
-            var target = Math.round((Math.ceil(d_list.scrollTop() + 40) / 40));
+            var target = Math.round((Math.ceil(d_list.scrollTop() + 48) / 48));
             var target_element = d_list.find(".js-dd-"+target);
             var val = target_element.data('value');
-            var scroll_to = target_element.position().top - 40 + d_list[0].scrollTop;
+            var scroll_to = target_element.position().top - 48 + d_list[0].scrollTop;
 
             d_list.animate({
                 scrollTop: scroll_to
@@ -223,10 +223,10 @@ $.widget( "corecss.datepicker" , {
             m_list.find(".active").removeClass("active");
         });
         m_list.on('scrollstop', function(){
-            var target = Math.round((Math.ceil(m_list.scrollTop() + 40) / 40));
+            var target = Math.round((Math.ceil(m_list.scrollTop() + 48) / 48));
             var target_element = m_list.find(".js-dm-"+target);
             var val = target_element.data('value');
-            var scroll_to = target_element.position().top - 40 + m_list[0].scrollTop;
+            var scroll_to = target_element.position().top - 48 + m_list[0].scrollTop;
 
             m_list.animate({
                 scrollTop: scroll_to
@@ -242,10 +242,10 @@ $.widget( "corecss.datepicker" , {
             y_list.find(".active").removeClass("active");
         });
         y_list.on('scrollstop', function(){
-            var target = Math.round((Math.ceil(y_list.scrollTop() + 40) / 40));
+            var target = Math.round((Math.ceil(y_list.scrollTop() + 48) / 48));
             var target_element = y_list.find(".js-dy-"+target);
             var val = target_element.data('value');
-            var scroll_to = target_element.position().top - 40 + y_list[0].scrollTop;
+            var scroll_to = target_element.position().top - 48 + y_list[0].scrollTop;
 
             y_list.animate({
                 scrollTop: scroll_to

@@ -63,17 +63,17 @@
 
         &:before, &:after {
             background: @lightBlue700;
-            height: 2px;
+            height: 1px;
             width: 100%;
             content: "";
             position: absolute;
-            top: 40px;
+            top: 48px;
             z-index: 2;
             left: 0;
         }
 
         &:after {
-            top: 78px;
+            top: 94px;
         }
 
         .d-list, .m-list, .y-list, .v-list, .h-list, .s-list {
@@ -81,7 +81,7 @@
             margin: 0;
             list-style: inside none;
             width: ~"calc((100% - 48px) / 3)";
-            height: 120px;
+            height: 144px;
             overflow-y: scroll;
             text-align: center;
             position: relative;
@@ -89,7 +89,7 @@
             li {
                 padding: 4px;
                 font-size: 14px;
-                line-height: 30px;
+                line-height: 38px;
                 color: @gray;
 
                 &.active {

@@ -58,15 +58,15 @@ $.widget( "corecss.timeselect" , {
         this._removeScrollEvents();
 
         h_list.scrollTop(0).animate({
-            scrollTop: element.find(".js-hh-"+hour).addClass("active").position().top - 40
+            scrollTop: element.find(".js-hh-"+hour).addClass("active").position().top - 48
         });
 
         m_list.scrollTop(0).animate({
-            scrollTop: element.find(".js-mm-"+minute).addClass("active").position().top - 40
+            scrollTop: element.find(".js-mm-"+minute).addClass("active").position().top - 48
         });
 
         s_list.scrollTop(0).animate({
-            scrollTop: element.find(".js-ss-"+second).addClass("active").position().top - 40
+            scrollTop: element.find(".js-ss-"+second).addClass("active").position().top - 48
         });
 
         this._createScrollEvents();
@@ -152,10 +152,10 @@ $.widget( "corecss.timeselect" , {
             h_list.find(".active").removeClass("active");
         });
         h_list.on('scrollstop', function(){
-            var target = Math.round((Math.ceil(h_list.scrollTop() + 40) / 40)) - 1;
+            var target = Math.round((Math.ceil(h_list.scrollTop() + 48) / 48)) - 1;
             var target_element = h_list.find(".js-hh-"+target);
             var val = target_element.data('value');
-            var scroll_to = target_element.position().top - 40 + h_list[0].scrollTop;
+            var scroll_to = target_element.position().top - 48 + h_list[0].scrollTop;
 
             h_list.animate({
                 scrollTop: scroll_to
@@ -168,10 +168,10 @@ $.widget( "corecss.timeselect" , {
             m_list.find(".active").removeClass("active");
         });
         m_list.on('scrollstop', function(){
-            var target = Math.round((Math.ceil(m_list.scrollTop() + 40) / 40)) - 1;
+            var target = Math.round((Math.ceil(m_list.scrollTop() + 48) / 48)) - 1;
             var target_element = m_list.find(".js-mm-"+target);
             var val = target_element.data('value');
-            var scroll_to = target_element.position().top - 40 + m_list[0].scrollTop;
+            var scroll_to = target_element.position().top - 48 + m_list[0].scrollTop;
 
             m_list.animate({
                 scrollTop: scroll_to
@@ -184,10 +184,10 @@ $.widget( "corecss.timeselect" , {
             s_list.find(".active").removeClass("active");
         });
         s_list.on('scrollstop', function(){
-            var target = Math.round((Math.ceil(s_list.scrollTop() + 40) / 40)) - 1;
+            var target = Math.round((Math.ceil(s_list.scrollTop() + 48) / 48)) - 1;
             var target_element = s_list.find(".js-ss-"+target);
             var val = target_element.data('value');
-            var scroll_to = target_element.position().top - 40 + s_list[0].scrollTop;
+            var scroll_to = target_element.position().top - 48 + s_list[0].scrollTop;
 
             s_list.animate({
                 scrollTop: scroll_to
