@@ -21,7 +21,7 @@ var picker = {
         return coreDialog.create({
             content: picker,
             options: {
-                cls: "timeselect-dialog"
+                cls: "wheelpicker-dialog"
             }
         });
     },
@@ -37,7 +37,7 @@ var picker = {
         return coreDialog.create({
             content: picker,
             options: {
-                cls: "wheelselect-dialog"
+                cls: "wheelpicker-dialog"
             }
         });
     },
@@ -67,7 +67,7 @@ var picker = {
         return coreDialog.create({
             content: picker,
             options: {
-                cls: "datepicker-dialog"
+                cls: "wheelpicker-dialog"
             }
         });
     }

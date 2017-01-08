@@ -83,6 +83,18 @@ $.widget( "corecss.timeselect" , {
         return $(html);
     },
 
+    _drawHeader: function(){
+        var element = this.element,
+            html = "", header,
+            o = this.options;
+
+        html += "<span class='part'>"+coreLocales[o.locale].calendar.time[0]+"</span><span class='part'>"+coreLocales[o.locale].calendar.time[1]+"</span><span class='part'>"+coreLocales[o.locale].calendar.time[2]+"</span>";
+
+        header = $(html);
+
+        return header;
+    },
+
     _drawPicker: function(){
         var element = this.element, o = this.options;
         var picker_inner = $("<div>").addClass("picker-content-inner");
@@ -117,14 +129,15 @@ $.widget( "corecss.timeselect" , {
         var that = this, element = this.element, o = this.options;
         var h, c, f;
 
-        if (!element.hasClass("timeselect")) element.addClass("timeselect");
+        if (!element.hasClass("wheelpicker")) element.addClass("wheelpicker");
 
         element.html("");
 
-        h = $("<div>").addClass("caption").html("<span>"+coreLocales[o.locale].calendar.time[0]+"</span><span>"+coreLocales[o.locale].calendar.time[1]+"</span><span>"+coreLocales[o.locale].calendar.time[2]+"</span>").appendTo(element);
+        h = $("<div>").addClass("picker-header").appendTo(element);
         c = $("<div>").addClass("picker-content").appendTo(element);
         f = $("<div>").addClass("picker-footer").appendTo(element);
 
+        h.append(this._drawHeader());
         c.append(this._drawPicker());
         f.append(this._drawFooter());
     },

@@ -4950,7 +4950,7 @@ header.more ~ .fixed-tabs,
     width: 512px !important;
   }
 }
-.datepicker {
+.wheelpicker {
   display: block;
   width: 330px;
   margin: 0 auto;
@@ -4958,23 +4958,40 @@ header.more ~ .fixed-tabs,
   position: relative;
   border: 1px #eee solid;
 }
-.datepicker .picker-header,
-.datepicker .picker-content,
-.datepicker .picker-footer {
+.wheelpicker .picker-header,
+.wheelpicker .picker-content,
+.wheelpicker .picker-footer {
   position: relative;
   display: block;
 }
-.datepicker .picker-header {
-  padding: 8px 16px;
-  font-size: 24px;
+.wheelpicker .picker-header {
+  font-size: 18px;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-grow: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 16px ;
   background: #0288d1;
   color: #ffffff;
+  text-transform: uppercase;
 }
-.datepicker .picker-content {
+.wheelpicker .picker-header span.part {
+  text-align: center;
+  width: calc((100% - 48px) / 3);
+}
+.wheelpicker .picker-content {
   padding: 16px;
   position: relative;
 }
-.datepicker .picker-footer {
+.wheelpicker .picker-footer {
   padding: 4px 8px;
   border-top: 1px #eee solid;
   display: -webkit-flex;
@@ -4987,10 +5004,10 @@ header.more ~ .fixed-tabs,
       -ms-flex-align: center;
           align-items: center;
 }
-.datepicker .picker-footer .flat-button {
+.wheelpicker .picker-footer .flat-button {
   color: #0288d1;
 }
-.datepicker .picker-content-inner {
+.wheelpicker .picker-content-inner {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -5004,8 +5021,8 @@ header.more ~ .fixed-tabs,
       -ms-flex-align: center;
           align-items: center;
 }
-.datepicker .picker-content-inner:before,
-.datepicker .picker-content-inner:after {
+.wheelpicker .picker-content-inner:before,
+.wheelpicker .picker-content-inner:after {
   background: #0288d1;
   height: 2px;
   width: 100%;
@@ -5015,12 +5032,15 @@ header.more ~ .fixed-tabs,
   z-index: 2;
   left: 0;
 }
-.datepicker .picker-content-inner:after {
+.wheelpicker .picker-content-inner:after {
   top: 78px;
 }
-.datepicker .picker-content-inner .d-list,
-.datepicker .picker-content-inner .m-list,
-.datepicker .picker-content-inner .y-list {
+.wheelpicker .picker-content-inner .d-list,
+.wheelpicker .picker-content-inner .m-list,
+.wheelpicker .picker-content-inner .y-list,
+.wheelpicker .picker-content-inner .v-list,
+.wheelpicker .picker-content-inner .h-list,
+.wheelpicker .picker-content-inner .s-list {
   padding: 0;
   margin: 0;
   list-style: inside none;
@@ -5030,37 +5050,52 @@ header.more ~ .fixed-tabs,
   text-align: center;
   position: relative;
 }
-.datepicker .picker-content-inner .d-list li,
-.datepicker .picker-content-inner .m-list li,
-.datepicker .picker-content-inner .y-list li {
+.wheelpicker .picker-content-inner .d-list li,
+.wheelpicker .picker-content-inner .m-list li,
+.wheelpicker .picker-content-inner .y-list li,
+.wheelpicker .picker-content-inner .v-list li,
+.wheelpicker .picker-content-inner .h-list li,
+.wheelpicker .picker-content-inner .s-list li {
   padding: 4px;
   font-size: 14px;
   line-height: 30px;
   color: #9E9E9E;
 }
-.datepicker .picker-content-inner .d-list li.active,
-.datepicker .picker-content-inner .m-list li.active,
-.datepicker .picker-content-inner .y-list li.active {
+.wheelpicker .picker-content-inner .d-list li.active,
+.wheelpicker .picker-content-inner .m-list li.active,
+.wheelpicker .picker-content-inner .y-list li.active,
+.wheelpicker .picker-content-inner .v-list li.active,
+.wheelpicker .picker-content-inner .h-list li.active,
+.wheelpicker .picker-content-inner .s-list li.active {
   color: #000000;
   font-weight: bolder;
   font-size: 18px;
 }
-.datepicker .picker-content-inner .d-list li,
-.datepicker .picker-content-inner .m-list li,
-.datepicker .picker-content-inner .y-list li {
+.wheelpicker .picker-content-inner .d-list li,
+.wheelpicker .picker-content-inner .m-list li,
+.wheelpicker .picker-content-inner .y-list li,
+.wheelpicker .picker-content-inner .v-list li,
+.wheelpicker .picker-content-inner .h-list li,
+.wheelpicker .picker-content-inner .s-list li {
   border: 1px transparent solid;
 }
-.datepicker .picker-content-inner .d-list::-webkit-scrollbar,
-.datepicker .picker-content-inner .m-list::-webkit-scrollbar,
-.datepicker .picker-content-inner .y-list::-webkit-scrollbar {
+.wheelpicker .picker-content-inner .d-list::-webkit-scrollbar,
+.wheelpicker .picker-content-inner .m-list::-webkit-scrollbar,
+.wheelpicker .picker-content-inner .y-list::-webkit-scrollbar,
+.wheelpicker .picker-content-inner .v-list::-webkit-scrollbar,
+.wheelpicker .picker-content-inner .h-list::-webkit-scrollbar,
+.wheelpicker .picker-content-inner .s-list::-webkit-scrollbar {
   display: none;
 }
-.datepicker-dialog {
+.wheelpicker .picker-content-inner .v-list {
+  width: 100%;
+}
+.wheelpicker-dialog {
   padding: 0;
   width: 330px !important;
   max-width: none;
 }
-.datepicker-dialog .dialog-content {
+.wheelpicker-dialog .dialog-content {
   width: 100%;
 }
 .timepicker {
@@ -5314,243 +5349,6 @@ header.more ~ .fixed-tabs,
   .timepicker-dialog {
     width: 512px !important;
   }
-}
-.timeselect {
-  display: block;
-  width: 330px;
-  margin: 0 auto;
-  border-radius: 2px;
-  position: relative;
-  border: 1px #eee solid;
-}
-.timeselect .caption {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-grow: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
-  -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-  padding: 16px ;
-  background: #0288d1;
-  color: #ffffff;
-}
-.timeselect .caption span {
-  text-align: center;
-  width: calc((100% - 48px) / 3);
-}
-.timeselect .picker-header,
-.timeselect .picker-content,
-.timeselect .picker-footer {
-  position: relative;
-  display: block;
-}
-.timeselect .picker-header {
-  padding: 8px 16px;
-  font-size: 24px;
-  background: #0288d1;
-  color: #ffffff;
-}
-.timeselect .picker-content {
-  padding: 0 16px;
-  position: relative;
-}
-.timeselect .picker-footer {
-  padding: 4px 8px;
-  border-top: 1px #eee solid;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-.timeselect .picker-footer .flat-button {
-  color: #0288d1;
-}
-.timeselect .picker-content-inner {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-grow: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
-  -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-.timeselect .picker-content-inner:before,
-.timeselect .picker-content-inner:after {
-  background: #0288d1;
-  height: 2px;
-  width: 100%;
-  content: "";
-  position: absolute;
-  top: 40px;
-  z-index: 2;
-  left: 0;
-}
-.timeselect .picker-content-inner:after {
-  top: 78px;
-}
-.timeselect .picker-content-inner .h-list,
-.timeselect .picker-content-inner .m-list,
-.timeselect .picker-content-inner .s-list {
-  padding: 0;
-  margin: 0;
-  list-style: inside none;
-  width: calc((100% - 48px) / 3);
-  height: 120px;
-  overflow-y: scroll;
-  text-align: center;
-  position: relative;
-}
-.timeselect .picker-content-inner .h-list li,
-.timeselect .picker-content-inner .m-list li,
-.timeselect .picker-content-inner .s-list li {
-  padding: 4px;
-  font-size: 14px;
-  line-height: 30px;
-  color: #9E9E9E;
-}
-.timeselect .picker-content-inner .h-list li.active,
-.timeselect .picker-content-inner .m-list li.active,
-.timeselect .picker-content-inner .s-list li.active {
-  color: #000000;
-  font-weight: bolder;
-  font-size: 18px;
-}
-.timeselect .picker-content-inner .h-list li,
-.timeselect .picker-content-inner .m-list li,
-.timeselect .picker-content-inner .s-list li {
-  border: 1px transparent solid;
-}
-.timeselect .picker-content-inner .h-list::-webkit-scrollbar,
-.timeselect .picker-content-inner .m-list::-webkit-scrollbar,
-.timeselect .picker-content-inner .s-list::-webkit-scrollbar {
-  display: none;
-}
-.timeselect-dialog {
-  padding: 0;
-  width: 330px !important;
-  max-width: none;
-}
-.timeselect-dialog .dialog-content {
-  width: 100%;
-}
-.wheelselect {
-  display: block;
-  width: 330px;
-  margin: 0 auto;
-  border-radius: 2px;
-  position: relative;
-  border: 1px #eee solid;
-}
-.wheelselect .picker-header,
-.wheelselect .picker-content,
-.wheelselect .picker-footer {
-  position: relative;
-  display: block;
-}
-.wheelselect .picker-header {
-  padding: 8px 16px;
-  font-size: 24px;
-  background: #0288d1;
-  color: #ffffff;
-}
-.wheelselect .picker-content {
-  padding: 0 16px;
-  position: relative;
-}
-.wheelselect .picker-footer {
-  padding: 4px 8px;
-  border-top: 1px #eee solid;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-.wheelselect .picker-footer .flat-button {
-  color: #0288d1;
-}
-.wheelselect .picker-content-inner {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-grow: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
-  -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-.wheelselect .picker-content-inner:before,
-.wheelselect .picker-content-inner:after {
-  background: #0288d1;
-  height: 2px;
-  width: 100%;
-  content: "";
-  position: absolute;
-  top: 40px;
-  z-index: 2;
-  left: 0;
-}
-.wheelselect .picker-content-inner:after {
-  top: 78px;
-}
-.wheelselect .picker-content-inner .v-list {
-  padding: 0;
-  margin: 0;
-  list-style: inside none;
-  width: 100%;
-  height: 120px;
-  overflow-y: scroll;
-  text-align: center;
-  position: relative;
-}
-.wheelselect .picker-content-inner .v-list li {
-  padding: 4px;
-  font-size: 14px;
-  line-height: 30px;
-  color: #9E9E9E;
-}
-.wheelselect .picker-content-inner .v-list li.active {
-  color: #000000;
-  font-weight: bolder;
-  font-size: 18px;
-}
-.wheelselect .picker-content-inner .v-list li {
-  border: 1px transparent solid;
-}
-.wheelselect .picker-content-inner .v-list::-webkit-scrollbar {
-  display: none;
-}
-.wheelselect-dialog {
-  padding: 0;
-  width: 330px !important;
-  max-width: none;
-}
-.wheelselect-dialog .dialog-content {
-  width: 100%;
 }
 .multi-action {
   display: inline-block;
