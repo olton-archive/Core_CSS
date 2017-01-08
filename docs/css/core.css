@@ -5024,16 +5024,16 @@ header.more ~ .fixed-tabs,
 .wheelpicker .picker-content-inner:before,
 .wheelpicker .picker-content-inner:after {
   background: #0288d1;
-  height: 2px;
+  height: 1px;
   width: 100%;
   content: "";
   position: absolute;
-  top: 40px;
+  top: 48px;
   z-index: 2;
   left: 0;
 }
 .wheelpicker .picker-content-inner:after {
-  top: 78px;
+  top: 94px;
 }
 .wheelpicker .picker-content-inner .d-list,
 .wheelpicker .picker-content-inner .m-list,
@@ -5045,7 +5045,7 @@ header.more ~ .fixed-tabs,
   margin: 0;
   list-style: inside none;
   width: calc((100% - 48px) / 3);
-  height: 120px;
+  height: 144px;
   overflow-y: scroll;
   text-align: center;
   position: relative;
@@ -5058,7 +5058,7 @@ header.more ~ .fixed-tabs,
 .wheelpicker .picker-content-inner .s-list li {
   padding: 4px;
   font-size: 14px;
-  line-height: 30px;
+  line-height: 38px;
   color: #9E9E9E;
 }
 .wheelpicker .picker-content-inner .d-list li.active,

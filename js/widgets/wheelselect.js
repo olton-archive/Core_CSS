@@ -58,7 +58,7 @@ $.widget( "corecss.wheelselect" , {
         this._removeScrollEvents();
 
         v_list.scrollTop(0).animate({
-            scrollTop: element.find(".js-vv-"+value).addClass("active").position().top - 40
+            scrollTop: element.find(".js-vv-"+value).addClass("active").position().top - 48
         });
 
         this._createScrollEvents();
@@ -137,10 +137,10 @@ $.widget( "corecss.wheelselect" , {
             v_list.find(".active").removeClass("active");
         });
         v_list.on('scrollstop', function(){
-            var target = Math.round((Math.ceil(v_list.scrollTop() + 40) / 40)) - 1;
+            var target = Math.round((Math.ceil(v_list.scrollTop() + 48) / 48)) - 1;
             var target_element = v_list.find(".js-vv-"+target);
             var val = target_element.data('value');
-            var scroll_to = target_element.position().top - 40 + v_list[0].scrollTop;
+            var scroll_to = target_element.position().top - 48 + v_list[0].scrollTop;
 
             v_list.animate({
                 scrollTop: scroll_to
