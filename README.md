@@ -1,2 +1,2 @@
 # CoreCSS
-Universal CSS Framework for Web and Mobile Projects
+Universal CSS Framework for Phonegap
