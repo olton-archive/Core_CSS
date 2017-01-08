@@ -171,9 +171,7 @@ $.widget( "corecss.datepicker" , {
     _createPicker: function(){
         var h, c, f, element = this.element;
 
-        if (!element.hasClass("datepicker")) {
-            element.addClass("datepicker");
-        }
+        if (!element.hasClass("wheelpicker")) element.addClass("wheelpicker");
 
         element.html("");
 

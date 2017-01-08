@@ -113,7 +113,7 @@ $.widget( "corecss.wheelselect" , {
         var that = this, element = this.element, o = this.options;
         var h, c, f;
 
-        if (!element.hasClass("wheelselect")) element.addClass("wheelselect");
+        if (!element.hasClass("wheelpicker")) element.addClass("wheelpicker");
 
         element.html("");
 
