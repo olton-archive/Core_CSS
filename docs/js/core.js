@@ -8197,7 +8197,7 @@ $.widget( "corecss.wheelselect" , {
             });
         }
 
-        console.log(o.values);
+        //console.log(o.values);
 
         this._createElement();
         this._createScrollEvents();

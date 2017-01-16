@@ -20,7 +20,7 @@
 *.jar
 *.rar
 *.tar
-*.zip
+# *.zip
 
 # Numerous always-ignore extensions
 *.diff

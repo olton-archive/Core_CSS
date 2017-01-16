@@ -959,31 +959,6 @@ header.more ~ .view-content,
 .grid.condensed .cell {
   padding: 1px;
 }
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
-  .grid:not(.no-transform) .row .cell {
-    width: calc(100% / 6) !important;
-  }
-}
-@media only screen and (min-device-width: 640px) and (max-device-width: 768px) {
-  .grid:not(.no-transform) .row .cell {
-    width: calc(100% / 4) !important;
-  }
-}
-@media only screen and (max-device-width: 360px) {
-  .grid:not(.no-transform) .row .cell {
-    width: calc(100% / 3) !important;
-  }
-}
-@media only screen and (max-device-width: 320px) {
-  .grid:not(.no-transform) .row .cell {
-    width: calc(100% / 2) !important;
-  }
-}
-@media only screen and (max-device-width: 240px) {
-  .grid:not(.no-transform) .row .cell {
-    width: calc(100% / 1) !important;
-  }
-}
 .overlay {
   position: fixed;
   top: 0;
@@ -1443,6 +1418,12 @@ footer,
 .nav-button.light span:before,
 .nav-button.light span:after {
   background-color: #212121;
+}
+a.raised-button,
+a.flat-button,
+a.action-button {
+  line-height: 36px !important;
+  cursor: pointer;
 }
 .checkbox,
 .radio,
@@ -4669,7 +4650,7 @@ header.more ~ .fixed-tabs,
   font-size: .9em;
 }
 .sidebar-header ~ .sidebar-menu {
-  height: calc(100% - 160px);
+  height: calc(100% - 180px);
 }
 @media screen and (max-width: 640px) {
   .sidebar {
@@ -5060,6 +5041,7 @@ header.more ~ .fixed-tabs,
   font-size: 14px;
   line-height: 38px;
   color: #9E9E9E;
+  background: #ffffff;
 }
 .wheelpicker .picker-content-inner .d-list li.active,
 .wheelpicker .picker-content-inner .m-list li.active,
@@ -5070,6 +5052,7 @@ header.more ~ .fixed-tabs,
   color: #000000;
   font-weight: bolder;
   font-size: 18px;
+  background: #ffffff;
 }
 .wheelpicker .picker-content-inner .d-list li,
 .wheelpicker .picker-content-inner .m-list li,
@@ -5765,46 +5748,46 @@ header.more ~ .fixed-tabs,
   border-width: 1px;
 }
 * .padding1 {
-  padding: 8px;
+  padding: 8px !important;
 }
 * .margin1 {
-  margin: 8px;
+  margin: 8px !important;
 }
 * .padding2 {
-  padding: 16px;
+  padding: 16px !important;
 }
 * .margin2 {
-  margin: 16px;
+  margin: 16px !important;
 }
 * .padding4 {
-  padding: 32px;
+  padding: 32px !important;
 }
 * .margin4 {
-  margin: 32px;
+  margin: 32px !important;
 }
 * .padding5 {
-  padding: 40px;
+  padding: 40px !important;
 }
 * .margin5 {
-  margin: 40px;
+  margin: 40px !important;
 }
 * .padding6 {
-  padding: 48px;
+  padding: 48px !important;
 }
 * .margin6 {
-  margin: 48px;
+  margin: 48px !important;
 }
 * .padding7 {
-  padding: 56px;
+  padding: 56px !important;
 }
 * .margin7 {
-  margin: 56px;
+  margin: 56px !important;
 }
 * .padding8 {
-  padding: 64px;
+  padding: 64px !important;
 }
 * .margin8 {
-  margin: 64px;
+  margin: 64px !important;
 }
 .debug {
   border: 1px dotted red !important;

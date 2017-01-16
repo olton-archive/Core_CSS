@@ -325,8 +325,8 @@
     @size: extract(@indentIndexes, @i);
     @indentID: @size / 8;
 
-    * .padding@{indentID} {padding: unit(@size, px);}
-    * .margin@{indentID} {margin: unit(@size, px);}
+    * .padding@{indentID} {padding: unit(@size, px)!important;}
+    * .margin@{indentID} {margin: unit(@size, px)!important;}
 
     .generate-indent(@size, @i + 1);
 }
