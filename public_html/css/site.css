@@ -1,0 +1,170 @@
+body {
+    margin: 0;
+}
+
+.app {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    height: auto;
+    overflow-y: scroll;
+}
+
+.hero {
+    height: 600px;
+    border-bottom: 48px solid;
+    position: relative;
+    text-align: center;
+}
+
+.container {
+    width: 940px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.logo {
+    width: 256px;
+    height: 256px;
+    border-radius: 50%;
+    background: #ffffff;
+    padding: 20px;
+    border: 32px solid;
+    top: 20px;
+    display: inline-block;
+}
+
+.logo img {
+    animation: spin 4s infinite linear;
+}
+
+.hero .title {
+    font-size: 64px;
+    font-weight: 100;
+    color: #ffffff;
+    margin: 40px 20px 10px;
+}
+.hero .subtitle {
+    font-size: 32px;
+    font-weight: 100;
+    color: #ffffff;
+    padding: 0 80px;
+    margin: 0 0 10px;
+}
+
+.bb .raised-button {
+    width: 150px;
+}
+
+.bb .raised-button + .raised-button {
+    margin-left: 20px;
+}
+
+.version {
+    position: absolute;
+    bottom: -32px;
+    width: 100%;
+    text-align: center;
+    color: #eee;
+}
+
+.h_header {
+    font-size: 48px;
+    font-weight: 100;
+    margin: 20px 0 10px;
+}
+
+.h_header_2 {
+    font-size: 32px;
+    font-weight: 100;
+    margin: 0 0 10px;
+}
+
+.h_header_3 {
+    font-size: 24px;
+    font-weight: 100;
+    margin: 0 0 10px;
+}
+
+.l_text {
+    font-size: 18px; font-weight: 100;
+}
+
+.l_text_s {
+    font-size: 16px; font-weight: 100;
+}
+
+.ani-logo {
+    animation: spin 4s infinite linear;
+}
+
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
+
+#g1 .cell {
+    height: 146px;
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+    padding: 48px;
+}
+
+#g1 .cell h3{
+    font-size: 28px;
+    line-height: 1;
+    text-align: center;
+    width: 100%;
+}
+
+.title_b {
+    width: 100%;
+    height: 100px;
+    background: transparent url("../images/google_material.jpg") top left no-repeat;
+    position: relative;
+}
+
+.list-menu {
+    list-style: none inside;
+    margin: 10px 0 0;
+    padding: 0;
+}
+
+.list-menu li {
+
+}
+
+.list-menu li a{
+    padding: 4px;
+    color: #fff;
+    display: block;
+    font-size: 16px;
+    font-weight: 100;
+}
+
+.sidebar .sidebar-header {
+    background: #000 url(../images/menu-back.jpg) top left no-repeat;
+    background-size: cover;
+}
+
+.sidebar-menu li{
+    border-bottom: 1px #eee solid;
+}
+
+.sidebar-menu li a:not(.second-level) {
+    padding-left: 20px;
+}
+
+
+.sidebar {
+    transform: translate3d(0,0,0);
+    border-right: 1px #eee solid;
+}
+
+.view-content {
+    margin-left: 320px;
+    padding-top: 0 !important;
+}
