@@ -1,3 +1,40 @@
 <div class="page">
     <h1 class="h_header_2">Requirements</h1>
+    <hr class="thin"/>
+    <h3>DOCTYPE</h3>
+    <p>
+        Core_CSS required HTML5 doctype to create document.
+    </p>
+    <pre class="prettyprint linenums lang-html">
+        &lt;!DOCTYPE html&gt;
+    </pre>
+
+    <h3>Meta tags</h3>
+    <p>
+        Core_CSS required <strong>viewport</strong> meta tag.
+    </p>
+    <pre class="prettyprint linenums lang-html">
+        &lt;meta name="viewport"
+            content="user-scalable=no,
+            initial-scale=1, maximum-scale=1,
+            minimum-scale=1, width=device-width" /&gt;
+    </pre>
+
+    <h3>Meta security</h3>
+    <p>
+        Core_CSS for Phonegap required meta tag <strong>http-equiv</strong> with <strong>Content-Security-Policy</strong>.
+    </p>
+    <pre class="prettyprint linenums lang-html">
+        &lt;meta http-equiv="Content-Security-Policy"
+            content="..." /&gt;
+    </pre>
+
+    <h3>jQuery</h3>
+    <p>
+        Core_Components written as jquery widgets. Therefore require inclusion of the jQuery library.
+    </p>
+    <pre class="prettyprint linenums lang-html">
+        &lt;script src="path_to/jqury.js"&gt;&lt;/script&gt;
+    </pre>
+
 </div>
