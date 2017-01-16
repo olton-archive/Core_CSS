@@ -6,7 +6,7 @@
     <title>CoreCss - Simple CSS/JS framework for Phonegap</title>
     <link rel="stylesheet" type="text/css" href="css/core.min.css">
     <link rel="stylesheet" type="text/css" href="css/core-colors.min.css">
-    <link rel="stylesheet" type="text/css" href="css/core-icons.css">
+    <link rel="stylesheet" type="text/css" href="css/core-icons.min.css">
     <link rel="stylesheet" type="text/css" href="css/phone.css">
     <link rel="stylesheet" type="text/css" href="css/site.css">
 </head>
@@ -47,18 +47,22 @@
 
     <script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/core.min.js"></script>
+    <script src="js/pre-code.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
     <script>
         var media = "(min-width: 801px)";
         var mq = window.matchMedia( media );
         var default_target = "welcome";
         $(".view-content").load(default_target+".html", function(){
-
+            preCode("pre, textarea");
+            PR.prettyPrint();
         });
 
         $(".sidebar-menu").on("click", "li > a", function(e){
             var target = $(this).data("target");
             $(".view-content").load(target+".html", function(){
-
+                preCode("pre, textarea");
+                PR.prettyPrint();
             });
             if (!mq.matches) {
                 $(".sidebar").data("sidebar").close();
