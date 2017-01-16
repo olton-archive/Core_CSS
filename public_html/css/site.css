@@ -55,7 +55,7 @@ body {
 }
 
 .bb .raised-button {
-    width: 150px;
+    /*width: 150px;*/
 }
 
 .bb .raised-button + .raised-button {
@@ -225,7 +225,7 @@ body {
         padding: 0 20px;
     }
     .bb .raised-button {
-        width: 120px;
+        /*width: 120px;*/
     }
     .hero {
         height: 530px;
