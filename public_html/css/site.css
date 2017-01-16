@@ -158,13 +158,107 @@ body {
     padding-left: 20px;
 }
 
-
-.sidebar {
-    transform: translate3d(0,0,0);
-    border-right: 1px #eee solid;
+.page {
+    padding: 20px;
 }
 
-.view-content {
-    margin-left: 320px;
-    padding-top: 0 !important;
+.heading {
+    font-weight: 100;
+}
+
+#logo2 {
+    position: absolute;
+    z-index: 2;
+    width: 100px;
+    left: 50%;
+    top: 50%;
+    margin: -50px 0 0 -50px;
+    opacity: .7;
+}
+
+.pad1 {
+    padding: 0 10px;
+}
+
+.no-big {
+    display: none !important;
+}
+
+@media screen and (min-width: 769px) {
+    .sidebar {
+        transform: translate3d(0,0,0);
+        border-right: 1px #eee solid;
+    }
+
+    header {
+        display: none !important;
+    }
+
+    .view-content {
+        margin-left: 320px;
+        padding-top: 0 !important;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .container {
+        width: 100%;
+        padding: 0 20px;
+    }
+    .logo {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: #ffffff;
+        padding: 20px;
+        border: 24px solid;
+        top: 20px;
+        display: inline-block;
+    }
+    .hero .title{
+        font-size: 48px;
+    }
+    .hero .subtitle{
+        font-size: 20px;
+        padding: 0 20px;
+    }
+    .bb .raised-button {
+        width: 120px;
+    }
+    .hero {
+        height: 530px;
+    }
+    #g1 .cell  {
+        padding: 10px;
+    }
+    #g1 .cell h3 {
+        font-size: 20px;
+    }
+
+}
+
+@media screen and (max-width: 640px){
+    .no-big {
+        display: block !important;
+    }
+    .grid .cell {
+        width: 50% !important;
+    }
+    .hero {
+        height: 530px;
+    }
+    .no-640 {
+        display: none !important;
+    }
+}
+@media screen and (max-width: 360px){
+    .grid .cell {
+        width: 100% !important;
+    }
+    #logo2 {
+        display: none;
+    }
+    .no-360 {
+        display: none !important;
+    }
 }

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
     <title>CoreCss - Simple CSS/JS framework for Phonegap</title>
     <link rel="stylesheet" type="text/css" href="css/core.min.css">
     <link rel="stylesheet" type="text/css" href="css/core-colors.min.css">
@@ -36,8 +37,8 @@
 
             <br />
 
-            <div class="grid fg-white" id="g1">
-                <img src="images/Core_logo2.svg" style="position: absolute; z-index: 2; width: 100px; left: 50%; top: 50%; margin: -50px 0 0 -50px; opacity: .7">
+            <div class="grid fg-white no-transform" id="g1">
+                <img id="logo2" src="images/Core_logo2.svg">
                 <div class="row cells2 align-center">
                     <div class="cell bg-teal-800"><h3 class="h_header_2">ONE STYLE FOR ALL DEVICES</h3></div>
                     <div class="cell bg-blue-400"><h3 class="h_header_2">HTML5, JS, CSS3</h3></div>
@@ -51,32 +52,50 @@
             <br />
             <br />
 
-            <div class="grid">
+            <div class="no-big">
+                <h2 class="h_header_2">Material_Design</h2>
+                <p class="l_text_s">
+                    Core_CSS was designed according to the official Google Material design specification to bring pixel-perfect Material features - from visual design and colors to interactions and effects. And now, Core_CSS will be a great solution to create Mobile apps with native Material look and feel.
+                </p>
+            </div>
+
+            <div class="no-big">
+                <h2 class="h_header_2">Core_Components</h2>
+                <p class="l_text_s">
+                    Core_CSS comes with a bunch of ready to use UI elements and widgets like modals, popup, action sheet, popover, list views, media lists, tabs, side panels, layout grid, preloader (activity indicator), form elements, etc. The awesome point is that you don't need JavaScript at all for the most of mentioned widgets.
+                </p>
+            </div>
+
+            <div class="grid no-transform no-640">
                 <div class="row cells2">
-                    <div class="cell " style="padding-right: 20px;">
-                        <h2 class="h_header_2">Material_Design</h2>
-                        <p class="l_text_s">
-                            Core_CSS was designed according to the official Google Material design specification to bring pixel-perfect Material features - from visual design and colors to interactions and effects. And now, Core_CSS will be a great solution to create Mobile apps with native Material look and feel.
-                        </p>
+                    <div class="cell">
+                        <div class="pad1">
+                            <h2 class="h_header_2">Material_Design</h2>
+                            <p class="l_text_s">
+                                Core_CSS was designed according to the official Google Material design specification to bring pixel-perfect Material features - from visual design and colors to interactions and effects. And now, Core_CSS will be a great solution to create Mobile apps with native Material look and feel.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="cell no-360">
+                        <img src="images/google_material.jpg" style="height: 170px;">
+                    </div>
+                </div>
+                <div class="row cells2">
+                    <div class="cell no-360">
+                        <img src="images/components_material.jpg" style="height: 170px;">
                     </div>
                     <div class="cell">
-                        <img src="images/google_material.jpg" style="height: 170px;">
+                        <div class="pad1">
+                            <h2 class="h_header_2">Core_Components</h2>
+                            <p class="l_text_s">
+                                Core_CSS comes with a bunch of ready to use UI elements and widgets like modals, popup, action sheet, popover, list views, media lists, tabs, side panels, layout grid, preloader (activity indicator), form elements, etc. The awesome point is that you don't need JavaScript at all for the most of mentioned widgets.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="grid">
-                <div class="row cells2">
-                    <div class="cell">
-                        <img src="images/components_material.jpg" style="height: 170px;">
-                    </div>
-                    <div class="cell " style="padding-left: 20px;">
-                        <h2 class="h_header_2">Core_Components</h2>
-                        <p class="l_text_s">
-                            Core_CSS comes with a bunch of ready to use UI elements and widgets like modals, popup, action sheet, popover, list views, media lists, tabs, side panels, layout grid, preloader (activity indicator), form elements, etc. The awesome point is that you don't need JavaScript at all for the most of mentioned widgets.
-                        </p>
-                    </div>
-                </div>
+            <div class="grid no-transform">
             </div>
 
             <h2 class="h_header fg-red align-center">It_Is_Free</h2>
@@ -91,8 +110,8 @@
         <br />
 
         <footer class="bg-blue-900 fg-white">
-            <div class="container" style="padding: 20px 0">
-                <div class="grid">
+            <div class="container" style="padding-top: 20px; padding-bottom: 20px;">
+                <div class="grid no-transform">
                     <div class="row cells3">
                         <div class="cell colspan2">
                             <h4 class="h_header_3">Project</h4>
