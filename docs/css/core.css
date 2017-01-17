@@ -191,28 +191,28 @@ body {
   text-align: justify;
 }
 .text-regular {
-  font-weight: 400;
+  font-weight: 400 !important;
 }
 .text-light {
-  font-weight: 200;
+  font-weight: 200 !important;
 }
 .text-light-ultra {
-  font-weight: 100;
+  font-weight: 100 !important;
 }
 .text-medium {
-  font-weight: 500;
+  font-weight: 500 !important;
 }
 .text-bold {
-  font-weight: 700;
+  font-weight: 700 !important;
 }
 .text-upper {
-  text-transform: uppercase;
+  text-transform: uppercase !important;
 }
 .text-lower {
-  text-transform: lowercase;
+  text-transform: lowercase !important;
 }
 .text-capitalize {
-  text-transform: capitalize;
+  text-transform: capitalize !important;
 }
 .display3,
 .display4,
@@ -240,69 +240,69 @@ body {
 .display4 {
   font-size: 112px;
   margin-bottom: 20px;
-  font-weight: 200;
+  font-weight: 200 !important;
   line-height: 1.2;
   color: #757575;
 }
 .display3 {
   font-size: 56px;
   margin-bottom: 20px;
-  font-weight: 400;
+  font-weight: 400 !important;
   line-height: 1.2;
   color: #757575;
 }
 .display2 {
   font-size: 45px;
   margin-bottom: 20px;
-  font-weight: 400;
+  font-weight: 400 !important;
   line-height: 1.2;
   color: #757575;
 }
 .display1 {
   font-size: 34px;
   margin-bottom: 16px;
-  font-weight: 400;
+  font-weight: 400 !important;
   color: #757575;
 }
 .headline {
   font-size: 24px;
   margin-bottom: 14px;
-  font-weight: 400;
+  font-weight: 400 !important;
   color: #212121;
 }
 .heading {
   font-size: 20px;
   margin-bottom: 12px;
-  font-weight: 500;
+  font-weight: 500 !important;
   color: #212121;
 }
 .subheading {
   font-size: 15px;
   margin-bottom: 12px;
-  font-weight: 400;
+  font-weight: 400 !important;
   color: #212121;
 }
 .body {
   font-size: 14px;
   margin-bottom: 10px;
-  font-weight: 400;
+  font-weight: 400 !important;
   color: #212121;
 }
 .body2 {
   font-size: 13px;
   margin-bottom: 10px;
-  font-weight: 500;
+  font-weight: 500 !important;
   color: #212121;
 }
 .caption {
   font-size: 12px;
-  font-weight: 400;
+  font-weight: 400 !important;
   color: #757575;
 }
 .button {
   font-size: 14px;
-  font-weight: 500;
-  text-transform: uppercase;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
   line-height: 1.5;
   color: #212121;
 }
@@ -321,7 +321,7 @@ hr.thin,
 body {
   font-size: 14px;
   margin-bottom: 10px;
-  font-weight: 400;
+  font-weight: 400 !important;
   color: #212121;
 }
 p + p,
@@ -360,6 +360,7 @@ p,
   height: 40px;
   font-size: 40px;
   margin: 4px;
+  border-radius: 50%;
 }
 .app {
   position: absolute;
@@ -1249,8 +1250,8 @@ footer,
 .action-button,
 .tool-button {
   white-space: nowrap;
-  font-weight: 500;
-  text-transform: uppercase;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
   line-height: 1.5;
   color: #212121;
   border: 0;
@@ -5433,7 +5434,7 @@ header.more ~ .fixed-tabs,
 .toast {
   position: fixed;
   bottom: 20px;
-  width: 80%;
+  width: auto;
   max-width: 568px;
   padding: 8px 24px;
   text-align: left;
