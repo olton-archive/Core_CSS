@@ -1,0 +1,83 @@
+<div class="page">
+    <h1 class="h_header_2">Colors</h1>
+    <hr class="thin">
+
+    <h2 class="headline">Color palette</h2>
+    <p>
+        Material takes cues from contemporary architecture, road signs, pavement marking tape, and athletic courts. Color should be unexpected and vibrant.
+        <br />
+        <br />
+        This color palette comprises primary and accent colors that can be used for illustration or to develop your brand colors. They’ve been designed to work harmoniously with each other. The color palette starts with primary colors and fills in the spectrum to create a complete and usable palette for Android, Web, and iOS. Google suggests using the 500 colors as the primary colors in your app and the other colors as accents colors.
+        <br />
+        <br />
+        Themes enable consistent app styling through surface shades, shadow depth, and ink opacity.
+    </p>
+
+    <h2 class="headline">Color names</h2>
+    <p>white, black, red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, amber, orange, deepOrange, brown, gray, blueGray</p>
+
+    <h2 class="headline">Color classes</h2>
+    <p>
+        Colors classes defined in <strong>core.css</strong> (fg-* and bg-*) and <strong>core-colors.css</strong> (bd-*, ol-*, st-*, active and focus). To set color class to element you can use next classes (replace * with color name):
+    </p>
+    <ul>
+        <li><strong>fg-*</strong> - text color</li>
+        <li><strong>bg-*</strong> - background color</li>
+        <li><strong>bd-*</strong> - border color</li>
+        <li><strong>ol-*</strong> - outline color</li>
+        <li><strong>st-*</strong> - stroke color</li>
+
+        <li><strong>fg-*-active</strong> - text color for active element</li>
+        <li><strong>bg-*-active</strong> - background color for active element</li>
+        <li><strong>bd-*-active</strong> - border color for active element</li>
+        <li><strong>ol-*-active</strong> - outline color for active element</li>
+
+        <li><strong>fg-*-focus</strong> - text color for focused element</li>
+        <li><strong>bg-*-focus</strong> - background color for focused element</li>
+        <li><strong>bd-*-focus</strong> - border color for focused element</li>
+        <li><strong>ol-*-focus</strong> - outline color for focused element</li>
+    </ul>
+    <pre class="prettyprint linenums">
+        &lt;p class="fg-white bg-red"&gt;Lorem ipsum dolor mesum.&lt;/p&gt;
+        &lt;button class="action-button fg-white bg-red bg-green-700-active"&gt;+&lt;/button&gt;
+    </pre>
+
+    <h2 class="headline">Color list</h2>
+    <ul class="list" id="colors-list"></ul>
+
+    <h2 class="headline">Colors Schemas</h2>
+    <ul class="list" id="colors-list-schemas"></ul>
+
+</div>
+
+<script>
+    var list = $("#colors-list").html("");
+    var list_schemas = $("#colors-list-schemas").html("");
+    var color_name = ['red', 'pink', 'purple', 'deepPurple', 'indigo', 'blue', 'lightBlue', 'cyan', 'teal', 'green', 'lightGreen', 'lime', 'yellow', 'amber', 'orange', 'deepOrange'];
+    var color_name_2 = ['brown', 'gray', 'blueGray'];
+    var color_index = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', 'A100', 'A200', 'A400', 'A700'];
+    var color_index_2 = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900'];
+    var li;
+
+
+    $.each(color_name, function (i, cn) {
+        $("<li>").addClass("bg-"+cn).appendTo(list);
+    });
+    $.each(color_name_2, function (i, cn) {
+        $("<li>").addClass("bg-"+cn).appendTo(list);
+    });
+
+    $.each(color_name, function (i, cn) {
+        $("<li>").addClass("color-title").html(cn).appendTo(list_schemas);
+        $.each(color_index, function (ii, ci) {
+            $("<li>").addClass("bg-"+cn+"-"+ci).html(cn+"-"+ci).appendTo(list_schemas);
+        });
+    });
+
+    $.each(color_name_2, function (i, cn) {
+        $("<li>").addClass("color-title").html(cn).appendTo(list_schemas);
+        $.each(color_index_2, function (ii, ci) {
+            $("<li>").addClass("bg-"+cn+"-"+ci).html(cn+"-"+ci).appendTo(list_schemas);
+        });
+    });
+</script>

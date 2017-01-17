@@ -150,6 +150,10 @@ body {
     background-size: cover;
 }
 
+.sidebar-menu li.disabled{
+    color: rgba(0, 0, 0, 0.3);
+}
+
 .sidebar-menu li{
     border-bottom: 1px #eee solid;
 }
@@ -185,6 +189,62 @@ body {
 }
 
 .prettyprint ol.linenums > li { list-style-type: decimal; }
+
+#colors-list {
+    list-style: none inside;
+    margin: 0;
+    padding: 0;
+}
+
+#colors-list li {
+    display: inline-block;
+    width: 10%;
+    height: 10px;
+}
+
+#colors-list-schemas {
+    list-style: none inside;
+    margin: 0;
+    padding: 0;
+}
+
+#colors-list-schemas li {
+    display: block;
+    padding: 4px 10px;
+    color: #fff;
+}
+
+#colors-list-schemas li.color-title {
+    color: #000;
+    font-size: 18px;
+    padding: 4px;
+    text-align: left;
+    margin-top: 20px;
+}
+
+.example {
+    padding: 20px;
+    border: 1px solid #eee;
+}
+
+#icons-list li {
+    width: 50%;
+    display: block;
+    float: left;
+    border-top: 1px #eee solid;
+}
+
+@media screen and (min-width: 1200px) {
+    #icons-list li {
+        width: 25%;
+    }
+}
+
+@media screen and (min-width: 1099px) {
+    #icons-list li {
+        width: 33%;
+    }
+}
 
 @media screen and (min-width: 769px) {
     .sidebar {
@@ -253,6 +313,13 @@ body {
         display: none !important;
     }
 }
+
+@media screen and (max-width: 540px) {
+    #icons-list li {
+        width: 100%;
+    }
+}
+
 @media screen and (max-width: 360px){
     .grid .cell {
         width: 100% !important;

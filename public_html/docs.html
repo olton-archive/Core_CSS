@@ -26,17 +26,38 @@
                 <span class="subtitle fg-white"> 2017 &copy; Sergey Pimenov</span>
             </div>
             <ul class="sidebar-menu">
-                <li><a href="#" data-target="requirements">Requirements</a></li>
-                <!--<li><a href="quick.html">Quick Start</a></li>-->
-                <!--<li><a href="components.html">Components</a></li>-->
-                <!--<li><a class="second-level" href="~header.html">Header</a></li>-->
-                <!--<li><a class="second-level" href="~sidebar.html">Sidebar</a></li>-->
-                <!--<li><a href="utils.html">Utils</a></li>-->
-                <!--<li><a class="second-level" href="~swipe.html">Swipe Plugin</a></li>-->
-                <!--<li><a class="second-level" href="~easing.html">Easing Functions</a></li>-->
-                <!--<li><a class="second-level" href="~template.html">Template Engine</a></li>-->
-                <!--<li><a class="second-level" href="~storage.html">Storage Engine</a></li>-->
-                <!--<li><a class="second-level" href="~security.html">Security</a></li>-->
+                <li><a href="#"                       data-target="requirements">Requirements</a></li>
+                <li><a href="#"                       data-target="typo">Typography</a></li>
+                <li><a href="#"                       data-target="colors">Colors</a></li>
+                <li><a href="#"                       data-target="icons">Icons</a></li>
+                <li><a href="#"                       data-target="components">Components</a></li>
+                <li><a href="#"  class="second-level" data-target="bottomnav">Bottom navigation</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="bottomsheets">Bottom sheets</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="buttons">Buttons</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="cards">Cards</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="chips">Chips</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="datatables">Data tables</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="dialogs">Dialogs</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="grids">Grids</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="header">Header</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="lists">Lists</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="menus">Menus</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="panels">Panels</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="pickers">Pickers</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="progress">Progress &amp; activity</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="range">Range</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="steppers">Steppers</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="tabs">Tabs</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="textfields">Text fields</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="toasts">Toasts</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="toolbars">Toolbars</a></li>
+                <li class="disabled"><a href="#"                       data-target="utils">Utils</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="swipe">Ripple Plugin</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="swipe">Swipe Plugin</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="easing">Easing Functions</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="template">Template Engine</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="storage">Storage Engine</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="security">Security</a></li>
             </ul>
         </div>
 
@@ -48,6 +69,7 @@
     <script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/core.min.js"></script>
     <script src="js/pre-code.js"></script>
+    <script src="js/list.min.js"></script>
     <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
     <script>
         var media = "(min-width: 801px)";
@@ -60,7 +82,11 @@
 
         $(".sidebar-menu").on("click", "li > a", function(e){
             var target = $(this).data("target");
-            $(".view-content").load(target+".html", function(){
+            $(".view-content").load(target+".html", function( response, status, xhr ){
+                if ( status == "error" ) {
+                    coreToast('This volume in progress...');
+                    return false;
+                }
                 preCode("pre, textarea");
                 PR.prettyPrint();
             });
