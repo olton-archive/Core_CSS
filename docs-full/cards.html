@@ -57,6 +57,7 @@
                 <li><a href="gravatar.html">Граватар</a></li>
                 <li><a href="stepper.html">Пошаговость</a></li>
                 <li><a href="chips.html">Chips</a></li>
+                <li><a href="cards.html">New Cards</a></li>
             </ul>
         </div>
         <div class="navbar-item">
@@ -70,117 +71,43 @@
                 <li><a href="panels.html">Панели</a></li>
                 <li><a href="sheet.html">Доп. навигация</a></li>
                 <li><a href="menus.html">Меню</a></li>
+                <li><a href="wheel-select.html">New Weel Secect</a></li>
+                <li><a href="time-select.html">New Time Secect</a></li>
+                <li><a href="donut.html">Donut</a></li>
+                <li><a href="pickers.html">Pickers</a></li>
+                <li><a href="accordion.html">Accordion</a></li>
+                <li><a href="toasts.html">Toasts</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
 <div class="container">
-    <h1>Форма и ее элементы</h1>
+    <h1>Кнопки</h1>
 
-    <h4 class="text-bold">Поля ввода</h4>
     <div class="example" data-text="пример">
 <pre><code class="html">
-    &lt;div class="input-control full-size"&gt;
-        &lt;input type="text" placeholder="Enter your phone"&gt;
-        &lt;span class="label"&gt;Enter your phone&lt;/span&gt;
-        &lt;hr&gt;
-    &lt;/div&gt;
-    &lt;div class="input-control full-size"&gt;
-        &lt;input type="text" placeholder="Enter your phone"&gt;
-        &lt;span class="label"&gt;Enter your phone&lt;/span&gt;
-        &lt;span class="informer"&gt;At least 8 characters&lt;/span&gt;
-        &lt;hr&gt;
-    &lt;/div&gt;
+    &lt;button class="flat-button ripple"&gt;Flat&lt;/button&gt;
 
+    &lt;button class="flat-button ripple"&gt;&lt;span&gt;Flat&lt;/span&gt; &lt;span class="mif-user"&gt;&lt;/span&gt; &lt;/button&gt;
 
-    &lt;br /&gt;
-    &lt;h3 class="subheading fg-teal"&gt;With icon&lt;/h3&gt;
-    &lt;div class="input-control with-icon full-size"&gt;
-        &lt;input type="text" placeholder="Enter your phone"&gt;
-        &lt;span class="label"&gt;Enter your phone&lt;/span&gt;
-        &lt;span class="informer"&gt;At least 8 characters&lt;/span&gt;
-        &lt;span class="mif-envelop icon"&gt;&lt;/span&gt;
-        &lt;hr&gt;
-    &lt;/div&gt;
+    &lt;button class="raised-button bg-pink-300 bg-pink-900-active fg-white ripple"&gt;Raised&lt;/button&gt;
 
-    &lt;h3 class="subheading fg-teal"&gt;Permanent label&lt;/h3&gt;
-    &lt;div class="input-control with-icon permanent-label full-size"&gt;
-        &lt;input type="text" placeholder="Enter your phone"&gt;
-        &lt;span class="label"&gt;Enter your phone&lt;/span&gt;
-        &lt;span class="informer"&gt;At least 8 characters&lt;/span&gt;
-        &lt;span class="mif-phone icon"&gt;&lt;/span&gt;
-        &lt;hr&gt;
-    &lt;/div&gt;
+    &lt;button class="raised-button ripple"&gt;Raised&lt;/button&gt;
+
+    &lt;button class="action-button ripple"&gt;&lt;span class="mif-plus"&gt;&lt;/span&gt;&lt;/button&gt;
+
+    &lt;button class="action-button mini ripple"&gt;&lt;span class="mif-plus"&gt;&lt;/span&gt;&lt;/button&gt;
+
+    &lt;button class="action-button primary bg-pink-300 bg-pink-900-active fg-white ripple"&gt;&lt;span class="mif-plus"&gt;&lt;/span&gt;&lt;/button&gt;
 
 </code></pre>
     </div>
     <div class="phone android" style="margin-left: auto; margin-right: auto; float: none; -webkit-box-sizing: content-box;-moz-box-sizing: content-box;box-sizing: content-box;">
-        <iframe src="frame-form.html" frameborder="0" scrolling="no"></iframe>
+        <iframe src="frame-cards.html" frameborder="0" scrolling="no"></iframe>
         <div class="statusbar"></div>
     </div>
-    <br><br>
 
-
-    <h4 class="text-bold">Переключатели</h4>
-    <div class="example" data-text="пример">
-<pre><code class="html">
-    &lt;label class="checkbox"&gt;
-        &lt;input type="checkbox"&gt;
-        &lt;span class="check"&gt;&lt;/span&gt;
-    &lt;/label&gt;
-
-    &lt;label class="checkbox"&gt;
-        &lt;input type="checkbox" checked&gt;
-        &lt;span class="check"&gt;&lt;/span&gt;
-    &lt;/label&gt;
-
-    &lt;label class="checkbox"&gt;
-        &lt;input type="checkbox" disabled&gt;
-        &lt;span class="check"&gt;&lt;/span&gt;
-    &lt;/label&gt;
-
-    &lt;label class="checkbox"&gt;
-        &lt;input type="checkbox" disabled checked&gt;
-        &lt;span class="check"&gt;&lt;/span&gt;
-    &lt;/label&gt;
-
-    &lt;label class="radio"&gt;
-        &lt;input type="radio" name="r1"&gt;
-        &lt;span class="check"&gt;&lt;/span&gt;
-    &lt;/label&gt;
-
-    &lt;label class="radio"&gt;
-        &lt;input type="radio" name="r1" checked&gt;
-        &lt;span class="check"&gt;&lt;/span&gt;
-    &lt;/label&gt;
-
-    &lt;label class="radio"&gt;
-        &lt;input type="radio" name="r1" disabled&gt;
-        &lt;span class="check"&gt;&lt;/span&gt;
-    &lt;/label&gt;
-
-    &lt;label class="radio"&gt;
-        &lt;input type="radio" name="r2" checked disabled&gt;
-        &lt;span class="check"&gt;&lt;/span&gt;
-    &lt;/label&gt;
-
-    &lt;label class="switch"&gt;
-        &lt;input type="checkbox"&gt;
-        &lt;span class="check"&gt;&lt;/span&gt;
-    &lt;/label&gt;
-
-    &lt;label class="switch"&gt;
-        &lt;input type="checkbox" disabled&gt;
-        &lt;span class="check"&gt;&lt;/span&gt;
-    &lt;/label&gt;
-
-</code></pre>
-    </div>
-    <div class="phone android" style="margin-left: auto; margin-right: auto; float: none; -webkit-box-sizing: content-box;-moz-box-sizing: content-box;box-sizing: content-box;">
-        <iframe src="frame-form2.html" frameborder="0" scrolling="no"></iframe>
-        <div class="statusbar"></div>
-    </div>
 </div>
 </body>
 </html>
