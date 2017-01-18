@@ -108,43 +108,63 @@ module.exports = function(grunt) {
             }
         },
 
+        "compress": {
+            main: {
+                options: {
+                    archive: "target/<%= pkg.name %>_css-<%= pkg.version %>.zip"
+                },
+                files: [
+                    {
+                        expand: true,
+                        cwd: "build/",
+                        src: ["**/*"],
+                        dest: "."
+                    },
+                    {
+                        src: ["README.md", "LICENSE", "CHANGELOG.md"],
+                        dest: "."
+                    }
+                ]
+            }
+        },
+
         copy: {
-            docs_css_core: {
-                src: 'build/css/<%= pkg.name %>.css',
-                dest: 'docs/css/<%= pkg.name %>.css'
+            fonts: {
+                expand: true,
+                cwd: 'fonts',
+                src: '**/*',
+                dest: 'build/fonts'
             },
-            docs_css_core_colors: {
-                src: 'build/css/<%= pkg.name %>-colors.css',
-                dest: 'docs/css/<%= pkg.name %>-colors.css'
+            docs: {
+                expand: true,
+                cwd: 'build',
+                src: '**/*',
+                dest: 'docs'
             },
-            docs_css_core_icons: {
-                src: 'build/css/<%= pkg.name %>-icons.css',
-                dest: 'docs/css/<%= pkg.name %>-icons.css'
+            public_html: {
+                expand: true,
+                cwd: 'build',
+                src: '**/*',
+                dest: 'public_html'
             },
-            docs_css_core_fonts: {
-                src: 'fonts/*',
-                dest: 'build/'
-            },
-            docs_css_core_fonts_2: {
-                src: 'fonts/*',
-                dest: 'docs/'
-            },
-            docs_js: {
-                src: 'build/js/<%= pkg.name %>.js',
-                dest: 'docs/js/<%= pkg.name %>.js'
+            public_release: {
+                expand: true,
+                cwd: 'target',
+                src: '**/*',
+                dest: 'public_html/files/'
             }
         },
 
         watch: {
             scripts: {
-                files: ['js/*.js', 'js/utils/*.js', 'js/widgets/*js', 'less/*.less', 'less/utils/*.less', 'less/core/*.less', 'less/include/*.less', 'less/schemes/*.less'],
-                tasks: ['concat', 'uglify', 'less', 'postcss', 'copy']
+                files: ['js/*.js', 'js/utils/*.js', 'js/widgets/*js', 'less/*.less', 'less/utils/*.less', 'less/core/*.less', 'less/include/*.less', 'less/schemes/*.less', 'Gruntfile.js'],
+                tasks: ['concat', 'uglify', 'less', 'postcss','cssmin', 'copy']
             }
         }
     });
 
     grunt.registerTask('default', [
-        'clean', 'concat', 'uglify', 'less', 'postcss', 'cssmin', 'copy', 'watch'
+        'clean', 'concat', 'uglify', 'less', 'postcss', 'cssmin', 'copy', 'compress', 'watch'
     ]);
 
 };

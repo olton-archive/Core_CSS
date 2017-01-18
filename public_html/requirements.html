@@ -1,0 +1,71 @@
+<div class="page">
+    <h1 class="h_header_2">Requirements</h1>
+    <hr class="thin"/>
+    <h3>DOCTYPE</h3>
+    <p>
+        Core_CSS required HTML5 doctype to create document.
+    </p>
+    <pre class="prettyprint linenums lang-html">
+        &lt;!DOCTYPE html&gt;
+    </pre>
+
+    <h3>Meta tags</h3>
+    <p>
+        Core_CSS required <strong>viewport</strong> meta tag.
+    </p>
+    <pre class="prettyprint linenums lang-html">
+        &lt;meta name="viewport"
+            content="user-scalable=no,
+            initial-scale=1, maximum-scale=1,
+            minimum-scale=1, width=device-width" /&gt;
+    </pre>
+
+    <h3>Meta security</h3>
+    <p>
+        Core_CSS for Phonegap required meta tag <strong>http-equiv</strong> with <strong>Content-Security-Policy</strong> value and security definition <strong>content</strong>.
+    </p>
+    <pre class="prettyprint linenums lang-html">
+        &lt;meta http-equiv="Content-Security-Policy"
+            content="..." /&gt;
+    </pre>
+
+    <h3>jQuery</h3>
+    <p>
+        Core_Components written as jquery widgets. Therefore require inclusion of the jQuery library.
+    </p>
+    <pre class="prettyprint linenums lang-html">
+        &lt;script src="path_to/jqury.js"&gt;&lt;/script&gt;
+    </pre>
+
+    <h3>Page template</h3>
+    <pre class="prettyprint linenums lang-html">
+        &lt;!DOCTYPE html&gt;
+        &lt;html lang="en"&gt;
+        &lt;head&gt;
+            &lt;meta charset="UTF-8"&gt;
+            &lt;meta name="viewport"
+                  content="user-scalable=no,
+                  initial-scale=1,
+                  maximum-scale=1,
+                  minimum-scale=1,
+                  width=device-width" /&gt;
+            &lt;meta http-equiv="Content-Security-Policy"
+                  content="default-src * 'unsafe-inline';
+                  style-src 'self' 'unsafe-inline';
+                  media-src *" /&gt;
+
+            &lt;link ... href="css/core.min.css"&gt;
+            &lt;link ... href="css/core-colors.min.css"&gt;
+            &lt;link ... href="css/core-icons.min.css"&gt;
+
+            &lt;title&gt;Page title&lt;/title&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+            ...
+
+            &lt;script src="js/jquery-3.1.1.min.js"&gt;&lt;/script&gt;
+            &lt;script src="js/core.min.js"&gt;&lt;/script&gt;
+        &lt;/body&gt;
+        &lt;/html&gt;
+    </pre>
+</div>

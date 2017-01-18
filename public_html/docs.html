@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <title>CoreCss - Simple CSS/JS framework for Phonegap</title>
+    <link rel="stylesheet" type="text/css" href="css/core.min.css">
+    <link rel="stylesheet" type="text/css" href="css/core-colors.min.css">
+    <link rel="stylesheet" type="text/css" href="css/core-icons.min.css">
+    <link rel="stylesheet" type="text/css" href="css/phone.css">
+    <link rel="stylesheet" type="text/css" href="css/site.css">
+</head>
+<body>
+    <div class="app">
+        <header class="header fix-slow-animation">
+            <button class="nav-button" id="sidebar-toggle"><span></span></button>
+            <span class="app-title">Core_CSS</span>
+        </header>
+
+        <div class="sidebar" data-role="sidebar" data-toggle="#sidebar-toggle"  data-overlay="true">
+            <div class="sidebar-header">
+                <div class="avatar">
+                    <img src="images/Core_logo3.svg" class="ani-logo">
+                </div>
+                <span class="title fg-white" style="font-size: 18px; font-weight: 100">Core_CSS Documentation <small>v1.0.0</small></span>
+                <span class="subtitle fg-white"> 2017 &copy; Sergey Pimenov</span>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#"                       data-target="requirements">Requirements</a></li>
+                <li><a href="#"                       data-target="typo">Typography</a></li>
+                <li><a href="#"                       data-target="colors">Colors</a></li>
+                <li><a href="#"                       data-target="icons">Icons</a></li>
+                <li><a href="#"                       data-target="components">Components</a></li>
+                <li><a href="#"  class="second-level" data-target="bottomnav">Bottom navigation</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="bottomsheets">Bottom sheets</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="buttons">Buttons</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="cards">Cards</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="chips">Chips</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="datatables">Data tables</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="dialogs">Dialogs</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="grids">Grids</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="header">Header</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="lists">Lists</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="menus">Menus</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="panels">Panels</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="pickers">Pickers</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="progress">Progress &amp; activity</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="range">Range</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="steppers">Steppers</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="tabs">Tabs</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="textfields">Text fields</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="toasts">Toasts</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="toolbars">Toolbars</a></li>
+                <li class="disabled"><a href="#"                       data-target="utils">Utils</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="swipe">Ripple Plugin</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="swipe">Swipe Plugin</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="easing">Easing Functions</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="template">Template Engine</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="storage">Storage Engine</a></li>
+                <li class="disabled"><a href="#"  class="second-level" data-target="security">Security</a></li>
+            </ul>
+        </div>
+
+        <div class="view-content">
+
+        </div>
+    </div>
+
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/core.min.js"></script>
+    <script src="js/pre-code.js"></script>
+    <script src="js/list.min.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script>
+        var media = "(min-width: 801px)";
+        var mq = window.matchMedia( media );
+        var default_target = "welcome";
+        $(".view-content").load(default_target+".html", function(){
+            preCode("pre, textarea");
+            PR.prettyPrint();
+        });
+
+        $(".sidebar-menu").on("click", "li > a", function(e){
+            var target = $(this).data("target");
+            $(".view-content").load(target+".html", function( response, status, xhr ){
+                if ( status == "error" ) {
+                    coreToast('This volume in progress...');
+                    return false;
+                }
+                preCode("pre, textarea");
+                PR.prettyPrint();
+            });
+            if (!mq.matches) {
+                $(".sidebar").data("sidebar").close();
+            }
+        });
+
+        $(window).on("resize", function(){
+            mq = window.matchMedia( media );
+        });
+    </script>
+</body>
+</html>
