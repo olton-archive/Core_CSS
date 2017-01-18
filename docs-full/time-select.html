@@ -45,6 +45,7 @@
                 <li><a href="/">Начало</a></li>
                 <li><a href="typography.html">Типографика</a></li>
                 <li><a href="colors.html">Цвета</a></li>
+                <li><a href="icons.html">New Icons</a></li>
                 <li><a href="tables.html">Таблицы</a></li>
                 <li><a href="buttons.html">Кнопки</a></li>
                 <li><a href="form.html">Форма и ее элементы</a></li>
@@ -57,6 +58,7 @@
                 <li><a href="gravatar.html">Граватар</a></li>
                 <li><a href="stepper.html">Пошаговость</a></li>
                 <li><a href="chips.html">Chips</a></li>
+                <li><a href="cards.html">New Cards</a></li>
             </ul>
         </div>
         <div class="navbar-item">
@@ -65,98 +67,49 @@
                 <li><a href="tabs.html">Табы</a></li>
                 <li><a href="dialogs.html">Диалоговые окна</a></li>
                 <li><a href="multi-action.html">Многозадачные кнопки</a></li>
-                <li><a href="calendar.html">Календарь</a></li>
                 <li><a href="slider.html">Слайдер</a></li>
                 <li><a href="panels.html">Панели</a></li>
                 <li><a href="sheet.html">Доп. навигация</a></li>
                 <li><a href="menus.html">Меню</a></li>
+                <li><a href="wheel-select.html">New Weel Secect</a></li>
+                <li><a href="time-select.html">New Time Secect</a></li>
+                <li><a href="donut.html">New Donut</a></li>
+                <li><a href="pickers.html">New Pickers</a></li>
+                <li><a href="accordion.html">New Accordion</a></li>
+                <li><a href="toasts.html">New Toasts</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
 <div class="container">
-    <h1>Типографика</h1>
+    <h1>Выбор времени</h1>
 
-    <h4 class="text-bold">Основные элементы</h4>
-    <p>
-        Для отображения текста используется гарнитура Roboto. <strong>Roboto</strong> — шрифтовая гарнитура без засечек.
-        Гарнитура включает в себя прямое и <span class="text-italic">наклонное</span> начертания для шрифтов различной ширины (<span class="text-light">Light</span>, Regular, <span class="text-bold">Bold</span>).
-    </p>
-    <div class="example" data-text="пример">
-<pre><code class="html">
-    &lt;div class="display4"&gt;Disp4&lt;/div&gt;
-    &lt;div class="display3"&gt;Display3&lt;/div&gt;
-    &lt;div class="display2"&gt;Display2&lt;/div&gt;
-    &lt;div class="display1"&gt;Display1&lt;/div&gt;
-    &lt;div class="headline"&gt;Headline&lt;/div&gt;
-    &lt;div class="heading"&gt;Heading&lt;/div&gt;
-    &lt;div class="subheading"&gt;Subheading&lt;/div&gt;
-    &lt;div class="body"&gt;Body&lt;/div&gt;
-    &lt;div class="body2"&gt;Body2&lt;/div&gt;
-    &lt;div class="caption"&gt;Caption&lt;/div&gt;
-
-    &lt;h4 class="subheading fg-teal"&gt;Paragraph&lt;/h4&gt;
-
-    &lt;p&gt;First paragraph. Lorem ipsum dolor mesum. Lorem ipsum dolor mesum.&lt;/p&gt;
-    &lt;p class="indent"&gt;First paragraph. Lorem ipsum dolor mesum. Lorem ipsum dolor mesum.&lt;/p&gt;
-    &lt;p&gt;First paragraph. Lorem ipsum dolor mesum. Lorem ipsum dolor mesum.&lt;/p&gt;
-
-    &lt;h4 class="subheading fg-teal"&gt;HR&lt;/h4&gt;
-    &lt;hr class="hr"&gt;
-    &lt;hr class="hr thin"&gt;
-
-</code></pre>
-    </div>
-    <div class="phone android" style="margin-left: auto; margin-right: auto; float: none; -webkit-box-sizing: content-box;-moz-box-sizing: content-box;box-sizing: content-box;">
-        <iframe src="frame-typography.html" frameborder="0" scrolling="no"></iframe>
-        <div class="statusbar"></div>
-    </div>
-    <br><br>
-    <h4 class="text-bold">Списки</h4>
+    <h4 class="text-bold">Виджет выбора времени</h4>
     <p></p>
     <div class="example" data-text="пример">
 <pre><code class="html">
-    &lt;ul class="list bordered"&gt;
-        &lt;li class="list-item with-second-label"&gt;
-            &lt;img class="avatar" src="images/me.jpg"&gt;
-            &lt;span class="label"&gt;List item&lt;/span&gt;
-            &lt;span class="second-label"&gt;second label&lt;/span&gt;
-            &lt;span class="second-action mif-alarm fg-red"&gt;&lt;/span&gt;
-        &lt;/li&gt;
-        &lt;li class="list-item "&gt;
-            &lt;img class="avatar" src="images/me.jpg"&gt;
-            &lt;span class="label"&gt;List item&lt;/span&gt;
-            &lt;span class="second-action mif-alarm fg-green"&gt;&lt;/span&gt;
-        &lt;/li&gt;
-        &lt;li class="list-item "&gt;
-            &lt;img class="avatar" src="images/me.jpg"&gt;
-            &lt;span class="label"&gt;List item&lt;/span&gt;
-            &lt;span class="second-action mif-alarm"&gt;&lt;/span&gt;
-        &lt;/li&gt;
-        &lt;li class="list-item "&gt;
-            &lt;img class="avatar" src="images/me.jpg"&gt;
-            &lt;span class="label"&gt;List item&lt;/span&gt;
-        &lt;/li&gt;
-        &lt;li class="list-item "&gt;
-            &lt;img class="avatar" src="images/me.jpg"&gt;
-            &lt;span class="label"&gt;List item&lt;/span&gt;
-        &lt;/li&gt;
-    &lt;/ul&gt;
-
-    &lt;br /&gt;
-
-    &lt;h3 class="subheading"&gt;Custom item&lt;/h3&gt;
-    &lt;ul class="list"&gt;
-        &lt;li class="list-item-custom padding4"&gt;&lt;/li&gt;
-        &lt;li class="list-item-custom padding4"&gt;&lt;/li&gt;
-        &lt;li class="list-item-custom padding4"&gt;&lt;/li&gt;
-    &lt;/ul&gt;
+    &lt;div data-role="timeselect"&gt;&lt;/div&gt;
 
 </code></pre>
     </div>
     <div class="phone android" style="margin-left: auto; margin-right: auto; float: none; -webkit-box-sizing: content-box;-moz-box-sizing: content-box;box-sizing: content-box;">
-        <iframe src="frame-typography2.html" frameborder="0" scrolling="no"></iframe>
+        <iframe src="frame-time-select.html" frameborder="0" scrolling="no"></iframe>
+        <div class="statusbar"></div>
+    </div>
+    <br><br>
+
+
+    <h4 class="text-bold">Виджет выбора времени по клику на кнопку</h4>
+    <p></p>
+    <div class="example" data-text="пример">
+<pre><code class="html">
+    &lt;button class="raised-button primary" onclick="corePicker.timeSelect()"&gt;time select Dialog&lt;/button&gt;
+
+</code></pre>
+    </div>
+    <div class="phone android" style="margin-left: auto; margin-right: auto; float: none; -webkit-box-sizing: content-box;-moz-box-sizing: content-box;box-sizing: content-box;">
+        <iframe src="frame-time-select2.html" frameborder="0" scrolling="no"></iframe>
         <div class="statusbar"></div>
     </div>
 </div>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link href="css/restyle.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/docs.css">
+    <link rel="stylesheet" type="text/css" href="css/phone.css">
+
+    <link rel="stylesheet" type="text/css" href="css/core.css">
+    <link rel="stylesheet" type="text/css" href="css/core-colors.css">
+    <link rel="stylesheet" type="text/css" href="css/core-icons.css">
+    <link rel="stylesheet" type="text/css" href="css/docs.css">
+
+    <title>CoreCSS</title>
+
+    <script src="js/jquery/jquery-2.2.4.min.js"></script>
+    <script src="//coreui.net/js/list.min.js"></script>
+    <script src="js/restyle.js"></script>
+
+    <link rel="stylesheet" href="highlight/styles/default.css">
+    <script src="highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <style>
+        body > .container {
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .demo .cell {
+            background-color: antiquewhite;
+            border: 1px gray dotted;
+        }
+        .demo2 .cell {
+            border: 0 gray solid;
+            text-align: center;
+            font-size: .8em;
+            padding: 4px 0;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar dark fixed-top block-shadow-impact">
+    <div class="navbar-content container">
+        <a href="/" class="navbar-item fg-white">CoreCSS</a>
+        <span class="navbar-divider"></span>
+        <div class="navbar-item">
+            <a href="#" class="dropdown-toggle fg-white">Basic</a>
+            <ul class="d-menu context" data-role="dropdown">
+                <li><a href="/">Начало</a></li>
+                <li><a href="typography.html">Типографика</a></li>
+                <li><a href="colors.html">Цвета</a></li>
+                <li><a href="icons.html">New Icons</a></li>
+                <li><a href="tables.html">Таблицы</a></li>
+                <li><a href="buttons.html">Кнопки</a></li>
+                <li><a href="form.html">Форма и ее элементы</a></li>
+            </ul>
+        </div>
+        <div class="navbar-item">
+            <a href="#" class="dropdown-toggle fg-white">NoJS Компоненты</a>
+            <ul class="d-menu context" data-role="dropdown">
+                <li><a href="progress.html">Прогрессбар</a></li>
+                <li><a href="gravatar.html">Граватар</a></li>
+                <li><a href="stepper.html">Пошаговость</a></li>
+                <li><a href="chips.html">Chips</a></li>
+                <li><a href="cards.html">New Cards</a></li>
+            </ul>
+        </div>
+        <div class="navbar-item">
+            <a href="#" class="dropdown-toggle fg-white">JS Компоненты</a>
+            <ul class="d-menu context" data-role="dropdown">
+                <li><a href="tabs.html">Табы</a></li>
+                <li><a href="dialogs.html">Диалоговые окна</a></li>
+                <li><a href="multi-action.html">Многозадачные кнопки</a></li>
+                <li><a href="slider.html">Слайдер</a></li>
+                <li><a href="panels.html">Панели</a></li>
+                <li><a href="sheet.html">Доп. навигация</a></li>
+                <li><a href="menus.html">Меню</a></li>
+                <li><a href="wheel-select.html">New Weel Secect</a></li>
+                <li><a href="time-select.html">New Time Secect</a></li>
+                <li><a href="donut.html">New Donut</a></li>
+                <li><a href="pickers.html">New Pickers</a></li>
+                <li><a href="accordion.html">New Accordion</a></li>
+                <li><a href="toasts.html">New Toasts</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <h1>Иконки</h1>
+
+    <div class="example" data-text="пример">
+<pre><code class="html">
+    &lt;span class="i-add"&gt;&lt;/span&gt;
+    &lt;span class="i-done"&gt;&lt;/span&gt;
+
+</code></pre>
+    </div>
+
+    <div class="page">
+        <div class="padding2 bg-gray-50">
+            <h3>Поиск иконок</h3>
+            <div class="input-control permanent-label full-size">
+                <input type="text" placeholder="Имя иконки" id="icon_search_field">
+                <span class="label fg-lightBlue">Имя иконки</span>
+                <hr class="bg-lightBlue">
+            </div>
+        </div>
+
+        <br/>
+        <br/>
+
+        <div id="icon_list_wrapper" class="clear">
+            <style>
+                #icons-list {
+                    overflow: hidden;
+                }
+                #icons-list li {
+                    float: left;
+                    width: 33%;
+                    border-top: 1px #eee solid
+                }
+            </style>
+            <ul class="list" id="icons-list">
+                <li class="list-item"><span class="avatar i-library"></span><span class="label">library</span></li>
+                <li class="list-item"><span class="avatar i-add"></span><span class="label">add</span></li>
+                <li class="list-item"><span class="avatar i-photo_add"></span><span class="label">photo_add</span></li>
+                <li class="list-item"><span class="avatar i-alarm"></span><span class="label">alarm</span></li>
+                <li class="list-item"><span class="avatar i-infinity"></span><span class="label">infinity</span></li>
+                <li class="list-item"><span class="avatar i-announcement"></span><span class="label">announcement</span></li>
+                <li class="list-item"><span class="avatar i-apps"></span><span class="label">apps</span></li>
+                <li class="list-item"><span class="avatar i-money"></span><span class="label">money</span></li>
+                <li class="list-item"><span class="avatar i-autorenew"></span><span class="label">autorenew</span></li>
+                <li class="list-item"><span class="avatar i-timer"></span><span class="label">timer</span></li>
+                <li class="list-item"><span class="avatar i-block"></span><span class="label">block</span></li>
+                <li class="list-item"><span class="avatar i-turned_in"></span><span class="label">turned_in</span></li>
+                <li class="list-item"><span class="avatar i-turned_in_not"></span><span class="label">turned_in_not</span></li>
+                <li class="list-item"><span class="avatar i-phone"></span><span class="label">phone</span></li>
+                <li class="list-item"><span class="avatar i-random"></span><span class="label">random</span></li>
+                <li class="list-item"><span class="avatar i-chat"></span><span class="label">chat</span></li>
+                <li class="list-item"><span class="avatar i-chat_bubble"></span><span class="label">chat_bubble</span></li>
+                <li class="list-item"><span class="avatar i-chat_bubble_light"></span><span class="label">chat_bubble_light</span></li>
+                <li class="list-item"><span class="avatar i-close"></span><span class="label">close</span></li>
+                <li class="list-item"><span class="avatar i-cloud_done"></span><span class="label">cloud_done</span></li>
+                <li class="list-item"><span class="avatar i-cloud_download"></span><span class="label">cloud_download</span></li>
+                <li class="list-item"><span class="avatar i-comment"></span><span class="label">comment</span></li>
+                <li class="list-item"><span class="avatar i-contact_mail"></span><span class="label">contact_mail</span></li>
+                <li class="list-item"><span class="avatar i-contact_phone"></span><span class="label">contact_phone</span></li>
+                <li class="list-item"><span class="avatar i-dialpad"></span><span class="label">dialpad</span></li>
+                <li class="list-item"><span class="avatar i-directions"></span><span class="label">directions</span></li>
+                <li class="list-item"><span class="avatar i-cancel"></span><span class="label">cancel</span></li>
+                <li class="list-item"><span class="avatar i-remove"></span><span class="label">remove</span></li>
+                <li class="list-item"><span class="avatar i-done"></span><span class="label">done</span></li>
+                <li class="list-item"><span class="avatar i-done_all"></span><span class="label">done_all</span></li>
+                <li class="list-item"><span class="avatar i-error"></span><span class="label">error</span></li>
+                <li class="list-item"><span class="avatar i-event_available"></span><span class="label">event_available</span></li>
+                <li class="list-item"><span class="avatar i-event_busy"></span><span class="label">event_busy</span></li>
+                <li class="list-item"><span class="avatar i-favorite"></span><span class="label">favorite</span></li>
+                <li class="list-item"><span class="avatar i-sms_failed"></span><span class="label">sms_failed</span></li>
+                <li class="list-item"><span class="avatar i-record"></span><span class="label">record</span></li>
+                <li class="list-item"><span class="avatar i-fiber_new"></span><span class="label">fiber_new</span></li>
+                <li class="list-item"><span class="avatar i-fiber_pin"></span><span class="label">fiber_pin</span></li>
+                <li class="list-item"><span class="avatar i-get_app"></span><span class="label">get_app</span></li>
+                <li class="list-item"><span class="avatar i-file_upload"></span><span class="label">file_upload</span></li>
+                <li class="list-item"><span class="avatar i-flight_in"></span><span class="label">flight_in</span></li>
+                <li class="list-item"><span class="avatar i-flight_out"></span><span class="label">flight_out</span></li>
+                <li class="list-item"><span class="avatar i-hammer"></span><span class="label">hammer</span></li>
+                <li class="list-item"><span class="avatar i-star_fill"></span><span class="label">star_fill</span></li>
+                <li class="list-item"><span class="avatar i-people"></span><span class="label">people</span></li>
+                <li class="list-item"><span class="avatar i-group_add"></span><span class="label">group_add</span></li>
+                <li class="list-item"><span class="avatar i-restore"></span><span class="label">restore</span></li>
+                <li class="list-item"><span class="avatar i-home"></span><span class="label">home</span></li>
+                <li class="list-item"><span class="avatar i-http"></span><span class="label">http</span></li>
+                <li class="list-item"><span class="avatar i-lock"></span><span class="label">lock</span></li>
+                <li class="list-item"><span class="avatar i-import_export"></span><span class="label">import_export</span></li>
+                <li class="list-item"><span class="avatar i-chevron_down"></span><span class="label">chevron_down</span></li>
+                <li class="list-item"><span class="avatar i-chevron_left"></span><span class="label">chevron_left</span></li>
+                <li class="list-item"><span class="avatar i-chevron_right"></span><span class="label">chevron_right</span></li>
+                <li class="list-item"><span class="avatar i-chevron_up"></span><span class="label">chevron_up</span></li>
+                <li class="list-item"><span class="avatar i-back"></span><span class="label">back</span></li>
+                <li class="list-item"><span class="avatar i-keyboard_voice"></span><span class="label">keyboard_voice</span></li>
+                <li class="list-item"><span class="avatar i-library_music"></span><span class="label">library_music</span></li>
+                <li class="list-item"><span class="avatar i-local_library"></span><span class="label">local_library</span></li>
+                <li class="list-item"><span class="avatar i-lock_open"></span><span class="label">lock_open</span></li>
+                <li class="list-item"><span class="avatar i-lock_outline"></span><span class="label">lock_outline</span></li>
+                <li class="list-item"><span class="avatar i-low_priority"></span><span class="label">low_priority</span></li>
+                <li class="list-item"><span class="avatar i-loyalty"></span><span class="label">loyalty</span></li>
+                <li class="list-item"><span class="avatar i-menu"></span><span class="label">menu</span></li>
+                <li class="list-item"><span class="avatar i-more"></span><span class="label">more</span></li>
+                <li class="list-item"><span class="avatar i-more_horiz"></span><span class="label">more_horiz</span></li>
+                <li class="list-item"><span class="avatar i-more_vert"></span><span class="label">more_vert</span></li>
+                <li class="list-item"><span class="avatar i-pause"></span><span class="label">pause</span></li>
+                <li class="list-item"><span class="avatar i-people_outline"></span><span class="label">people_outline</span></li>
+                <li class="list-item"><span class="avatar i-perm_contact_calendar"></span><span class="label">perm_contact_calendar</span></li>
+                <li class="list-item"><span class="avatar i-user"></span><span class="label">user</span></li>
+                <li class="list-item"><span class="avatar i-user_add"></span><span class="label">user_add</span></li>
+                <li class="list-item"><span class="avatar i-phone_bluetooth_speaker"></span><span class="label">phone_bluetooth_speaker</span></li>
+                <li class="list-item"><span class="avatar i-phone_forwarded"></span><span class="label">phone_forwarded</span></li>
+                <li class="list-item"><span class="avatar i-phone_in_talk"></span><span class="label">phone_in_talk</span></li>
+                <li class="list-item"><span class="avatar i-phone_locked"></span><span class="label">phone_locked</span></li>
+                <li class="list-item"><span class="avatar i-phone_missed"></span><span class="label">phone_missed</span></li>
+                <li class="list-item"><span class="avatar i-phone_paused"></span><span class="label">phone_paused</span></li>
+                <li class="list-item"><span class="avatar i-play"></span><span class="label">play</span></li>
+                <li class="list-item"><span class="avatar i-playlist_add"></span><span class="label">playlist_add</span></li>
+                <li class="list-item"><span class="avatar i-playlist_check"></span><span class="label">playlist_check</span></li>
+                <li class="list-item"><span class="avatar i-playlist_play"></span><span class="label">playlist_play</span></li>
+                <li class="list-item"><span class="avatar i-portrait"></span><span class="label">portrait</span></li>
+                <li class="list-item"><span class="avatar i-power"></span><span class="label">power</span></li>
+                <li class="list-item"><span class="avatar i-globe"></span><span class="label">globe</span></li>
+                <li class="list-item"><span class="avatar i-recent_actors"></span><span class="label">recent_actors</span></li>
+                <li class="list-item"><span class="avatar i-record_voice_over"></span><span class="label">record_voice_over</span></li>
+                <li class="list-item"><span class="avatar i-visibility"></span><span class="label">visibility</span></li>
+                <li class="list-item"><span class="avatar i-report"></span><span class="label">report</span></li>
+                <li class="list-item"><span class="avatar i-warning"></span><span class="label">warning</span></li>
+                <li class="list-item"><span class="avatar i-ring"></span><span class="label">ring</span></li>
+                <li class="list-item"><span class="avatar i-school"></span><span class="label">school</span></li>
+                <li class="list-item"><span class="avatar i-search"></span><span class="label">search</span></li>
+                <li class="list-item"><span class="avatar i-security"></span><span class="label">security</span></li>
+                <li class="list-item"><span class="avatar i-send"></span><span class="label">send</span></li>
+                <li class="list-item"><span class="avatar i-settings"></span><span class="label">settings</span></li>
+                <li class="list-item"><span class="avatar i-restore2"></span><span class="label">restore2</span></li>
+                <li class="list-item"><span class="avatar i-settings_ethernet"></span><span class="label">settings_ethernet</span></li>
+                <li class="list-item"><span class="avatar i-share"></span><span class="label">share</span></li>
+                <li class="list-item"><span class="avatar i-shop"></span><span class="label">shop</span></li>
+                <li class="list-item"><span class="avatar i-shopping_basket"></span><span class="label">shopping_basket</span></li>
+                <li class="list-item"><span class="avatar i-sim_card"></span><span class="label">sim_card</span></li>
+                <li class="list-item"><span class="avatar i-sim_card_alert"></span><span class="label">sim_card_alert</span></li>
+                <li class="list-item"><span class="avatar i-star"></span><span class="label">star</span></li>
+                <li class="list-item"><span class="avatar i-stop"></span><span class="label">stop</span></li>
+                <li class="list-item"><span class="avatar i-thumb_down"></span><span class="label">thumb_down</span></li>
+                <li class="list-item"><span class="avatar i-thumb_up"></span><span class="label">thumb_up</span></li>
+                <li class="list-item"><span class="avatar i-thumbs"></span><span class="label">thumbs</span></li>
+                <li class="list-item"><span class="avatar i-today"></span><span class="label">today</span></li>
+                <li class="list-item"><span class="avatar i-traffic"></span><span class="label">traffic</span></li>
+                <li class="list-item"><span class="avatar i-train"></span><span class="label">train</span></li>
+                <li class="list-item"><span class="avatar i-tune"></span><span class="label">tune</span></li>
+                <li class="list-item"><span class="avatar i-unfold"></span><span class="label">unfold</span></li>
+                <li class="list-item"><span class="avatar i-update"></span><span class="label">update</span></li>
+                <li class="list-item"><span class="avatar i-verified"></span><span class="label">verified</span></li>
+                <li class="list-item"><span class="avatar i-volume_off"></span><span class="label">volume_off</span></li>
+                <li class="list-item"><span class="avatar i-volume_up"></span><span class="label">volume_up</span></li>
+                <li class="list-item"><span class="avatar i-key"></span><span class="label">key</span></li>
+                <li class="list-item"><span class="avatar i-globe_lock"></span><span class="label">global_lock</span></li>
+                <li class="list-item"><span class="avatar i-wc"></span><span class="label">wc</span></li>
+                <li class="list-item"><span class="avatar i-search_next"></span><span class="label">search_next</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        var icon_list_options = {
+            valueNames: ['label']
+        };
+
+        var icon_list = new List('icon_list_wrapper', icon_list_options);
+        icon_list.sort('label', { order: "asc" });
+
+        $("#icon_search_field").off("keyup").on("keyup", function(){
+            var val = this.value.trim();
+            icon_list.search(val);
+        });
+    </script>
+
+</div>
+</body>
+</html>

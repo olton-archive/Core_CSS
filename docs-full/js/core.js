@@ -1,6 +1,6 @@
 /*!
  * Core CSS v1.0.0 (https://github.com/imena/core-css)
- * Copyright 2016 Sergey Pimenov
+ * Copyright 2017 Sergey Pimenov
  * Licensed under  ()
  */
 
@@ -16,11 +16,33 @@
 var $ = jQuery;
 
 // Source: js/init.js
-if (window.CALENDAR_WEEK_START == undefined) {window.CALENDAR_WEEK_START = 1;}
-if (window.CALENDAR_LOCALE == undefined) {window.CALENDAR_LOCALE = 'en';}
+if (window.CORE_CALENDAR_WEEK_START == undefined) {window.CORE_CALENDAR_WEEK_START = 1;}
+if (window.CORE_LOCALE == undefined) {window.CORE_LOCALE = 'en-US';}
 if (window.CORE_ANIMATION_DURATION == undefined) {window.CORE_ANIMATION_DURATION = 200;}
 
 var CoreCss = {
+
+    callback: function(cb, args){
+        if (cb != undefined) {
+            if (typeof cb === 'function') {
+                cb(args);
+            } else {
+                if (typeof window[cb] === 'function') {
+                    window[cb](args);
+                } else {
+                    var result = eval("(function(){"+cb+"})");
+                    var _arguments = [];
+                    if (args instanceof Array) {
+                        _arguments = args;
+                    } else {
+                        _arguments.push(args);
+                    }
+                    result.apply(null, _arguments);
+                }
+            }
+        }
+    },
+
     uniqueId: function (prefix) {
 var d = new Date().getTime();
         var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -117,7 +139,7 @@ var d = new Date().getTime();
     }
 };
 
-
+$.CoreCss = window.coreCss = CoreCss;
 // Source: js/utils/easing.js
 $.easing['jswing'] = $.easing['swing'];
 
@@ -314,32 +336,6 @@ Number.prototype.format = function(n, x, s, c) {
     return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
 };
 
-String.prototype.isUrl = function () {
-var regexp = /^(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-    return regexp.test(this);
-};
-
-String.prototype.isColor = function () {
-return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(this);
-};
-
-window.secondsToTime = function(secs)
-{
-    var hours = Math.floor(secs / (60 * 60));
-
-    var divisor_for_minutes = secs % (60 * 60);
-    var minutes = Math.floor(divisor_for_minutes / 60);
-
-    var divisor_for_seconds = divisor_for_minutes % 60;
-    var seconds = Math.ceil(divisor_for_seconds);
-
-    return {
-        "h": hours,
-        "m": minutes,
-        "s": seconds
-    };
-};
-
 /*
  * Date Format 1.2.3
  * (c) 2007-2009 Steven Levithan <stevenlevithan.com>
@@ -395,7 +391,7 @@ var token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g,
 
         //console.log(locale);
 
-        var locale = window.CALENDAR_LOCALE || 'en';
+        var locale = CORE_LOCALE || 'en-US';
 
         var _ = utc ? "getUTC" : "get",
             d = date[_ + "Date"](),
@@ -410,12 +406,12 @@ var token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g,
             flags = {
                 d: d,
                 dd: pad(d),
-                ddd: window.CALENDAR_LOCALES[locale].days[D],
-                dddd: window.CALENDAR_LOCALES[locale].days[D + 7],
+                ddd: coreLocales[locale].calendar.days[D],
+                dddd: coreLocales[locale].calendar.days[D + 7],
                 m: m + 1,
                 mm: pad(m + 1),
-                mmm: window.CALENDAR_LOCALES[locale].months[m],
-                mmmm: window.CALENDAR_LOCALES[locale].months[m + 12],
+                mmm: coreLocales[locale].calendar.months[m],
+                mmmm: coreLocales[locale].calendar.months[m + 12],
                 yy: String(y).slice(2),
                 yyyy: y,
                 h: H % 12 || 12,
@@ -464,51 +460,93 @@ Date.prototype.format = function (mask, utc) {
 return dateFormat(this, mask, utc);
 };
 
+
 // Source: js/utils/locales.js
-window.CALENDAR_LOCALES = {
-    'en': {
-        months: [
-            "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December",
-            "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-        ],
-        days: [
-            "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
-            "Su", "Mo", "Tu", "We", "Th", "Fr", "Sa",
-            "Sun", "Mon", "Tus", "Wen", "Thu", "Fri", "Sat"
-        ],
-        buttons: [
-            "Today", "Clear", "Cancel", "Help", "Prior", "Next", "Finish", "Ok"
-        ]
+var locales = {
+
+    'en-US': {
+        calendar: {
+            months: [
+                "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December",
+                "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+            ],
+            days: [
+                "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
+                "Su", "Mo", "Tu", "We", "Th", "Fr", "Sa",
+                "Sun", "Mon", "Tus", "Wen", "Thu", "Fri", "Sat"
+            ],
+            time: ["HOUR", "MIN", "SEC"]
+        },
+        buttons: {
+            ok: "OK",
+            cancel: "Cancel",
+            done: "Done",
+            today: "Today",
+            now: "Now",
+            clear: "Clear",
+            help: "Help",
+            yes: "Yes",
+            no: "No",
+            random: "Random"
+        }
     },
-    'ua': {
-        months: [
-            "Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень",
-            "Січ", "Лют", "Бер", "Кві", "Тра", "Чер", "Лип", "Сер", "Вер", "Жов", "Лис", "Гру"
-        ],
-        days: [
-            "Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П’ятниця", "Субота",
-            "Нд", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб",
-            "Нед", "Пон", "Вiв", "Сер", "Чет", "Пят", "Суб"
-        ],
-        buttons: [
-            "Сьогодні", "Очистити", "Скасувати", "Допомога", "Назад", "Вперед", "Готово", "Ok"
-        ]
+
+    'uk-UA': {
+        calendar: {
+            months: [
+                "Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень",
+                "Січ", "Лют", "Бер", "Кві", "Тра", "Чер", "Лип", "Сер", "Вер", "Жов", "Лис", "Гру"
+            ],
+            days: [
+                "Неділя", "Понеділок", "Вівторок", "Середа", "Четвер", "П’ятниця", "Субота",
+                "Нд", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб",
+                "Нед", "Пон", "Вiв", "Сер", "Чет", "Пят", "Суб"
+            ],
+            time: ["ГОД", "ХВЛ", "СЕК"]
+        },
+        buttons: {
+            ok: "ОК",
+            cancel: "Відміна",
+            done: "Готово",
+            today: "Сьогодні",
+            now: "Зараз",
+            clear: "Очистити",
+            help: "Допомога",
+            yes: "Так",
+            no: "Ні",
+            random: "Випадково"
+        }
     },
-    'ru': {
-        months: [
-            "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь",
-            "Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"
-        ],
-        days: [
-            "Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота",
-            "Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб",
-            "Вос", "Пон", "Вто", "Сре", "Чет", "Пят", "Суб"
-        ],
-        buttons: [
-            "Сегодня", "Очистить", "Отменить", "Помощь", "Назад", "Вперед", "Готово", "Ok"
-        ]
+
+    'ru-RU': {
+        calendar: {
+            months: [
+                "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь",
+                "Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"
+            ],
+            days: [
+                "Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота",
+                "Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб",
+                "Вос", "Пон", "Вто", "Сре", "Чет", "Пят", "Суб"
+            ],
+            time: ["ЧАС", "МИН", "СЕК"]
+        },
+        buttons: {
+            ok: "ОК",
+            cancel: "Отмена",
+            done: "Готово",
+            today: "Сегодня",
+            now: "Сейчас",
+            clear: "Очистить",
+            help: "Помощь",
+            yes: "Да",
+            no: "Нет",
+            random: "Случайно"
+        }
     }
 };
+
+window.coreLocales = locales;
 
 // Source: js/utils/md5.js
 /*
@@ -524,373 +562,389 @@ window.CALENDAR_LOCALES = {
  * Configurable variables. You may need to tweak these to be compatible with
  * the server-side, but the defaults work in most cases.
  */
-var hexcase = 0;   /* hex output format. 0 - lowercase; 1 - uppercase        */
-var b64pad  = "";  /* base-64 pad character. "=" for strict RFC compliance   */
+var hexcase = 0;
+/* hex output format. 0 - lowercase; 1 - uppercase        */
+var b64pad = "";
+/* base-64 pad character. "=" for strict RFC compliance   */
 
 /*
  * These are the functions you'll usually want to call
  * They take string arguments and return either hex or base-64 encoded strings
  */
-function hex_md5(s)    { return rstr2hex(rstr_md5(str2rstr_utf8(s))); }
-function b64_md5(s)    { return rstr2b64(rstr_md5(str2rstr_utf8(s))); }
-function any_md5(s, e) { return rstr2any(rstr_md5(str2rstr_utf8(s)), e); }
-function hex_hmac_md5(k, d)
-  { return rstr2hex(rstr_hmac_md5(str2rstr_utf8(k), str2rstr_utf8(d))); }
-function b64_hmac_md5(k, d)
-  { return rstr2b64(rstr_hmac_md5(str2rstr_utf8(k), str2rstr_utf8(d))); }
-function any_hmac_md5(k, d, e)
-  { return rstr2any(rstr_hmac_md5(str2rstr_utf8(k), str2rstr_utf8(d)), e); }
+function hex_md5(s) {
+    return rstr2hex(rstr_md5(str2rstr_utf8(s)));
+}
+function b64_md5(s) {
+    return rstr2b64(rstr_md5(str2rstr_utf8(s)));
+}
+function any_md5(s, e) {
+    return rstr2any(rstr_md5(str2rstr_utf8(s)), e);
+}
+function hex_hmac_md5(k, d) {
+    return rstr2hex(rstr_hmac_md5(str2rstr_utf8(k), str2rstr_utf8(d)));
+}
+function b64_hmac_md5(k, d) {
+    return rstr2b64(rstr_hmac_md5(str2rstr_utf8(k), str2rstr_utf8(d)));
+}
+function any_hmac_md5(k, d, e) {
+    return rstr2any(rstr_hmac_md5(str2rstr_utf8(k), str2rstr_utf8(d)), e);
+}
 
 /*
  * Perform a simple self-test to see if the VM is working
  */
-function md5_vm_test()
-{
-  return hex_md5("abc").toLowerCase() == "900150983cd24fb0d6963f7d28e17f72";
+function md5_vm_test() {
+    return hex_md5("abc").toLowerCase() == "900150983cd24fb0d6963f7d28e17f72";
 }
 
 /*
  * Calculate the MD5 of a raw string
  */
-function rstr_md5(s)
-{
-  return binl2rstr(binl_md5(rstr2binl(s), s.length * 8));
+function rstr_md5(s) {
+    return binl2rstr(binl_md5(rstr2binl(s), s.length * 8));
 }
 
 /*
  * Calculate the HMAC-MD5, of a key and some data (raw strings)
  */
-function rstr_hmac_md5(key, data)
-{
-  var bkey = rstr2binl(key);
-  if(bkey.length > 16) bkey = binl_md5(bkey, key.length * 8);
+function rstr_hmac_md5(key, data) {
+    var bkey = rstr2binl(key);
+    if (bkey.length > 16) bkey = binl_md5(bkey, key.length * 8);
 
-  var ipad = Array(16), opad = Array(16);
-  for(var i = 0; i < 16; i++)
-  {
-    ipad[i] = bkey[i] ^ 0x36363636;
-    opad[i] = bkey[i] ^ 0x5C5C5C5C;
-  }
+    var ipad = Array(16), opad = Array(16);
+    for (var i = 0; i < 16; i++) {
+        ipad[i] = bkey[i] ^ 0x36363636;
+        opad[i] = bkey[i] ^ 0x5C5C5C5C;
+    }
 
-  var hash = binl_md5(ipad.concat(rstr2binl(data)), 512 + data.length * 8);
-  return binl2rstr(binl_md5(opad.concat(hash), 512 + 128));
+    var hash = binl_md5(ipad.concat(rstr2binl(data)), 512 + data.length * 8);
+    return binl2rstr(binl_md5(opad.concat(hash), 512 + 128));
 }
 
 /*
  * Convert a raw string to a hex string
  */
-function rstr2hex(input)
-{
-  try { hexcase } catch(e) { hexcase=0; }
-  var hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
-  var output = "";
-  var x;
-  for(var i = 0; i < input.length; i++)
-  {
-    x = input.charCodeAt(i);
-    output += hex_tab.charAt((x >>> 4) & 0x0F)
-           +  hex_tab.charAt( x        & 0x0F);
-  }
-  return output;
+function rstr2hex(input) {
+    try {
+        hexcase
+    } catch (e) {
+        hexcase = 0;
+    }
+    var hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
+    var output = "";
+    var x;
+    for (var i = 0; i < input.length; i++) {
+        x = input.charCodeAt(i);
+        output += hex_tab.charAt((x >>> 4) & 0x0F)
+            + hex_tab.charAt(x & 0x0F);
+    }
+    return output;
 }
 
 /*
  * Convert a raw string to a base-64 string
  */
-function rstr2b64(input)
-{
-  try { b64pad } catch(e) { b64pad=''; }
-  var tab = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-  var output = "";
-  var len = input.length;
-  for(var i = 0; i < len; i += 3)
-  {
-    var triplet = (input.charCodeAt(i) << 16)
-                | (i + 1 < len ? input.charCodeAt(i+1) << 8 : 0)
-                | (i + 2 < len ? input.charCodeAt(i+2)      : 0);
-    for(var j = 0; j < 4; j++)
-    {
-      if(i * 8 + j * 6 > input.length * 8) output += b64pad;
-      else output += tab.charAt((triplet >>> 6*(3-j)) & 0x3F);
+function rstr2b64(input) {
+    try {
+        b64pad
+    } catch (e) {
+        b64pad = '';
     }
-  }
-  return output;
+    var tab = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    var output = "";
+    var len = input.length;
+    for (var i = 0; i < len; i += 3) {
+        var triplet = (input.charCodeAt(i) << 16)
+            | (i + 1 < len ? input.charCodeAt(i + 1) << 8 : 0)
+            | (i + 2 < len ? input.charCodeAt(i + 2) : 0);
+        for (var j = 0; j < 4; j++) {
+            if (i * 8 + j * 6 > input.length * 8) output += b64pad;
+            else output += tab.charAt((triplet >>> 6 * (3 - j)) & 0x3F);
+        }
+    }
+    return output;
 }
 
 /*
  * Convert a raw string to an arbitrary string encoding
  */
-function rstr2any(input, encoding)
-{
-  var divisor = encoding.length;
-  var i, j, q, x, quotient;
+function rstr2any(input, encoding) {
+    var divisor = encoding.length;
+    var i, j, q, x, quotient;
 
-  /* Convert to an array of 16-bit big-endian values, forming the dividend */
-  var dividend = Array(Math.ceil(input.length / 2));
-  for(i = 0; i < dividend.length; i++)
-  {
-    dividend[i] = (input.charCodeAt(i * 2) << 8) | input.charCodeAt(i * 2 + 1);
-  }
-
-  /*
-   * Repeatedly perform a long division. The binary array forms the dividend,
-   * the length of the encoding is the divisor. Once computed, the quotient
-   * forms the dividend for the next step. All remainders are stored for later
-   * use.
-   */
-  var full_length = Math.ceil(input.length * 8 /
-                                    (Math.log(encoding.length) / Math.log(2)));
-  var remainders = Array(full_length);
-  for(j = 0; j < full_length; j++)
-  {
-    quotient = Array();
-    x = 0;
-    for(i = 0; i < dividend.length; i++)
-    {
-      x = (x << 16) + dividend[i];
-      q = Math.floor(x / divisor);
-      x -= q * divisor;
-      if(quotient.length > 0 || q > 0)
-        quotient[quotient.length] = q;
+    /* Convert to an array of 16-bit big-endian values, forming the dividend */
+    var dividend = Array(Math.ceil(input.length / 2));
+    for (i = 0; i < dividend.length; i++) {
+        dividend[i] = (input.charCodeAt(i * 2) << 8) | input.charCodeAt(i * 2 + 1);
     }
-    remainders[j] = x;
-    dividend = quotient;
-  }
 
-  /* Convert the remainders to the output string */
-  var output = "";
-  for(i = remainders.length - 1; i >= 0; i--)
-    output += encoding.charAt(remainders[i]);
+    /*
+     * Repeatedly perform a long division. The binary array forms the dividend,
+     * the length of the encoding is the divisor. Once computed, the quotient
+     * forms the dividend for the next step. All remainders are stored for later
+     * use.
+     */
+    var full_length = Math.ceil(input.length * 8 /
+        (Math.log(encoding.length) / Math.log(2)));
+    var remainders = Array(full_length);
+    for (j = 0; j < full_length; j++) {
+        quotient = Array();
+        x = 0;
+        for (i = 0; i < dividend.length; i++) {
+            x = (x << 16) + dividend[i];
+            q = Math.floor(x / divisor);
+            x -= q * divisor;
+            if (quotient.length > 0 || q > 0)
+                quotient[quotient.length] = q;
+        }
+        remainders[j] = x;
+        dividend = quotient;
+    }
 
-  return output;
+    /* Convert the remainders to the output string */
+    var output = "";
+    for (i = remainders.length - 1; i >= 0; i--)
+        output += encoding.charAt(remainders[i]);
+
+    return output;
 }
 
 /*
  * Encode a string as utf-8.
  * For efficiency, this assumes the input is valid utf-16.
  */
-function str2rstr_utf8(input)
-{
-  var output = "";
-  var i = -1;
-  var x, y;
+function str2rstr_utf8(input) {
+    var output = "";
+    var i = -1;
+    var x, y;
 
-  while(++i < input.length)
-  {
-    /* Decode utf-16 surrogate pairs */
-    x = input.charCodeAt(i);
-    y = i + 1 < input.length ? input.charCodeAt(i + 1) : 0;
-    if(0xD800 <= x && x <= 0xDBFF && 0xDC00 <= y && y <= 0xDFFF)
-    {
-      x = 0x10000 + ((x & 0x03FF) << 10) + (y & 0x03FF);
-      i++;
+    while (++i < input.length) {
+        /* Decode utf-16 surrogate pairs */
+        x = input.charCodeAt(i);
+        y = i + 1 < input.length ? input.charCodeAt(i + 1) : 0;
+        if (0xD800 <= x && x <= 0xDBFF && 0xDC00 <= y && y <= 0xDFFF) {
+            x = 0x10000 + ((x & 0x03FF) << 10) + (y & 0x03FF);
+            i++;
+        }
+
+        /* Encode output as utf-8 */
+        if (x <= 0x7F)
+            output += String.fromCharCode(x);
+        else if (x <= 0x7FF)
+            output += String.fromCharCode(0xC0 | ((x >>> 6 ) & 0x1F),
+                0x80 | ( x & 0x3F));
+        else if (x <= 0xFFFF)
+            output += String.fromCharCode(0xE0 | ((x >>> 12) & 0x0F),
+                0x80 | ((x >>> 6 ) & 0x3F),
+                0x80 | ( x & 0x3F));
+        else if (x <= 0x1FFFFF)
+            output += String.fromCharCode(0xF0 | ((x >>> 18) & 0x07),
+                0x80 | ((x >>> 12) & 0x3F),
+                0x80 | ((x >>> 6 ) & 0x3F),
+                0x80 | ( x & 0x3F));
     }
-
-    /* Encode output as utf-8 */
-    if(x <= 0x7F)
-      output += String.fromCharCode(x);
-    else if(x <= 0x7FF)
-      output += String.fromCharCode(0xC0 | ((x >>> 6 ) & 0x1F),
-                                    0x80 | ( x         & 0x3F));
-    else if(x <= 0xFFFF)
-      output += String.fromCharCode(0xE0 | ((x >>> 12) & 0x0F),
-                                    0x80 | ((x >>> 6 ) & 0x3F),
-                                    0x80 | ( x         & 0x3F));
-    else if(x <= 0x1FFFFF)
-      output += String.fromCharCode(0xF0 | ((x >>> 18) & 0x07),
-                                    0x80 | ((x >>> 12) & 0x3F),
-                                    0x80 | ((x >>> 6 ) & 0x3F),
-                                    0x80 | ( x         & 0x3F));
-  }
-  return output;
+    return output;
 }
 
 /*
  * Encode a string as utf-16
  */
-function str2rstr_utf16le(input)
-{
-  var output = "";
-  for(var i = 0; i < input.length; i++)
-    output += String.fromCharCode( input.charCodeAt(i)        & 0xFF,
-                                  (input.charCodeAt(i) >>> 8) & 0xFF);
-  return output;
+function str2rstr_utf16le(input) {
+    var output = "";
+    for (var i = 0; i < input.length; i++)
+        output += String.fromCharCode(input.charCodeAt(i) & 0xFF,
+            (input.charCodeAt(i) >>> 8) & 0xFF);
+    return output;
 }
 
-function str2rstr_utf16be(input)
-{
-  var output = "";
-  for(var i = 0; i < input.length; i++)
-    output += String.fromCharCode((input.charCodeAt(i) >>> 8) & 0xFF,
-                                   input.charCodeAt(i)        & 0xFF);
-  return output;
+function str2rstr_utf16be(input) {
+    var output = "";
+    for (var i = 0; i < input.length; i++)
+        output += String.fromCharCode((input.charCodeAt(i) >>> 8) & 0xFF,
+            input.charCodeAt(i) & 0xFF);
+    return output;
 }
 
 /*
  * Convert a raw string to an array of little-endian words
  * Characters >255 have their high-byte silently ignored.
  */
-function rstr2binl(input)
-{
-  var output = Array(input.length >> 2);
-  for(var i = 0; i < output.length; i++)
-    output[i] = 0;
-  for(var i = 0; i < input.length * 8; i += 8)
-    output[i>>5] |= (input.charCodeAt(i / 8) & 0xFF) << (i%32);
-  return output;
+function rstr2binl(input) {
+    var output = Array(input.length >> 2);
+    for (var i = 0; i < output.length; i++)
+        output[i] = 0;
+    for (var i = 0; i < input.length * 8; i += 8)
+        output[i >> 5] |= (input.charCodeAt(i / 8) & 0xFF) << (i % 32);
+    return output;
 }
 
 /*
  * Convert an array of little-endian words to a string
  */
-function binl2rstr(input)
-{
-  var output = "";
-  for(var i = 0; i < input.length * 32; i += 8)
-    output += String.fromCharCode((input[i>>5] >>> (i % 32)) & 0xFF);
-  return output;
+function binl2rstr(input) {
+    var output = "";
+    for (var i = 0; i < input.length * 32; i += 8)
+        output += String.fromCharCode((input[i >> 5] >>> (i % 32)) & 0xFF);
+    return output;
 }
 
 /*
  * Calculate the MD5 of an array of little-endian words, and a bit length.
  */
-function binl_md5(x, len)
-{
-  /* append padding */
-  x[len >> 5] |= 0x80 << ((len) % 32);
-  x[(((len + 64) >>> 9) << 4) + 14] = len;
+function binl_md5(x, len) {
+    /* append padding */
+    x[len >> 5] |= 0x80 << ((len) % 32);
+    x[(((len + 64) >>> 9) << 4) + 14] = len;
 
-  var a =  1732584193;
-  var b = -271733879;
-  var c = -1732584194;
-  var d =  271733878;
+    var a = 1732584193;
+    var b = -271733879;
+    var c = -1732584194;
+    var d = 271733878;
 
-  for(var i = 0; i < x.length; i += 16)
-  {
-    var olda = a;
-    var oldb = b;
-    var oldc = c;
-    var oldd = d;
+    for (var i = 0; i < x.length; i += 16) {
+        var olda = a;
+        var oldb = b;
+        var oldc = c;
+        var oldd = d;
 
-    a = md5_ff(a, b, c, d, x[i+ 0], 7 , -680876936);
-    d = md5_ff(d, a, b, c, x[i+ 1], 12, -389564586);
-    c = md5_ff(c, d, a, b, x[i+ 2], 17,  606105819);
-    b = md5_ff(b, c, d, a, x[i+ 3], 22, -1044525330);
-    a = md5_ff(a, b, c, d, x[i+ 4], 7 , -176418897);
-    d = md5_ff(d, a, b, c, x[i+ 5], 12,  1200080426);
-    c = md5_ff(c, d, a, b, x[i+ 6], 17, -1473231341);
-    b = md5_ff(b, c, d, a, x[i+ 7], 22, -45705983);
-    a = md5_ff(a, b, c, d, x[i+ 8], 7 ,  1770035416);
-    d = md5_ff(d, a, b, c, x[i+ 9], 12, -1958414417);
-    c = md5_ff(c, d, a, b, x[i+10], 17, -42063);
-    b = md5_ff(b, c, d, a, x[i+11], 22, -1990404162);
-    a = md5_ff(a, b, c, d, x[i+12], 7 ,  1804603682);
-    d = md5_ff(d, a, b, c, x[i+13], 12, -40341101);
-    c = md5_ff(c, d, a, b, x[i+14], 17, -1502002290);
-    b = md5_ff(b, c, d, a, x[i+15], 22,  1236535329);
+        a = md5_ff(a, b, c, d, x[i + 0], 7, -680876936);
+        d = md5_ff(d, a, b, c, x[i + 1], 12, -389564586);
+        c = md5_ff(c, d, a, b, x[i + 2], 17, 606105819);
+        b = md5_ff(b, c, d, a, x[i + 3], 22, -1044525330);
+        a = md5_ff(a, b, c, d, x[i + 4], 7, -176418897);
+        d = md5_ff(d, a, b, c, x[i + 5], 12, 1200080426);
+        c = md5_ff(c, d, a, b, x[i + 6], 17, -1473231341);
+        b = md5_ff(b, c, d, a, x[i + 7], 22, -45705983);
+        a = md5_ff(a, b, c, d, x[i + 8], 7, 1770035416);
+        d = md5_ff(d, a, b, c, x[i + 9], 12, -1958414417);
+        c = md5_ff(c, d, a, b, x[i + 10], 17, -42063);
+        b = md5_ff(b, c, d, a, x[i + 11], 22, -1990404162);
+        a = md5_ff(a, b, c, d, x[i + 12], 7, 1804603682);
+        d = md5_ff(d, a, b, c, x[i + 13], 12, -40341101);
+        c = md5_ff(c, d, a, b, x[i + 14], 17, -1502002290);
+        b = md5_ff(b, c, d, a, x[i + 15], 22, 1236535329);
 
-    a = md5_gg(a, b, c, d, x[i+ 1], 5 , -165796510);
-    d = md5_gg(d, a, b, c, x[i+ 6], 9 , -1069501632);
-    c = md5_gg(c, d, a, b, x[i+11], 14,  643717713);
-    b = md5_gg(b, c, d, a, x[i+ 0], 20, -373897302);
-    a = md5_gg(a, b, c, d, x[i+ 5], 5 , -701558691);
-    d = md5_gg(d, a, b, c, x[i+10], 9 ,  38016083);
-    c = md5_gg(c, d, a, b, x[i+15], 14, -660478335);
-    b = md5_gg(b, c, d, a, x[i+ 4], 20, -405537848);
-    a = md5_gg(a, b, c, d, x[i+ 9], 5 ,  568446438);
-    d = md5_gg(d, a, b, c, x[i+14], 9 , -1019803690);
-    c = md5_gg(c, d, a, b, x[i+ 3], 14, -187363961);
-    b = md5_gg(b, c, d, a, x[i+ 8], 20,  1163531501);
-    a = md5_gg(a, b, c, d, x[i+13], 5 , -1444681467);
-    d = md5_gg(d, a, b, c, x[i+ 2], 9 , -51403784);
-    c = md5_gg(c, d, a, b, x[i+ 7], 14,  1735328473);
-    b = md5_gg(b, c, d, a, x[i+12], 20, -1926607734);
+        a = md5_gg(a, b, c, d, x[i + 1], 5, -165796510);
+        d = md5_gg(d, a, b, c, x[i + 6], 9, -1069501632);
+        c = md5_gg(c, d, a, b, x[i + 11], 14, 643717713);
+        b = md5_gg(b, c, d, a, x[i + 0], 20, -373897302);
+        a = md5_gg(a, b, c, d, x[i + 5], 5, -701558691);
+        d = md5_gg(d, a, b, c, x[i + 10], 9, 38016083);
+        c = md5_gg(c, d, a, b, x[i + 15], 14, -660478335);
+        b = md5_gg(b, c, d, a, x[i + 4], 20, -405537848);
+        a = md5_gg(a, b, c, d, x[i + 9], 5, 568446438);
+        d = md5_gg(d, a, b, c, x[i + 14], 9, -1019803690);
+        c = md5_gg(c, d, a, b, x[i + 3], 14, -187363961);
+        b = md5_gg(b, c, d, a, x[i + 8], 20, 1163531501);
+        a = md5_gg(a, b, c, d, x[i + 13], 5, -1444681467);
+        d = md5_gg(d, a, b, c, x[i + 2], 9, -51403784);
+        c = md5_gg(c, d, a, b, x[i + 7], 14, 1735328473);
+        b = md5_gg(b, c, d, a, x[i + 12], 20, -1926607734);
 
-    a = md5_hh(a, b, c, d, x[i+ 5], 4 , -378558);
-    d = md5_hh(d, a, b, c, x[i+ 8], 11, -2022574463);
-    c = md5_hh(c, d, a, b, x[i+11], 16,  1839030562);
-    b = md5_hh(b, c, d, a, x[i+14], 23, -35309556);
-    a = md5_hh(a, b, c, d, x[i+ 1], 4 , -1530992060);
-    d = md5_hh(d, a, b, c, x[i+ 4], 11,  1272893353);
-    c = md5_hh(c, d, a, b, x[i+ 7], 16, -155497632);
-    b = md5_hh(b, c, d, a, x[i+10], 23, -1094730640);
-    a = md5_hh(a, b, c, d, x[i+13], 4 ,  681279174);
-    d = md5_hh(d, a, b, c, x[i+ 0], 11, -358537222);
-    c = md5_hh(c, d, a, b, x[i+ 3], 16, -722521979);
-    b = md5_hh(b, c, d, a, x[i+ 6], 23,  76029189);
-    a = md5_hh(a, b, c, d, x[i+ 9], 4 , -640364487);
-    d = md5_hh(d, a, b, c, x[i+12], 11, -421815835);
-    c = md5_hh(c, d, a, b, x[i+15], 16,  530742520);
-    b = md5_hh(b, c, d, a, x[i+ 2], 23, -995338651);
+        a = md5_hh(a, b, c, d, x[i + 5], 4, -378558);
+        d = md5_hh(d, a, b, c, x[i + 8], 11, -2022574463);
+        c = md5_hh(c, d, a, b, x[i + 11], 16, 1839030562);
+        b = md5_hh(b, c, d, a, x[i + 14], 23, -35309556);
+        a = md5_hh(a, b, c, d, x[i + 1], 4, -1530992060);
+        d = md5_hh(d, a, b, c, x[i + 4], 11, 1272893353);
+        c = md5_hh(c, d, a, b, x[i + 7], 16, -155497632);
+        b = md5_hh(b, c, d, a, x[i + 10], 23, -1094730640);
+        a = md5_hh(a, b, c, d, x[i + 13], 4, 681279174);
+        d = md5_hh(d, a, b, c, x[i + 0], 11, -358537222);
+        c = md5_hh(c, d, a, b, x[i + 3], 16, -722521979);
+        b = md5_hh(b, c, d, a, x[i + 6], 23, 76029189);
+        a = md5_hh(a, b, c, d, x[i + 9], 4, -640364487);
+        d = md5_hh(d, a, b, c, x[i + 12], 11, -421815835);
+        c = md5_hh(c, d, a, b, x[i + 15], 16, 530742520);
+        b = md5_hh(b, c, d, a, x[i + 2], 23, -995338651);
 
-    a = md5_ii(a, b, c, d, x[i+ 0], 6 , -198630844);
-    d = md5_ii(d, a, b, c, x[i+ 7], 10,  1126891415);
-    c = md5_ii(c, d, a, b, x[i+14], 15, -1416354905);
-    b = md5_ii(b, c, d, a, x[i+ 5], 21, -57434055);
-    a = md5_ii(a, b, c, d, x[i+12], 6 ,  1700485571);
-    d = md5_ii(d, a, b, c, x[i+ 3], 10, -1894986606);
-    c = md5_ii(c, d, a, b, x[i+10], 15, -1051523);
-    b = md5_ii(b, c, d, a, x[i+ 1], 21, -2054922799);
-    a = md5_ii(a, b, c, d, x[i+ 8], 6 ,  1873313359);
-    d = md5_ii(d, a, b, c, x[i+15], 10, -30611744);
-    c = md5_ii(c, d, a, b, x[i+ 6], 15, -1560198380);
-    b = md5_ii(b, c, d, a, x[i+13], 21,  1309151649);
-    a = md5_ii(a, b, c, d, x[i+ 4], 6 , -145523070);
-    d = md5_ii(d, a, b, c, x[i+11], 10, -1120210379);
-    c = md5_ii(c, d, a, b, x[i+ 2], 15,  718787259);
-    b = md5_ii(b, c, d, a, x[i+ 9], 21, -343485551);
+        a = md5_ii(a, b, c, d, x[i + 0], 6, -198630844);
+        d = md5_ii(d, a, b, c, x[i + 7], 10, 1126891415);
+        c = md5_ii(c, d, a, b, x[i + 14], 15, -1416354905);
+        b = md5_ii(b, c, d, a, x[i + 5], 21, -57434055);
+        a = md5_ii(a, b, c, d, x[i + 12], 6, 1700485571);
+        d = md5_ii(d, a, b, c, x[i + 3], 10, -1894986606);
+        c = md5_ii(c, d, a, b, x[i + 10], 15, -1051523);
+        b = md5_ii(b, c, d, a, x[i + 1], 21, -2054922799);
+        a = md5_ii(a, b, c, d, x[i + 8], 6, 1873313359);
+        d = md5_ii(d, a, b, c, x[i + 15], 10, -30611744);
+        c = md5_ii(c, d, a, b, x[i + 6], 15, -1560198380);
+        b = md5_ii(b, c, d, a, x[i + 13], 21, 1309151649);
+        a = md5_ii(a, b, c, d, x[i + 4], 6, -145523070);
+        d = md5_ii(d, a, b, c, x[i + 11], 10, -1120210379);
+        c = md5_ii(c, d, a, b, x[i + 2], 15, 718787259);
+        b = md5_ii(b, c, d, a, x[i + 9], 21, -343485551);
 
-    a = safe_add(a, olda);
-    b = safe_add(b, oldb);
-    c = safe_add(c, oldc);
-    d = safe_add(d, oldd);
-  }
-  return Array(a, b, c, d);
+        a = safe_add(a, olda);
+        b = safe_add(b, oldb);
+        c = safe_add(c, oldc);
+        d = safe_add(d, oldd);
+    }
+    return Array(a, b, c, d);
 }
 
 /*
  * These functions implement the four basic operations the algorithm uses.
  */
-function md5_cmn(q, a, b, x, s, t)
-{
-  return safe_add(bit_rol(safe_add(safe_add(a, q), safe_add(x, t)), s),b);
+function md5_cmn(q, a, b, x, s, t) {
+    return safe_add(bit_rol(safe_add(safe_add(a, q), safe_add(x, t)), s), b);
 }
-function md5_ff(a, b, c, d, x, s, t)
-{
-  return md5_cmn((b & c) | ((~b) & d), a, b, x, s, t);
+function md5_ff(a, b, c, d, x, s, t) {
+    return md5_cmn((b & c) | ((~b) & d), a, b, x, s, t);
 }
-function md5_gg(a, b, c, d, x, s, t)
-{
-  return md5_cmn((b & d) | (c & (~d)), a, b, x, s, t);
+function md5_gg(a, b, c, d, x, s, t) {
+    return md5_cmn((b & d) | (c & (~d)), a, b, x, s, t);
 }
-function md5_hh(a, b, c, d, x, s, t)
-{
-  return md5_cmn(b ^ c ^ d, a, b, x, s, t);
+function md5_hh(a, b, c, d, x, s, t) {
+    return md5_cmn(b ^ c ^ d, a, b, x, s, t);
 }
-function md5_ii(a, b, c, d, x, s, t)
-{
-  return md5_cmn(c ^ (b | (~d)), a, b, x, s, t);
+function md5_ii(a, b, c, d, x, s, t) {
+    return md5_cmn(c ^ (b | (~d)), a, b, x, s, t);
 }
 
 /*
  * Add integers, wrapping at 2^32. This uses 16-bit operations internally
  * to work around bugs in some JS interpreters.
  */
-function safe_add(x, y)
-{
-  var lsw = (x & 0xFFFF) + (y & 0xFFFF);
-  var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
-  return (msw << 16) | (lsw & 0xFFFF);
+function safe_add(x, y) {
+    var lsw = (x & 0xFFFF) + (y & 0xFFFF);
+    var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+    return (msw << 16) | (lsw & 0xFFFF);
 }
 
 /*
  * Bitwise rotate a 32-bit number to the left.
  */
-function bit_rol(num, cnt)
-{
-  return (num << cnt) | (num >>> (32 - cnt));
+function bit_rol(num, cnt) {
+    return (num << cnt) | (num >>> (32 - cnt));
 }
 
+
+window.md5 = {
+    hex: function(val){
+        return hex_md5(val);
+    },
+
+    b64: function(val){
+        return b64_md5(val);
+    },
+
+    any: function(s, e){
+        return any_md5(s, e);
+    },
+
+    hex_hmac: function(k, d){
+        return hex_hmac_md5(k, d);
+    },
+
+    b64_hmac: function(k, d){
+        return b64_hmac_md5(k, d);
+    },
+
+    any_hmac: function(k, d, e){
+        return any_hmac_md5(k, d, e);
+    }
+};
 // Source: js/utils/ripemd160.js
 /*
  * A JavaScript implementation of the RIPEMD-160 Algorithm
@@ -905,379 +959,445 @@ function bit_rol(num, cnt)
  * Configurable variables. You may need to tweak these to be compatible with
  * the server-side, but the defaults work in most cases.
  */
-var hexcase = 0;  /* hex output format. 0 - lowercase; 1 - uppercase        */
-var b64pad  = ""; /* base-64 pad character. "=" for strict RFC compliance   */
+var hexcase = 0;
+/* hex output format. 0 - lowercase; 1 - uppercase        */
+var b64pad = "";
+/* base-64 pad character. "=" for strict RFC compliance   */
 
 /*
  * These are the functions you'll usually want to call
  * They take string arguments and return either hex or base-64 encoded strings
  */
-function hex_rmd160(s)    { return rstr2hex(rstr_rmd160(str2rstr_utf8(s))); }
-function b64_rmd160(s)    { return rstr2b64(rstr_rmd160(str2rstr_utf8(s))); }
-function any_rmd160(s, e) { return rstr2any(rstr_rmd160(str2rstr_utf8(s)), e); }
-function hex_hmac_rmd160(k, d)
-  { return rstr2hex(rstr_hmac_rmd160(str2rstr_utf8(k), str2rstr_utf8(d))); }
-function b64_hmac_rmd160(k, d)
-  { return rstr2b64(rstr_hmac_rmd160(str2rstr_utf8(k), str2rstr_utf8(d))); }
-function any_hmac_rmd160(k, d, e)
-  { return rstr2any(rstr_hmac_rmd160(str2rstr_utf8(k), str2rstr_utf8(d)), e); }
+function hex_rmd160(s) {
+    return rstr2hex(rstr_rmd160(str2rstr_utf8(s)));
+}
+function b64_rmd160(s) {
+    return rstr2b64(rstr_rmd160(str2rstr_utf8(s)));
+}
+function any_rmd160(s, e) {
+    return rstr2any(rstr_rmd160(str2rstr_utf8(s)), e);
+}
+function hex_hmac_rmd160(k, d) {
+    return rstr2hex(rstr_hmac_rmd160(str2rstr_utf8(k), str2rstr_utf8(d)));
+}
+function b64_hmac_rmd160(k, d) {
+    return rstr2b64(rstr_hmac_rmd160(str2rstr_utf8(k), str2rstr_utf8(d)));
+}
+function any_hmac_rmd160(k, d, e) {
+    return rstr2any(rstr_hmac_rmd160(str2rstr_utf8(k), str2rstr_utf8(d)), e);
+}
 
 /*
  * Perform a simple self-test to see if the VM is working
  */
-function rmd160_vm_test()
-{
-  return hex_rmd160("abc").toLowerCase() == "8eb208f7e05d987a9b044a8e98c6b087f15a0bfc";
+function rmd160_vm_test() {
+    return hex_rmd160("abc").toLowerCase() == "8eb208f7e05d987a9b044a8e98c6b087f15a0bfc";
 }
 
 /*
  * Calculate the rmd160 of a raw string
  */
-function rstr_rmd160(s)
-{
-  return binl2rstr(binl_rmd160(rstr2binl(s), s.length * 8));
+function rstr_rmd160(s) {
+    return binl2rstr(binl_rmd160(rstr2binl(s), s.length * 8));
 }
 
 /*
  * Calculate the HMAC-rmd160 of a key and some data (raw strings)
  */
-function rstr_hmac_rmd160(key, data)
-{
-  var bkey = rstr2binl(key);
-  if(bkey.length > 16) bkey = binl_rmd160(bkey, key.length * 8);
+function rstr_hmac_rmd160(key, data) {
+    var bkey = rstr2binl(key);
+    if (bkey.length > 16) bkey = binl_rmd160(bkey, key.length * 8);
 
-  var ipad = Array(16), opad = Array(16);
-  for(var i = 0; i < 16; i++)
-  {
-    ipad[i] = bkey[i] ^ 0x36363636;
-    opad[i] = bkey[i] ^ 0x5C5C5C5C;
-  }
+    var ipad = Array(16), opad = Array(16);
+    for (var i = 0; i < 16; i++) {
+        ipad[i] = bkey[i] ^ 0x36363636;
+        opad[i] = bkey[i] ^ 0x5C5C5C5C;
+    }
 
-  var hash = binl_rmd160(ipad.concat(rstr2binl(data)), 512 + data.length * 8);
-  return binl2rstr(binl_rmd160(opad.concat(hash), 512 + 160));
+    var hash = binl_rmd160(ipad.concat(rstr2binl(data)), 512 + data.length * 8);
+    return binl2rstr(binl_rmd160(opad.concat(hash), 512 + 160));
 }
 
 /*
  * Convert a raw string to a hex string
  */
-function rstr2hex(input)
-{
-  try { hexcase } catch(e) { hexcase=0; }
-  var hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
-  var output = "";
-  var x;
-  for(var i = 0; i < input.length; i++)
-  {
-    x = input.charCodeAt(i);
-    output += hex_tab.charAt((x >>> 4) & 0x0F)
-           +  hex_tab.charAt( x        & 0x0F);
-  }
-  return output;
+function rstr2hex(input) {
+    try {
+        hexcase
+    } catch (e) {
+        hexcase = 0;
+    }
+    var hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
+    var output = "";
+    var x;
+    for (var i = 0; i < input.length; i++) {
+        x = input.charCodeAt(i);
+        output += hex_tab.charAt((x >>> 4) & 0x0F)
+            + hex_tab.charAt(x & 0x0F);
+    }
+    return output;
 }
 
 /*
  * Convert a raw string to a base-64 string
  */
-function rstr2b64(input)
-{
-  try { b64pad } catch(e) { b64pad=''; }
-  var tab = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-  var output = "";
-  var len = input.length;
-  for(var i = 0; i < len; i += 3)
-  {
-    var triplet = (input.charCodeAt(i) << 16)
-                | (i + 1 < len ? input.charCodeAt(i+1) << 8 : 0)
-                | (i + 2 < len ? input.charCodeAt(i+2)      : 0);
-    for(var j = 0; j < 4; j++)
-    {
-      if(i * 8 + j * 6 > input.length * 8) output += b64pad;
-      else output += tab.charAt((triplet >>> 6*(3-j)) & 0x3F);
+function rstr2b64(input) {
+    try {
+        b64pad
+    } catch (e) {
+        b64pad = '';
     }
-  }
-  return output;
+    var tab = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    var output = "";
+    var len = input.length;
+    for (var i = 0; i < len; i += 3) {
+        var triplet = (input.charCodeAt(i) << 16)
+            | (i + 1 < len ? input.charCodeAt(i + 1) << 8 : 0)
+            | (i + 2 < len ? input.charCodeAt(i + 2) : 0);
+        for (var j = 0; j < 4; j++) {
+            if (i * 8 + j * 6 > input.length * 8) output += b64pad;
+            else output += tab.charAt((triplet >>> 6 * (3 - j)) & 0x3F);
+        }
+    }
+    return output;
 }
 
 /*
  * Convert a raw string to an arbitrary string encoding
  */
-function rstr2any(input, encoding)
-{
-  var divisor = encoding.length;
-  var remainders = Array();
-  var i, q, x, quotient;
+function rstr2any(input, encoding) {
+    var divisor = encoding.length;
+    var remainders = Array();
+    var i, q, x, quotient;
 
-  /* Convert to an array of 16-bit big-endian values, forming the dividend */
-  var dividend = Array(Math.ceil(input.length / 2));
-  for(i = 0; i < dividend.length; i++)
-  {
-    dividend[i] = (input.charCodeAt(i * 2) << 8) | input.charCodeAt(i * 2 + 1);
-  }
-
-  /*
-   * Repeatedly perform a long division. The binary array forms the dividend,
-   * the length of the encoding is the divisor. Once computed, the quotient
-   * forms the dividend for the next step. We stop when the dividend is zero.
-   * All remainders are stored for later use.
-   */
-  while(dividend.length > 0)
-  {
-    quotient = Array();
-    x = 0;
-    for(i = 0; i < dividend.length; i++)
-    {
-      x = (x << 16) + dividend[i];
-      q = Math.floor(x / divisor);
-      x -= q * divisor;
-      if(quotient.length > 0 || q > 0)
-        quotient[quotient.length] = q;
+    /* Convert to an array of 16-bit big-endian values, forming the dividend */
+    var dividend = Array(Math.ceil(input.length / 2));
+    for (i = 0; i < dividend.length; i++) {
+        dividend[i] = (input.charCodeAt(i * 2) << 8) | input.charCodeAt(i * 2 + 1);
     }
-    remainders[remainders.length] = x;
-    dividend = quotient;
-  }
 
-  /* Convert the remainders to the output string */
-  var output = "";
-  for(i = remainders.length - 1; i >= 0; i--)
-    output += encoding.charAt(remainders[i]);
+    /*
+     * Repeatedly perform a long division. The binary array forms the dividend,
+     * the length of the encoding is the divisor. Once computed, the quotient
+     * forms the dividend for the next step. We stop when the dividend is zero.
+     * All remainders are stored for later use.
+     */
+    while (dividend.length > 0) {
+        quotient = Array();
+        x = 0;
+        for (i = 0; i < dividend.length; i++) {
+            x = (x << 16) + dividend[i];
+            q = Math.floor(x / divisor);
+            x -= q * divisor;
+            if (quotient.length > 0 || q > 0)
+                quotient[quotient.length] = q;
+        }
+        remainders[remainders.length] = x;
+        dividend = quotient;
+    }
 
-  /* Append leading zero equivalents */
-  var full_length = Math.ceil(input.length * 8 /
-                                    (Math.log(encoding.length) / Math.log(2)))
-  for(i = output.length; i < full_length; i++)
-    output = encoding[0] + output;
+    /* Convert the remainders to the output string */
+    var output = "";
+    for (i = remainders.length - 1; i >= 0; i--)
+        output += encoding.charAt(remainders[i]);
 
-  return output;
+    /* Append leading zero equivalents */
+    var full_length = Math.ceil(input.length * 8 /
+        (Math.log(encoding.length) / Math.log(2)))
+    for (i = output.length; i < full_length; i++)
+        output = encoding[0] + output;
+
+    return output;
 }
 
 /*
  * Encode a string as utf-8.
  * For efficiency, this assumes the input is valid utf-16.
  */
-function str2rstr_utf8(input)
-{
-  var output = "";
-  var i = -1;
-  var x, y;
+function str2rstr_utf8(input) {
+    var output = "";
+    var i = -1;
+    var x, y;
 
-  while(++i < input.length)
-  {
-    /* Decode utf-16 surrogate pairs */
-    x = input.charCodeAt(i);
-    y = i + 1 < input.length ? input.charCodeAt(i + 1) : 0;
-    if(0xD800 <= x && x <= 0xDBFF && 0xDC00 <= y && y <= 0xDFFF)
-    {
-      x = 0x10000 + ((x & 0x03FF) << 10) + (y & 0x03FF);
-      i++;
+    while (++i < input.length) {
+        /* Decode utf-16 surrogate pairs */
+        x = input.charCodeAt(i);
+        y = i + 1 < input.length ? input.charCodeAt(i + 1) : 0;
+        if (0xD800 <= x && x <= 0xDBFF && 0xDC00 <= y && y <= 0xDFFF) {
+            x = 0x10000 + ((x & 0x03FF) << 10) + (y & 0x03FF);
+            i++;
+        }
+
+        /* Encode output as utf-8 */
+        if (x <= 0x7F)
+            output += String.fromCharCode(x);
+        else if (x <= 0x7FF)
+            output += String.fromCharCode(0xC0 | ((x >>> 6 ) & 0x1F),
+                0x80 | ( x & 0x3F));
+        else if (x <= 0xFFFF)
+            output += String.fromCharCode(0xE0 | ((x >>> 12) & 0x0F),
+                0x80 | ((x >>> 6 ) & 0x3F),
+                0x80 | ( x & 0x3F));
+        else if (x <= 0x1FFFFF)
+            output += String.fromCharCode(0xF0 | ((x >>> 18) & 0x07),
+                0x80 | ((x >>> 12) & 0x3F),
+                0x80 | ((x >>> 6 ) & 0x3F),
+                0x80 | ( x & 0x3F));
     }
-
-    /* Encode output as utf-8 */
-    if(x <= 0x7F)
-      output += String.fromCharCode(x);
-    else if(x <= 0x7FF)
-      output += String.fromCharCode(0xC0 | ((x >>> 6 ) & 0x1F),
-                                    0x80 | ( x         & 0x3F));
-    else if(x <= 0xFFFF)
-      output += String.fromCharCode(0xE0 | ((x >>> 12) & 0x0F),
-                                    0x80 | ((x >>> 6 ) & 0x3F),
-                                    0x80 | ( x         & 0x3F));
-    else if(x <= 0x1FFFFF)
-      output += String.fromCharCode(0xF0 | ((x >>> 18) & 0x07),
-                                    0x80 | ((x >>> 12) & 0x3F),
-                                    0x80 | ((x >>> 6 ) & 0x3F),
-                                    0x80 | ( x         & 0x3F));
-  }
-  return output;
+    return output;
 }
 
 /*
  * Encode a string as utf-16
  */
-function str2rstr_utf16le(input)
-{
-  var output = "";
-  for(var i = 0; i < input.length; i++)
-    output += String.fromCharCode( input.charCodeAt(i)        & 0xFF,
-                                  (input.charCodeAt(i) >>> 8) & 0xFF);
-  return output;
+function str2rstr_utf16le(input) {
+    var output = "";
+    for (var i = 0; i < input.length; i++)
+        output += String.fromCharCode(input.charCodeAt(i) & 0xFF,
+            (input.charCodeAt(i) >>> 8) & 0xFF);
+    return output;
 }
 
-function str2rstr_utf16be(input)
-{
-  var output = "";
-  for(var i = 0; i < input.length; i++)
-    output += String.fromCharCode((input.charCodeAt(i) >>> 8) & 0xFF,
-                                   input.charCodeAt(i)        & 0xFF);
-  return output;
+function str2rstr_utf16be(input) {
+    var output = "";
+    for (var i = 0; i < input.length; i++)
+        output += String.fromCharCode((input.charCodeAt(i) >>> 8) & 0xFF,
+            input.charCodeAt(i) & 0xFF);
+    return output;
 }
 
 /*
  * Convert a raw string to an array of little-endian words
  * Characters >255 have their high-byte silently ignored.
  */
-function rstr2binl(input)
-{
-  var output = Array(input.length >> 2);
-  for(var i = 0; i < output.length; i++)
-    output[i] = 0;
-  for(var i = 0; i < input.length * 8; i += 8)
-    output[i>>5] |= (input.charCodeAt(i / 8) & 0xFF) << (i%32);
-  return output;
+function rstr2binl(input) {
+    var output = Array(input.length >> 2);
+    for (var i = 0; i < output.length; i++)
+        output[i] = 0;
+    for (var i = 0; i < input.length * 8; i += 8)
+        output[i >> 5] |= (input.charCodeAt(i / 8) & 0xFF) << (i % 32);
+    return output;
 }
 
 /*
  * Convert an array of little-endian words to a string
  */
-function binl2rstr(input)
-{
-  var output = "";
-  for(var i = 0; i < input.length * 32; i += 8)
-    output += String.fromCharCode((input[i>>5] >>> (i % 32)) & 0xFF);
-  return output;
+function binl2rstr(input) {
+    var output = "";
+    for (var i = 0; i < input.length * 32; i += 8)
+        output += String.fromCharCode((input[i >> 5] >>> (i % 32)) & 0xFF);
+    return output;
 }
 
 /*
  * Calculate the RIPE-MD160 of an array of little-endian words, and a bit length.
  */
-function binl_rmd160(x, len)
-{
-  /* append padding */
-  x[len >> 5] |= 0x80 << (len % 32);
-  x[(((len + 64) >>> 9) << 4) + 14] = len;
+function binl_rmd160(x, len) {
+    /* append padding */
+    x[len >> 5] |= 0x80 << (len % 32);
+    x[(((len + 64) >>> 9) << 4) + 14] = len;
 
-  var h0 = 0x67452301;
-  var h1 = 0xefcdab89;
-  var h2 = 0x98badcfe;
-  var h3 = 0x10325476;
-  var h4 = 0xc3d2e1f0;
+    var h0 = 0x67452301;
+    var h1 = 0xefcdab89;
+    var h2 = 0x98badcfe;
+    var h3 = 0x10325476;
+    var h4 = 0xc3d2e1f0;
 
-  for (var i = 0; i < x.length; i += 16) {
-    var T;
-    var A1 = h0, B1 = h1, C1 = h2, D1 = h3, E1 = h4;
-    var A2 = h0, B2 = h1, C2 = h2, D2 = h3, E2 = h4;
-    for (var j = 0; j <= 79; ++j) {
-      T = safe_add(A1, rmd160_f(j, B1, C1, D1));
-      T = safe_add(T, x[i + rmd160_r1[j]]);
-      T = safe_add(T, rmd160_K1(j));
-      T = safe_add(bit_rol(T, rmd160_s1[j]), E1);
-      A1 = E1; E1 = D1; D1 = bit_rol(C1, 10); C1 = B1; B1 = T;
-      T = safe_add(A2, rmd160_f(79-j, B2, C2, D2));
-      T = safe_add(T, x[i + rmd160_r2[j]]);
-      T = safe_add(T, rmd160_K2(j));
-      T = safe_add(bit_rol(T, rmd160_s2[j]), E2);
-      A2 = E2; E2 = D2; D2 = bit_rol(C2, 10); C2 = B2; B2 = T;
+    for (var i = 0; i < x.length; i += 16) {
+        var T;
+        var A1 = h0, B1 = h1, C1 = h2, D1 = h3, E1 = h4;
+        var A2 = h0, B2 = h1, C2 = h2, D2 = h3, E2 = h4;
+        for (var j = 0; j <= 79; ++j) {
+            T = safe_add(A1, rmd160_f(j, B1, C1, D1));
+            T = safe_add(T, x[i + rmd160_r1[j]]);
+            T = safe_add(T, rmd160_K1(j));
+            T = safe_add(bit_rol(T, rmd160_s1[j]), E1);
+            A1 = E1;
+            E1 = D1;
+            D1 = bit_rol(C1, 10);
+            C1 = B1;
+            B1 = T;
+            T = safe_add(A2, rmd160_f(79 - j, B2, C2, D2));
+            T = safe_add(T, x[i + rmd160_r2[j]]);
+            T = safe_add(T, rmd160_K2(j));
+            T = safe_add(bit_rol(T, rmd160_s2[j]), E2);
+            A2 = E2;
+            E2 = D2;
+            D2 = bit_rol(C2, 10);
+            C2 = B2;
+            B2 = T;
+        }
+        T = safe_add(h1, safe_add(C1, D2));
+        h1 = safe_add(h2, safe_add(D1, E2));
+        h2 = safe_add(h3, safe_add(E1, A2));
+        h3 = safe_add(h4, safe_add(A1, B2));
+        h4 = safe_add(h0, safe_add(B1, C2));
+        h0 = T;
     }
-    T = safe_add(h1, safe_add(C1, D2));
-    h1 = safe_add(h2, safe_add(D1, E2));
-    h2 = safe_add(h3, safe_add(E1, A2));
-    h3 = safe_add(h4, safe_add(A1, B2));
-    h4 = safe_add(h0, safe_add(B1, C2));
-    h0 = T;
-  }
-  return [h0, h1, h2, h3, h4];
+    return [h0, h1, h2, h3, h4];
 }
 
-function rmd160_f(j, x, y, z)
-{
-  return ( 0 <= j && j <= 15) ? (x ^ y ^ z) :
-         (16 <= j && j <= 31) ? (x & y) | (~x & z) :
-         (32 <= j && j <= 47) ? (x | ~y) ^ z :
-         (48 <= j && j <= 63) ? (x & z) | (y & ~z) :
-         (64 <= j && j <= 79) ? x ^ (y | ~z) :
-         "rmd160_f: j out of range";
+function rmd160_f(j, x, y, z) {
+    return ( 0 <= j && j <= 15) ? (x ^ y ^ z) :
+        (16 <= j && j <= 31) ? (x & y) | (~x & z) :
+            (32 <= j && j <= 47) ? (x | ~y) ^ z :
+                (48 <= j && j <= 63) ? (x & z) | (y & ~z) :
+                    (64 <= j && j <= 79) ? x ^ (y | ~z) :
+                        "rmd160_f: j out of range";
 }
-function rmd160_K1(j)
-{
-  return ( 0 <= j && j <= 15) ? 0x00000000 :
-         (16 <= j && j <= 31) ? 0x5a827999 :
-         (32 <= j && j <= 47) ? 0x6ed9eba1 :
-         (48 <= j && j <= 63) ? 0x8f1bbcdc :
-         (64 <= j && j <= 79) ? 0xa953fd4e :
-         "rmd160_K1: j out of range";
+function rmd160_K1(j) {
+    return ( 0 <= j && j <= 15) ? 0x00000000 :
+        (16 <= j && j <= 31) ? 0x5a827999 :
+            (32 <= j && j <= 47) ? 0x6ed9eba1 :
+                (48 <= j && j <= 63) ? 0x8f1bbcdc :
+                    (64 <= j && j <= 79) ? 0xa953fd4e :
+                        "rmd160_K1: j out of range";
 }
-function rmd160_K2(j)
-{
-  return ( 0 <= j && j <= 15) ? 0x50a28be6 :
-         (16 <= j && j <= 31) ? 0x5c4dd124 :
-         (32 <= j && j <= 47) ? 0x6d703ef3 :
-         (48 <= j && j <= 63) ? 0x7a6d76e9 :
-         (64 <= j && j <= 79) ? 0x00000000 :
-         "rmd160_K2: j out of range";
+function rmd160_K2(j) {
+    return ( 0 <= j && j <= 15) ? 0x50a28be6 :
+        (16 <= j && j <= 31) ? 0x5c4dd124 :
+            (32 <= j && j <= 47) ? 0x6d703ef3 :
+                (48 <= j && j <= 63) ? 0x7a6d76e9 :
+                    (64 <= j && j <= 79) ? 0x00000000 :
+                        "rmd160_K2: j out of range";
 }
 var rmd160_r1 = [
-   0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15,
-   7,  4, 13,  1, 10,  6, 15,  3, 12,  0,  9,  5,  2, 14, 11,  8,
-   3, 10, 14,  4,  9, 15,  8,  1,  2,  7,  0,  6, 13, 11,  5, 12,
-   1,  9, 11, 10,  0,  8, 12,  4, 13,  3,  7, 15, 14,  5,  6,  2,
-   4,  0,  5,  9,  7, 12,  2, 10, 14,  1,  3,  8, 11,  6, 15, 13
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+    7, 4, 13, 1, 10, 6, 15, 3, 12, 0, 9, 5, 2, 14, 11, 8,
+    3, 10, 14, 4, 9, 15, 8, 1, 2, 7, 0, 6, 13, 11, 5, 12,
+    1, 9, 11, 10, 0, 8, 12, 4, 13, 3, 7, 15, 14, 5, 6, 2,
+    4, 0, 5, 9, 7, 12, 2, 10, 14, 1, 3, 8, 11, 6, 15, 13
 ];
 var rmd160_r2 = [
-   5, 14,  7,  0,  9,  2, 11,  4, 13,  6, 15,  8,  1, 10,  3, 12,
-   6, 11,  3,  7,  0, 13,  5, 10, 14, 15,  8, 12,  4,  9,  1,  2,
-  15,  5,  1,  3,  7, 14,  6,  9, 11,  8, 12,  2, 10,  0,  4, 13,
-   8,  6,  4,  1,  3, 11, 15,  0,  5, 12,  2, 13,  9,  7, 10, 14,
-  12, 15, 10,  4,  1,  5,  8,  7,  6,  2, 13, 14,  0,  3,  9, 11
+    5, 14, 7, 0, 9, 2, 11, 4, 13, 6, 15, 8, 1, 10, 3, 12,
+    6, 11, 3, 7, 0, 13, 5, 10, 14, 15, 8, 12, 4, 9, 1, 2,
+    15, 5, 1, 3, 7, 14, 6, 9, 11, 8, 12, 2, 10, 0, 4, 13,
+    8, 6, 4, 1, 3, 11, 15, 0, 5, 12, 2, 13, 9, 7, 10, 14,
+    12, 15, 10, 4, 1, 5, 8, 7, 6, 2, 13, 14, 0, 3, 9, 11
 ];
 var rmd160_s1 = [
-  11, 14, 15, 12,  5,  8,  7,  9, 11, 13, 14, 15,  6,  7,  9,  8,
-   7,  6,  8, 13, 11,  9,  7, 15,  7, 12, 15,  9, 11,  7, 13, 12,
-  11, 13,  6,  7, 14,  9, 13, 15, 14,  8, 13,  6,  5, 12,  7,  5,
-  11, 12, 14, 15, 14, 15,  9,  8,  9, 14,  5,  6,  8,  6,  5, 12,
-   9, 15,  5, 11,  6,  8, 13, 12,  5, 12, 13, 14, 11,  8,  5,  6
+    11, 14, 15, 12, 5, 8, 7, 9, 11, 13, 14, 15, 6, 7, 9, 8,
+    7, 6, 8, 13, 11, 9, 7, 15, 7, 12, 15, 9, 11, 7, 13, 12,
+    11, 13, 6, 7, 14, 9, 13, 15, 14, 8, 13, 6, 5, 12, 7, 5,
+    11, 12, 14, 15, 14, 15, 9, 8, 9, 14, 5, 6, 8, 6, 5, 12,
+    9, 15, 5, 11, 6, 8, 13, 12, 5, 12, 13, 14, 11, 8, 5, 6
 ];
 var rmd160_s2 = [
-   8,  9,  9, 11, 13, 15, 15,  5,  7,  7,  8, 11, 14, 14, 12,  6,
-   9, 13, 15,  7, 12,  8,  9, 11,  7,  7, 12,  7,  6, 15, 13, 11,
-   9,  7, 15, 11,  8,  6,  6, 14, 12, 13,  5, 14, 13, 13,  7,  5,
-  15,  5,  8, 11, 14, 14,  6, 14,  6,  9, 12,  9, 12,  5, 15,  8,
-   8,  5, 12,  9, 12,  5, 14,  6,  8, 13,  6,  5, 15, 13, 11, 11
+    8, 9, 9, 11, 13, 15, 15, 5, 7, 7, 8, 11, 14, 14, 12, 6,
+    9, 13, 15, 7, 12, 8, 9, 11, 7, 7, 12, 7, 6, 15, 13, 11,
+    9, 7, 15, 11, 8, 6, 6, 14, 12, 13, 5, 14, 13, 13, 7, 5,
+    15, 5, 8, 11, 14, 14, 6, 14, 6, 9, 12, 9, 12, 5, 15, 8,
+    8, 5, 12, 9, 12, 5, 14, 6, 8, 13, 6, 5, 15, 13, 11, 11
 ];
 
 /*
  * Add integers, wrapping at 2^32. This uses 16-bit operations internally
  * to work around bugs in some JS interpreters.
  */
-function safe_add(x, y)
-{
-  var lsw = (x & 0xFFFF) + (y & 0xFFFF);
-  var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
-  return (msw << 16) | (lsw & 0xFFFF);
+function safe_add(x, y) {
+    var lsw = (x & 0xFFFF) + (y & 0xFFFF);
+    var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+    return (msw << 16) | (lsw & 0xFFFF);
 }
 
 /*
  * Bitwise rotate a 32-bit number to the left.
  */
-function bit_rol(num, cnt)
-{
-  return (num << cnt) | (num >>> (32 - cnt));
+function bit_rol(num, cnt) {
+    return (num << cnt) | (num >>> (32 - cnt));
 }
 
-// Source: js/utils/ripple.js
-$(document).on("click", ".ripple", function(e){
-    var ink, d, x, y, that = $(this);
+window.rmd160 = {
+    hex: function(val){
+        return hex_rmd160(val);
+    },
 
-    if (that.css("position") == 'static') {
-        that.css("position", "relative")
+    b64: function(val){
+        return b64_rmd160(val);
+    },
+
+    any: function(s, e){
+        return any_rmd160(s, e);
+    },
+
+    hex_hmac: function(k, d){
+        return hex_hmac_rmd160(k, d);
+    },
+
+    b64_hmac: function(k, d){
+        return b64_hmac_rmd160(k, d);
+    },
+
+    any_hmac: function(k, d, e){
+        return any_hmac_rmd160(k, d, e);
     }
+};
+// Source: js/utils/scroll-events.js
+var special = jQuery.event.special,
+    uid1 = 'D' + (+new Date()),
+    uid2 = 'D' + (+new Date() + 1);
 
-    if(that.find(".ripple-ink").length === 0){
-        that.prepend("<span class='ripple-ink'></span>");
+special.scrollstart = {
+    setup: function() {
+
+        var timer,
+            handler =  function(evt) {
+
+                var _self = this,
+                    _args = arguments;
+
+                if (timer) {
+                    clearTimeout(timer);
+                } else {
+                    evt.type = 'scrollstart';
+                    jQuery.event.dispatch.apply(_self, _args);
+                }
+
+                timer = setTimeout( function(){
+                    timer = null;
+                }, special.scrollstop.latency);
+
+            };
+
+        jQuery(this).bind('scroll', handler).data(uid1, handler);
+
+    },
+    teardown: function(){
+        jQuery(this).unbind( 'scroll', jQuery(this).data(uid1) );
     }
+};
 
-    ink = that.find(".ripple-ink");
-    ink.removeClass("ripple-animate");
+special.scrollstop = {
+    latency: 300,
+    setup: function() {
 
-    if(!ink.height() && !ink.width()){
-        d = Math.max(that.outerWidth(), that.outerHeight());
-        ink.css({height: d, width: d});
+        var timer,
+            handler = function(evt) {
+
+                var _self = this,
+                    _args = arguments;
+
+                if (timer) {
+                    clearTimeout(timer);
+                }
+
+                timer = setTimeout( function(){
+
+                    timer = null;
+                    evt.type = 'scrollstop';
+                    jQuery.event.dispatch.apply(_self, _args);
+
+                }, special.scrollstop.latency);
+
+            };
+
+        jQuery(this).bind('scroll', handler).data(uid2, handler);
+
+    },
+    teardown: function() {
+        jQuery(this).unbind( 'scroll', jQuery(this).data(uid2) );
     }
-
-    x = e.pageX - that.offset().left - ink.width()/2;
-    y = e.pageY - that.offset().top - ink.height()/2;
-
-    ink.css({top: y+'px', left: x+'px'}).addClass("ripple-animate");
-});
-
+};
 // Source: js/utils/sha1.js
 /*
  * A JavaScript implementation of the Secure Hash Algorithm, SHA-1, as defined
@@ -1292,281 +1412,277 @@ $(document).on("click", ".ripple", function(e){
  * Configurable variables. You may need to tweak these to be compatible with
  * the server-side, but the defaults work in most cases.
  */
-var hexcase = 0;  /* hex output format. 0 - lowercase; 1 - uppercase        */
-var b64pad  = ""; /* base-64 pad character. "=" for strict RFC compliance   */
+var hexcase = 0;
+/* hex output format. 0 - lowercase; 1 - uppercase        */
+var b64pad = "";
+/* base-64 pad character. "=" for strict RFC compliance   */
 
 /*
  * These are the functions you'll usually want to call
  * They take string arguments and return either hex or base-64 encoded strings
  */
-function hex_sha1(s)    { return rstr2hex(rstr_sha1(str2rstr_utf8(s))); }
-function b64_sha1(s)    { return rstr2b64(rstr_sha1(str2rstr_utf8(s))); }
-function any_sha1(s, e) { return rstr2any(rstr_sha1(str2rstr_utf8(s)), e); }
-function hex_hmac_sha1(k, d)
-  { return rstr2hex(rstr_hmac_sha1(str2rstr_utf8(k), str2rstr_utf8(d))); }
-function b64_hmac_sha1(k, d)
-  { return rstr2b64(rstr_hmac_sha1(str2rstr_utf8(k), str2rstr_utf8(d))); }
-function any_hmac_sha1(k, d, e)
-  { return rstr2any(rstr_hmac_sha1(str2rstr_utf8(k), str2rstr_utf8(d)), e); }
+function hex_sha1(s) {
+    return rstr2hex(rstr_sha1(str2rstr_utf8(s)));
+}
+function b64_sha1(s) {
+    return rstr2b64(rstr_sha1(str2rstr_utf8(s)));
+}
+function any_sha1(s, e) {
+    return rstr2any(rstr_sha1(str2rstr_utf8(s)), e);
+}
+function hex_hmac_sha1(k, d) {
+    return rstr2hex(rstr_hmac_sha1(str2rstr_utf8(k), str2rstr_utf8(d)));
+}
+function b64_hmac_sha1(k, d) {
+    return rstr2b64(rstr_hmac_sha1(str2rstr_utf8(k), str2rstr_utf8(d)));
+}
+function any_hmac_sha1(k, d, e) {
+    return rstr2any(rstr_hmac_sha1(str2rstr_utf8(k), str2rstr_utf8(d)), e);
+}
 
 /*
  * Perform a simple self-test to see if the VM is working
  */
-function sha1_vm_test()
-{
-  return hex_sha1("abc").toLowerCase() == "a9993e364706816aba3e25717850c26c9cd0d89d";
+function sha1_vm_test() {
+    return hex_sha1("abc").toLowerCase() == "a9993e364706816aba3e25717850c26c9cd0d89d";
 }
 
 /*
  * Calculate the SHA1 of a raw string
  */
-function rstr_sha1(s)
-{
-  return binb2rstr(binb_sha1(rstr2binb(s), s.length * 8));
+function rstr_sha1(s) {
+    return binb2rstr(binb_sha1(rstr2binb(s), s.length * 8));
 }
 
 /*
  * Calculate the HMAC-SHA1 of a key and some data (raw strings)
  */
-function rstr_hmac_sha1(key, data)
-{
-  var bkey = rstr2binb(key);
-  if(bkey.length > 16) bkey = binb_sha1(bkey, key.length * 8);
+function rstr_hmac_sha1(key, data) {
+    var bkey = rstr2binb(key);
+    if (bkey.length > 16) bkey = binb_sha1(bkey, key.length * 8);
 
-  var ipad = Array(16), opad = Array(16);
-  for(var i = 0; i < 16; i++)
-  {
-    ipad[i] = bkey[i] ^ 0x36363636;
-    opad[i] = bkey[i] ^ 0x5C5C5C5C;
-  }
+    var ipad = Array(16), opad = Array(16);
+    for (var i = 0; i < 16; i++) {
+        ipad[i] = bkey[i] ^ 0x36363636;
+        opad[i] = bkey[i] ^ 0x5C5C5C5C;
+    }
 
-  var hash = binb_sha1(ipad.concat(rstr2binb(data)), 512 + data.length * 8);
-  return binb2rstr(binb_sha1(opad.concat(hash), 512 + 160));
+    var hash = binb_sha1(ipad.concat(rstr2binb(data)), 512 + data.length * 8);
+    return binb2rstr(binb_sha1(opad.concat(hash), 512 + 160));
 }
 
 /*
  * Convert a raw string to a hex string
  */
-function rstr2hex(input)
-{
-  try { hexcase } catch(e) { hexcase=0; }
-  var hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
-  var output = "";
-  var x;
-  for(var i = 0; i < input.length; i++)
-  {
-    x = input.charCodeAt(i);
-    output += hex_tab.charAt((x >>> 4) & 0x0F)
-           +  hex_tab.charAt( x        & 0x0F);
-  }
-  return output;
+function rstr2hex(input) {
+    try {
+        hexcase
+    } catch (e) {
+        hexcase = 0;
+    }
+    var hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
+    var output = "";
+    var x;
+    for (var i = 0; i < input.length; i++) {
+        x = input.charCodeAt(i);
+        output += hex_tab.charAt((x >>> 4) & 0x0F)
+            + hex_tab.charAt(x & 0x0F);
+    }
+    return output;
 }
 
 /*
  * Convert a raw string to a base-64 string
  */
-function rstr2b64(input)
-{
-  try { b64pad } catch(e) { b64pad=''; }
-  var tab = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-  var output = "";
-  var len = input.length;
-  for(var i = 0; i < len; i += 3)
-  {
-    var triplet = (input.charCodeAt(i) << 16)
-                | (i + 1 < len ? input.charCodeAt(i+1) << 8 : 0)
-                | (i + 2 < len ? input.charCodeAt(i+2)      : 0);
-    for(var j = 0; j < 4; j++)
-    {
-      if(i * 8 + j * 6 > input.length * 8) output += b64pad;
-      else output += tab.charAt((triplet >>> 6*(3-j)) & 0x3F);
+function rstr2b64(input) {
+    try {
+        b64pad
+    } catch (e) {
+        b64pad = '';
     }
-  }
-  return output;
+    var tab = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    var output = "";
+    var len = input.length;
+    for (var i = 0; i < len; i += 3) {
+        var triplet = (input.charCodeAt(i) << 16)
+            | (i + 1 < len ? input.charCodeAt(i + 1) << 8 : 0)
+            | (i + 2 < len ? input.charCodeAt(i + 2) : 0);
+        for (var j = 0; j < 4; j++) {
+            if (i * 8 + j * 6 > input.length * 8) output += b64pad;
+            else output += tab.charAt((triplet >>> 6 * (3 - j)) & 0x3F);
+        }
+    }
+    return output;
 }
 
 /*
  * Convert a raw string to an arbitrary string encoding
  */
-function rstr2any(input, encoding)
-{
-  var divisor = encoding.length;
-  var remainders = Array();
-  var i, q, x, quotient;
+function rstr2any(input, encoding) {
+    var divisor = encoding.length;
+    var remainders = Array();
+    var i, q, x, quotient;
 
-  /* Convert to an array of 16-bit big-endian values, forming the dividend */
-  var dividend = Array(Math.ceil(input.length / 2));
-  for(i = 0; i < dividend.length; i++)
-  {
-    dividend[i] = (input.charCodeAt(i * 2) << 8) | input.charCodeAt(i * 2 + 1);
-  }
-
-  /*
-   * Repeatedly perform a long division. The binary array forms the dividend,
-   * the length of the encoding is the divisor. Once computed, the quotient
-   * forms the dividend for the next step. We stop when the dividend is zero.
-   * All remainders are stored for later use.
-   */
-  while(dividend.length > 0)
-  {
-    quotient = Array();
-    x = 0;
-    for(i = 0; i < dividend.length; i++)
-    {
-      x = (x << 16) + dividend[i];
-      q = Math.floor(x / divisor);
-      x -= q * divisor;
-      if(quotient.length > 0 || q > 0)
-        quotient[quotient.length] = q;
+    /* Convert to an array of 16-bit big-endian values, forming the dividend */
+    var dividend = Array(Math.ceil(input.length / 2));
+    for (i = 0; i < dividend.length; i++) {
+        dividend[i] = (input.charCodeAt(i * 2) << 8) | input.charCodeAt(i * 2 + 1);
     }
-    remainders[remainders.length] = x;
-    dividend = quotient;
-  }
 
-  /* Convert the remainders to the output string */
-  var output = "";
-  for(i = remainders.length - 1; i >= 0; i--)
-    output += encoding.charAt(remainders[i]);
+    /*
+     * Repeatedly perform a long division. The binary array forms the dividend,
+     * the length of the encoding is the divisor. Once computed, the quotient
+     * forms the dividend for the next step. We stop when the dividend is zero.
+     * All remainders are stored for later use.
+     */
+    while (dividend.length > 0) {
+        quotient = Array();
+        x = 0;
+        for (i = 0; i < dividend.length; i++) {
+            x = (x << 16) + dividend[i];
+            q = Math.floor(x / divisor);
+            x -= q * divisor;
+            if (quotient.length > 0 || q > 0)
+                quotient[quotient.length] = q;
+        }
+        remainders[remainders.length] = x;
+        dividend = quotient;
+    }
 
-  /* Append leading zero equivalents */
-  var full_length = Math.ceil(input.length * 8 /
-                                    (Math.log(encoding.length) / Math.log(2)))
-  for(i = output.length; i < full_length; i++)
-    output = encoding[0] + output;
+    /* Convert the remainders to the output string */
+    var output = "";
+    for (i = remainders.length - 1; i >= 0; i--)
+        output += encoding.charAt(remainders[i]);
 
-  return output;
+    /* Append leading zero equivalents */
+    var full_length = Math.ceil(input.length * 8 /
+        (Math.log(encoding.length) / Math.log(2)))
+    for (i = output.length; i < full_length; i++)
+        output = encoding[0] + output;
+
+    return output;
 }
 
 /*
  * Encode a string as utf-8.
  * For efficiency, this assumes the input is valid utf-16.
  */
-function str2rstr_utf8(input)
-{
-  var output = "";
-  var i = -1;
-  var x, y;
+function str2rstr_utf8(input) {
+    var output = "";
+    var i = -1;
+    var x, y;
 
-  while(++i < input.length)
-  {
-    /* Decode utf-16 surrogate pairs */
-    x = input.charCodeAt(i);
-    y = i + 1 < input.length ? input.charCodeAt(i + 1) : 0;
-    if(0xD800 <= x && x <= 0xDBFF && 0xDC00 <= y && y <= 0xDFFF)
-    {
-      x = 0x10000 + ((x & 0x03FF) << 10) + (y & 0x03FF);
-      i++;
+    while (++i < input.length) {
+        /* Decode utf-16 surrogate pairs */
+        x = input.charCodeAt(i);
+        y = i + 1 < input.length ? input.charCodeAt(i + 1) : 0;
+        if (0xD800 <= x && x <= 0xDBFF && 0xDC00 <= y && y <= 0xDFFF) {
+            x = 0x10000 + ((x & 0x03FF) << 10) + (y & 0x03FF);
+            i++;
+        }
+
+        /* Encode output as utf-8 */
+        if (x <= 0x7F)
+            output += String.fromCharCode(x);
+        else if (x <= 0x7FF)
+            output += String.fromCharCode(0xC0 | ((x >>> 6 ) & 0x1F),
+                0x80 | ( x & 0x3F));
+        else if (x <= 0xFFFF)
+            output += String.fromCharCode(0xE0 | ((x >>> 12) & 0x0F),
+                0x80 | ((x >>> 6 ) & 0x3F),
+                0x80 | ( x & 0x3F));
+        else if (x <= 0x1FFFFF)
+            output += String.fromCharCode(0xF0 | ((x >>> 18) & 0x07),
+                0x80 | ((x >>> 12) & 0x3F),
+                0x80 | ((x >>> 6 ) & 0x3F),
+                0x80 | ( x & 0x3F));
     }
-
-    /* Encode output as utf-8 */
-    if(x <= 0x7F)
-      output += String.fromCharCode(x);
-    else if(x <= 0x7FF)
-      output += String.fromCharCode(0xC0 | ((x >>> 6 ) & 0x1F),
-                                    0x80 | ( x         & 0x3F));
-    else if(x <= 0xFFFF)
-      output += String.fromCharCode(0xE0 | ((x >>> 12) & 0x0F),
-                                    0x80 | ((x >>> 6 ) & 0x3F),
-                                    0x80 | ( x         & 0x3F));
-    else if(x <= 0x1FFFFF)
-      output += String.fromCharCode(0xF0 | ((x >>> 18) & 0x07),
-                                    0x80 | ((x >>> 12) & 0x3F),
-                                    0x80 | ((x >>> 6 ) & 0x3F),
-                                    0x80 | ( x         & 0x3F));
-  }
-  return output;
+    return output;
 }
 
 /*
  * Encode a string as utf-16
  */
-function str2rstr_utf16le(input)
-{
-  var output = "";
-  for(var i = 0; i < input.length; i++)
-    output += String.fromCharCode( input.charCodeAt(i)        & 0xFF,
-                                  (input.charCodeAt(i) >>> 8) & 0xFF);
-  return output;
+function str2rstr_utf16le(input) {
+    var output = "";
+    for (var i = 0; i < input.length; i++)
+        output += String.fromCharCode(input.charCodeAt(i) & 0xFF,
+            (input.charCodeAt(i) >>> 8) & 0xFF);
+    return output;
 }
 
-function str2rstr_utf16be(input)
-{
-  var output = "";
-  for(var i = 0; i < input.length; i++)
-    output += String.fromCharCode((input.charCodeAt(i) >>> 8) & 0xFF,
-                                   input.charCodeAt(i)        & 0xFF);
-  return output;
+function str2rstr_utf16be(input) {
+    var output = "";
+    for (var i = 0; i < input.length; i++)
+        output += String.fromCharCode((input.charCodeAt(i) >>> 8) & 0xFF,
+            input.charCodeAt(i) & 0xFF);
+    return output;
 }
 
 /*
  * Convert a raw string to an array of big-endian words
  * Characters >255 have their high-byte silently ignored.
  */
-function rstr2binb(input)
-{
-  var output = Array(input.length >> 2);
-  for(var i = 0; i < output.length; i++)
-    output[i] = 0;
-  for(var i = 0; i < input.length * 8; i += 8)
-    output[i>>5] |= (input.charCodeAt(i / 8) & 0xFF) << (24 - i % 32);
-  return output;
+function rstr2binb(input) {
+    var output = Array(input.length >> 2);
+    for (var i = 0; i < output.length; i++)
+        output[i] = 0;
+    for (var i = 0; i < input.length * 8; i += 8)
+        output[i >> 5] |= (input.charCodeAt(i / 8) & 0xFF) << (24 - i % 32);
+    return output;
 }
 
 /*
  * Convert an array of big-endian words to a string
  */
-function binb2rstr(input)
-{
-  var output = "";
-  for(var i = 0; i < input.length * 32; i += 8)
-    output += String.fromCharCode((input[i>>5] >>> (24 - i % 32)) & 0xFF);
-  return output;
+function binb2rstr(input) {
+    var output = "";
+    for (var i = 0; i < input.length * 32; i += 8)
+        output += String.fromCharCode((input[i >> 5] >>> (24 - i % 32)) & 0xFF);
+    return output;
 }
 
 /*
  * Calculate the SHA-1 of an array of big-endian words, and a bit length
  */
-function binb_sha1(x, len)
-{
-  /* append padding */
-  x[len >> 5] |= 0x80 << (24 - len % 32);
-  x[((len + 64 >> 9) << 4) + 15] = len;
+function binb_sha1(x, len) {
+    /* append padding */
+    x[len >> 5] |= 0x80 << (24 - len % 32);
+    x[((len + 64 >> 9) << 4) + 15] = len;
 
-  var w = Array(80);
-  var a =  1732584193;
-  var b = -271733879;
-  var c = -1732584194;
-  var d =  271733878;
-  var e = -1009589776;
+    var w = Array(80);
+    var a = 1732584193;
+    var b = -271733879;
+    var c = -1732584194;
+    var d = 271733878;
+    var e = -1009589776;
 
-  for(var i = 0; i < x.length; i += 16)
-  {
-    var olda = a;
-    var oldb = b;
-    var oldc = c;
-    var oldd = d;
-    var olde = e;
+    for (var i = 0; i < x.length; i += 16) {
+        var olda = a;
+        var oldb = b;
+        var oldc = c;
+        var oldd = d;
+        var olde = e;
 
-    for(var j = 0; j < 80; j++)
-    {
-      if(j < 16) w[j] = x[i + j];
-      else w[j] = bit_rol(w[j-3] ^ w[j-8] ^ w[j-14] ^ w[j-16], 1);
-      var t = safe_add(safe_add(bit_rol(a, 5), sha1_ft(j, b, c, d)),
-                       safe_add(safe_add(e, w[j]), sha1_kt(j)));
-      e = d;
-      d = c;
-      c = bit_rol(b, 30);
-      b = a;
-      a = t;
+        for (var j = 0; j < 80; j++) {
+            if (j < 16) w[j] = x[i + j];
+            else w[j] = bit_rol(w[j - 3] ^ w[j - 8] ^ w[j - 14] ^ w[j - 16], 1);
+            var t = safe_add(safe_add(bit_rol(a, 5), sha1_ft(j, b, c, d)),
+                safe_add(safe_add(e, w[j]), sha1_kt(j)));
+            e = d;
+            d = c;
+            c = bit_rol(b, 30);
+            b = a;
+            a = t;
+        }
+
+        a = safe_add(a, olda);
+        b = safe_add(b, oldb);
+        c = safe_add(c, oldc);
+        d = safe_add(d, oldd);
+        e = safe_add(e, olde);
     }
-
-    a = safe_add(a, olda);
-    b = safe_add(b, oldb);
-    c = safe_add(c, oldc);
-    d = safe_add(d, oldd);
-    e = safe_add(e, olde);
-  }
-  return Array(a, b, c, d, e);
+    return Array(a, b, c, d, e);
 
 }
 
@@ -1574,42 +1690,63 @@ function binb_sha1(x, len)
  * Perform the appropriate triplet combination function for the current
  * iteration
  */
-function sha1_ft(t, b, c, d)
-{
-  if(t < 20) return (b & c) | ((~b) & d);
-  if(t < 40) return b ^ c ^ d;
-  if(t < 60) return (b & c) | (b & d) | (c & d);
-  return b ^ c ^ d;
+function sha1_ft(t, b, c, d) {
+    if (t < 20) return (b & c) | ((~b) & d);
+    if (t < 40) return b ^ c ^ d;
+    if (t < 60) return (b & c) | (b & d) | (c & d);
+    return b ^ c ^ d;
 }
 
 /*
  * Determine the appropriate additive constant for the current iteration
  */
-function sha1_kt(t)
-{
-  return (t < 20) ?  1518500249 : (t < 40) ?  1859775393 :
-         (t < 60) ? -1894007588 : -899497514;
+function sha1_kt(t) {
+    return (t < 20) ? 1518500249 : (t < 40) ? 1859775393 :
+        (t < 60) ? -1894007588 : -899497514;
 }
 
 /*
  * Add integers, wrapping at 2^32. This uses 16-bit operations internally
  * to work around bugs in some JS interpreters.
  */
-function safe_add(x, y)
-{
-  var lsw = (x & 0xFFFF) + (y & 0xFFFF);
-  var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
-  return (msw << 16) | (lsw & 0xFFFF);
+function safe_add(x, y) {
+    var lsw = (x & 0xFFFF) + (y & 0xFFFF);
+    var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+    return (msw << 16) | (lsw & 0xFFFF);
 }
 
 /*
  * Bitwise rotate a 32-bit number to the left.
  */
-function bit_rol(num, cnt)
-{
-  return (num << cnt) | (num >>> (32 - cnt));
+function bit_rol(num, cnt) {
+    return (num << cnt) | (num >>> (32 - cnt));
 }
 
+window.sha1 = {
+    hex: function(val){
+        return hex_sha1(val);
+    },
+
+    b64: function(val){
+        return b64_sha1(val);
+    },
+
+    any: function(s, e){
+        return any_sha1(s, e);
+    },
+
+    hex_hmac: function(k, d){
+        return hex_hmac_sha1(k, d);
+    },
+
+    b64_hmac: function(k, d){
+        return b64_hmac_sha1(k, d);
+    },
+
+    any_hmac: function(k, d, e){
+        return any_hmac_sha1(k, d, e);
+    }
+};
 // Source: js/utils/sha256.js
 /*
  * A JavaScript implementation of the Secure Hash Algorithm, SHA-256, as defined
@@ -1625,330 +1762,374 @@ function bit_rol(num, cnt)
  * Configurable variables. You may need to tweak these to be compatible with
  * the server-side, but the defaults work in most cases.
  */
-var hexcase = 0;  /* hex output format. 0 - lowercase; 1 - uppercase        */
-var b64pad  = ""; /* base-64 pad character. "=" for strict RFC compliance   */
+var hexcase = 0;
+/* hex output format. 0 - lowercase; 1 - uppercase        */
+var b64pad = "";
+/* base-64 pad character. "=" for strict RFC compliance   */
 
 /*
  * These are the functions you'll usually want to call
  * They take string arguments and return either hex or base-64 encoded strings
  */
-function hex_sha256(s)    { return rstr2hex(rstr_sha256(str2rstr_utf8(s))); }
-function b64_sha256(s)    { return rstr2b64(rstr_sha256(str2rstr_utf8(s))); }
-function any_sha256(s, e) { return rstr2any(rstr_sha256(str2rstr_utf8(s)), e); }
-function hex_hmac_sha256(k, d)
-  { return rstr2hex(rstr_hmac_sha256(str2rstr_utf8(k), str2rstr_utf8(d))); }
-function b64_hmac_sha256(k, d)
-  { return rstr2b64(rstr_hmac_sha256(str2rstr_utf8(k), str2rstr_utf8(d))); }
-function any_hmac_sha256(k, d, e)
-  { return rstr2any(rstr_hmac_sha256(str2rstr_utf8(k), str2rstr_utf8(d)), e); }
+function hex_sha256(s) {
+    return rstr2hex(rstr_sha256(str2rstr_utf8(s)));
+}
+function b64_sha256(s) {
+    return rstr2b64(rstr_sha256(str2rstr_utf8(s)));
+}
+function any_sha256(s, e) {
+    return rstr2any(rstr_sha256(str2rstr_utf8(s)), e);
+}
+function hex_hmac_sha256(k, d) {
+    return rstr2hex(rstr_hmac_sha256(str2rstr_utf8(k), str2rstr_utf8(d)));
+}
+function b64_hmac_sha256(k, d) {
+    return rstr2b64(rstr_hmac_sha256(str2rstr_utf8(k), str2rstr_utf8(d)));
+}
+function any_hmac_sha256(k, d, e) {
+    return rstr2any(rstr_hmac_sha256(str2rstr_utf8(k), str2rstr_utf8(d)), e);
+}
 
 /*
  * Perform a simple self-test to see if the VM is working
  */
-function sha256_vm_test()
-{
-  return hex_sha256("abc").toLowerCase() ==
-            "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad";
+function sha256_vm_test() {
+    return hex_sha256("abc").toLowerCase() ==
+        "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad";
 }
 
 /*
  * Calculate the sha256 of a raw string
  */
-function rstr_sha256(s)
-{
-  return binb2rstr(binb_sha256(rstr2binb(s), s.length * 8));
+function rstr_sha256(s) {
+    return binb2rstr(binb_sha256(rstr2binb(s), s.length * 8));
 }
 
 /*
  * Calculate the HMAC-sha256 of a key and some data (raw strings)
  */
-function rstr_hmac_sha256(key, data)
-{
-  var bkey = rstr2binb(key);
-  if(bkey.length > 16) bkey = binb_sha256(bkey, key.length * 8);
+function rstr_hmac_sha256(key, data) {
+    var bkey = rstr2binb(key);
+    if (bkey.length > 16) bkey = binb_sha256(bkey, key.length * 8);
 
-  var ipad = Array(16), opad = Array(16);
-  for(var i = 0; i < 16; i++)
-  {
-    ipad[i] = bkey[i] ^ 0x36363636;
-    opad[i] = bkey[i] ^ 0x5C5C5C5C;
-  }
+    var ipad = Array(16), opad = Array(16);
+    for (var i = 0; i < 16; i++) {
+        ipad[i] = bkey[i] ^ 0x36363636;
+        opad[i] = bkey[i] ^ 0x5C5C5C5C;
+    }
 
-  var hash = binb_sha256(ipad.concat(rstr2binb(data)), 512 + data.length * 8);
-  return binb2rstr(binb_sha256(opad.concat(hash), 512 + 256));
+    var hash = binb_sha256(ipad.concat(rstr2binb(data)), 512 + data.length * 8);
+    return binb2rstr(binb_sha256(opad.concat(hash), 512 + 256));
 }
 
 /*
  * Convert a raw string to a hex string
  */
-function rstr2hex(input)
-{
-  try { hexcase } catch(e) { hexcase=0; }
-  var hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
-  var output = "";
-  var x;
-  for(var i = 0; i < input.length; i++)
-  {
-    x = input.charCodeAt(i);
-    output += hex_tab.charAt((x >>> 4) & 0x0F)
-           +  hex_tab.charAt( x        & 0x0F);
-  }
-  return output;
+function rstr2hex(input) {
+    try {
+        hexcase
+    } catch (e) {
+        hexcase = 0;
+    }
+    var hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
+    var output = "";
+    var x;
+    for (var i = 0; i < input.length; i++) {
+        x = input.charCodeAt(i);
+        output += hex_tab.charAt((x >>> 4) & 0x0F)
+            + hex_tab.charAt(x & 0x0F);
+    }
+    return output;
 }
 
 /*
  * Convert a raw string to a base-64 string
  */
-function rstr2b64(input)
-{
-  try { b64pad } catch(e) { b64pad=''; }
-  var tab = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-  var output = "";
-  var len = input.length;
-  for(var i = 0; i < len; i += 3)
-  {
-    var triplet = (input.charCodeAt(i) << 16)
-                | (i + 1 < len ? input.charCodeAt(i+1) << 8 : 0)
-                | (i + 2 < len ? input.charCodeAt(i+2)      : 0);
-    for(var j = 0; j < 4; j++)
-    {
-      if(i * 8 + j * 6 > input.length * 8) output += b64pad;
-      else output += tab.charAt((triplet >>> 6*(3-j)) & 0x3F);
+function rstr2b64(input) {
+    try {
+        b64pad
+    } catch (e) {
+        b64pad = '';
     }
-  }
-  return output;
+    var tab = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    var output = "";
+    var len = input.length;
+    for (var i = 0; i < len; i += 3) {
+        var triplet = (input.charCodeAt(i) << 16)
+            | (i + 1 < len ? input.charCodeAt(i + 1) << 8 : 0)
+            | (i + 2 < len ? input.charCodeAt(i + 2) : 0);
+        for (var j = 0; j < 4; j++) {
+            if (i * 8 + j * 6 > input.length * 8) output += b64pad;
+            else output += tab.charAt((triplet >>> 6 * (3 - j)) & 0x3F);
+        }
+    }
+    return output;
 }
 
 /*
  * Convert a raw string to an arbitrary string encoding
  */
-function rstr2any(input, encoding)
-{
-  var divisor = encoding.length;
-  var remainders = Array();
-  var i, q, x, quotient;
+function rstr2any(input, encoding) {
+    var divisor = encoding.length;
+    var remainders = Array();
+    var i, q, x, quotient;
 
-  /* Convert to an array of 16-bit big-endian values, forming the dividend */
-  var dividend = Array(Math.ceil(input.length / 2));
-  for(i = 0; i < dividend.length; i++)
-  {
-    dividend[i] = (input.charCodeAt(i * 2) << 8) | input.charCodeAt(i * 2 + 1);
-  }
-
-  /*
-   * Repeatedly perform a long division. The binary array forms the dividend,
-   * the length of the encoding is the divisor. Once computed, the quotient
-   * forms the dividend for the next step. We stop when the dividend is zero.
-   * All remainders are stored for later use.
-   */
-  while(dividend.length > 0)
-  {
-    quotient = Array();
-    x = 0;
-    for(i = 0; i < dividend.length; i++)
-    {
-      x = (x << 16) + dividend[i];
-      q = Math.floor(x / divisor);
-      x -= q * divisor;
-      if(quotient.length > 0 || q > 0)
-        quotient[quotient.length] = q;
+    /* Convert to an array of 16-bit big-endian values, forming the dividend */
+    var dividend = Array(Math.ceil(input.length / 2));
+    for (i = 0; i < dividend.length; i++) {
+        dividend[i] = (input.charCodeAt(i * 2) << 8) | input.charCodeAt(i * 2 + 1);
     }
-    remainders[remainders.length] = x;
-    dividend = quotient;
-  }
 
-  /* Convert the remainders to the output string */
-  var output = "";
-  for(i = remainders.length - 1; i >= 0; i--)
-    output += encoding.charAt(remainders[i]);
+    /*
+     * Repeatedly perform a long division. The binary array forms the dividend,
+     * the length of the encoding is the divisor. Once computed, the quotient
+     * forms the dividend for the next step. We stop when the dividend is zero.
+     * All remainders are stored for later use.
+     */
+    while (dividend.length > 0) {
+        quotient = Array();
+        x = 0;
+        for (i = 0; i < dividend.length; i++) {
+            x = (x << 16) + dividend[i];
+            q = Math.floor(x / divisor);
+            x -= q * divisor;
+            if (quotient.length > 0 || q > 0)
+                quotient[quotient.length] = q;
+        }
+        remainders[remainders.length] = x;
+        dividend = quotient;
+    }
 
-  /* Append leading zero equivalents */
-  var full_length = Math.ceil(input.length * 8 /
-                                    (Math.log(encoding.length) / Math.log(2)))
-  for(i = output.length; i < full_length; i++)
-    output = encoding[0] + output;
+    /* Convert the remainders to the output string */
+    var output = "";
+    for (i = remainders.length - 1; i >= 0; i--)
+        output += encoding.charAt(remainders[i]);
 
-  return output;
+    /* Append leading zero equivalents */
+    var full_length = Math.ceil(input.length * 8 /
+        (Math.log(encoding.length) / Math.log(2)))
+    for (i = output.length; i < full_length; i++)
+        output = encoding[0] + output;
+
+    return output;
 }
 
 /*
  * Encode a string as utf-8.
  * For efficiency, this assumes the input is valid utf-16.
  */
-function str2rstr_utf8(input)
-{
-  var output = "";
-  var i = -1;
-  var x, y;
+function str2rstr_utf8(input) {
+    var output = "";
+    var i = -1;
+    var x, y;
 
-  while(++i < input.length)
-  {
-    /* Decode utf-16 surrogate pairs */
-    x = input.charCodeAt(i);
-    y = i + 1 < input.length ? input.charCodeAt(i + 1) : 0;
-    if(0xD800 <= x && x <= 0xDBFF && 0xDC00 <= y && y <= 0xDFFF)
-    {
-      x = 0x10000 + ((x & 0x03FF) << 10) + (y & 0x03FF);
-      i++;
+    while (++i < input.length) {
+        /* Decode utf-16 surrogate pairs */
+        x = input.charCodeAt(i);
+        y = i + 1 < input.length ? input.charCodeAt(i + 1) : 0;
+        if (0xD800 <= x && x <= 0xDBFF && 0xDC00 <= y && y <= 0xDFFF) {
+            x = 0x10000 + ((x & 0x03FF) << 10) + (y & 0x03FF);
+            i++;
+        }
+
+        /* Encode output as utf-8 */
+        if (x <= 0x7F)
+            output += String.fromCharCode(x);
+        else if (x <= 0x7FF)
+            output += String.fromCharCode(0xC0 | ((x >>> 6 ) & 0x1F),
+                0x80 | ( x & 0x3F));
+        else if (x <= 0xFFFF)
+            output += String.fromCharCode(0xE0 | ((x >>> 12) & 0x0F),
+                0x80 | ((x >>> 6 ) & 0x3F),
+                0x80 | ( x & 0x3F));
+        else if (x <= 0x1FFFFF)
+            output += String.fromCharCode(0xF0 | ((x >>> 18) & 0x07),
+                0x80 | ((x >>> 12) & 0x3F),
+                0x80 | ((x >>> 6 ) & 0x3F),
+                0x80 | ( x & 0x3F));
     }
-
-    /* Encode output as utf-8 */
-    if(x <= 0x7F)
-      output += String.fromCharCode(x);
-    else if(x <= 0x7FF)
-      output += String.fromCharCode(0xC0 | ((x >>> 6 ) & 0x1F),
-                                    0x80 | ( x         & 0x3F));
-    else if(x <= 0xFFFF)
-      output += String.fromCharCode(0xE0 | ((x >>> 12) & 0x0F),
-                                    0x80 | ((x >>> 6 ) & 0x3F),
-                                    0x80 | ( x         & 0x3F));
-    else if(x <= 0x1FFFFF)
-      output += String.fromCharCode(0xF0 | ((x >>> 18) & 0x07),
-                                    0x80 | ((x >>> 12) & 0x3F),
-                                    0x80 | ((x >>> 6 ) & 0x3F),
-                                    0x80 | ( x         & 0x3F));
-  }
-  return output;
+    return output;
 }
 
 /*
  * Encode a string as utf-16
  */
-function str2rstr_utf16le(input)
-{
-  var output = "";
-  for(var i = 0; i < input.length; i++)
-    output += String.fromCharCode( input.charCodeAt(i)        & 0xFF,
-                                  (input.charCodeAt(i) >>> 8) & 0xFF);
-  return output;
+function str2rstr_utf16le(input) {
+    var output = "";
+    for (var i = 0; i < input.length; i++)
+        output += String.fromCharCode(input.charCodeAt(i) & 0xFF,
+            (input.charCodeAt(i) >>> 8) & 0xFF);
+    return output;
 }
 
-function str2rstr_utf16be(input)
-{
-  var output = "";
-  for(var i = 0; i < input.length; i++)
-    output += String.fromCharCode((input.charCodeAt(i) >>> 8) & 0xFF,
-                                   input.charCodeAt(i)        & 0xFF);
-  return output;
+function str2rstr_utf16be(input) {
+    var output = "";
+    for (var i = 0; i < input.length; i++)
+        output += String.fromCharCode((input.charCodeAt(i) >>> 8) & 0xFF,
+            input.charCodeAt(i) & 0xFF);
+    return output;
 }
 
 /*
  * Convert a raw string to an array of big-endian words
  * Characters >255 have their high-byte silently ignored.
  */
-function rstr2binb(input)
-{
-  var output = Array(input.length >> 2);
-  for(var i = 0; i < output.length; i++)
-    output[i] = 0;
-  for(var i = 0; i < input.length * 8; i += 8)
-    output[i>>5] |= (input.charCodeAt(i / 8) & 0xFF) << (24 - i % 32);
-  return output;
+function rstr2binb(input) {
+    var output = Array(input.length >> 2);
+    for (var i = 0; i < output.length; i++)
+        output[i] = 0;
+    for (var i = 0; i < input.length * 8; i += 8)
+        output[i >> 5] |= (input.charCodeAt(i / 8) & 0xFF) << (24 - i % 32);
+    return output;
 }
 
 /*
  * Convert an array of big-endian words to a string
  */
-function binb2rstr(input)
-{
-  var output = "";
-  for(var i = 0; i < input.length * 32; i += 8)
-    output += String.fromCharCode((input[i>>5] >>> (24 - i % 32)) & 0xFF);
-  return output;
+function binb2rstr(input) {
+    var output = "";
+    for (var i = 0; i < input.length * 32; i += 8)
+        output += String.fromCharCode((input[i >> 5] >>> (24 - i % 32)) & 0xFF);
+    return output;
 }
 
 /*
  * Main sha256 function, with its support functions
  */
-function sha256_S (X, n) {return ( X >>> n ) | (X << (32 - n));}
-function sha256_R (X, n) {return ( X >>> n );}
-function sha256_Ch(x, y, z) {return ((x & y) ^ ((~x) & z));}
-function sha256_Maj(x, y, z) {return ((x & y) ^ (x & z) ^ (y & z));}
-function sha256_Sigma0256(x) {return (sha256_S(x, 2) ^ sha256_S(x, 13) ^ sha256_S(x, 22));}
-function sha256_Sigma1256(x) {return (sha256_S(x, 6) ^ sha256_S(x, 11) ^ sha256_S(x, 25));}
-function sha256_Gamma0256(x) {return (sha256_S(x, 7) ^ sha256_S(x, 18) ^ sha256_R(x, 3));}
-function sha256_Gamma1256(x) {return (sha256_S(x, 17) ^ sha256_S(x, 19) ^ sha256_R(x, 10));}
-function sha256_Sigma0512(x) {return (sha256_S(x, 28) ^ sha256_S(x, 34) ^ sha256_S(x, 39));}
-function sha256_Sigma1512(x) {return (sha256_S(x, 14) ^ sha256_S(x, 18) ^ sha256_S(x, 41));}
-function sha256_Gamma0512(x) {return (sha256_S(x, 1)  ^ sha256_S(x, 8) ^ sha256_R(x, 7));}
-function sha256_Gamma1512(x) {return (sha256_S(x, 19) ^ sha256_S(x, 61) ^ sha256_R(x, 6));}
+function sha256_S(X, n) {
+    return ( X >>> n ) | (X << (32 - n));
+}
+function sha256_R(X, n) {
+    return ( X >>> n );
+}
+function sha256_Ch(x, y, z) {
+    return ((x & y) ^ ((~x) & z));
+}
+function sha256_Maj(x, y, z) {
+    return ((x & y) ^ (x & z) ^ (y & z));
+}
+function sha256_Sigma0256(x) {
+    return (sha256_S(x, 2) ^ sha256_S(x, 13) ^ sha256_S(x, 22));
+}
+function sha256_Sigma1256(x) {
+    return (sha256_S(x, 6) ^ sha256_S(x, 11) ^ sha256_S(x, 25));
+}
+function sha256_Gamma0256(x) {
+    return (sha256_S(x, 7) ^ sha256_S(x, 18) ^ sha256_R(x, 3));
+}
+function sha256_Gamma1256(x) {
+    return (sha256_S(x, 17) ^ sha256_S(x, 19) ^ sha256_R(x, 10));
+}
+function sha256_Sigma0512(x) {
+    return (sha256_S(x, 28) ^ sha256_S(x, 34) ^ sha256_S(x, 39));
+}
+function sha256_Sigma1512(x) {
+    return (sha256_S(x, 14) ^ sha256_S(x, 18) ^ sha256_S(x, 41));
+}
+function sha256_Gamma0512(x) {
+    return (sha256_S(x, 1) ^ sha256_S(x, 8) ^ sha256_R(x, 7));
+}
+function sha256_Gamma1512(x) {
+    return (sha256_S(x, 19) ^ sha256_S(x, 61) ^ sha256_R(x, 6));
+}
 
 var sha256_K = new Array
 (
-  1116352408, 1899447441, -1245643825, -373957723, 961987163, 1508970993,
-  -1841331548, -1424204075, -670586216, 310598401, 607225278, 1426881987,
-  1925078388, -2132889090, -1680079193, -1046744716, -459576895, -272742522,
-  264347078, 604807628, 770255983, 1249150122, 1555081692, 1996064986,
-  -1740746414, -1473132947, -1341970488, -1084653625, -958395405, -710438585,
-  113926993, 338241895, 666307205, 773529912, 1294757372, 1396182291,
-  1695183700, 1986661051, -2117940946, -1838011259, -1564481375, -1474664885,
-  -1035236496, -949202525, -778901479, -694614492, -200395387, 275423344,
-  430227734, 506948616, 659060556, 883997877, 958139571, 1322822218,
-  1537002063, 1747873779, 1955562222, 2024104815, -2067236844, -1933114872,
-  -1866530822, -1538233109, -1090935817, -965641998
+    1116352408, 1899447441, -1245643825, -373957723, 961987163, 1508970993,
+    -1841331548, -1424204075, -670586216, 310598401, 607225278, 1426881987,
+    1925078388, -2132889090, -1680079193, -1046744716, -459576895, -272742522,
+    264347078, 604807628, 770255983, 1249150122, 1555081692, 1996064986,
+    -1740746414, -1473132947, -1341970488, -1084653625, -958395405, -710438585,
+    113926993, 338241895, 666307205, 773529912, 1294757372, 1396182291,
+    1695183700, 1986661051, -2117940946, -1838011259, -1564481375, -1474664885,
+    -1035236496, -949202525, -778901479, -694614492, -200395387, 275423344,
+    430227734, 506948616, 659060556, 883997877, 958139571, 1322822218,
+    1537002063, 1747873779, 1955562222, 2024104815, -2067236844, -1933114872,
+    -1866530822, -1538233109, -1090935817, -965641998
 );
 
-function binb_sha256(m, l)
-{
-  var HASH = new Array(1779033703, -1150833019, 1013904242, -1521486534,
-                       1359893119, -1694144372, 528734635, 1541459225);
-  var W = new Array(64);
-  var a, b, c, d, e, f, g, h;
-  var i, j, T1, T2;
+function binb_sha256(m, l) {
+    var HASH = new Array(1779033703, -1150833019, 1013904242, -1521486534,
+        1359893119, -1694144372, 528734635, 1541459225);
+    var W = new Array(64);
+    var a, b, c, d, e, f, g, h;
+    var i, j, T1, T2;
 
-  /* append padding */
-  m[l >> 5] |= 0x80 << (24 - l % 32);
-  m[((l + 64 >> 9) << 4) + 15] = l;
+    /* append padding */
+    m[l >> 5] |= 0x80 << (24 - l % 32);
+    m[((l + 64 >> 9) << 4) + 15] = l;
 
-  for(i = 0; i < m.length; i += 16)
-  {
-    a = HASH[0];
-    b = HASH[1];
-    c = HASH[2];
-    d = HASH[3];
-    e = HASH[4];
-    f = HASH[5];
-    g = HASH[6];
-    h = HASH[7];
+    for (i = 0; i < m.length; i += 16) {
+        a = HASH[0];
+        b = HASH[1];
+        c = HASH[2];
+        d = HASH[3];
+        e = HASH[4];
+        f = HASH[5];
+        g = HASH[6];
+        h = HASH[7];
 
-    for(j = 0; j < 64; j++)
-    {
-      if (j < 16) W[j] = m[j + i];
-      else W[j] = safe_add(safe_add(safe_add(sha256_Gamma1256(W[j - 2]), W[j - 7]),
-                                            sha256_Gamma0256(W[j - 15])), W[j - 16]);
+        for (j = 0; j < 64; j++) {
+            if (j < 16) W[j] = m[j + i];
+            else W[j] = safe_add(safe_add(safe_add(sha256_Gamma1256(W[j - 2]), W[j - 7]),
+                sha256_Gamma0256(W[j - 15])), W[j - 16]);
 
-      T1 = safe_add(safe_add(safe_add(safe_add(h, sha256_Sigma1256(e)), sha256_Ch(e, f, g)),
-                                                          sha256_K[j]), W[j]);
-      T2 = safe_add(sha256_Sigma0256(a), sha256_Maj(a, b, c));
-      h = g;
-      g = f;
-      f = e;
-      e = safe_add(d, T1);
-      d = c;
-      c = b;
-      b = a;
-      a = safe_add(T1, T2);
+            T1 = safe_add(safe_add(safe_add(safe_add(h, sha256_Sigma1256(e)), sha256_Ch(e, f, g)),
+                sha256_K[j]), W[j]);
+            T2 = safe_add(sha256_Sigma0256(a), sha256_Maj(a, b, c));
+            h = g;
+            g = f;
+            f = e;
+            e = safe_add(d, T1);
+            d = c;
+            c = b;
+            b = a;
+            a = safe_add(T1, T2);
+        }
+
+        HASH[0] = safe_add(a, HASH[0]);
+        HASH[1] = safe_add(b, HASH[1]);
+        HASH[2] = safe_add(c, HASH[2]);
+        HASH[3] = safe_add(d, HASH[3]);
+        HASH[4] = safe_add(e, HASH[4]);
+        HASH[5] = safe_add(f, HASH[5]);
+        HASH[6] = safe_add(g, HASH[6]);
+        HASH[7] = safe_add(h, HASH[7]);
     }
-
-    HASH[0] = safe_add(a, HASH[0]);
-    HASH[1] = safe_add(b, HASH[1]);
-    HASH[2] = safe_add(c, HASH[2]);
-    HASH[3] = safe_add(d, HASH[3]);
-    HASH[4] = safe_add(e, HASH[4]);
-    HASH[5] = safe_add(f, HASH[5]);
-    HASH[6] = safe_add(g, HASH[6]);
-    HASH[7] = safe_add(h, HASH[7]);
-  }
-  return HASH;
+    return HASH;
 }
 
-function safe_add (x, y)
-{
-  var lsw = (x & 0xFFFF) + (y & 0xFFFF);
-  var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
-  return (msw << 16) | (lsw & 0xFFFF);
+function safe_add(x, y) {
+    var lsw = (x & 0xFFFF) + (y & 0xFFFF);
+    var msw = (x >> 16) + (y >> 16) + (lsw >> 16);
+    return (msw << 16) | (lsw & 0xFFFF);
 }
 
+window.sha256 = {
+    hex: function(val){
+        return hex_sha256(val);
+    },
+
+    b64: function(val){
+        return b64_sha256(val);
+    },
+
+    any: function(s, e){
+        return any_sha256(s, e);
+    },
+
+    hex_hmac: function(k, d){
+        return hex_hmac_sha256(k, d);
+    },
+
+    b64_hmac: function(k, d){
+        return b64_hmac_sha256(k, d);
+    },
+
+    any_hmac: function(k, d, e){
+        return any_hmac_sha256(k, d, e);
+    }
+};
 // Source: js/utils/sha512.js
 /*
  * A JavaScript implementation of the Secure Hash Algorithm, SHA-512, as defined
@@ -1963,490 +2144,500 @@ function safe_add (x, y)
  * Configurable variables. You may need to tweak these to be compatible with
  * the server-side, but the defaults work in most cases.
  */
-var hexcase = 0;  /* hex output format. 0 - lowercase; 1 - uppercase        */
-var b64pad  = ""; /* base-64 pad character. "=" for strict RFC compliance   */
+var hexcase = 0;
+/* hex output format. 0 - lowercase; 1 - uppercase        */
+var b64pad = "";
+/* base-64 pad character. "=" for strict RFC compliance   */
 
 /*
  * These are the functions you'll usually want to call
  * They take string arguments and return either hex or base-64 encoded strings
  */
-function hex_sha512(s)    { return rstr2hex(rstr_sha512(str2rstr_utf8(s))); }
-function b64_sha512(s)    { return rstr2b64(rstr_sha512(str2rstr_utf8(s))); }
-function any_sha512(s, e) { return rstr2any(rstr_sha512(str2rstr_utf8(s)), e);}
-function hex_hmac_sha512(k, d)
-  { return rstr2hex(rstr_hmac_sha512(str2rstr_utf8(k), str2rstr_utf8(d))); }
-function b64_hmac_sha512(k, d)
-  { return rstr2b64(rstr_hmac_sha512(str2rstr_utf8(k), str2rstr_utf8(d))); }
-function any_hmac_sha512(k, d, e)
-  { return rstr2any(rstr_hmac_sha512(str2rstr_utf8(k), str2rstr_utf8(d)), e);}
+function hex_sha512(s) {
+    return rstr2hex(rstr_sha512(str2rstr_utf8(s)));
+}
+function b64_sha512(s) {
+    return rstr2b64(rstr_sha512(str2rstr_utf8(s)));
+}
+function any_sha512(s, e) {
+    return rstr2any(rstr_sha512(str2rstr_utf8(s)), e);
+}
+function hex_hmac_sha512(k, d) {
+    return rstr2hex(rstr_hmac_sha512(str2rstr_utf8(k), str2rstr_utf8(d)));
+}
+function b64_hmac_sha512(k, d) {
+    return rstr2b64(rstr_hmac_sha512(str2rstr_utf8(k), str2rstr_utf8(d)));
+}
+function any_hmac_sha512(k, d, e) {
+    return rstr2any(rstr_hmac_sha512(str2rstr_utf8(k), str2rstr_utf8(d)), e);
+}
 
 /*
  * Perform a simple self-test to see if the VM is working
  */
-function sha512_vm_test()
-{
-  return hex_sha512("abc").toLowerCase() ==
-    "ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a" +
-    "2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f";
+function sha512_vm_test() {
+    return hex_sha512("abc").toLowerCase() ==
+        "ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a" +
+        "2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f";
 }
 
 /*
  * Calculate the SHA-512 of a raw string
  */
-function rstr_sha512(s)
-{
-  return binb2rstr(binb_sha512(rstr2binb(s), s.length * 8));
+function rstr_sha512(s) {
+    return binb2rstr(binb_sha512(rstr2binb(s), s.length * 8));
 }
 
 /*
  * Calculate the HMAC-SHA-512 of a key and some data (raw strings)
  */
-function rstr_hmac_sha512(key, data)
-{
-  var bkey = rstr2binb(key);
-  if(bkey.length > 32) bkey = binb_sha512(bkey, key.length * 8);
+function rstr_hmac_sha512(key, data) {
+    var bkey = rstr2binb(key);
+    if (bkey.length > 32) bkey = binb_sha512(bkey, key.length * 8);
 
-  var ipad = Array(32), opad = Array(32);
-  for(var i = 0; i < 32; i++)
-  {
-    ipad[i] = bkey[i] ^ 0x36363636;
-    opad[i] = bkey[i] ^ 0x5C5C5C5C;
-  }
+    var ipad = Array(32), opad = Array(32);
+    for (var i = 0; i < 32; i++) {
+        ipad[i] = bkey[i] ^ 0x36363636;
+        opad[i] = bkey[i] ^ 0x5C5C5C5C;
+    }
 
-  var hash = binb_sha512(ipad.concat(rstr2binb(data)), 1024 + data.length * 8);
-  return binb2rstr(binb_sha512(opad.concat(hash), 1024 + 512));
+    var hash = binb_sha512(ipad.concat(rstr2binb(data)), 1024 + data.length * 8);
+    return binb2rstr(binb_sha512(opad.concat(hash), 1024 + 512));
 }
 
 /*
  * Convert a raw string to a hex string
  */
-function rstr2hex(input)
-{
-  try { hexcase } catch(e) { hexcase=0; }
-  var hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
-  var output = "";
-  var x;
-  for(var i = 0; i < input.length; i++)
-  {
-    x = input.charCodeAt(i);
-    output += hex_tab.charAt((x >>> 4) & 0x0F)
-           +  hex_tab.charAt( x        & 0x0F);
-  }
-  return output;
+function rstr2hex(input) {
+    try {
+        hexcase
+    } catch (e) {
+        hexcase = 0;
+    }
+    var hex_tab = hexcase ? "0123456789ABCDEF" : "0123456789abcdef";
+    var output = "";
+    var x;
+    for (var i = 0; i < input.length; i++) {
+        x = input.charCodeAt(i);
+        output += hex_tab.charAt((x >>> 4) & 0x0F)
+            + hex_tab.charAt(x & 0x0F);
+    }
+    return output;
 }
 
 /*
  * Convert a raw string to a base-64 string
  */
-function rstr2b64(input)
-{
-  try { b64pad } catch(e) { b64pad=''; }
-  var tab = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-  var output = "";
-  var len = input.length;
-  for(var i = 0; i < len; i += 3)
-  {
-    var triplet = (input.charCodeAt(i) << 16)
-                | (i + 1 < len ? input.charCodeAt(i+1) << 8 : 0)
-                | (i + 2 < len ? input.charCodeAt(i+2)      : 0);
-    for(var j = 0; j < 4; j++)
-    {
-      if(i * 8 + j * 6 > input.length * 8) output += b64pad;
-      else output += tab.charAt((triplet >>> 6*(3-j)) & 0x3F);
+function rstr2b64(input) {
+    try {
+        b64pad
+    } catch (e) {
+        b64pad = '';
     }
-  }
-  return output;
+    var tab = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    var output = "";
+    var len = input.length;
+    for (var i = 0; i < len; i += 3) {
+        var triplet = (input.charCodeAt(i) << 16)
+            | (i + 1 < len ? input.charCodeAt(i + 1) << 8 : 0)
+            | (i + 2 < len ? input.charCodeAt(i + 2) : 0);
+        for (var j = 0; j < 4; j++) {
+            if (i * 8 + j * 6 > input.length * 8) output += b64pad;
+            else output += tab.charAt((triplet >>> 6 * (3 - j)) & 0x3F);
+        }
+    }
+    return output;
 }
 
 /*
  * Convert a raw string to an arbitrary string encoding
  */
-function rstr2any(input, encoding)
-{
-  var divisor = encoding.length;
-  var i, j, q, x, quotient;
+function rstr2any(input, encoding) {
+    var divisor = encoding.length;
+    var i, j, q, x, quotient;
 
-  /* Convert to an array of 16-bit big-endian values, forming the dividend */
-  var dividend = Array(Math.ceil(input.length / 2));
-  for(i = 0; i < dividend.length; i++)
-  {
-    dividend[i] = (input.charCodeAt(i * 2) << 8) | input.charCodeAt(i * 2 + 1);
-  }
-
-  /*
-   * Repeatedly perform a long division. The binary array forms the dividend,
-   * the length of the encoding is the divisor. Once computed, the quotient
-   * forms the dividend for the next step. All remainders are stored for later
-   * use.
-   */
-  var full_length = Math.ceil(input.length * 8 /
-                                    (Math.log(encoding.length) / Math.log(2)));
-  var remainders = Array(full_length);
-  for(j = 0; j < full_length; j++)
-  {
-    quotient = Array();
-    x = 0;
-    for(i = 0; i < dividend.length; i++)
-    {
-      x = (x << 16) + dividend[i];
-      q = Math.floor(x / divisor);
-      x -= q * divisor;
-      if(quotient.length > 0 || q > 0)
-        quotient[quotient.length] = q;
+    /* Convert to an array of 16-bit big-endian values, forming the dividend */
+    var dividend = Array(Math.ceil(input.length / 2));
+    for (i = 0; i < dividend.length; i++) {
+        dividend[i] = (input.charCodeAt(i * 2) << 8) | input.charCodeAt(i * 2 + 1);
     }
-    remainders[j] = x;
-    dividend = quotient;
-  }
 
-  /* Convert the remainders to the output string */
-  var output = "";
-  for(i = remainders.length - 1; i >= 0; i--)
-    output += encoding.charAt(remainders[i]);
+    /*
+     * Repeatedly perform a long division. The binary array forms the dividend,
+     * the length of the encoding is the divisor. Once computed, the quotient
+     * forms the dividend for the next step. All remainders are stored for later
+     * use.
+     */
+    var full_length = Math.ceil(input.length * 8 /
+        (Math.log(encoding.length) / Math.log(2)));
+    var remainders = Array(full_length);
+    for (j = 0; j < full_length; j++) {
+        quotient = Array();
+        x = 0;
+        for (i = 0; i < dividend.length; i++) {
+            x = (x << 16) + dividend[i];
+            q = Math.floor(x / divisor);
+            x -= q * divisor;
+            if (quotient.length > 0 || q > 0)
+                quotient[quotient.length] = q;
+        }
+        remainders[j] = x;
+        dividend = quotient;
+    }
 
-  return output;
+    /* Convert the remainders to the output string */
+    var output = "";
+    for (i = remainders.length - 1; i >= 0; i--)
+        output += encoding.charAt(remainders[i]);
+
+    return output;
 }
 
 /*
  * Encode a string as utf-8.
  * For efficiency, this assumes the input is valid utf-16.
  */
-function str2rstr_utf8(input)
-{
-  var output = "";
-  var i = -1;
-  var x, y;
+function str2rstr_utf8(input) {
+    var output = "";
+    var i = -1;
+    var x, y;
 
-  while(++i < input.length)
-  {
-    /* Decode utf-16 surrogate pairs */
-    x = input.charCodeAt(i);
-    y = i + 1 < input.length ? input.charCodeAt(i + 1) : 0;
-    if(0xD800 <= x && x <= 0xDBFF && 0xDC00 <= y && y <= 0xDFFF)
-    {
-      x = 0x10000 + ((x & 0x03FF) << 10) + (y & 0x03FF);
-      i++;
+    while (++i < input.length) {
+        /* Decode utf-16 surrogate pairs */
+        x = input.charCodeAt(i);
+        y = i + 1 < input.length ? input.charCodeAt(i + 1) : 0;
+        if (0xD800 <= x && x <= 0xDBFF && 0xDC00 <= y && y <= 0xDFFF) {
+            x = 0x10000 + ((x & 0x03FF) << 10) + (y & 0x03FF);
+            i++;
+        }
+
+        /* Encode output as utf-8 */
+        if (x <= 0x7F)
+            output += String.fromCharCode(x);
+        else if (x <= 0x7FF)
+            output += String.fromCharCode(0xC0 | ((x >>> 6 ) & 0x1F),
+                0x80 | ( x & 0x3F));
+        else if (x <= 0xFFFF)
+            output += String.fromCharCode(0xE0 | ((x >>> 12) & 0x0F),
+                0x80 | ((x >>> 6 ) & 0x3F),
+                0x80 | ( x & 0x3F));
+        else if (x <= 0x1FFFFF)
+            output += String.fromCharCode(0xF0 | ((x >>> 18) & 0x07),
+                0x80 | ((x >>> 12) & 0x3F),
+                0x80 | ((x >>> 6 ) & 0x3F),
+                0x80 | ( x & 0x3F));
     }
-
-    /* Encode output as utf-8 */
-    if(x <= 0x7F)
-      output += String.fromCharCode(x);
-    else if(x <= 0x7FF)
-      output += String.fromCharCode(0xC0 | ((x >>> 6 ) & 0x1F),
-                                    0x80 | ( x         & 0x3F));
-    else if(x <= 0xFFFF)
-      output += String.fromCharCode(0xE0 | ((x >>> 12) & 0x0F),
-                                    0x80 | ((x >>> 6 ) & 0x3F),
-                                    0x80 | ( x         & 0x3F));
-    else if(x <= 0x1FFFFF)
-      output += String.fromCharCode(0xF0 | ((x >>> 18) & 0x07),
-                                    0x80 | ((x >>> 12) & 0x3F),
-                                    0x80 | ((x >>> 6 ) & 0x3F),
-                                    0x80 | ( x         & 0x3F));
-  }
-  return output;
+    return output;
 }
 
 /*
  * Encode a string as utf-16
  */
-function str2rstr_utf16le(input)
-{
-  var output = "";
-  for(var i = 0; i < input.length; i++)
-    output += String.fromCharCode( input.charCodeAt(i)        & 0xFF,
-                                  (input.charCodeAt(i) >>> 8) & 0xFF);
-  return output;
+function str2rstr_utf16le(input) {
+    var output = "";
+    for (var i = 0; i < input.length; i++)
+        output += String.fromCharCode(input.charCodeAt(i) & 0xFF,
+            (input.charCodeAt(i) >>> 8) & 0xFF);
+    return output;
 }
 
-function str2rstr_utf16be(input)
-{
-  var output = "";
-  for(var i = 0; i < input.length; i++)
-    output += String.fromCharCode((input.charCodeAt(i) >>> 8) & 0xFF,
-                                   input.charCodeAt(i)        & 0xFF);
-  return output;
+function str2rstr_utf16be(input) {
+    var output = "";
+    for (var i = 0; i < input.length; i++)
+        output += String.fromCharCode((input.charCodeAt(i) >>> 8) & 0xFF,
+            input.charCodeAt(i) & 0xFF);
+    return output;
 }
 
 /*
  * Convert a raw string to an array of big-endian words
  * Characters >255 have their high-byte silently ignored.
  */
-function rstr2binb(input)
-{
-  var output = Array(input.length >> 2);
-  for(var i = 0; i < output.length; i++)
-    output[i] = 0;
-  for(var i = 0; i < input.length * 8; i += 8)
-    output[i>>5] |= (input.charCodeAt(i / 8) & 0xFF) << (24 - i % 32);
-  return output;
+function rstr2binb(input) {
+    var output = Array(input.length >> 2);
+    for (var i = 0; i < output.length; i++)
+        output[i] = 0;
+    for (var i = 0; i < input.length * 8; i += 8)
+        output[i >> 5] |= (input.charCodeAt(i / 8) & 0xFF) << (24 - i % 32);
+    return output;
 }
 
 /*
  * Convert an array of big-endian words to a string
  */
-function binb2rstr(input)
-{
-  var output = "";
-  for(var i = 0; i < input.length * 32; i += 8)
-    output += String.fromCharCode((input[i>>5] >>> (24 - i % 32)) & 0xFF);
-  return output;
+function binb2rstr(input) {
+    var output = "";
+    for (var i = 0; i < input.length * 32; i += 8)
+        output += String.fromCharCode((input[i >> 5] >>> (24 - i % 32)) & 0xFF);
+    return output;
 }
 
 /*
  * Calculate the SHA-512 of an array of big-endian dwords, and a bit length
  */
 var sha512_k;
-function binb_sha512(x, len)
-{
-  if(sha512_k == undefined)
-  {
-    //SHA512 constants
-    sha512_k = new Array(
-new int64(0x428a2f98, -685199838), new int64(0x71374491, 0x23ef65cd),
-new int64(-1245643825, -330482897), new int64(-373957723, -2121671748),
-new int64(0x3956c25b, -213338824), new int64(0x59f111f1, -1241133031),
-new int64(-1841331548, -1357295717), new int64(-1424204075, -630357736),
-new int64(-670586216, -1560083902), new int64(0x12835b01, 0x45706fbe),
-new int64(0x243185be, 0x4ee4b28c), new int64(0x550c7dc3, -704662302),
-new int64(0x72be5d74, -226784913), new int64(-2132889090, 0x3b1696b1),
-new int64(-1680079193, 0x25c71235), new int64(-1046744716, -815192428),
-new int64(-459576895, -1628353838), new int64(-272742522, 0x384f25e3),
-new int64(0xfc19dc6, -1953704523), new int64(0x240ca1cc, 0x77ac9c65),
-new int64(0x2de92c6f, 0x592b0275), new int64(0x4a7484aa, 0x6ea6e483),
-new int64(0x5cb0a9dc, -1119749164), new int64(0x76f988da, -2096016459),
-new int64(-1740746414, -295247957), new int64(-1473132947, 0x2db43210),
-new int64(-1341970488, -1728372417), new int64(-1084653625, -1091629340),
-new int64(-958395405, 0x3da88fc2), new int64(-710438585, -1828018395),
-new int64(0x6ca6351, -536640913), new int64(0x14292967, 0xa0e6e70),
-new int64(0x27b70a85, 0x46d22ffc), new int64(0x2e1b2138, 0x5c26c926),
-new int64(0x4d2c6dfc, 0x5ac42aed), new int64(0x53380d13, -1651133473),
-new int64(0x650a7354, -1951439906), new int64(0x766a0abb, 0x3c77b2a8),
-new int64(-2117940946, 0x47edaee6), new int64(-1838011259, 0x1482353b),
-new int64(-1564481375, 0x4cf10364), new int64(-1474664885, -1136513023),
-new int64(-1035236496, -789014639), new int64(-949202525, 0x654be30),
-new int64(-778901479, -688958952), new int64(-694614492, 0x5565a910),
-new int64(-200395387, 0x5771202a), new int64(0x106aa070, 0x32bbd1b8),
-new int64(0x19a4c116, -1194143544), new int64(0x1e376c08, 0x5141ab53),
-new int64(0x2748774c, -544281703), new int64(0x34b0bcb5, -509917016),
-new int64(0x391c0cb3, -976659869), new int64(0x4ed8aa4a, -482243893),
-new int64(0x5b9cca4f, 0x7763e373), new int64(0x682e6ff3, -692930397),
-new int64(0x748f82ee, 0x5defb2fc), new int64(0x78a5636f, 0x43172f60),
-new int64(-2067236844, -1578062990), new int64(-1933114872, 0x1a6439ec),
-new int64(-1866530822, 0x23631e28), new int64(-1538233109, -561857047),
-new int64(-1090935817, -1295615723), new int64(-965641998, -479046869),
-new int64(-903397682, -366583396), new int64(-779700025, 0x21c0c207),
-new int64(-354779690, -840897762), new int64(-176337025, -294727304),
-new int64(0x6f067aa, 0x72176fba), new int64(0xa637dc5, -1563912026),
-new int64(0x113f9804, -1090974290), new int64(0x1b710b35, 0x131c471b),
-new int64(0x28db77f5, 0x23047d84), new int64(0x32caab7b, 0x40c72493),
-new int64(0x3c9ebe0a, 0x15c9bebc), new int64(0x431d67c4, -1676669620),
-new int64(0x4cc5d4be, -885112138), new int64(0x597f299c, -60457430),
-new int64(0x5fcb6fab, 0x3ad6faec), new int64(0x6c44198c, 0x4a475817));
-  }
-
-  //Initial hash values
-  var H = new Array(
-new int64(0x6a09e667, -205731576),
-new int64(-1150833019, -2067093701),
-new int64(0x3c6ef372, -23791573),
-new int64(-1521486534, 0x5f1d36f1),
-new int64(0x510e527f, -1377402159),
-new int64(-1694144372, 0x2b3e6c1f),
-new int64(0x1f83d9ab, -79577749),
-new int64(0x5be0cd19, 0x137e2179));
-
-  var T1 = new int64(0, 0),
-    T2 = new int64(0, 0),
-    a = new int64(0,0),
-    b = new int64(0,0),
-    c = new int64(0,0),
-    d = new int64(0,0),
-    e = new int64(0,0),
-    f = new int64(0,0),
-    g = new int64(0,0),
-    h = new int64(0,0),
-    //Temporary variables not specified by the document
-    s0 = new int64(0, 0),
-    s1 = new int64(0, 0),
-    Ch = new int64(0, 0),
-    Maj = new int64(0, 0),
-    r1 = new int64(0, 0),
-    r2 = new int64(0, 0),
-    r3 = new int64(0, 0);
-  var j, i;
-  var W = new Array(80);
-  for(i=0; i<80; i++)
-    W[i] = new int64(0, 0);
-
-  // append padding to the source string. The format is described in the FIPS.
-  x[len >> 5] |= 0x80 << (24 - (len & 0x1f));
-  x[((len + 128 >> 10)<< 5) + 31] = len;
-
-  for(i = 0; i<x.length; i+=32) //32 dwords is the block size
-  {
-    int64copy(a, H[0]);
-    int64copy(b, H[1]);
-    int64copy(c, H[2]);
-    int64copy(d, H[3]);
-    int64copy(e, H[4]);
-    int64copy(f, H[5]);
-    int64copy(g, H[6]);
-    int64copy(h, H[7]);
-
-    for(j=0; j<16; j++)
-    {
-        W[j].h = x[i + 2*j];
-        W[j].l = x[i + 2*j + 1];
+function binb_sha512(x, len) {
+    if (sha512_k == undefined) {
+        //SHA512 constants
+        sha512_k = new Array(
+            new int64(0x428a2f98, -685199838), new int64(0x71374491, 0x23ef65cd),
+            new int64(-1245643825, -330482897), new int64(-373957723, -2121671748),
+            new int64(0x3956c25b, -213338824), new int64(0x59f111f1, -1241133031),
+            new int64(-1841331548, -1357295717), new int64(-1424204075, -630357736),
+            new int64(-670586216, -1560083902), new int64(0x12835b01, 0x45706fbe),
+            new int64(0x243185be, 0x4ee4b28c), new int64(0x550c7dc3, -704662302),
+            new int64(0x72be5d74, -226784913), new int64(-2132889090, 0x3b1696b1),
+            new int64(-1680079193, 0x25c71235), new int64(-1046744716, -815192428),
+            new int64(-459576895, -1628353838), new int64(-272742522, 0x384f25e3),
+            new int64(0xfc19dc6, -1953704523), new int64(0x240ca1cc, 0x77ac9c65),
+            new int64(0x2de92c6f, 0x592b0275), new int64(0x4a7484aa, 0x6ea6e483),
+            new int64(0x5cb0a9dc, -1119749164), new int64(0x76f988da, -2096016459),
+            new int64(-1740746414, -295247957), new int64(-1473132947, 0x2db43210),
+            new int64(-1341970488, -1728372417), new int64(-1084653625, -1091629340),
+            new int64(-958395405, 0x3da88fc2), new int64(-710438585, -1828018395),
+            new int64(0x6ca6351, -536640913), new int64(0x14292967, 0xa0e6e70),
+            new int64(0x27b70a85, 0x46d22ffc), new int64(0x2e1b2138, 0x5c26c926),
+            new int64(0x4d2c6dfc, 0x5ac42aed), new int64(0x53380d13, -1651133473),
+            new int64(0x650a7354, -1951439906), new int64(0x766a0abb, 0x3c77b2a8),
+            new int64(-2117940946, 0x47edaee6), new int64(-1838011259, 0x1482353b),
+            new int64(-1564481375, 0x4cf10364), new int64(-1474664885, -1136513023),
+            new int64(-1035236496, -789014639), new int64(-949202525, 0x654be30),
+            new int64(-778901479, -688958952), new int64(-694614492, 0x5565a910),
+            new int64(-200395387, 0x5771202a), new int64(0x106aa070, 0x32bbd1b8),
+            new int64(0x19a4c116, -1194143544), new int64(0x1e376c08, 0x5141ab53),
+            new int64(0x2748774c, -544281703), new int64(0x34b0bcb5, -509917016),
+            new int64(0x391c0cb3, -976659869), new int64(0x4ed8aa4a, -482243893),
+            new int64(0x5b9cca4f, 0x7763e373), new int64(0x682e6ff3, -692930397),
+            new int64(0x748f82ee, 0x5defb2fc), new int64(0x78a5636f, 0x43172f60),
+            new int64(-2067236844, -1578062990), new int64(-1933114872, 0x1a6439ec),
+            new int64(-1866530822, 0x23631e28), new int64(-1538233109, -561857047),
+            new int64(-1090935817, -1295615723), new int64(-965641998, -479046869),
+            new int64(-903397682, -366583396), new int64(-779700025, 0x21c0c207),
+            new int64(-354779690, -840897762), new int64(-176337025, -294727304),
+            new int64(0x6f067aa, 0x72176fba), new int64(0xa637dc5, -1563912026),
+            new int64(0x113f9804, -1090974290), new int64(0x1b710b35, 0x131c471b),
+            new int64(0x28db77f5, 0x23047d84), new int64(0x32caab7b, 0x40c72493),
+            new int64(0x3c9ebe0a, 0x15c9bebc), new int64(0x431d67c4, -1676669620),
+            new int64(0x4cc5d4be, -885112138), new int64(0x597f299c, -60457430),
+            new int64(0x5fcb6fab, 0x3ad6faec), new int64(0x6c44198c, 0x4a475817));
     }
 
-    for(j=16; j<80; j++)
-    {
-      //sigma1
-      int64rrot(r1, W[j-2], 19);
-      int64revrrot(r2, W[j-2], 29);
-      int64shr(r3, W[j-2], 6);
-      s1.l = r1.l ^ r2.l ^ r3.l;
-      s1.h = r1.h ^ r2.h ^ r3.h;
-      //sigma0
-      int64rrot(r1, W[j-15], 1);
-      int64rrot(r2, W[j-15], 8);
-      int64shr(r3, W[j-15], 7);
-      s0.l = r1.l ^ r2.l ^ r3.l;
-      s0.h = r1.h ^ r2.h ^ r3.h;
+    //Initial hash values
+    var H = new Array(
+        new int64(0x6a09e667, -205731576),
+        new int64(-1150833019, -2067093701),
+        new int64(0x3c6ef372, -23791573),
+        new int64(-1521486534, 0x5f1d36f1),
+        new int64(0x510e527f, -1377402159),
+        new int64(-1694144372, 0x2b3e6c1f),
+        new int64(0x1f83d9ab, -79577749),
+        new int64(0x5be0cd19, 0x137e2179));
 
-      int64add4(W[j], s1, W[j-7], s0, W[j-16]);
+    var T1 = new int64(0, 0),
+        T2 = new int64(0, 0),
+        a = new int64(0, 0),
+        b = new int64(0, 0),
+        c = new int64(0, 0),
+        d = new int64(0, 0),
+        e = new int64(0, 0),
+        f = new int64(0, 0),
+        g = new int64(0, 0),
+        h = new int64(0, 0),
+        //Temporary variables not specified by the document
+        s0 = new int64(0, 0),
+        s1 = new int64(0, 0),
+        Ch = new int64(0, 0),
+        Maj = new int64(0, 0),
+        r1 = new int64(0, 0),
+        r2 = new int64(0, 0),
+        r3 = new int64(0, 0);
+    var j, i;
+    var W = new Array(80);
+    for (i = 0; i < 80; i++)
+        W[i] = new int64(0, 0);
+
+    // append padding to the source string. The format is described in the FIPS.
+    x[len >> 5] |= 0x80 << (24 - (len & 0x1f));
+    x[((len + 128 >> 10) << 5) + 31] = len;
+
+    for (i = 0; i < x.length; i += 32) //32 dwords is the block size
+    {
+        int64copy(a, H[0]);
+        int64copy(b, H[1]);
+        int64copy(c, H[2]);
+        int64copy(d, H[3]);
+        int64copy(e, H[4]);
+        int64copy(f, H[5]);
+        int64copy(g, H[6]);
+        int64copy(h, H[7]);
+
+        for (j = 0; j < 16; j++) {
+            W[j].h = x[i + 2 * j];
+            W[j].l = x[i + 2 * j + 1];
+        }
+
+        for (j = 16; j < 80; j++) {
+            //sigma1
+            int64rrot(r1, W[j - 2], 19);
+            int64revrrot(r2, W[j - 2], 29);
+            int64shr(r3, W[j - 2], 6);
+            s1.l = r1.l ^ r2.l ^ r3.l;
+            s1.h = r1.h ^ r2.h ^ r3.h;
+            //sigma0
+            int64rrot(r1, W[j - 15], 1);
+            int64rrot(r2, W[j - 15], 8);
+            int64shr(r3, W[j - 15], 7);
+            s0.l = r1.l ^ r2.l ^ r3.l;
+            s0.h = r1.h ^ r2.h ^ r3.h;
+
+            int64add4(W[j], s1, W[j - 7], s0, W[j - 16]);
+        }
+
+        for (j = 0; j < 80; j++) {
+            //Ch
+            Ch.l = (e.l & f.l) ^ (~e.l & g.l);
+            Ch.h = (e.h & f.h) ^ (~e.h & g.h);
+
+            //Sigma1
+            int64rrot(r1, e, 14);
+            int64rrot(r2, e, 18);
+            int64revrrot(r3, e, 9);
+            s1.l = r1.l ^ r2.l ^ r3.l;
+            s1.h = r1.h ^ r2.h ^ r3.h;
+
+            //Sigma0
+            int64rrot(r1, a, 28);
+            int64revrrot(r2, a, 2);
+            int64revrrot(r3, a, 7);
+            s0.l = r1.l ^ r2.l ^ r3.l;
+            s0.h = r1.h ^ r2.h ^ r3.h;
+
+            //Maj
+            Maj.l = (a.l & b.l) ^ (a.l & c.l) ^ (b.l & c.l);
+            Maj.h = (a.h & b.h) ^ (a.h & c.h) ^ (b.h & c.h);
+
+            int64add5(T1, h, s1, Ch, sha512_k[j], W[j]);
+            int64add(T2, s0, Maj);
+
+            int64copy(h, g);
+            int64copy(g, f);
+            int64copy(f, e);
+            int64add(e, d, T1);
+            int64copy(d, c);
+            int64copy(c, b);
+            int64copy(b, a);
+            int64add(a, T1, T2);
+        }
+        int64add(H[0], H[0], a);
+        int64add(H[1], H[1], b);
+        int64add(H[2], H[2], c);
+        int64add(H[3], H[3], d);
+        int64add(H[4], H[4], e);
+        int64add(H[5], H[5], f);
+        int64add(H[6], H[6], g);
+        int64add(H[7], H[7], h);
     }
 
-    for(j = 0; j < 80; j++)
-    {
-      //Ch
-      Ch.l = (e.l & f.l) ^ (~e.l & g.l);
-      Ch.h = (e.h & f.h) ^ (~e.h & g.h);
-
-      //Sigma1
-      int64rrot(r1, e, 14);
-      int64rrot(r2, e, 18);
-      int64revrrot(r3, e, 9);
-      s1.l = r1.l ^ r2.l ^ r3.l;
-      s1.h = r1.h ^ r2.h ^ r3.h;
-
-      //Sigma0
-      int64rrot(r1, a, 28);
-      int64revrrot(r2, a, 2);
-      int64revrrot(r3, a, 7);
-      s0.l = r1.l ^ r2.l ^ r3.l;
-      s0.h = r1.h ^ r2.h ^ r3.h;
-
-      //Maj
-      Maj.l = (a.l & b.l) ^ (a.l & c.l) ^ (b.l & c.l);
-      Maj.h = (a.h & b.h) ^ (a.h & c.h) ^ (b.h & c.h);
-
-      int64add5(T1, h, s1, Ch, sha512_k[j], W[j]);
-      int64add(T2, s0, Maj);
-
-      int64copy(h, g);
-      int64copy(g, f);
-      int64copy(f, e);
-      int64add(e, d, T1);
-      int64copy(d, c);
-      int64copy(c, b);
-      int64copy(b, a);
-      int64add(a, T1, T2);
+    //represent the hash as an array of 32-bit dwords
+    var hash = new Array(16);
+    for (i = 0; i < 8; i++) {
+        hash[2 * i] = H[i].h;
+        hash[2 * i + 1] = H[i].l;
     }
-    int64add(H[0], H[0], a);
-    int64add(H[1], H[1], b);
-    int64add(H[2], H[2], c);
-    int64add(H[3], H[3], d);
-    int64add(H[4], H[4], e);
-    int64add(H[5], H[5], f);
-    int64add(H[6], H[6], g);
-    int64add(H[7], H[7], h);
-  }
-
-  //represent the hash as an array of 32-bit dwords
-  var hash = new Array(16);
-  for(i=0; i<8; i++)
-  {
-    hash[2*i] = H[i].h;
-    hash[2*i + 1] = H[i].l;
-  }
-  return hash;
+    return hash;
 }
 
 //A constructor for 64-bit numbers
-function int64(h, l)
-{
-  this.h = h;
-  this.l = l;
-  //this.toString = int64toString;
+function int64(h, l) {
+    this.h = h;
+    this.l = l;
+    //this.toString = int64toString;
 }
 
 //Copies src into dst, assuming both are 64-bit numbers
-function int64copy(dst, src)
-{
-  dst.h = src.h;
-  dst.l = src.l;
+function int64copy(dst, src) {
+    dst.h = src.h;
+    dst.l = src.l;
 }
 
 //Right-rotates a 64-bit number by shift
 //Won't handle cases of shift>=32
 //The function revrrot() is for that
-function int64rrot(dst, x, shift)
-{
-    dst.l = (x.l >>> shift) | (x.h << (32-shift));
-    dst.h = (x.h >>> shift) | (x.l << (32-shift));
+function int64rrot(dst, x, shift) {
+    dst.l = (x.l >>> shift) | (x.h << (32 - shift));
+    dst.h = (x.h >>> shift) | (x.l << (32 - shift));
 }
 
 //Reverses the dwords of the source and then rotates right by shift.
 //This is equivalent to rotation by 32+shift
-function int64revrrot(dst, x, shift)
-{
-    dst.l = (x.h >>> shift) | (x.l << (32-shift));
-    dst.h = (x.l >>> shift) | (x.h << (32-shift));
+function int64revrrot(dst, x, shift) {
+    dst.l = (x.h >>> shift) | (x.l << (32 - shift));
+    dst.h = (x.l >>> shift) | (x.h << (32 - shift));
 }
 
 //Bitwise-shifts right a 64-bit number by shift
 //Won't handle shift>=32, but it's never needed in SHA512
-function int64shr(dst, x, shift)
-{
-    dst.l = (x.l >>> shift) | (x.h << (32-shift));
+function int64shr(dst, x, shift) {
+    dst.l = (x.l >>> shift) | (x.h << (32 - shift));
     dst.h = (x.h >>> shift);
 }
 
 //Adds two 64-bit numbers
 //Like the original implementation, does not rely on 32-bit operations
-function int64add(dst, x, y)
-{
-   var w0 = (x.l & 0xffff) + (y.l & 0xffff);
-   var w1 = (x.l >>> 16) + (y.l >>> 16) + (w0 >>> 16);
-   var w2 = (x.h & 0xffff) + (y.h & 0xffff) + (w1 >>> 16);
-   var w3 = (x.h >>> 16) + (y.h >>> 16) + (w2 >>> 16);
-   dst.l = (w0 & 0xffff) | (w1 << 16);
-   dst.h = (w2 & 0xffff) | (w3 << 16);
+function int64add(dst, x, y) {
+    var w0 = (x.l & 0xffff) + (y.l & 0xffff);
+    var w1 = (x.l >>> 16) + (y.l >>> 16) + (w0 >>> 16);
+    var w2 = (x.h & 0xffff) + (y.h & 0xffff) + (w1 >>> 16);
+    var w3 = (x.h >>> 16) + (y.h >>> 16) + (w2 >>> 16);
+    dst.l = (w0 & 0xffff) | (w1 << 16);
+    dst.h = (w2 & 0xffff) | (w3 << 16);
 }
 
 //Same, except with 4 addends. Works faster than adding them one by one.
-function int64add4(dst, a, b, c, d)
-{
-   var w0 = (a.l & 0xffff) + (b.l & 0xffff) + (c.l & 0xffff) + (d.l & 0xffff);
-   var w1 = (a.l >>> 16) + (b.l >>> 16) + (c.l >>> 16) + (d.l >>> 16) + (w0 >>> 16);
-   var w2 = (a.h & 0xffff) + (b.h & 0xffff) + (c.h & 0xffff) + (d.h & 0xffff) + (w1 >>> 16);
-   var w3 = (a.h >>> 16) + (b.h >>> 16) + (c.h >>> 16) + (d.h >>> 16) + (w2 >>> 16);
-   dst.l = (w0 & 0xffff) | (w1 << 16);
-   dst.h = (w2 & 0xffff) | (w3 << 16);
+function int64add4(dst, a, b, c, d) {
+    var w0 = (a.l & 0xffff) + (b.l & 0xffff) + (c.l & 0xffff) + (d.l & 0xffff);
+    var w1 = (a.l >>> 16) + (b.l >>> 16) + (c.l >>> 16) + (d.l >>> 16) + (w0 >>> 16);
+    var w2 = (a.h & 0xffff) + (b.h & 0xffff) + (c.h & 0xffff) + (d.h & 0xffff) + (w1 >>> 16);
+    var w3 = (a.h >>> 16) + (b.h >>> 16) + (c.h >>> 16) + (d.h >>> 16) + (w2 >>> 16);
+    dst.l = (w0 & 0xffff) | (w1 << 16);
+    dst.h = (w2 & 0xffff) | (w3 << 16);
 }
 
 //Same, except with 5 addends
-function int64add5(dst, a, b, c, d, e)
-{
-   var w0 = (a.l & 0xffff) + (b.l & 0xffff) + (c.l & 0xffff) + (d.l & 0xffff) + (e.l & 0xffff);
-   var w1 = (a.l >>> 16) + (b.l >>> 16) + (c.l >>> 16) + (d.l >>> 16) + (e.l >>> 16) + (w0 >>> 16);
-   var w2 = (a.h & 0xffff) + (b.h & 0xffff) + (c.h & 0xffff) + (d.h & 0xffff) + (e.h & 0xffff) + (w1 >>> 16);
-   var w3 = (a.h >>> 16) + (b.h >>> 16) + (c.h >>> 16) + (d.h >>> 16) + (e.h >>> 16) + (w2 >>> 16);
-   dst.l = (w0 & 0xffff) | (w1 << 16);
-   dst.h = (w2 & 0xffff) | (w3 << 16);
+function int64add5(dst, a, b, c, d, e) {
+    var w0 = (a.l & 0xffff) + (b.l & 0xffff) + (c.l & 0xffff) + (d.l & 0xffff) + (e.l & 0xffff);
+    var w1 = (a.l >>> 16) + (b.l >>> 16) + (c.l >>> 16) + (d.l >>> 16) + (e.l >>> 16) + (w0 >>> 16);
+    var w2 = (a.h & 0xffff) + (b.h & 0xffff) + (c.h & 0xffff) + (d.h & 0xffff) + (e.h & 0xffff) + (w1 >>> 16);
+    var w3 = (a.h >>> 16) + (b.h >>> 16) + (c.h >>> 16) + (d.h >>> 16) + (e.h >>> 16) + (w2 >>> 16);
+    dst.l = (w0 & 0xffff) | (w1 << 16);
+    dst.h = (w2 & 0xffff) | (w3 << 16);
 }
 
+window.sha512 = {
+    hex: function(val){
+        return hex_sha512(val);
+    },
+
+    b64: function(val){
+        return b64_sha512(val);
+    },
+
+    any: function(s, e){
+        return any_sha512(s, e);
+    },
+
+    hex_hmac: function(k, d){
+        return hex_hmac_sha512(k, d);
+    },
+
+    b64_hmac: function(k, d){
+        return b64_hmac_sha512(k, d);
+    },
+
+    any_hmac: function(k, d, e){
+        return any_hmac_sha512(k, d, e);
+    }
+};
 // Source: js/utils/storage.js
 var storage = {
     key: "MyAppKey",
@@ -2456,16 +2647,23 @@ var storage = {
     },
 
     setItem: function(key, value){
-        window.localStorage.setItem(storage.key + ":" + key, value);
+        window.localStorage.setItem(storage.key + ":" + key, JSON.stringify(value));
     },
 
-    getItem: function(key, default_value){
-        return window.localStorage.getItem(storage.key + ":" + key) || (default_value || null);
+    getItem: function(key, default_value, reviver){
+        var result,
+            value = window.localStorage.getItem(storage.key + ":" + key) || (default_value || null);
+        try {
+            result = JSON.parse(value, reviver);
+        } catch (e) {
+            result = null;
+        }
+        return result;
     },
 
-    getItemPart: function(key, sub_key, default_value){
-        var val = this.getItem(key, default_value);
-        return val !== null && val[sub_key] !== undefined ? val[sub_key] : null;
+    getItemPart: function(key, sub_key, default_value, reviver){
+        var val = this.getItem(key, default_value, reviver);
+        return val !== null && typeof val === 'object' && val[sub_key] !== undefined ? val[sub_key] : null;
     },
 
     delItem: function(key){
@@ -2474,10 +2672,106 @@ var storage = {
 };
 
 window.coreStorage = storage;
+// Source: js/utils/tpl.js
+// var template =
+//     'My skills:' +
+//     '<%if(this.showSkills) {%>' +
+//     '<%for(var index in this.skills) {%>' +
+//     '<a href="#"><%this.skills[index]%></a>' +
+//     '<%}%>' +
+//     '<%} else {%>' +
+//     '<p>none</p>' +
+//     '<%}%>';
+//     console.log(TemplateEngine(template, {
+//     skills: ["js", "html", "css"],
+//     showSkills: true
+// }));
+
+var TemplateEngine = function(html, options) {
+    var re = /<%(.+?)%>/g,
+        reExp = /(^( )?(var|if|for|else|switch|case|break|{|}|;))(.*)?/g,
+        code = 'with(obj) { var r=[];\n',
+        cursor = 0,
+        result,
+        match;
+    var add = function(line, js) {
+        js? (code += line.match(reExp) ? line + '\n' : 'r.push(' + line + ');\n') :
+            (code += line != '' ? 'r.push("' + line.replace(/"/g, '\\"') + '");\n' : '');
+        return add;
+    };
+    while(match = re.exec(html)) {
+        add(html.slice(cursor, match.index))(match[1], true);
+        cursor = match.index + match[0].length;
+    }
+    add(html.substr(cursor, html.length - cursor));
+    code = (code + 'return r.join(""); }').replace(/[\r\t\n]/g, ' ');
+    try { result = new Function('obj', code).apply(options, [options]); }
+    catch(err) { console.error("'" + err.message + "'", " in \n\nCode:\n", code, "\n"); }
+    return result;
+};
+
+window.coreTemplate = TemplateEngine;
+
+$.Template = TemplateEngine;
+// Source: js/utils/utilities.js
+var Utils = {
+    isUrl: function (val) {
+var regexp = /^(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+        return regexp.test(val);
+    },
+
+    isColor: function (val) {
+return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(val);
+    },
+
+    secondsToTime: function(secs) {
+        var hours = Math.floor(secs / (60 * 60));
+
+        var divisor_for_minutes = secs % (60 * 60);
+        var minutes = Math.floor(divisor_for_minutes / 60);
+
+        var divisor_for_seconds = divisor_for_minutes % 60;
+        var seconds = Math.ceil(divisor_for_seconds);
+
+        return {
+            "h": hours,
+            "m": minutes,
+            "s": seconds
+        };
+    },
+
+    hex2rgba: function(hex, alpha){
+        var c;
+        alpha = isNaN(alpha) ? 1 : alpha;
+        if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+            c= hex.substring(1).split('');
+            if(c.length== 3){
+                c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+            }
+            c= '0x'+c.join('');
+            return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+','+alpha+')';
+        }
+        throw new Error('Hex2rgba error. Bad Hex value');
+    },
+
+    random: function(from, to){
+        return Math.floor(Math.random()*(to-from+1)+from);
+    },
+
+    isInt: function(n){
+        return Number(n) === n && n % 1 === 0;
+    },
+
+    isFloat: function(n){
+        return Number(n) === n && n % 1 !== 0;
+    }
+};
+
+window.coreUtils = Utils;
 // Source: js/utils/widget_factory.js
 $.ui = $.ui || {};
 
-var version = $.ui.version = "1.12.0-rc.2";
+var version = $.ui.version = "1.12.1";
 
 var widgetUuid = 0;
 var widgetSlice = Array.prototype.slice;
@@ -2669,35 +2963,42 @@ $.widget.bridge = function( name, object ) {
         var returnValue = this;
 
         if ( isMethodCall ) {
-            this.each( function() {
-                var methodValue;
-                var instance = $.data( this, fullName );
 
-                if ( options === "instance" ) {
-                    returnValue = instance;
-                    return false;
-                }
+            // If this is an empty collection, we need to have the instance method
+            // return undefined instead of the jQuery instance
+            if ( !this.length && options === "instance" ) {
+                returnValue = undefined;
+            } else {
+                this.each( function() {
+                    var methodValue;
+                    var instance = $.data( this, fullName );
 
-                if ( !instance ) {
-                    return $.error( "cannot call methods on " + name +
-                        " prior to initialization; " +
-                        "attempted to call method '" + options + "'" );
-                }
+                    if ( options === "instance" ) {
+                        returnValue = instance;
+                        return false;
+                    }
 
-                if ( !$.isFunction( instance[ options ] ) || options.charAt( 0 ) === "_" ) {
-                    return $.error( "no such method '" + options + "' for " + name +
-                        " widget instance" );
-                }
+                    if ( !instance ) {
+                        return $.error( "cannot call methods on " + name +
+                            " prior to initialization; " +
+                            "attempted to call method '" + options + "'" );
+                    }
 
-                methodValue = instance[ options ].apply( instance, args );
+                    if ( !$.isFunction( instance[ options ] ) || options.charAt( 0 ) === "_" ) {
+                        return $.error( "no such method '" + options + "' for " + name +
+                            " widget instance" );
+                    }
 
-                if ( methodValue !== instance && methodValue !== undefined ) {
-                    returnValue = methodValue && methodValue.jquery ?
-                        returnValue.pushStack( methodValue.get() ) :
-                        methodValue;
-                    return false;
-                }
-            } );
+                    methodValue = instance[ options ].apply( instance, args );
+
+                    if ( methodValue !== instance && methodValue !== undefined ) {
+                        returnValue = methodValue && methodValue.jquery ?
+                            returnValue.pushStack( methodValue.get() ) :
+                            methodValue;
+                        return false;
+                    }
+                } );
+            }
         } else {
 
             // Allow multiple hashes to be passed on init
@@ -2961,6 +3262,10 @@ $.Widget.prototype = {
             }
         }
 
+        this._on( options.element, {
+            "remove": "_untrackClassesElement"
+        } );
+
         if ( options.keys ) {
             processClassString( options.keys.match( /\S+/g ) || [], true );
         }
@@ -2969,6 +3274,15 @@ $.Widget.prototype = {
         }
 
         return full.join( " " );
+    },
+
+    _untrackClassesElement: function( event ) {
+        var that = this;
+        $.each( that.classesElementLookup, function( key, value ) {
+            if ( $.inArray( event.target, value ) !== -1 ) {
+                that.classesElementLookup[ key ] = $( value.not( event.target ).get() );
+            }
+        } );
     },
 
     _removeClass: function( element, keys, extra ) {
@@ -3163,6 +3477,90 @@ $.each( { show: "fadeIn", hide: "fadeOut" }, function( method, defaultEffect ) {
 } );
 
 var widget = $.widget;
+// Source: js/widgets/accordion.js
+$.widget( "corecss.accordion" , {
+
+    version: "1.0.0",
+
+    options: {
+        closeAny: true,
+        onOpen: $.noop,
+        onClose: $.noop
+    },
+
+    _create: function () {
+        var that = this, element = this.element, o = this.options;
+
+        this._setOptionsFromDOM();
+
+        this._createEvents();
+
+        element.data('accordion', this);
+    },
+
+    _createEvents: function(){
+        var that = this, element = this.element, o = this.options;
+
+        element.on("click", ".accordion-item > a.item-header", function(){
+            var frame = $(this).parent();
+            if  (!frame.hasClass('active')) {
+                that._openFrame(frame);
+            } else {
+                that._closeFrame(frame);
+            }
+        });
+    },
+
+    _closeAllFrames: function(){
+        var that = this;
+        var frames = this.element.children('.accordion-item.active');
+        $.each(frames, function(){
+            that._closeFrame($(this));
+        });
+    },
+
+    _openFrame: function(frame){
+        var o = this.options;
+        var content = frame.children('.item-content');
+
+        if (o.closeAny) this._closeAllFrames();
+
+        content.slideDown(o.speed);
+        frame.addClass('active');
+
+        $.CoreCss.callback(o.onOpen, frame);
+    },
+
+    _closeFrame: function(frame){
+        var o = this.options;
+        var content = frame.children('.item-content');
+        content.slideUp(o.speed,function(){
+            frame.removeClass("active");
+        });
+        $.CoreCss.callback(o.onClose, frame);
+    },
+
+    _setOptionsFromDOM: function(){
+        var element = this.element, o = this.options;
+
+        $.each(element.data(), function(key, value){
+            if (key in o) {
+                try {
+                    o[key] = $.parseJSON(value);
+                } catch (e) {
+                    o[key] = value;
+                }
+            }
+        });
+    },
+
+    _destroy: function () {
+    },
+
+    _setOption: function ( key, value ) {
+        this._super('_setOption', key, value);
+    }
+});
 
 // Source: js/widgets/bottomsheet.js
 $.widget("corecss.bottomsheet", {
@@ -3282,734 +3680,389 @@ window.closeBottomSheet = function(target){
 
 
 // Source: js/widgets/calendar.js
-$.widget("corecss.calendar", {
+
+
+$.widget( "corecss.calendar" , {
 
     version: "1.0.0",
 
     options: {
-        format: "yyyy-mm-dd",
-        multiSelect: false,
-        startMode: 'day', //year, month, day
-        weekStart: window.CALENDAR_WEEK_START, // 0 - Sunday, 1 - Monday
-        otherDays: true,
-        date: new Date(),
-        minDate: false,
-        maxDate: false,
-        preset: false,
-        exclude: false,
-        stored: false,
-        buttons: {
-            buttonToday: false,
-            buttonClear: false,
-            buttonOk: true,
-            buttonCancel: true
-        },
-        syncCalenderToDateField: true,
-        locale: window.CALENDAR_LOCALE,
-        actions: true,
-        condensedGrid: false,
-        scheme: 'default',
-        getDates: function (d) { },
-        dayClick: function (d, d0) { },
+        weekStart: CORE_CALENDAR_WEEK_START,
+        mode: "default", // default, range, multi
+        startFrom: "day", // day, month, year
+        format: "dd-mm-yyyy",
+        locale: CORE_LOCALE,
+        toolbar: true,
+        footer: true,
+        preset: [],
+        current: null,
+        buttons: ['cancel', 'today', 'clear', 'done'],
+        isDialog: false,
 
-        onOkClick: function(d, d2){},
-        onCancelClick: function(){}
+        onCreate: $.noop,
+        onDone: $.noop,
+        onCancel: $.noop,
+        onToday: $.noop,
+        onClear: $.noop,
+        onDay: $.noop
     },
 
-    //_storage: [],
-    //_exclude: [],
-
-    _year: 0,
-    _month: 0,
-    _day: 0,
-    _today: new Date(),
-    _event: '',
-
-    _mode: 'day', // day, month, year
-    _distance: 0,
-
-    _events: [],
+    current: new Date(),
+    today: new Date(),
+    selected: [],
 
     _create: function () {
         var that = this, element = this.element, o = this.options;
 
-        if (!element.hasClass('calendar')) { element.addClass('calendar'); }
-
         this._setOptionsFromDOM();
 
-        if (typeof o.date === 'string') {
-            o.date = new Date(o.date);
-        }
-
-        if (o.minDate !== false && typeof o.minDate === 'string') {
-            o.minDate = new Date(o.minDate + 'T00:00:00Z') - 24 * 60 * 60 * 1000;
-        }
-
-        if (o.maxDate !== false && typeof o.maxDate === 'string') {
-            o.maxDate = new Date(o.maxDate + 'T00:00:00Z');
-        }
-
-        //console.log(window.METRO_LOCALES);
-
-        this.locales = window.CALENDAR_LOCALES;
-
-        this._year = o.date.getFullYear();
-        this._distance = o.date.getFullYear() - 4;
-        this._month = o.date.getMonth();
-        this._day = o.date.getDate();
-        this._dayOfWeek = o.date.getDay();
-        this._mode = o.startMode;
-
-        element.data("_storage", []);
-        element.data("_exclude", []);
-        element.data("_stored", []);
-
-        var re, dates;
-
-        if (o.preset) {
-            re = /\s*,\s*/;
-            dates = o.preset.split(re);
-            $.each(dates, function () {
-                if (new Date(this) !== undefined) { that.setDate(this); }
+        if (typeof o.preset !== 'object') {
+            o.preset = o.preset.split(",").map(function(v){
+                return v.trim();
             });
         }
 
-        if (o.exclude) {
-            re = /\s*,\s*/;
-            dates = o.exclude.split(re);
-            $.each(dates, function () {
-                if (new Date(this) !== undefined) { that.setDateExclude(this); }
-            });
+        this.selected = o.preset.map(function(v){
+            var d = new Date(v);
+            d.setHours(0,0,0,0);
+            return d.getTime();
+        });
+
+        if (o.current != null && typeof o.current == 'string') {
+            this.current = new Date(o.current);
         }
 
-        if (o.stored) {
-            re = /\s*,\s*/;
-            dates = o.stored.split(re);
-            $.each(dates, function () {
-                if (new Date(this) !== undefined) { that.setDateStored(this); }
-            });
-        }
-
-        if (o.scheme !== 'default') {
-            element.addClass(o.scheme);
-        }
-
-        this._renderCalendar();
+        this._createCalendar();
+        this._createEvents();
 
         element.data('calendar', this);
 
+        $.CoreCss.callback(o.onCreate, element);
     },
 
-    _renderButtons: function (table) {
-        var tr, td, o = this.options;
+    _drawHeader: function(){
+        var o = this.options, target = this.today,
+            day = target.getDate(),
+            dayWeek = target.getDay(),
+            month = target.getMonth(),
+            year = target.getFullYear(),
+            html = "", header;
 
-        //console.log( o.buttons);
+        html += "<div class='year'>"+year+"</div>";
+        html += "<div class='day'>"+coreLocales[o.locale].calendar.days[dayWeek]+", "+coreLocales[o.locale].calendar.months[month + 12]+' '+day+"</div>";
 
-        if (typeof o.buttons === 'object') {
+        header = $(html);
 
-            var buttonToday = o.buttons.buttonToday !== false ? "<button class='button calendar-btn-today flat-button ripple place-left'>" + this.locales[o.locale].buttons[0] + "</button>" : "";
-            var buttonClear = o.buttons.buttonClear !== false  ? "<button class='button calendar-btn-clear flat-button ripple place-left'>" + this.locales[o.locale].buttons[1] + "</button>" : "";
-            var buttonOk = o.buttons.buttonOk !== false ? "<button class='button calendar-btn-ok flat-button ripple'>" + this.locales[o.locale].buttons[7] + "</button>" : "";
-            var buttonCancel = o.buttons.buttonCancel !== false ? "<button class='button calendar-btn-cancel flat-button ripple'>" + this.locales[o.locale].buttons[2] + "</button>" : "";
-
-            tr = $("<div/>").addClass("calendar-row calendar-actions");
-            td = $("<div/>").addClass("align-right").html(
-                buttonToday + buttonClear+ buttonCancel + buttonOk
-            );
-            td.appendTo(tr);
-            tr.appendTo(table);
-        }
+        return header;
     },
 
-    _renderMonth: function () {
+    _drawToolbar: function(){
         var o = this.options,
-            year = this._year,
-            month = this._month,
-            day = this._day,
-            //event = this._event,
-            feb = 28;
+            month = this.current.getMonth(),
+            year = this.current.getFullYear(),
+            toolbar = $("<div>").addClass("toolbar");
 
-        if (month === 1) {
-            if ((year % 100 !== 0) && (year % 4 === 0) || (year % 400 === 0)) {
-                feb = 29;
-            }
+        $("<span>").addClass("prev_month js-control").appendTo(toolbar);
+        $("<span>").addClass("current_month").html(coreLocales[o.locale].calendar.months[month]).appendTo(toolbar);
+        $("<span>").addClass("next_month js-control").appendTo(toolbar);
+        $("<span>").addClass("prev_year js-control").appendTo(toolbar);
+        $("<span>").addClass("current_year").html(year).appendTo(toolbar);
+        $("<span>").addClass("next_year js-control").appendTo(toolbar);
+
+        if (o.toolbar !== true) {
+            toolbar.hide();
         }
 
-        var totalDays = ["31", "" + feb + "", "31", "30", "31", "30", "31", "31", "30", "31", "30", "31"];
-        var daysInMonth = totalDays[month];
+        return toolbar;
+    },
 
-        var first_week_day = this._dateFromNumbers(year, month + 1, 1).getDay();
+    _drawFooter: function(){
+        var element = this.element, o = this.options,
+            footer = element.find(".calendar-footer"),
+            html = "";
 
-        var table, tr, td, i, div;
+        $.each(o.buttons, function(){
+            html += "<button class='flat-button js-button-"+this+" "+(o.isDialog && (this == 'cancel' || this == 'done') ? 'js-dialog-close' : '')+"'>"+coreLocales[o.locale].buttons[this]+"</button>";
+        });
 
-        this.element.html("");
+        // html += "<button class='flat-button js-button-cancel'>"+coreLocales[o.locale].buttons.cancel+"</button>";
+        // html += "<button class='flat-button js-button-today'>"+coreLocales[o.locale].buttons.today+"</button>";
+        // html += "<button class='flat-button js-button-clear'>"+coreLocales[o.locale].buttons.clear+"</button>";
+        // html += "<button class='flat-button js-button-done'>"+coreLocales[o.locale].buttons.done+"</button>";
 
-        table = $("<div/>").addClass("calendar-grid");
-        if (o.condensedGrid) {
-            table.addClass('condensed no-border');
+        if (o.footer !== true) {
+            footer.hide();
         }
 
-        //console.log(this.locales);
+        return $(html);
+    },
 
-        // Add calendar header
-        tr = $("<div/>").addClass('calendar-row no-margin');
+    _drawDays: function(distance){
 
-        $("<div/>").addClass("calendar-cell align-center").html("<a class='btn-previous-year' href='#'>-</a>").appendTo(tr);
-        $("<div/>").addClass("calendar-cell align-center").html("<a class='btn-previous-month' href='#'>&#12296;</a>").appendTo(tr);
+        function getDay(date){
+            var day = date.getDay();
+            if (day == 0) day = 7;
+            return day - 1;
+        }
 
-        $("<div/>").addClass("calendar-cell sel-month align-center").html("<a class='btn-select-month' href='#'>" + this.locales[o.locale].months[month] + ' ' + year + "</a>").appendTo(tr);
+        distance = distance || 0;
+        var o = this.options,
+            day = this.current.getDate(),
+            month = this.current.getMonth() + distance,
+            year = this.current.getFullYear(),
+            firstDay = new Date(year, month, 1),
+            i, j, md, dd, total = 0, days, stored_day,
+            p_month_days,
+            days_inner = $("<div>").addClass("days-frame");
 
-        $("<div/>").addClass("calendar-cell align-center").html("<a class='btn-next-month' href='#'>&#12297;</a>").appendTo(tr);
-        $("<div/>").addClass("calendar-cell align-center").html("<a class='btn-next-year' href='#'>+</a>").appendTo(tr);
 
-        tr.addClass("calendar-subheader").appendTo(table);
+        if (month < 0) {
+            month = 11;
+            year--;
+        }
 
-        // Add day names
-        var j;
-        tr = $("<div/>").addClass('calendar-row week-days');
+        if (month > 11) {
+            month = 0;
+            year++;
+        }
+
+        /* Draw days of week*/
+        var weekDays = $("<div>").addClass("week-days").appendTo(days_inner);
         for (i = 0; i < 7; i++) {
-            if (!o.weekStart) {
-                td = $("<div/>").addClass("calendar-cell align-center day-of-week").appendTo(tr);
-                div = $("<div/>").html(this.locales[o.locale].days[i + 7]).appendTo(td);
+            if (o.weekStart === 0) {
+                j = i;
             } else {
                 j = i + 1;
                 if (j === 7) { j = 0; }
-                td = $("<div/>").addClass("calendar-cell align-center day-of-week").appendTo(tr);
-                div = $("<div/>").html(this.locales[o.locale].days[j + 7]).appendTo(td);
             }
+            $("<div/>").addClass("day").html(coreLocales[o.locale].calendar.days[j + 7]).appendTo(weekDays);
         }
-        tr.addClass("calendar-subheader").appendTo(table);
+        /* End of days of week */
 
-        // Add empty days for previos month
-        var prevMonth = this._month - 1; if (prevMonth < 0) { prevMonth = 11; } var daysInPrevMonth = totalDays[prevMonth];
-        var _first_week_day = ((o.weekStart) ? first_week_day + 6 : first_week_day) % 7;
-        var htmlPrevDay = "";
-        tr = $("<div/>").addClass('calendar-row');
-        for (i = 0; i < _first_week_day; i++) {
-            if (o.otherDays) { htmlPrevDay = daysInPrevMonth - (_first_week_day - i - 1); }
-            td = $("<div/>").addClass("calendar-cell empty").appendTo(tr);
-            div = $("<div/>").addClass('other-day').html(htmlPrevDay).appendTo(td);
-            if (!o.otherDays) {
-                div.css('visibility', 'hidden');
+        days = $("<div>").addClass("days");
+
+        p_month_days = (new Date(year, month, 0)).getDate();
+
+        md = $("<div>").addClass("month-days").appendTo(days);
+
+        /* Draw prev month days */
+        for(i = 0; i < getDay(firstDay); i++) {
+            stored_day = new Date(year, month - 1, p_month_days - getDay(firstDay) + 1 + i);
+            dd = $("<div>").addClass("day fg-gray-400 prev-month-day").html(p_month_days - getDay(firstDay) + 1 + i).appendTo(md);
+            dd.data('day', stored_day);
+            if (this.selected.indexOf(stored_day.getTime()) > -1) {
+                dd.addClass("selected");
             }
-        }
-
-        // Days for current month
-        var week_day = ((o.weekStart) ? first_week_day + 6 : first_week_day) % 7;
-
-        var d, a, d_html;
-
-        for (i = 1; i <= daysInMonth; i++) {
-            week_day %= 7;
-
-            if (week_day === 0) {
-                tr.appendTo(table);
-                tr = $("<div/>").addClass('calendar-row');
-            }
-
-            td = $("<div/>").addClass("calendar-cell align-center day");
-            div = $("<div/>").appendTo(td);
-
-            if (o.minDate !== false && (this._dateFromNumbers(year, month + 1, i) < o.minDate) || o.maxDate !== false && (this._dateFromNumbers(year, month + 1, i) > o.maxDate)) {
-                td.removeClass("day");
-                div.addClass("other-day");
-                d_html = i;
-            } else {
-                d_html = "<a href='#'>" + i + "</a>";
-            }
-
-            if (i == this._day) {
-                td.addClass("selected");
-            }
-
-            div.html(d_html);
-
-            //console.log(div);
-
-            if (year === this._today.getFullYear() && month === this._today.getMonth() && this._today.getDate() === i) {
-                td.addClass("today");
-            }
-
-            //console.log('xxx');
-            d = this._dateNumberStringyFy(this._year, this._month + 1, i);
-
-            if (this.element.data('_storage').indexOf(d) >= 0) {
-                a = td.find("a");
-                a.parent().parent().addClass("selected");
-            }
-
-            if (this.element.data('_exclude').indexOf(d) >= 0) {
-                a = td.find("a");
-                a.parent().parent().addClass("exclude");
-            }
-
-            if (this.element.data('_stored').indexOf(d) >= 0) {
-                a = td.find("a");
-                a.parent().parent().addClass("stored");
-            }
-
-            td.appendTo(tr);
-            week_day++;
+            total++;
         }
 
-
-        // next month other days
-        var htmlOtherDays = "";
-        for (i = week_day + 1; i <= 7; i++) {
-            if (o.otherDays) { htmlOtherDays = i - week_day; }
-            td = $("<div/>").addClass("calendar-cell empty").appendTo(tr);
-            div = $("<div/>").addClass('other-day').html(htmlOtherDays).appendTo(td);
-            if (!o.otherDays) {
-                div.css('visibility', 'hidden');
+        /* Draw current month days */
+        while(firstDay.getMonth() == month) {
+            stored_day = new Date(firstDay.getFullYear(), firstDay.getMonth(), firstDay.getDate());
+            dd = $("<div>").addClass("day").html(firstDay.getDate()).appendTo(md);
+            dd.data('day', stored_day);
+            if (
+                this.today.getFullYear() == firstDay.getFullYear() &&
+                this.today.getMonth() == firstDay.getMonth() &&
+                this.today.getDate() == firstDay.getDate()
+            ) {
+                dd.addClass("today");
             }
+
+            if (this.selected.indexOf(stored_day.getTime()) > -1) {
+                dd.addClass("selected");
+            }
+
+            total++;
+
+            if (getDay(firstDay) % 7 == 6) {
+                md = $("<div>").addClass("month-days").appendTo(days);
+            }
+            firstDay.setDate(firstDay.getDate() + 1);
         }
 
-        tr.appendTo(table);
-        this._renderHeader();
-        this._renderButtons(table);
-        table.appendTo(this.element);
+        /* Draw next month days */
+        while(total < 42) {
+            stored_day = new Date(firstDay.getFullYear(), firstDay.getMonth(), firstDay.getDate());
+            dd = $("<div>").addClass("day fg-gray-400 next-month-day").html(firstDay.getDate()).appendTo(md);
+            dd.data('day', stored_day);
+            if (this.selected.indexOf(stored_day.getTime()) > -1) {
+                dd.addClass("selected");
+            }
+            if (getDay(firstDay) % 7 == 6) {
+                md = $("<div>").addClass("month-days").appendTo(days);
+            }
+            firstDay.setDate(firstDay.getDate() + 1);
+            total++;
+        }
+
+        days.appendTo(days_inner);
+
+        return days_inner;
     },
 
-    _renderMonths: function () {
-        var table, tr, td, i, j;
+    _drawCalendar: function(){
+        var h, c, f, d, element = this.element;
 
-        this.element.html("");
+        element.html("");
 
-        table = $("<div/>").addClass("calendar-grid");
-        if (this.options.condensedGrid) {
-            table.addClass('condensed no-border');
-        }
+        h = $("<div>").addClass("calendar-header").appendTo(element);
+        c = $("<div>").addClass("calendar-content").appendTo(element);
+        f = $("<div>").addClass("calendar-footer").appendTo(element);
+        d = $("<div>").addClass("days-inner");
 
-        // Add calendar header
-        tr = $("<div/>").addClass('calendar-row');
+        h.append(this._drawHeader());
+        c.append(this._drawToolbar());
 
-        $("<div/>").addClass("calendar-cell sel-minus align-center").html("<a class='btn-previous-year' href='#'>-</a>").appendTo(tr);
-        $("<div/>").addClass("calendar-cell sel-year align-center").html("<a class='btn-select-year' href='#'>" + this._year + "</a>").appendTo(tr);
-        $("<div/>").addClass("calendar-cell sel-plus align-center").html("<a class='btn-next-year' href='#'>+</a>").appendTo(tr);
+        c.append(d);
+        d.append(this._drawDays());
 
-        tr.addClass("calendar-subheader").appendTo(table);
-
-        tr = $("<div/>").addClass('calendar-row');
-        j = 0;
-        for (i = 0; i < 12; i++) {
-
-            //td = $("<td/>").addClass("text-center month").html("<a href='#' data-month='"+i+"'>"+this.options.monthsShort[i]+"</a>");
-            td = $("<div/>").addClass("calendar-cell month-cell align-center month").html("<a href='#' data-month='" + i + "'>" + this.locales[this.options.locale].months[i + 12] + "</a>");
-
-            if (this._month === i && (new Date()).getFullYear() === this._year) {
-                td.addClass("today");
-            }
-
-            td.appendTo(tr);
-            if ((j + 1) % 4 === 0) {
-                tr.appendTo(table);
-                tr = $("<div/>").addClass('calendar-row');
-            }
-            j += 1;
-        }
-
-        this._renderHeader();
-        this._renderButtons(table);
-
-        table.appendTo(this.element);
+        f.append(this._drawFooter());
     },
 
-    _renderYears: function () {
-        var table, tr, td, i, j;
+    _createCalendar: function(){
+        var that = this, element = this.element, o = this.options;
 
-        this.element.html("");
-
-        table = $("<div/>").addClass("calendar-grid");
-        if (this.options.condensedGrid) {
-            table.addClass('condensed no-border');
+            if (!element.hasClass("calendar")) {
+            element.addClass("calendar");
         }
 
-        // Add calendar header
-        tr = $("<div/>").addClass('calendar-row cells4');
+        this._drawCalendar();
 
-        $("<div/>").addClass("calendar-cell sel-minus align-center").html("<a class='btn-previous-year' href='#'>-</a>").appendTo(tr);
-        $("<div/>").addClass("calendar-cell sel-year align-center").html("<a class='btn-none-btn'>" + (this._distance) + "-" + (this._distance + 11) + "</a>").appendTo(tr);
-        $("<div/>").addClass("calendar-cell sel-plus align-center").html("<a class='btn-next-year' href='#'>+</a>").appendTo(tr);
-
-        tr.addClass("calendar-subheader").appendTo(table);
-
-        tr = $("<div/>").addClass('calendar-row');
-
-        j = 0;
-        for (i = this._distance; i < this._distance + 12; i++) {
-            td = $("<div/>").addClass("calendar-cell year-cell align-center year").html("<a href='#' data-year='" + i + "'>" + i + "</a>");
-            if ((new Date()).getFullYear() === i) {
-                td.addClass("today");
-            }
-            td.appendTo(tr);
-            if ((j + 1) % 4 === 0) {
-                tr.appendTo(table);
-                tr = $("<div/>").addClass('calendar-row');
-            }
-            j += 1;
-        }
-
-        this._renderHeader();
-        this._renderButtons(table);
-
-        table.appendTo(this.element);
+        element.ripple({
+            rippleTarget: '.flat-button, .day, .js-control',
+            rippleColor: '#ccc'
+        });
     },
 
-    _renderCalendar: function () {
-        var element = this.element;
+    _createEvents: function(){
+        var that = this, element = this.element, o = this.options;
 
-        //this._renderHeader();
+        element.on("click", ".js-control", function(){
 
-        switch (this._mode) {
-            case 'year': this._renderYears(); break;
-            case 'month': this._renderMonths(); break;
-            default: this._renderMonth();
-        }
+            var el = $(this), m, y;
+            var day = that.current.getDate(),
+                month = that.current.getMonth(),
+                year = that.current.getFullYear();
 
-        this._initButtons();
-
-    },
-
-    _renderHeader: function(){
-        var element = this.element;
-
-        // console.log(this._year);
-        // console.log(this._month + 1);
-        // console.log(this._day);
-        // console.log(this._dayOfWeek);
-
-        var header_html = "";
-
-        header_html += "<div class='header-year'>"+this._year+"</div>";
-        header_html += "<div class='header-month'>"+this.locales[this.options.locale].days[this._dayOfWeek + 14]+", "+this.locales[this.options.locale].months[this._month + 12]+' '+this._day+"</div>";
-
-
-        var header = element.find(".calendar-header");
-
-        //console.log(header.length);
-
-        if (header.length == 0) {
-            header = $("<div>").addClass("calendar-header");
-            header.appendTo(element);
-        }
-
-        header.html(header_html);
-    },
-
-    _initButtons: function () {
-        // Add actions
-        var that = this, o = this.options,
-            table = this.element.find('.calendar-grid');
-
-        if (this._mode === 'day') {
-            table.find('.btn-select-month').off('click').on('click', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                that._mode = 'month';
-                that._renderCalendar();
-            });
-            table.find('.btn-previous-month').off('click').on('click', function (e) {
-                that._event = 'eventPrevious';
-                e.preventDefault();
-                e.stopPropagation();
-                that._month -= 1;
-                if (that._month < 0) {
-                    that._year -= 1;
-                    that._month = 11;
+            if (el.hasClass("prev_month")) {
+                month -= 1;
+                if (month < 0) {
+                    year -= 1;
+                    month = 11;
                 }
-                that._renderCalendar();
-            });
-            table.find('.btn-next-month').off('click').on('click', function (e) {
-                that._event = 'eventNext';
-                e.preventDefault();
-                e.stopPropagation();
-                that._month += 1;
-                if (that._month === 12) {
-                    that._year += 1;
-                    that._month = 0;
+                that.current = new Date(year, month);
+            }
+            if (el.hasClass("next_month")) {
+                month += 1;
+                if (month == 12) {
+                    year += 1;
+                    month = 0;
                 }
-                that._renderCalendar();
-            });
-            table.find('.btn-previous-year').off('click').on('click', function (e) {
-                that._event = 'eventPrevious';
-                e.preventDefault();
-                e.stopPropagation();
-                that._year -= 1;
-                that._renderCalendar();
-            });
-            table.find('.btn-next-year').off('click').on('click', function (e) {
-                that._event = 'eventNext';
-                e.preventDefault();
-                e.stopPropagation();
-                that._year += 1;
-                that._renderCalendar();
-            });
-            table.find('.day a').off('click').on('click', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
+                that.current = new Date(year, month);
+            }
+            if (el.hasClass("next_year")) {
+                that.current = new Date(year + 1, month);
+            }
+            if (el.hasClass("prev_year")) {
+                that.current = new Date(year - 1, month);
+            }
 
-                if ($(this).parent().parent().hasClass('exclude')) {
-                    return false;
+            setTimeout(function(){
+                that._drawCalendar();
+            }, 300);
+
+        });
+
+        element.on("click", ".js-button-today", function(){
+            that.current = that.today = new Date();
+            that.today.setHours(0,0,0,0);
+            that.selected[0] = that.today.getTime();
+            setTimeout(function(){
+                that._drawCalendar();
+                $.CoreCss.callback(o.onToday, element);
+            }, 300);
+        });
+
+        element.on("click", ".js-button-clear", function(){
+            that.current = that.today = new Date();
+            that.selected = [];
+            setTimeout(function(){
+                that._drawCalendar();
+                $.CoreCss.callback(o.onClear, element);
+            }, 300);
+        });
+
+        element.on("click", ".js-button-done", function(){
+            setTimeout(function(){
+                var result;
+
+                switch(o.mode) {
+                    case 'range':
+                    case 'multi': result = that.selected; break;
+                    default: result = that.selected[0];
                 }
 
-                var d = (new Date(that._paddy(that._year, 4), that._paddy(that._month, 2), that._paddy(parseInt($(this).html()), 2)).format(that.options.format, null));
-                var d0 = (new Date(that._paddy(that._year, 4), that._paddy(that._month, 2), that._paddy(parseInt($(this).html()), 2)));
+                $.CoreCss.callback(o.onDone, result);
+            }, 300);
+        });
 
-                if (that.options.multiSelect) {
-                    $(this).parent().parent().toggleClass("selected");
+        element.on("click", ".month-days .day", function(){
+            var el = $(this), day = el.data('day'), index = that.selected.indexOf(day.getTime());
 
-                    if ($(this).parent().parent().hasClass("selected")) {
-                        that._addDate(that._dateStringyFy(d0));
+            if (o.mode == 'default') {
+
+                element.find(".selected").removeClass("selected");
+                that.selected = [];
+                that.current = that.today = day;
+                element.find(".calendar-header").html("").append(that._drawHeader());
+
+                if (el.hasClass("prev-month-day") || el.hasClass("next-month-day")) {
+                    that._drawCalendar();
+                    $.each(element.find(".month-days .day"), function () {
+                        var day2 = $(this).data('day');
+                        if (day.getTime() == day2.getTime()) {
+                            that.selected[0] = $(this).data('day').getTime();
+                            $(this).addClass("selected");
+                        }
+                    });
+                } else {
+                    that.selected[0] = day.getTime();
+                    el.addClass("selected");
+                }
+
+            }
+
+            if (o.mode == 'multi') {
+
+                if (el.hasClass("prev-month-day") || el.hasClass("next-month-day")) {
+                    that.current = el.data('day');
+                    that._drawCalendar();
+                    $.each(element.find(".month-days .day"), function () {
+                        var day2 = $(this).data('day');
+                        if (day.getTime() == day2.getTime()) {
+                            if (index == -1) {
+                                that.selected.push(day.getTime());
+                            } else {
+                                delete that.selected[index];
+                            }
+
+                            $(this).toggleClass("selected");
+                        }
+                    });
+                } else {
+                    if (index == -1) {
+                        that.selected.push(day.getTime());
                     } else {
-                        that._removeDate(that._dateStringyFy(d0));
+                        delete that.selected[index];
                     }
-                } else {
-                    table.find('.day a').parent().parent().removeClass('selected');
-                    $(this).parent().parent().addClass("selected");
-                    that.element.data('_storage', []);
-                    that._addDate(that._dateStringyFy(d0));
+                    el.toggleClass("selected");
                 }
 
-
-                if (typeof o.dayClick === 'function') {
-                    o.dayClick(d, d0);
-                } else {
-                    if (typeof window[o.dayClick] === 'function') {
-                        window[o.dayClick](d, d0);
-                    } else {
-                        var result = eval("(function(){" + o.dayClick + "})");
-                        result.call(d, d0);
-                    }
-                }
-
-                that._day = parseInt($(this).html());
-                that._renderCalendar();
-            });
-        } else if (this._mode === 'month') {
-            table.find('.month a').off('click').on('click', function (e) {
-                that._event = 'eventNext';
-                e.preventDefault();
-                e.stopPropagation();
-                that._month = parseInt($(this).data('month'));
-                that._mode = 'day';
-                that._renderCalendar();
-            });
-            table.find('.btn-previous-year').off('click').on('click', function (e) {
-                that._event = 'eventPrevious';
-                e.preventDefault();
-                e.stopPropagation();
-                that._year -= 1;
-                that._renderCalendar();
-            });
-            table.find('.btn-next-year').off('click').on('click', function (e) {
-                that._event = 'eventNext';
-                e.preventDefault();
-                e.stopPropagation();
-                that._year += 1;
-                that._renderCalendar();
-            });
-            table.find('.btn-select-year').off('click').on('click', function (e) {
-                that._event = 'eventNext';
-                e.preventDefault();
-                e.stopPropagation();
-                that._mode = 'year';
-                that._renderCalendar();
-            });
-        } else {
-            table.find('.year a').off('click').on('click', function (e) {
-                that._event = 'eventNext';
-                e.preventDefault();
-                e.stopPropagation();
-                that._year = parseInt($(this).data('year'));
-                that._mode = 'month';
-                that._renderCalendar();
-            });
-            table.find('.btn-previous-year').off('click').on('click', function (e) {
-                that._event = 'eventPrevious';
-                e.preventDefault();
-                e.stopPropagation();
-                that._distance -= 10;
-                that._renderCalendar();
-            });
-            table.find('.btn-next-year').off('click').on('click', function (e) {
-                that._event = 'eventNext';
-                e.preventDefault();
-                e.stopPropagation();
-                that._distance += 10;
-                that._renderCalendar();
-            });
-        }
-
-        table.find('.calendar-btn-today').off('click').on('click', function (e) {
-            //that._event = 'eventNext';
-            e.preventDefault();
-            e.stopPropagation();
-            that._mode = that.options.startMode;
-            that.options.date = new Date();
-            that._year = that.options.date.getFullYear();
-            that._month = that.options.date.getMonth();
-            that._day = that.options.date.getDate();
-            that._renderCalendar();
-        });
-        table.find('.calendar-btn-clear').off('click').on('click', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            that.options.date = new Date();
-            that._year = that.options.date.getFullYear();
-            that._month = that.options.date.getMonth();
-            that._day = that.options.date.getDate();
-            that.element.data('_storage', []);
-            that._renderCalendar();
-        });
-
-        table.find('.calendar-btn-ok').off('click').on('click', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            var res = new Date(that._year, that._month, that._day);
-            var res2 = that.getDates();
-
-            if (typeof o.onOkClick === 'function') {
-                o.onOkClick(res, res2);
-            } else {
-                if (typeof window[o.onOkClick] === 'function') {
-                    window[o.onOkClick](res, res2);
-                } else {
-                    var result = eval("(function(){"+o.onOkClick+"})");
-                    result.call(res, res2);
-                }
             }
+
+            $.CoreCss.callback(o.onDay, day);
         });
-
-        table.find('.calendar-btn-cancel').off('click').on('click', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            if (typeof o.onCancelClick === 'function') {
-                o.onCancelClick();
-            } else {
-                if (typeof window[o.onCancelClick] === 'function') {
-                    window[o.onCancelClick]();
-                } else {
-                    var result = eval("(function(){"+o.onCancelClick+"})");
-                    result.call();
-                }
-            }
-        });
-
-    },
-
-    _addDate: function (d) {
-        var index = this.element.data('_storage').indexOf(d);
-        if (index < 0) { this.element.data('_storage').push(d); }
-    },
-
-    _removeDate: function (d) {
-        var index = this.element.data('_storage').indexOf(d);
-        this.element.data('_storage').splice(index, 1);
-    },
-
-    _addDateExclude: function (d) {
-        var index = this.element.data('_exclude').indexOf(d);
-        if (index < 0) { this.element.data('_exclude').push(d); }
-    },
-
-    _addDateStored: function (d) {
-        var index = this.element.data('_stored').indexOf(d);
-        if (index < 0) { this.element.data('_stored').push(d); }
-    },
-
-    _removeDateExclude: function (d) {
-        var index = this.element.data('_exclude').indexOf(d);
-        this.element.data('_exclude').splice(index, 1);
-    },
-
-    _removeDateStored: function (d) {
-        var index = this.element.data('_stored').indexOf(d);
-        this.element.data('_stored').splice(index, 1);
-    },
-
-    _paddy: function paddy(n, p, c) {
-        var pad_char = typeof c !== 'undefined' ? c : '0';
-        var pad = new Array(1 + p).join(pad_char);
-        return (pad + n).slice(-pad.length);
-    },
-
-    _dateFromNumbers: function dateFromNumbers(year, month, day){
-        return new Date(this._paddy(year, 4) + "/" +  this._paddy(month, 2) + "/" + this._paddy(day, 2));
-    },
-
-    _dateNumberStringyFy: function dateNumberStringyFy(year, month, day) {
-        return (this._dateFromNumbers(year, month, day)).format('yyyy-mm-dd')
-    },
-
-    _dateStringyFy: function dateStringyFy(d) {
-        return this._dateNumberStringyFy(d.getFullYear(), d.getMonth() + 1, d.getDate());
-    },
-
-    setDate: function (d) {
-        var r;
-        d = new Date(d);
-        r = this._dateNumberStringyFy(d.getFullYear(), d.getMonth() + 1, d.getDate());
-
-        this._addDate(r);
-        if (this.options.syncCalenderToDateField) {
-            this._year = d.getFullYear();
-            this._month = d.getMonth();
-            this._day = d.getDate();
-            this._dayOfWeek = d.getDay();
-        }
-        this._renderCalendar();
-    },
-
-    setDateExclude: function (d) {
-        var r;
-        d = new Date(d);
-        r = this._dateNumberStringyFy(d.getFullYear(), d.getMonth() + 1, d.getDate());
-        this._addDateExclude(r);
-        this._renderCalendar();
-    },
-
-    setDateStored: function (d) {
-        var r;
-        d = new Date(d);
-        r = this._dateNumberStringyFy(d.getFullYear(), d.getMonth() + 1, d.getDate());
-        this._addDateStored(r);
-        this._renderCalendar();
-    },
-
-    getDate: function (index) {
-        return new Date(index !== undefined ? this.element.data('_storage')[index] : this.element.data('_storage')[0]).format(this.options.format);
-    },
-
-    getDates: function () {
-        var res;
-        res = $.merge($.merge([], this.element.data('_storage')), this.element.data('_stored'));
-        return res.unique();
-    },
-
-    unsetDate: function (d) {
-        var r;
-        d = new Date(d);
-        r = this._dateNumberStringyFy(d.getFullYear(), d.getMonth() + 1, d.getDate());
-        this._removeDate(r);
-        this._renderCalendar();
-    },
-
-    unsetDateExclude: function (d) {
-        var r;
-        d = new Date(d);
-        r = this._dateNumberStringyFy(d.getFullYear(), d.getMonth() + 1, d.getDate());
-        this._removeDateExclude(r);
-        this._renderCalendar();
-    },
-
-    unsetDateStored: function (d) {
-        var r;
-        d = new Date(d);
-        r = this._dateNumberStringyFy(d.getFullYear(), d.getMonth() + 1, d.getDate());
-        this._removeDateStored(r);
-        this._renderCalendar();
     },
 
     _setOptionsFromDOM: function(){
@@ -4026,9 +4079,327 @@ $.widget("corecss.calendar", {
         });
     },
 
-    _destroy: function () { },
+    _destroy: function () {
+    },
 
-    _setOption: function (key, value) {
+    _setOption: function ( key, value ) {
+        this._super('_setOption', key, value);
+    }
+});
+
+// Source: js/widgets/datepicker.js
+$.widget( "corecss.datepicker" , {
+
+    version: "1.0.0",
+
+    options: {
+        locale: CORE_LOCALE,
+        minYear: 1900,
+        maxYear: new Date().getFullYear(),
+        day: (new Date()).getDate(),
+        month: (new Date()).getMonth(),
+        year: (new Date()).getFullYear(),
+        isDialog: false,
+        buttons: ['cancel', 'random', 'today', 'done'],
+        onDone: $.noop
+    },
+
+    current: new Date(),
+
+    day: null,
+    month: null,
+    year: null,
+
+    _create: function () {
+        var that = this, element = this.element, o = this.options;
+
+        this._setOptionsFromDOM();
+
+        this.day = o.day;
+        this.month = o.month;
+        this.year = o.year;
+
+        this._createPicker();
+        this._createScrollEvents();
+        this._createButtonsEvents();
+
+        setTimeout(function(){
+            that.today();
+        }, 100);
+
+        element.data('datepicker', this);
+    },
+
+    _correct: function(){
+        function isDate(y,m,d){
+            var date = new Date(y,m,d);
+            var convertedDate =
+                ""+date.getFullYear() + (date.getMonth()) + date.getDate();
+            var givenDate = "" + y + m + d;
+            return ( givenDate == convertedDate);
+        }
+
+        if (!isDate(this.year, this.month, this.day)) {
+            var date = new Date(this.year, this.month, this.day);
+            // date.setHours(0,0,0,0);
+            this.year = date.getFullYear();
+            this.month = date.getMonth();
+            this.day = date.getDate();
+            this._removeScrollEvents();
+            this.setPosition();
+            this._createScrollEvents();
+            //
+            // console.log("bad date! correct it.");
+            // console.log("new date is: " + date);
+        }
+    },
+
+    setPosition: function(){
+        var element = this.element;
+        var day = this.day,
+            month = this.month + 1,
+            year = this.year;
+        var d_list = element.find(".d-list"),
+            m_list = element.find(".m-list"),
+            y_list = element.find(".y-list");
+
+        this._removeScrollEvents();
+
+        // console.log(element.find(".js-dd-"+day).offset());
+        // console.log(element.find(".js-dm-"+month));
+        // console.log(element.find(".js-yy-"+year));
+        //
+        d_list.scrollTop(0).animate({
+           scrollTop: element.find(".js-dd-"+day).addClass("active").position().top - 48
+        });
+
+        m_list.scrollTop(0).animate({
+            scrollTop: element.find(".js-dm-"+month).addClass("active").position().top - 48
+        });
+
+        y_list.scrollTop(0).animate({
+            scrollTop: element.find(".js-yy-"+year).addClass("active").position().top - 48
+        });
+
+        this._createScrollEvents();
+    },
+
+    today: function(){
+        var d = new Date(); d.setHours(0,0,0,0);
+
+        this.day = d.getDate();
+        this.month = d.getMonth();
+        this.year = d.getFullYear();
+
+        this.setPosition();
+    },
+
+    _drawHeader: function(){
+        var element = this.element,
+            day = this.day,
+            dd = new Date(this.year, this.month, this.day),
+            dayWeek = dd.getDay(),
+            month = this.month,
+            year = this.year,
+            html = "", header,
+            o = this.options;
+
+        html += "<span class='day'>"+coreLocales[o.locale].calendar.days[dayWeek + 14]+", "+coreLocales[o.locale].calendar.months[month + 12]+' '+day+", "+year+"</span>";
+
+        header = $(html);
+
+        return header;
+    },
+
+    _drawFooter: function(){
+        var element = this.element, o = this.options,
+            html = "";
+
+        $.each(o.buttons, function(){
+            html += "<button class='flat-button js-button-"+this+" "+(o.isDialog && (this == 'cancel' || this == 'done') ? 'js-dialog-close' : '')+"'>"+coreLocales[o.locale].buttons[this]+"</button>";
+        });
+
+        // html += "<button class='flat-button js-button-rand'>"+coreLocales[o.locale].buttons.rand+"</button>";
+        // html += "<button class='flat-button js-button-today'>"+coreLocales[o.locale].buttons.today+"</button>";
+        // html += "<button class='flat-button js-button-done'>"+coreLocales[o.locale].buttons.done+"</button>";
+
+        return $(html);
+    },
+
+    _drawPicker: function(){
+        var element = this.element, o = this.options;
+        var picker_inner = $("<div>").addClass("picker-content-inner");
+        var d_list, m_list, y_list;
+        var i;
+
+        d_list = $("<ul>").addClass("d-list").appendTo(picker_inner);
+        $("<li>").html("&nbsp;").appendTo(d_list);
+        for(i = 1; i <= 31; i++) {
+            $("<li>").html(i).appendTo(d_list).data('value', i).addClass("js-dd-"+i);
+        }
+        $("<li>").html("&nbsp;").appendTo(d_list);
+
+        m_list = $("<ul>").addClass("m-list").appendTo(picker_inner);
+        $("<li>").html("&nbsp;").appendTo(m_list);
+        for(i = 1; i <= 12; i++) {
+            $("<li>").html(coreLocales[o.locale].calendar.months[i-1 + 12]).appendTo(m_list).data('value', i - 1).addClass("js-dm-"+i);
+        }
+        $("<li>").html("&nbsp;").appendTo(m_list);
+
+        y_list = $("<ul>").addClass("y-list").appendTo(picker_inner);
+        $("<li>").html("&nbsp;").appendTo(y_list);
+        var j = 1;
+        for(i = o.minYear; i <= o.maxYear; i++) {
+            $("<li>").html(i).appendTo(y_list).data('value', i).addClass("js-dy-"+j+" js-yy-"+i);
+            j++;
+        }
+        $("<li>").html("&nbsp;").appendTo(y_list);
+
+        return picker_inner;
+    },
+
+    _createPicker: function(){
+        var h, c, f, element = this.element;
+
+        if (!element.hasClass("wheelpicker")) element.addClass("wheelpicker");
+
+        element.html("");
+
+        h = $("<div>").addClass("picker-header").appendTo(element);
+        c = $("<div>").addClass("picker-content").appendTo(element);
+        f = $("<div>").addClass("picker-footer").appendTo(element);
+
+        h.append(this._drawHeader());
+        c.append(this._drawPicker());
+        f.append(this._drawFooter());
+    },
+
+    _removeScrollEvents: function(){
+        var element = this.element;
+        element.find(".d-list").off('scrollstart');
+        element.find(".d-list").off('scrollstop');
+        element.find(".m-list").off('scrollstart');
+        element.find(".m-list").off('scrollstop');
+        element.find(".y-list").off('scrollstart');
+        element.find(".y-list").off('scrollstop');
+    },
+
+    _createScrollEvents: function(){
+        var that = this, element = this.element, o = this.options;
+        var d_list = element.find(".d-list"),
+            m_list = element.find(".m-list"),
+            y_list = element.find(".y-list");
+
+        d_list.on('scrollstart', function(){
+            d_list.find(".active").removeClass("active");
+        });
+        d_list.on('scrollstop', function(){
+            var target = Math.round((Math.ceil(d_list.scrollTop() + 48) / 48));
+            var target_element = d_list.find(".js-dd-"+target);
+            var val = target_element.data('value');
+            var scroll_to = target_element.position().top - 48 + d_list[0].scrollTop;
+
+            d_list.animate({
+                scrollTop: scroll_to
+            }, CORE_ANIMATION_DURATION, function(){
+                target_element.addClass("active");
+                that.day = val;
+                element.find(".picker-header").html(that._drawHeader());
+                that._correct();
+            });
+        });
+
+        m_list.on('scrollstart', function(){
+            m_list.find(".active").removeClass("active");
+        });
+        m_list.on('scrollstop', function(){
+            var target = Math.round((Math.ceil(m_list.scrollTop() + 48) / 48));
+            var target_element = m_list.find(".js-dm-"+target);
+            var val = target_element.data('value');
+            var scroll_to = target_element.position().top - 48 + m_list[0].scrollTop;
+
+            m_list.animate({
+                scrollTop: scroll_to
+            }, CORE_ANIMATION_DURATION, function(){
+                target_element.addClass("active");
+                that.month = val;
+                element.find(".picker-header").html(that._drawHeader());
+                that._correct();
+            });
+        });
+
+        y_list.on('scrollstart', function(){
+            y_list.find(".active").removeClass("active");
+        });
+        y_list.on('scrollstop', function(){
+            var target = Math.round((Math.ceil(y_list.scrollTop() + 48) / 48));
+            var target_element = y_list.find(".js-dy-"+target);
+            var val = target_element.data('value');
+            var scroll_to = target_element.position().top - 48 + y_list[0].scrollTop;
+
+            y_list.animate({
+                scrollTop: scroll_to
+            }, CORE_ANIMATION_DURATION, function(){
+                target_element.addClass("active");
+                that.year = val;
+                element.find(".picker-header").html(that._drawHeader());
+                that._correct();
+            });
+        });
+    },
+
+    _createButtonsEvents: function(){
+        var that = this, element = this.element, o = this.options;
+
+        element.find(".js-button-random").on("click", function(){
+            function randomInteger(min, max) {
+                var rand = min - 0.5 + Math.random() * (max - min + 1);
+                rand = Math.round(rand);
+                return rand;
+            }
+
+            that.day = randomInteger(1, 31);
+            that.month = randomInteger(0, 11);
+            that.year = randomInteger(o.minYear, o.maxYear);
+
+            that.setPosition();
+        });
+
+        element.find(".js-button-done").on("click", function(){
+            var result = new Date(that.year, that.month, that.day);
+            $.CoreCss.callback(o.onDone, result);
+        });
+
+        element.find(".js-button-today").on("click", function(){
+            var d = new Date(); d.setHours(0,0,0,0);
+
+            that.day = d.getDate();
+            that.month = d.getMonth();
+            that.year = d.getFullYear();
+
+            that.setPosition();
+        });
+    },
+
+    _setOptionsFromDOM: function(){
+        var element = this.element, o = this.options;
+
+        $.each(element.data(), function(key, value){
+            if (key in o) {
+                try {
+                    o[key] = $.parseJSON(value);
+                } catch (e) {
+                    o[key] = value;
+                }
+            }
+        });
+    },
+
+    _destroy: function () {
+        this._removeScrollEvents();
+    },
+
+    _setOption: function ( key, value ) {
         this._super('_setOption', key, value);
     }
 });
@@ -4059,6 +4430,7 @@ $.widget( "corecss.dialog" , {
         closeAction: true,
         closeElement: ".js-dialog-close",
         removeOnClose: false,
+        cls: "",
 
         // _interval: undefined,
         // _overlay: undefined,
@@ -4115,7 +4487,7 @@ $.widget( "corecss.dialog" , {
         }
 
         if (o.overlayColor) {
-            if (o.overlayColor.isColor()) {
+            if (Utils.isColor(o.overlayColor)) {
                 overlay.css({
                     background: o.overlayColor
                 });
@@ -4137,7 +4509,7 @@ $.widget( "corecss.dialog" , {
         }
 
         if (o.background !== 'default') {
-            if (o.background.isColor()) {
+            if (Utils.isColor(o.background)) {
                 element.css({
                     background: o.background
                 });
@@ -4147,7 +4519,7 @@ $.widget( "corecss.dialog" , {
         }
 
         if (o.color !== 'default') {
-            if (o.color.isColor()) {
+            if (Utils.isColor(o.color)) {
                 element.css({
                     color: o.color
                 });
@@ -4163,6 +4535,9 @@ $.widget( "corecss.dialog" , {
             top: '100%'
         });
 
+        if (o.cls !== "") {
+            element.addClass(o.cls);
+        }
     },
 
     _hide: function(){
@@ -4290,7 +4665,7 @@ $.widget( "corecss.dialog" , {
 
         element.data('opened', true);
 
-        if (o.overlay) {
+        if (o.modal || o.overlay) {
             overlay = this._overlay;
             overlay.appendTo('body').show();
             if (o.overlayClickClose) {
@@ -4304,16 +4679,7 @@ $.widget( "corecss.dialog" , {
 
         //console.log('after show');
 
-        if (typeof o.onDialogOpen === 'function') {
-            o.onDialogOpen(element);
-        } else {
-            if (typeof window[o.onDialogOpen] === 'function') {
-                window[o.onDialogOpen](element);
-            } else {
-                var result = eval("(function(){"+o.onDialogOpen+"})");
-                result.call(element);
-            }
-        }
+        $.CoreCss.callback(o.onDialogOpen, element);
 
         if (o.hide && parseInt(o.hide) > 0) {
             this._interval = setTimeout(function(){
@@ -4336,16 +4702,8 @@ $.widget( "corecss.dialog" , {
         //element.fadeOut();
         this._hide();
 
-        if (typeof o.onDialogClose === 'function') {
-            o.onDialogClose(element);
-        } else {
-            if (typeof window[o.onDialogClose] === 'function') {
-                window[o.onDialogClose](element);
-            } else {
-                var result = eval("(function(){"+o.onDialogClose+"})");
-                result.call(element);
-            }
-        }
+        $.CoreCss.callback(o.onDialogClose, element);
+
     },
 
     reset: function(){
@@ -4442,7 +4800,7 @@ var dialog = {
             $("<div class='dialog-title'>"+data.title+"</div>").appendTo(dlg);
         }
         if (data.content !== undefined) {
-            $("<div class='dialog-content'>"+data.content+"</div>").appendTo(dlg);
+            $("<div class='dialog-content'>").append($(data.content)).appendTo(dlg);
         }
         if (data.actions !== undefined && typeof data.actions == 'object') {
 
@@ -4453,16 +4811,9 @@ var dialog = {
                 var button = $("<button class='flat-button'>"+item.title+"</button>");
 
                 if (item.onclick != undefined) button.on("click", function(){
-                    if (typeof item.onclick === 'function') {
-                        item.onclick(dlg);
-                    } else {
-                        if (typeof window[item.onclick] === 'function') {
-                            window[item.onclick](dlg);
-                        } else {
-                            var result = eval("(function(){"+item.onclick+"})");
-                            result.call(dlg);
-                        }
-                    }
+
+                    $.CoreCss.callback(item.onclick, dlg);
+
                 });
 
                 if (item.cls !== undefined) {
@@ -4481,7 +4832,8 @@ var dialog = {
             removeOnClose: true
         }, (data.options != undefined ? data.options : {}));
 
-        dlg.dialog(dlg_options);
+        return dlg.dialog(dlg_options);
+
     }
 };
 
@@ -4503,6 +4855,129 @@ $(window).on('resize', function(){
 $.Dialog = function(data){
     return coreDialog.create(data);
 };
+// Source: js/widgets/donut.js
+$.widget( "corecss.donut" , {
+
+    version: "1.0.0",
+
+    options: {
+        size: 100,
+        radius: 50,
+        value: 0,
+        background: "#ffffff",
+        color: "",
+        stroke: "#d1d8e7",
+        fill: "#49649f",
+        fontSize: 24,
+        hole: .8,
+        total: 100,
+        cap: "%",
+        animate: 0,
+        showTitle: true
+    },
+
+    _create: function () {
+        var that = this, element = this.element, o = this.options;
+
+        this._setOptionsFromDOM();
+
+        this._createDonut();
+
+        element.data('donut', this);
+    },
+
+    _createDonut: function(){
+        var that = this, element = this.element, o = this.options;
+        var html = "";
+        var r = o.radius  * (1 - (1 - o.hole) / 2);
+        var width = o.radius * (1 - o.hole);
+        var circumference = 2 * Math.PI * r;
+        var strokeDasharray = ((o.value * circumference) / o.total) + ' ' + circumference;
+        var transform = 'rotate(-90 ' + o.radius + ',' + o.radius + ')';
+        var fontSize = r * o.hole * 0.6;
+
+        if (!element.hasClass("donut")) element.addClass("donut");
+
+        element.css({
+            width: o.size,
+            height: o.size,
+            background: o.background
+        });
+
+        html += "<svg>";
+        html += "   <circle class='donut-back' r='"+(r)+"px' cx='"+(o.radius)+"px' cy='"+(o.radius)+"px' transform='"+(transform)+"' fill='none' stroke='"+(o.stroke)+"' stroke-width='"+(width)+"'/>";
+        html += "   <circle class='donut-fill' r='"+(r)+"px' cx='"+(o.radius)+"px' cy='"+(o.radius)+"px' transform='"+(transform)+"' fill='none' stroke='"+(o.fill)+"' stroke-width='"+(width)+"'/>";
+        if (o.showTitle === true) {
+            html += "   <text   class='donut-title' x='" + (o.radius) + "px' y='" + (o.radius) + "px' dy='" + (fontSize / 3) + "px' text-anchor='middle' fill='" + (o.fill) + "' font-size='" + (fontSize) + "px'>0" + (o.cap) + "</text>";
+        }
+        html += "</svg>";
+
+        element.html(html);
+
+        this.val(o.value);
+    },
+
+    _setValue: function(v){
+        var that = this, element = this.element, o = this.options;
+
+        o.value = v;
+
+        var fill = element.find(".donut-fill");
+        var title = element.find(".donut-title");
+        var r = o.radius  * (1 - (1 - o.hole) / 2);
+        var circumference = 2 * Math.PI * r;
+        var title_value = ((o.value * 1000 / o.total) / 10)+(o.cap);
+        var fill_value = ((o.value * circumference) / o.total) + ' ' + circumference;
+
+        fill.attr("stroke-dasharray", fill_value);
+        title.html(title_value);
+    },
+
+    val: function(v){
+        var that = this, o = this.options;
+
+        if (v === undefined) {
+            return o.value
+        }
+
+        if (o.animate > 0) {
+            var i = 0;
+            var interval;
+
+            interval = setInterval(function(){
+                that._setValue(++i);
+                if (i == v) {
+                    clearInterval(interval);
+                }
+            }, o.animate)
+
+        } else {
+            this._setValue(v);
+        }
+    },
+
+    _setOptionsFromDOM: function(){
+        var element = this.element, o = this.options;
+
+        $.each(element.data(), function(key, value){
+            if (key in o) {
+                try {
+                    o[key] = $.parseJSON(value);
+                } catch (e) {
+                    o[key] = value;
+                }
+            }
+        });
+    },
+
+    _destroy: function () {
+    },
+
+    _setOption: function ( key, value ) {
+        this._super('_setOption', key, value);
+    }
+});
+
 // Source: js/widgets/dropdown.js
 $.widget("corecss.dropdown", {
 
@@ -4843,106 +5318,221 @@ $.widget( "corecss.panel" , {
     }
 });
 
-// Source: js/widgets/sidebar.js
-$.widget("corecss.sidebar", {
+// Source: js/widgets/pickers.js
+var picker = {
+    timePicker: function(cb_done, cb_change){
+        var picker = $("<div>").timepicker({
+            onDone: cb_done,
+            onChange: cb_change,
+            isDialog: true
+        });
+        return coreDialog.create({
+            content: picker,
+            options: {
+                cls: "timepicker-dialog"
+            }
+        });
+    },
+
+    timeSelect: function(cb_done){
+        var picker = $("<div>").timeselect({
+            onDone: cb_done,
+            isDialog: true
+        });
+        return coreDialog.create({
+            content: picker,
+            options: {
+                cls: "wheelpicker-dialog"
+            }
+        });
+    },
+
+    wheelSelect: function(values, value, cb_done, title){
+        var picker = $("<div>").wheelselect({
+            title: title,
+            values: values,
+            value: value,
+            onDone: cb_done,
+            isDialog: true
+        });
+        return coreDialog.create({
+            content: picker,
+            options: {
+                cls: "wheelpicker-dialog"
+            }
+        });
+    },
+
+    calendarPicker: function(cb_done, options){
+        var picker_options = $.extend({}, {
+            isDialog: true,
+            onDone: cb_done
+        }, (options != undefined ? options : {}));
+
+        var picker = $("<div>").calendar(picker_options);
+        return coreDialog.create({
+            content: picker,
+            options: {
+                cls: "calendar-dialog"
+            }
+        });
+    },
+
+    datePicker: function(cb_done, options){
+        var picker_options = $.extend({}, {
+            isDialog: true,
+            onDone: cb_done
+        }, (options != undefined ? options : {}));
+
+        var picker = $("<div>").datepicker(picker_options);
+        return coreDialog.create({
+            content: picker,
+            options: {
+                cls: "wheelpicker-dialog"
+            }
+        });
+    }
+};
+
+$.Picker = window.corePicker = picker;
+// Source: js/widgets/progress.js
+$.widget( "corecss.progress" , {
 
     version: "1.0.0",
 
     options: {
-        toggle: null,
-        shift: null,
-        overlay: false,
-        duration: CORE_ANIMATION_DURATION
+        value: 0,
+        buffer: 0,
+        type: "default", // default, line, circle, buffered
+        barColor: 'bg-green',
+        bufferColor: 'bg-yellow',
+        color: 'bg-gray-600',
+        size: '64',
+        radius: '20',
+        onChange: $.noop,
+        onEnd: $.noop
     },
+
+    value: 0,
 
     _create: function () {
-        var that = this, element = this.element, o = this.options;
-
-        this._setOptionsFromDOM();
-        this._setToggle();
-
-        element.data('opened', false);
-        element.data("sidebar", this);
-    },
-
-    _setToggle: function(){
-        var that = this, element = this.element, o = this.options;
-
-        if (o.toggle !== null) {
-            $(o.toggle).on("click", function(e){
-
-                if (element.data('opened') === false) {
-                    that.open();
-                } else {
-                    that.close();
-                }
-
-                e.preventDefault();
-                //e.stopPropagation();
-            });
-        }
-    },
-
-    open: function(){
-        var that = this, element = this.element, o = this.options;
-        var overlay;
-
-        element.data('opened', true);
-
-        if (o.overlay === true) {
-            overlay = $("<div>").attr("id", "js-sidebar-overlay").addClass("overlay").appendTo($('body'));
-            overlay.on("click", function(){
-                that.close();
-            });
-        }
-
-        // element.animate({
-        //     left: 0
-        // }, o.duration);
-        element.addClass('active');
-
-        if (o.shift !== null) {
-
-            $.each(o.shift.split(","), function(){
-                $(this).animate({left: element.outerWidth()}, o.duration);
-            });
-        }
-    },
-
-    close: function(){
-        var that = this, element = this.element, o = this.options;
-        var overlay = $("#js-sidebar-overlay");
-
-        element.data('opened', false);
-
-        if (overlay.length > 0) {
-            overlay.off("click").remove();
-        }
-
-        if (o.shift !== null) {
-            $.each(o.shift.split(","), function(){
-                $(this).animate({left: 0}, o.duration);
-            });
-        }
-
-        // element.animate({
-        //     left: "-100%"
-        // }, o.duration);
-        element.removeClass('active');
-    },
-
-    toggleState: function(){
         var element = this.element;
 
-        if (element.data('opened') === true) {
-            this.close();
+        this._setOptionsFromDOM();
+
+        this._createProgress();
+
+        element.data('progress', this);
+    },
+
+    _createProgress: function(){
+        var element = this.element, o = this.options;
+        var template = '', bar, load, buffer, circle;
+
+        element.addClass("progress");
+
+        if (o.type == 'buffered') {
+
+            element.addClass("buffered");
+
+            bar  = $("<div class='bar'></div>").appendTo(element);
+            buffer  = $("<div class='buffer'></div>").appendTo(element);
+            load  = $("<div class='load'></div>").appendTo(element);
+
+            if (Utils.isColor(o.barColor)) {
+                bar.css('background', o.barColor);
+            } else {
+                bar.addClass(o.barColor);
+            }
+
+            if (Utils.isColor(o.bufferColor)) {
+                buffer.css('background', o.bufferColor);
+            } else {
+                buffer.addClass(o.bufferColor);
+            }
+
+            this.val(o.value);
+            this.buffer(o.buffer);
+
+        } else if (o.type == 'line') {
+            element.removeClass("progress");
+            element.addClass("progress-line");
+        } else if (o.type == 'circle') {
+            element.removeClass("progress");
+            element.addClass("circular-loader");
+            element.css({
+                width: o.size + 'px',
+                height: o.size + 'px'
+            });
+            circle = $('<svg class="circular"><circle class="path" cx="'+o.size/2+'" cy="'+o.size/2+'" r="'+o.radius+'" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg>').appendTo(element);
+            bar = element.find(".path");
+
+            if (Utils.isColor(o.barColor)) {
+                bar.css('stroke', o.barColor);
+            } else {
+                bar.addClass(o.barColor);
+            }
         } else {
-            this.open();
+            if (Utils.isColor(o.color)) {
+                element.css('background', o.color);
+            } else {
+                element.addClass(o.color);
+            }
+
+            bar = $("<div class='bar'>").appendTo(element);
+
+            if (Utils.isColor(o.barColor)) {
+                bar.css('background', o.barColor);
+            } else {
+                bar.addClass(o.barColor);
+            }
+
+            this.val(o.value);
         }
+    },
+
+    val: function(val){
+        var element = this.element, o = this.options;
+
+        if (val == undefined) {
+            return this.value;
+        }
+
+        this.value = val;
+        element.data('value', val);
+
+        element.find(".bar").css({
+            width: val + '%'
+        });
+
+        $.CoreCss.callback(o.onChange, val);
+
+        if (val == 100) {
+            $.CoreCss.callback(o.onEnd);
+        }
+
+        return this;
+    },
+
+    buffer: function(val){
+        var element = this.element;
+
+        if (val == undefined) {
+            return this.buffer;
+        }
+
+        this.buffer = val;
+        element.data('buffer', val);
+
+        element.find(".buffer").css({
+            width: val + '%'
+        });
+
+        return this;
     },
 
     _setOptionsFromDOM: function(){
-        var that = this, element = this.element, o = this.options;
+        var element = this.element, o = this.options;
 
         $.each(element.data(), function(key, value){
             if (key in o) {
@@ -4963,9 +5553,25 @@ $.widget("corecss.sidebar", {
     }
 });
 
+var progress = {
+    showPreloader: function(size, timeout){
+        size = size || 64;
+        timeout = timeout || false;
+        return coreDialog.create({
+            content: "<div data-role='progress' data-type='circle' data-size='"+size+"' data-radius='"+size/3+"'></div>",
+            options: {
+                width: size,
+                height: size,
+                cls: "preloader",
+                hide: timeout
+            }
+        });
+    }
+};
 
+$.Progress = window.coreProgress = progress;
 // Source: js/widgets/range.js
-$.widget("corecss.slider", {
+$.widget("corecss.range", {
 
     version: "1.0.1",
 
@@ -4992,11 +5598,11 @@ $.widget("corecss.slider", {
         target: false,
 
         onStartChange: function(){},
-        onChange: function(value, slider){},
-        onChanged: function(value, slider){},
-        onBufferChange: function(value, slider){},
+        onChange: function(value, range){},
+        onChanged: function(value, range){},
+        onBufferChange: function(value, range){},
 
-        _slider : {
+        _range : {
             vertical: false,
             offset: 0,
             length: 0,
@@ -5013,7 +5619,7 @@ $.widget("corecss.slider", {
 
 
         var o = this.options,
-            s = o._slider;
+            s = o._range;
 
         $.each(element.data(), function(key, value){
             if (key in o) {
@@ -5050,7 +5656,7 @@ $.widget("corecss.slider", {
             element.addClass('hint-left');
         }
 
-        this._createSlider();
+        this._createRange();
         this._initPoints();
         this._placeMarker(o.position);
         this._showBuffer(o.buffer);
@@ -5088,11 +5694,11 @@ $.widget("corecss.slider", {
             that._startMoveMarker(e);
         });
 
-        element.data('slider', this);
+        element.data('range', this);
     },
 
     _startMoveMarker: function(e){
-        var element = this.element, o = this.options, that = this, hint = element.children('.slider-hint');
+        var element = this.element, o = this.options, that = this, hint = element.children('.range-hint');
         var returnedValue;
 
         var event_move = CoreCss.isTouchDevice() ? 'touchmove' : 'mousemove';
@@ -5142,31 +5748,31 @@ $.widget("corecss.slider", {
             percents,
             valuePix,
 
-            vertical = o._slider.vertical,
-            sliderOffset = o._slider.offset,
-            sliderStart = o._slider.start,
-            sliderEnd = o._slider.stop,
-            sliderLength = o._slider.length,
-            markerSize = o._slider.marker;
+            vertical = o._range.vertical,
+            rangeOffset = o._range.offset,
+            rangeStart = o._range.start,
+            rangeEnd = o._range.stop,
+            rangeLength = o._range.length,
+            markerSize = o._range.marker;
 
         var event = !CoreCss.isTouchDevice() ? ev.originalEvent : ev.originalEvent.touches[0];
 
         //console.log(event);
 
         if (vertical) {
-            cursorPos = event.pageY - sliderOffset;
+            cursorPos = event.pageY - rangeOffset;
         } else {
-            cursorPos = event.pageX - sliderOffset;
+            cursorPos = event.pageX - rangeOffset;
         }
 
-        if (cursorPos < sliderStart) {
-            cursorPos = sliderStart;
-        } else if (cursorPos > sliderEnd) {
-            cursorPos = sliderEnd;
+        if (cursorPos < rangeStart) {
+            cursorPos = rangeStart;
+        } else if (cursorPos > rangeEnd) {
+            cursorPos = rangeEnd;
         }
 
         if (vertical) {
-            valuePix = sliderLength - cursorPos - markerSize / 2;
+            valuePix = rangeLength - cursorPos - markerSize / 2;
         } else {
             valuePix = cursorPos - markerSize / 2;
         }
@@ -5205,17 +5811,17 @@ $.widget("corecss.slider", {
         var size, size2, o = this.options, colorParts, colorIndex = 0, colorDelta, element = this.element,
             marker = this.element.children('.marker'),
             complete = this.element.children('.complete'),
-            hint = this.element.children('.slider-hint'), hintValue,
+            hint = this.element.children('.range-hint'), hintValue,
             oldPos = this._percToPix(o.position);
 
         colorParts = o.colors.length;
-        colorDelta = o._slider.length / colorParts;
+        colorDelta = o._range.length / colorParts;
 
-        if (o._slider.vertical) {
-            var oldSize = this._percToPix(o.position) + o._slider.marker,
-                oldSize2 = o._slider.length - oldSize;
-            size = this._percToPix(value) + o._slider.marker / 2;
-            size2 = o._slider.length - size;
+        if (o._range.vertical) {
+            var oldSize = this._percToPix(o.position) + o._range.marker,
+                oldSize2 = o._range.length - oldSize;
+            size = this._percToPix(value) + o._range.marker / 2;
+            size2 = o._range.length - size;
             this._animate(marker.css('top', oldSize2),{top: size2});
             this._animate(complete.css('height', oldSize),{height: size});
 
@@ -5272,16 +5878,16 @@ $.widget("corecss.slider", {
 
     _pixToPerc: function (valuePix) {
         var valuePerc;
-        valuePerc = (valuePix < 0 ? 0 : valuePix )* this.options._slider.ppp;
+        valuePerc = (valuePix < 0 ? 0 : valuePix )* this.options._range.ppp;
         return Math.round(this._correctValue(valuePerc));
     },
 
     _percToPix: function (value) {
-        ///console.log(this.options._slider.ppp, value);
-        if (this.options._slider.ppp === 0) {
+        ///console.log(this.options._range.ppp, value);
+        if (this.options._range.ppp === 0) {
             return 0;
         }
-        return Math.round(value / this.options._slider.ppp);
+        return Math.round(value / this.options._range.ppp);
     },
 
     _correctValue: function (value) {
@@ -5309,7 +5915,7 @@ $.widget("corecss.slider", {
     },
 
     _initPoints: function(){
-        var o = this.options, s = o._slider, element = this.element;
+        var o = this.options, s = o._range, element = this.element;
 
         if (s.vertical) {
             s.offset = element.offset().top;
@@ -5326,45 +5932,45 @@ $.widget("corecss.slider", {
         s.stop = s.length - s.marker / 2;
     },
 
-    _createSlider: function(){
+    _createRange: function(){
         var element = this.element,
             o = this.options,
             complete, marker, hint, buffer, back;
 
         element.html('');
 
-        back = $("<div/>").addClass("slider-backside").appendTo(element);
+        back = $("<div/>").addClass("range-backside").appendTo(element);
         complete = $("<div/>").addClass("complete").appendTo(element);
         buffer = $("<div/>").addClass("buffer").appendTo(element);
         marker = $("<a/>").addClass("marker").appendTo(element);
 
         if (o.showHint) {
-            hint = $("<span/>").addClass("slider-hint").appendTo(element);
+            hint = $("<span/>").addClass("range-hint").appendTo(element);
         }
 
         if (o.color !== 'default') {
-            if (o.color.isColor()) {
+            if (Utils.isColor(o.color)) {
                 back.css('background-color', o.color);
             } else {
                 back.addClass(o.color);
             }
         }
         if (o.completeColor !== 'default') {
-            if (o.completeColor.isColor()) {
+            if (Utils.isColor(o.completeColor)) {
                 complete.css('background-color', o.completeColor);
             } else {
                 complete.addClass(o.completeColor);
             }
         }
         if (o.bufferColor !== 'default') {
-            if (o.bufferColor.isColor()) {
+            if (Utils.isColor(o.bufferColor)) {
                 buffer.css('background-color', o.bufferColor);
             } else {
                 buffer.addClass(o.bufferColor);
             }
         }
         if (o.markerColor !== 'default') {
-            if (o.markerColor.isColor()) {
+            if (Utils.isColor(o.markerColor)) {
                 marker.css('background-color', o.markerColor);
             } else {
                 marker.addClass(o.markerColor);
@@ -5419,7 +6025,7 @@ $.widget("corecss.slider", {
         oldSize = o.buffer;
         size = value == 100 ? 99.9 : value;
 
-        if (o._slider.vertical) {
+        if (o._range.vertical) {
             this._animate(buffer.css('height', oldSize+'%'),{height: size+'%'});
 
         } else {
@@ -5465,7 +6071,971 @@ $.widget("corecss.slider", {
     }
 });
 
-// Source: js/widgets/swipe.js
+// Source: js/widgets/ripple.js
+$.widget( "corecss.ripple" , {
+
+    version: "1.0.0",
+
+    options: {
+        rippleColor: "#fff",
+        rippleAlpha: .4,
+        rippleTarget: "default"
+    },
+
+    _create: function () {
+        var that = this, element = this.element, o = this.options;
+
+        this._setOptionsFromDOM();
+
+        var target = o.rippleTarget === 'default' ? null : o.rippleTarget;
+
+        element.on("click", target, function(e){
+
+            var el = $(this);
+
+            if (el.css('position') == 'static') {
+                el.css('position', 'relative');
+            }
+
+            el.css({
+                overflow: 'hidden'
+            });
+
+            $(".ripple").remove();
+
+            var size = Math.max(el.outerWidth(), el.outerHeight());
+
+            // Add the element
+            var ripple = $("<span class='ripple'></span>").css({
+                width: size,
+                height: size
+            });
+
+            el.prepend(ripple);
+
+            // Get the center of the element
+            var x = e.pageX - el.offset().left - ripple.width()/2;
+            var y = e.pageY - el.offset().top - ripple.height()/2;
+
+            // Add the ripples CSS and start the animation
+            ripple.css({
+                background: Utils.hex2rgba(o.rippleColor, o.rippleAlpha),
+                width: size,
+                height: size,
+                top: y + 'px',
+                left: x + 'px'
+            }).addClass("rippleEffect");
+            setTimeout(function(){
+                $(".ripple").remove();
+            }, 400);
+        });
+
+        element.data('ripple', this);
+    },
+
+    _setOptionsFromDOM: function(){
+        var element = this.element, o = this.options;
+
+        $.each(element.data(), function(key, value){
+            if (key in o) {
+                try {
+                    o[key] = $.parseJSON(value);
+                } catch (e) {
+                    o[key] = value;
+                }
+            }
+        });
+    },
+
+    _destroy: function () {
+    },
+
+    _setOption: function ( key, value ) {
+        this._super('_setOption', key, value);
+    }
+});
+
+// Source: js/widgets/sidebar.js
+$.widget("corecss.sidebar", {
+
+    version: "1.0.0",
+
+    options: {
+        toggle: null,
+        shift: null,
+        overlay: false,
+        duration: CORE_ANIMATION_DURATION
+    },
+
+    _create: function () {
+        var that = this, element = this.element, o = this.options;
+
+        this._setOptionsFromDOM();
+        this._setToggle();
+
+        element.data('opened', false);
+        element.data("sidebar", this);
+    },
+
+    _setToggle: function(){
+        var that = this, element = this.element, o = this.options;
+
+        if (o.toggle !== null) {
+            $(o.toggle).on("click", function(e){
+
+                if (element.data('opened') === false) {
+                    that.open();
+                } else {
+                    that.close();
+                }
+
+                e.preventDefault();
+                //e.stopPropagation();
+            });
+        }
+    },
+
+    open: function(){
+        var that = this, element = this.element, o = this.options;
+        var overlay;
+
+        // if ($(o.toggle).hasClass("nav-button")) {
+        //     $(o.toggle).addClass("transform");
+        // }
+
+        element.data('opened', true);
+
+        if (o.overlay === true) {
+            overlay = $("<div>").attr("id", "js-sidebar-overlay").addClass("overlay").appendTo($('body'));
+            overlay.on("click", function(){
+                that.close();
+            });
+        }
+
+        // element.animate({
+        //     left: 0
+        // }, o.duration);
+        element.addClass('active');
+
+        if (o.shift !== null) {
+
+            $.each(o.shift.split(","), function(){
+                $(this).animate({left: element.outerWidth()}, o.duration);
+            });
+        }
+    },
+
+    close: function(){
+        var that = this, element = this.element, o = this.options;
+        var overlay = $("#js-sidebar-overlay");
+
+        // if ($(o.toggle).hasClass("nav-button")) {
+        //     $(o.toggle).removeClass("transform");
+        // }
+
+        element.data('opened', false);
+
+        if (overlay.length > 0) {
+            overlay.off("click").remove();
+        }
+
+        if (o.shift !== null) {
+            $.each(o.shift.split(","), function(){
+                $(this).animate({left: 0}, o.duration);
+            });
+        }
+
+        // element.animate({
+        //     left: "-100%"
+        // }, o.duration);
+        element.removeClass('active');
+    },
+
+    toggleState: function(){
+        var element = this.element;
+
+        if (element.data('opened') === true) {
+            this.close();
+        } else {
+            this.open();
+        }
+    },
+
+    _setOptionsFromDOM: function(){
+        var that = this, element = this.element, o = this.options;
+
+        $.each(element.data(), function(key, value){
+            if (key in o) {
+                try {
+                    o[key] = $.parseJSON(value);
+                } catch (e) {
+                    o[key] = value;
+                }
+            }
+        });
+    },
+
+    _destroy: function () {
+    },
+
+    _setOption: function ( key, value ) {
+        this._super('_setOption', key, value);
+    }
+});
+
+
+// Source: js/widgets/slider.js
+$.widget( "corecss.slider" , {
+
+    version: "1.0.0",
+
+    options: {
+    },
+
+    _create: function () {
+        var that = this, element = this.element, o = this.options;
+
+        this._setOptionsFromDOM();
+
+        element.data('slider', this);
+    },
+
+    _setOptionsFromDOM: function(){
+        var element = this.element, o = this.options;
+
+        $.each(element.data(), function(key, value){
+            if (key in o) {
+                try {
+                    o[key] = $.parseJSON(value);
+                } catch (e) {
+                    o[key] = value;
+                }
+            }
+        });
+    },
+
+    _destroy: function () {
+    },
+
+    _setOption: function ( key, value ) {
+        this._super('_setOption', key, value);
+    }
+});
+
+// Source: js/widgets/tabs.js
+$.widget( "corecss.tabs" , {
+
+    version: "1.0.0",
+
+    options: {
+        openTarget: false,
+        duration: CORE_ANIMATION_DURATION,
+        target: 'self',
+        markerColor: 'bg-white',
+        onTabClick: function(tab){return true;},
+        onTabChange: function(tab){}
+    },
+
+
+    _create: function () {
+        var that = this, element = this.element, o = this.options;
+        var tabs = element.find('li:not(.tab-marker)');
+        var tab_active = $(element.find('li.active:not(.tab-marker)')[0]);
+        var tab = tab_active.length > 0 ? tab_active : $(tabs[0]);
+
+        //console.log(tab);
+
+        this._setOptionsFromDOM();
+
+        this._createTabs();
+        this._createEvents();
+        this._openTab(tab, null);
+
+        element.data('tabs', this);
+    },
+
+    _createTabs: function(){
+        var element = this.element, o = this.options;
+        //var tabs = element.find('li:not(.tab-marker)');
+        var tab_marker = element.find('li.tab-marker');
+
+        if (tab_marker.length == 0) {
+            tab_marker = $("<li>").addClass("tab-marker");
+            tab_marker.appendTo(element);
+        }
+
+        if (Utils.isColor(o.markerColor)) {
+            tab_marker.css('background', o.markerColor);
+        } else {
+            tab_marker.addClass(o.markerColor);
+        }
+    },
+
+    _openTab: function(tab, direction){
+        var element = this.element, o = this.options;
+        var tabs = element.find('li:not(.tab-marker)');
+        var frames = o.target === 'self' ? element.siblings('.tabs-content').children('div') : $(o.target).children('div');
+        var frame = '#'+tab.data('target');
+        var marker = element.find('li.tab-marker');
+        var tab_width = tab.outerWidth();
+        var tab_left = tab.position().left;
+        var shift = tab.position().left + tab.outerWidth();
+        var width = element.outerWidth();
+        var scroll = element.scrollLeft();
+        var magic = 32;
+
+        var current_tab = $(element.find('li.active')[0]);
+
+        if (current_tab != tab) {
+            tabs.removeClass('active');
+            frames.hide();
+
+            tab.addClass('active');
+            $(frame).show();
+        }
+
+        if (shift + magic > width) {
+            element.animate({
+                scrollLeft: scroll + (shift - width) + (tab_width / 2)
+            }, o.duration);
+        }
+
+        if (tab_left - magic < 0) {
+            element.animate({
+                scrollLeft: tab_left + scroll - (tab_width / 2)
+            }, o.duration);
+        }
+
+        this._setMarker();
+    },
+
+    _setMarker: function(){
+        var that = this, element = this.element, o = this.options;
+        var tab = element.find("li.active");
+        var marker = element.find("li.tab-marker");
+        var tab_width = tab.outerWidth();
+        var tab_left = tab.position().left;
+        var scroll = element.scrollLeft();
+
+        marker.animate({
+            width: tab_width,
+            top: '100%',
+            left: tab_left + scroll
+        }, o.duration);
+    },
+
+    _createEvents: function(){
+        var that = this, element = this.element, o = this.options;
+        var tabs = element.find('li');
+
+        element.on('click', 'li', function(e){
+
+            if ($(this).hasClass('tab-marker')) return;
+            if ($(this).hasClass('scroll-control-left')) return;
+            if ($(this).hasClass('scroll-control-right')) return;
+
+            var result;
+            var tab = $(this), target = tab.data('target'), frame = $(target);
+            var tab_active = element.find("li.active");
+            var change_direction = tabs.index(tab) > tabs.index(tab_active) ? 'right' : 'left';
+
+            //console.log(change_direction);
+
+            if (tab.parent().hasClass('disabled')) {return false;}
+
+            if (typeof o.onTabClick === 'function') {
+                if (!o.onTabClick(tab)) {return false;}
+            } else {
+                if (typeof window[o.onTabClick] === 'function') {
+                    if (!window[o.onTabClick](tab)) {return false;}
+                } else {
+                    result = eval("(function(){"+o.onTabClick+"})");
+                    if (!result.call(tab)) {return false;}
+                }
+            }
+
+            if (target !=undefined && Utils.isUrl(target)) {
+                window.location.href = target;
+                return true;
+            }
+
+            element.data('activeTab', target);
+
+            that._openTab(tab, change_direction);
+
+            if (typeof o.onTabChange === 'function') {
+                o.onTabChange(tab);
+            } else {
+                if (typeof window[o.onTabChange] === 'function') {
+                    window[o.onTabChange](tab);
+                } else {
+                    result = eval("(function(){"+o.onTabChange+"})");
+                    result.call(tab);
+                }
+            }
+
+            e.preventDefault();
+            //e.stopPropagation();
+        });
+    },
+
+    hideTab: function(tab){
+
+    },
+
+    showTab: function(tab){
+
+    },
+
+    reset: function(tab){
+        this._openTab(tab)
+    },
+
+    _setOptionsFromDOM: function(){
+        var that = this, element = this.element, o = this.options;
+
+        $.each(element.data(), function(key, value){
+            if (key in o) {
+                try {
+                    o[key] = $.parseJSON(value);
+                } catch (e) {
+                    o[key] = value;
+                }
+            }
+        });
+    },
+
+    _destroy: function () {
+    },
+
+    _setOption: function ( key, value ) {
+        this._super('_setOption', key, value);
+    }
+});
+
+$(window).on('resize', function(){
+    var tabs = $('.tabs');
+    $.each(tabs, function(){
+        var el = $(this), _tabs = el.data("tabs"), tab = el.find("li.active");
+        _tabs.reset(tab);
+    });
+});
+// Source: js/widgets/timepicker.js
+$.widget( "corecss.timepicker" , {
+
+    version: "1.0.0",
+
+    options: {
+        locale: CORE_LOCALE,
+        time: new Date(),
+        isDialog: false,
+        onDone: $.noop,
+        onChange: $.noop,
+        onCancel: $.noop
+    },
+
+    mode: 'hours',
+    am: false,
+    hour: 0,
+    minute: 0,
+
+    _create: function () {
+        var that = this, element = this.element, o = this.options;
+        var c = 1000 * 60 * 5;
+        var date, h, m;
+
+        this._setOptionsFromDOM();
+
+        if (typeof o.time == 'string') {
+            date = new Date();
+            h = o.time.split(":")[0];
+            m = o.time.split(":")[1];
+            date.setHours(h, m);
+        } else {
+            date = o.time;
+        }
+
+        //date = o.date;
+
+        this.mode = 'hours';
+        this.am = date.getHours() < 12;
+        this.hour = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
+        this.minute = new Date(Math.round(date.getTime() / c) * c).getMinutes();
+
+        this._createPicker();
+        this._createEvents();
+
+        element.data('timepicker', this);
+    },
+
+    _drawHeader: function(){
+        var element = this.element, o = this.options,
+            html = "", hour, minute, am;
+
+        hour = this.hour > 12 ? this.hour - 12 : this.hour;
+        minute = this.minute < 10 ? '0'+this.minute : this.minute;
+        am = this.am;
+
+        html += "<span class='am "+(am ? 'active' : '')+"'>am</span>";
+        html += "<span class='pm "+(!am ? 'active' : '')+"'>pm</span>";
+        html += "<span class='js-hours active'>"+hour+"</span>";
+        html += "<span>:</span>";
+        html += "<span class='js-minutes'>"+minute+"</span>";
+
+        return $(html);
+    },
+
+    _drawFooter: function(){
+        var element = this.element, o = this.options,
+            html = "";
+
+        html += "<button class='flat-button js-button-cancel "+(o.isDialog === true ? 'js-dialog-close' : '')+"'>"+coreLocales[o.locale].buttons.cancel+"</button>";
+        html += "<button class='flat-button js-button-done "+(o.isDialog === true ? 'js-dialog-close' : '')+"'>"+coreLocales[o.locale].buttons.done+"</button>";
+
+        return $(html);
+    },
+
+    _createPicker: function(){
+        var that = this, element = this.element, o = this.options;
+        var i, j, h, c, f, pi, el, line, rotate;
+
+
+        if (!element.hasClass("timepicker")) {
+            element.addClass("timepicker");
+        }
+
+        element.html("");
+
+        h = $("<div>").addClass("picker-header").appendTo(element).html(this._drawHeader());
+        c = $("<div>").addClass("picker-content").appendTo(element);
+        f = $("<div>").addClass("picker-footer").appendTo(element).html(this._drawFooter());
+        pi = $("<div>").addClass("picker-inner").appendTo(c);
+
+        for(i = 0; i < 12; i++) {
+            j = i == 0 ? 12 : i;
+            el = $("<span>").addClass("picker-item").html(j).appendTo(pi).data("hour", j).data("minute", j * 5 == 60 ? '00' : j * 5).data('rotate', ((i+1) * 30 - 30));
+            if (j == this.hour) {
+                el.addClass("active");
+                rotate = el.data('rotate');
+            }
+        }
+
+        line = $("<div>").addClass("picker-line").appendTo(pi);
+        line.css({"transform": "rotate("+rotate+"deg)"});
+
+    },
+
+    _createEvents: function(){
+        var that = this, element = this.element, o = this.options;
+
+        element.on("click", ".picker-item", function(){
+            var el = $(this), rotate = el.data('rotate');
+            element.find(".picker-item.active").removeClass("active");
+            el.addClass("active");
+
+            if (that.mode == 'hours') {
+                element.find(".js-hours").text(el.data('hour'));
+                that.hour = el.data('hour');
+            } else {
+                element.find(".js-minutes").text(el.data('minute'));
+                that.minute = el.data('minute');
+            }
+
+            element.find(".picker-line").css({"transform": "rotate("+rotate+"deg)"});
+        });
+
+        element.on("click", ".js-hours, .js-minutes", function(){
+            var el = $(this);
+            element.find(".picker-item.active").removeClass("active");
+            if (el.hasClass("js-hours")) {
+                that.mode = "hours";
+                element.find(".js-hours").addClass("active");
+                element.find(".js-minutes").removeClass("active");
+                $.each(element.find(".picker-item"), function(){
+                    var el = $(this);
+                    el.text(el.data("hour"));
+                    if (el.data("hour") == that.hour) {
+                        el.addClass("active");
+                        element.find(".picker-line").css({"transform": "rotate("+el.data('rotate')+"deg)"});
+                    }
+                });
+            } else {
+                that.mode = "minutes";
+                element.find(".js-hours").removeClass("active");
+                element.find(".js-minutes").addClass("active");
+                $.each(element.find(".picker-item"), function(){
+                    var el = $(this);
+                    el.text(el.data("minute"));
+                    if (el.data("minute") == that.minute) {
+                        el.addClass("active");
+                        element.find(".picker-line").css({"transform": "rotate("+el.data('rotate')+"deg)"});
+                    }
+                });
+            }
+            var val = {
+                h: that.hour,
+                m: that.minute,
+                am: that.am
+            };
+            $.CoreCss.callback(o.onChange, val);
+        });
+
+        element.on("click", ".am, .pm", function(){
+            var el = $(this);
+            if (el.hasClass("am")) {
+                that.am = true;
+                element.find(".am").addClass("active");
+                element.find(".pm").removeClass("active");
+            } else {
+                that.am = false;
+                element.find(".am").removeClass("active");
+                element.find(".pm").addClass("active");
+            }
+
+            var val = {
+                h: that.hour,
+                m: that.minute,
+                am: that.am
+            };
+            $.CoreCss.callback(o.onChange, val);
+        });
+
+        element.on("click", ".js-button-done", function(){
+            var val = {
+                h: that.hour,
+                m: that.minute,
+                am: that.am
+            };
+            $.CoreCss.callback(o.onDone, val);
+        });
+
+        element.on("click", ".js-button-cancel", function(){
+            $.CoreCss.callback(o.onCancel);
+        });
+    },
+
+    _setOptionsFromDOM: function(){
+        var element = this.element, o = this.options;
+
+        $.each(element.data(), function(key, value){
+            if (key in o) {
+                try {
+                    o[key] = $.parseJSON(value);
+                } catch (e) {
+                    o[key] = value;
+                }
+            }
+        });
+    },
+
+    _destroy: function () {
+    },
+
+    _setOption: function ( key, value ) {
+        this._super('_setOption', key, value);
+    }
+});
+
+// Source: js/widgets/timeselect.js
+$.widget( "corecss.timeselect" , {
+
+    version: "1.0.0",
+
+    options: {
+        locale: CORE_LOCALE,
+        hour: 0,
+        minute: 0,
+        second: 0,
+        isDialog: false,
+        buttons: ['cancel', 'random', 'now', 'done'],
+        onDone: $.noop
+    },
+
+    hour: null,
+    minute: null,
+    second: null,
+
+    _create: function () {
+        var that = this, element = this.element, o = this.options;
+
+        this._setOptionsFromDOM();
+
+        this.hour = o.hour;
+        this.minute = o.minute;
+        this.second = o.second;
+
+        this._createElement();
+        this._createScrollEvents();
+        this._createButtonsEvents();
+
+        setTimeout(function(){
+            that.now();
+        }, 100);
+
+        element.data('timeselect', this);
+    },
+
+    now: function(){
+        var d = new Date();
+
+        this.hour = d.getHours();
+        this.minute = d.getMinutes();
+        this.second = d.getSeconds();
+
+        this.setPosition();
+    },
+
+    setPosition: function(){
+        var element = this.element;
+        var hour = this.hour,
+            minute = this.minute,
+            second = this.second;
+        var h_list = element.find(".h-list"),
+            m_list = element.find(".m-list"),
+            s_list = element.find(".s-list");
+
+        this._removeScrollEvents();
+
+        h_list.scrollTop(0).animate({
+            scrollTop: element.find(".js-hh-"+hour).addClass("active").position().top - 48
+        });
+
+        m_list.scrollTop(0).animate({
+            scrollTop: element.find(".js-mm-"+minute).addClass("active").position().top - 48
+        });
+
+        s_list.scrollTop(0).animate({
+            scrollTop: element.find(".js-ss-"+second).addClass("active").position().top - 48
+        });
+
+        this._createScrollEvents();
+    },
+
+    _drawFooter: function(){
+        var element = this.element, o = this.options,
+            html = "";
+
+        $.each(o.buttons, function(){
+            html += "<button class='flat-button js-button-"+this+" "+(o.isDialog && (this == 'cancel' || this == 'done') ? 'js-dialog-close' : '')+"'>"+coreLocales[o.locale].buttons[this]+"</button>";
+        });
+
+        return $(html);
+    },
+
+    _drawHeader: function(){
+        var element = this.element,
+            html = "", header,
+            o = this.options;
+
+        html += "<span class='part'>"+coreLocales[o.locale].calendar.time[0]+"</span><span class='part'>"+coreLocales[o.locale].calendar.time[1]+"</span><span class='part'>"+coreLocales[o.locale].calendar.time[2]+"</span>";
+
+        header = $(html);
+
+        return header;
+    },
+
+    _drawPicker: function(){
+        var element = this.element, o = this.options;
+        var picker_inner = $("<div>").addClass("picker-content-inner");
+        var h_list, m_list, s_list;
+        var i;
+
+        h_list = $("<ul>").addClass("h-list").appendTo(picker_inner);
+        $("<li>").html("&nbsp;").appendTo(h_list);
+        for(i = 0; i <= 23; i++) {
+            $("<li>").html(i).appendTo(h_list).data('value', i).addClass("js-hh-"+i);
+        }
+        $("<li>").html("&nbsp;").appendTo(h_list);
+
+        m_list = $("<ul>").addClass("m-list").appendTo(picker_inner);
+        $("<li>").html("&nbsp;").appendTo(m_list);
+        for(i = 0; i <= 59; i++) {
+            $("<li>").html(i).appendTo(m_list).data('value', i).addClass("js-mm-"+i);
+        }
+        $("<li>").html("&nbsp;").appendTo(m_list);
+
+        s_list = $("<ul>").addClass("s-list").appendTo(picker_inner);
+        $("<li>").html("&nbsp;").appendTo(s_list);
+        for(i = 0; i <= 59; i++) {
+            $("<li>").html(i).appendTo(s_list).data('value', i).addClass("js-ss-"+i);
+        }
+        $("<li>").html("&nbsp;").appendTo(s_list);
+
+        return picker_inner;
+    },
+
+    _createElement: function(){
+        var that = this, element = this.element, o = this.options;
+        var h, c, f;
+
+        if (!element.hasClass("wheelpicker")) element.addClass("wheelpicker");
+
+        element.html("");
+
+        h = $("<div>").addClass("picker-header").appendTo(element);
+        c = $("<div>").addClass("picker-content").appendTo(element);
+        f = $("<div>").addClass("picker-footer").appendTo(element);
+
+        h.append(this._drawHeader());
+        c.append(this._drawPicker());
+        f.append(this._drawFooter());
+    },
+
+    _createScrollEvents: function(){
+        var that = this, element = this.element, o = this.options;
+        var h_list = element.find(".h-list"),
+            m_list = element.find(".m-list"),
+            s_list = element.find(".s-list");
+
+        h_list.on('scrollstart', function(){
+            h_list.find(".active").removeClass("active");
+        });
+        h_list.on('scrollstop', function(){
+            var target = Math.round((Math.ceil(h_list.scrollTop() + 48) / 48)) - 1;
+            var target_element = h_list.find(".js-hh-"+target);
+            var val = target_element.data('value');
+            var scroll_to = target_element.position().top - 48 + h_list[0].scrollTop;
+
+            h_list.animate({
+                scrollTop: scroll_to
+            }, CORE_ANIMATION_DURATION, function(){
+                target_element.addClass("active");
+            });
+        });
+
+        m_list.on('scrollstart', function(){
+            m_list.find(".active").removeClass("active");
+        });
+        m_list.on('scrollstop', function(){
+            var target = Math.round((Math.ceil(m_list.scrollTop() + 48) / 48)) - 1;
+            var target_element = m_list.find(".js-mm-"+target);
+            var val = target_element.data('value');
+            var scroll_to = target_element.position().top - 48 + m_list[0].scrollTop;
+
+            m_list.animate({
+                scrollTop: scroll_to
+            }, CORE_ANIMATION_DURATION, function(){
+                target_element.addClass("active");
+            });
+        });
+
+        s_list.on('scrollstart', function(){
+            s_list.find(".active").removeClass("active");
+        });
+        s_list.on('scrollstop', function(){
+            var target = Math.round((Math.ceil(s_list.scrollTop() + 48) / 48)) - 1;
+            var target_element = s_list.find(".js-ss-"+target);
+            var val = target_element.data('value');
+            var scroll_to = target_element.position().top - 48 + s_list[0].scrollTop;
+
+            s_list.animate({
+                scrollTop: scroll_to
+            }, CORE_ANIMATION_DURATION, function(){
+                target_element.addClass("active");
+            });
+        });
+    },
+
+    _removeScrollEvents: function(){
+        var element = this.element;
+        element.find(".h-list").off('scrollstart');
+        element.find(".h-list").off('scrollstop');
+        element.find(".m-list").off('scrollstart');
+        element.find(".m-list").off('scrollstop');
+        element.find(".s-list").off('scrollstart');
+        element.find(".s-list").off('scrollstop');
+    },
+
+
+    _createButtonsEvents: function(){
+        var that = this, element = this.element, o = this.options;
+
+        element.find(".js-button-random").on("click", function(){
+            that.hour = Utils.random(0, 23);
+            that.minute = Utils.random(0, 59);
+            that.second = Utils.random(0, 59);
+
+            that.setPosition();
+        });
+
+        element.find(".js-button-done").on("click", function(){
+            var result = {
+                hour: that.hour,
+                minute: that.minute,
+                second: that.second
+            };
+            $.CoreCss.callback(o.onDone, result);
+        });
+
+        element.find(".js-button-now").on("click", function(){
+            var d = new Date();;
+
+            that.hour = d.getHours();
+            that.minute = d.getMinutes();
+            that.second = d.getSeconds();
+
+            that.setPosition();
+        });
+    },
+
+    _setOptionsFromDOM: function(){
+        var element = this.element, o = this.options;
+
+        $.each(element.data(), function(key, value){
+            if (key in o) {
+                try {
+                    o[key] = $.parseJSON(value);
+                } catch (e) {
+                    o[key] = value;
+                }
+            }
+        });
+    },
+
+    _destroy: function () {
+    },
+
+    _setOption: function ( key, value ) {
+        this._super('_setOption', key, value);
+    }
+});
+
+// Source: js/widgets/toast.js
+var Toast = function(message, callback, timeout, cls){
+    var toast = $("<div>").addClass("toast").html(message).appendTo($("body")).hide();
+    var width = toast.outerWidth();
+    var height = toast.outerHeight();
+    timeout = timeout || 2000;
+
+    toast.css({
+        'left': '50%',
+        'margin-left': -(width / 2),
+        'border-radius': height/2
+    }).addClass(cls).fadeIn(CORE_ANIMATION_DURATION);
+
+    setTimeout(function(){
+        toast.fadeOut(CORE_ANIMATION_DURATION, function(){
+            toast.remove();
+            if (callback != undefined) {
+                if (typeof callback === 'function') {
+                    callback();
+                } else {
+                    if (typeof window[callback] === 'function') {
+                        window[callback]();
+                    } else {
+                        var result = eval("(function(){"+callback+"})");
+                        result.call();
+                    }
+                }
+            }
+        });
+    }, timeout);
+};
+
+window.coreToast = Toast;
+
+$.Toast = Toast;
+// Source: js/widgets/touch.js
 var LEFT = "left",
     RIGHT = "right",
     UP = "up",
@@ -5535,7 +7105,7 @@ $.fn.swipe.fingers = {
 };
 */
 
-$.widget( "corecss.swipe" , {
+$.widget( "corecss.touch" , {
 
     version: "1.0.0",
 
@@ -5553,7 +7123,7 @@ $.widget( "corecss.swipe" , {
         swipeRight: null,
         swipeUp: null,
         swipeDown: null,
-        swipeStatus: null,
+        swipeStatus: null, // params: phase, direction, distance, duration, fingerCount, fingerData, currentDirection
         pinchIn: null,
         pinchOut: null,
         pinchStatus: null,
@@ -5628,7 +7198,7 @@ $.widget( "corecss.swipe" , {
             $.error('events not supported ' + this.START_EV + ',' + this.CANCEL_EV + ' on jQuery.swipe');
         }
 
-        element.data('swipe', this);
+        element.data('touch', this);
     },
 
     _setOptionsFromDOM: function(){
@@ -6599,177 +8169,184 @@ $.widget( "corecss.swipe" , {
     }
 });
 
-// Source: js/widgets/tabs.js
-$.widget( "corecss.tabs" , {
+// Source: js/widgets/wheelselect.js
+$.widget( "corecss.wheelselect" , {
 
     version: "1.0.0",
 
     options: {
-        openTarget: false,
-        duration: CORE_ANIMATION_DURATION,
-        target: 'self',
-        markerColor: 'bg-white',
-        onTabClick: function(tab){return true;},
-        onTabChange: function(tab){}
+        title: null,
+        locale: CORE_LOCALE,
+        values: null,
+        value: null,
+        isDialog: false,
+        buttons: ['cancel', 'random', 'done'],
+        onDone: $.noop
     },
 
+    _value: null,
 
     _create: function () {
         var that = this, element = this.element, o = this.options;
-        var tabs = element.find('li:not(.tab-marker)');
-        var tab_active = $(element.find('li.active:not(.tab-marker)')[0]);
-        var tab = tab_active.length > 0 ? tab_active : $(tabs[0]);
-
-        //console.log(tab);
 
         this._setOptionsFromDOM();
 
-        this._createTabs();
-        this._createEvents();
-        this._openTab(tab, null);
-
-        element.data('tabs', this);
-    },
-
-    _createTabs: function(){
-        var element = this.element, o = this.options;
-        //var tabs = element.find('li:not(.tab-marker)');
-        var tab_marker = element.find('li.tab-marker');
-
-        if (tab_marker.length == 0) {
-            tab_marker = $("<li>").addClass("tab-marker");
-            tab_marker.appendTo(element);
+        if (typeof o.values !== 'object') {
+            o.values = o.values.split(",").map(function(v){
+                return isNaN(v) ? v.trim() : Number(v);
+            });
         }
 
-        if (o.markerColor.isColor()) {
-            tab_marker.css('background', o.markerColor);
+        //console.log(o.values);
+
+        this._createElement();
+        this._createScrollEvents();
+        this._createButtonsEvents();
+
+        setTimeout(function(){
+            if (o.value !== null) {
+                that.value(o.value);
+            }
+        }, 100);
+
+        element.data('wheelselect', this);
+    },
+
+    value: function(v){
+        if (v === undefined) {
+            return this._value;
+        }
+
+        this._value = v;
+
+        this.setPosition();
+    },
+
+    setPosition: function(){
+        var element = this.element;
+        var value = this.options.values.indexOf(this._value);
+        var v_list = element.find(".v-list");
+
+        this._removeScrollEvents();
+
+        v_list.scrollTop(0).animate({
+            scrollTop: element.find(".js-vv-"+value).addClass("active").position().top - 48
+        });
+
+        this._createScrollEvents();
+    },
+
+    _drawHeader: function(){
+        var element = this.element,
+            html = "", header,
+            o = this.options;
+
+        html += "<span class='day'>"+o.title+"</span>";
+
+        header = $(html);
+
+        return header;
+    },
+
+    _drawFooter: function(){
+        var element = this.element, o = this.options,
+            html = "";
+
+        $.each(o.buttons, function(){
+            html += "<button class='flat-button js-button-"+this+" "+(o.isDialog && (this == 'cancel' || this == 'done') ? 'js-dialog-close' : '')+"'>"+coreLocales[o.locale].buttons[this]+"</button>";
+        });
+
+        return $(html);
+    },
+
+    _drawPicker: function(){
+        var element = this.element, o = this.options;
+        var picker_inner = $("<div>").addClass("picker-content-inner");
+        var v_list;
+        var i;
+
+        v_list = $("<ul>").addClass("v-list").appendTo(picker_inner);
+        $("<li>").html("&nbsp;").appendTo(v_list);
+
+        if ((Object.prototype.toString.call( o.values ) === '[object Array]' || Object.prototype.toString.call( o.values ) === '[object Object]') && o.values.length > 0) {
+            for(i = 0; i < o.values.length; i++) {
+                $("<li>").html(o.values[i]).appendTo(v_list).data('value', o.values[i]).addClass("js-vv-"+i);
+            }
         } else {
-            tab_marker.addClass(o.markerColor);
+            $("<li>").html("NO VALUES").data("value", null).appendTo(v_list);
         }
+
+        $("<li>").html("&nbsp;").appendTo(v_list);
+
+        return picker_inner;
     },
 
-    _openTab: function(tab, direction){
-        var element = this.element, o = this.options;
-        var tabs = element.find('li:not(.tab-marker)');
-        var frames = o.target === 'self' ? element.siblings('.tabs-content').children('div') : $(o.target).children('div');
-        var frame = '#'+tab.data('target');
-        var marker = element.find('li.tab-marker');
-        var tab_width = tab.outerWidth();
-        var tab_left = tab.position().left;
-        var shift = tab.position().left + tab.outerWidth();
-        var width = element.outerWidth();
-        var scroll = element.scrollLeft();
-        var magic = 32;
-
-        var current_tab = $(element.find('li.active')[0]);
-
-        if (current_tab != tab) {
-            tabs.removeClass('active');
-            frames.hide();
-
-            tab.addClass('active');
-            $(frame).show();
-        }
-
-        if (shift + magic > width) {
-            element.animate({
-                scrollLeft: scroll + (shift - width) + (tab_width / 2)
-            }, o.duration);
-        }
-
-        if (tab_left - magic < 0) {
-            element.animate({
-                scrollLeft: tab_left + scroll - (tab_width / 2)
-            }, o.duration);
-        }
-
-        this._setMarker();
-    },
-
-    _setMarker: function(){
+    _createElement: function(){
         var that = this, element = this.element, o = this.options;
-        var tab = element.find("li.active");
-        var marker = element.find("li.tab-marker");
-        var tab_width = tab.outerWidth();
-        var tab_left = tab.position().left;
-        var scroll = element.scrollLeft();
+        var h, c, f;
 
-        marker.animate({
-            width: tab_width,
-            top: '100%',
-            left: tab_left + scroll
-        }, o.duration);
+        if (!element.hasClass("wheelpicker")) element.addClass("wheelpicker");
+
+        element.html("");
+
+        if (o.title) {
+            h = $("<div>").addClass("picker-header").appendTo(element);
+            h.append(this._drawHeader());
+        }
+
+        c = $("<div>").addClass("picker-content").appendTo(element);
+        f = $("<div>").addClass("picker-footer").appendTo(element);
+
+        c.append(this._drawPicker());
+        f.append(this._drawFooter());
     },
 
-    _createEvents: function(){
+    _createScrollEvents: function(){
         var that = this, element = this.element, o = this.options;
-        var tabs = element.find('li');
+        var v_list = element.find(".v-list");
 
-        element.on('click', 'li', function(e){
+        v_list.on('scrollstart', function(){
+            v_list.find(".active").removeClass("active");
+        });
+        v_list.on('scrollstop', function(){
+            var target = Math.round((Math.ceil(v_list.scrollTop() + 48) / 48)) - 1;
+            var target_element = v_list.find(".js-vv-"+target);
+            var val = target_element.data('value');
+            var scroll_to = target_element.position().top - 48 + v_list[0].scrollTop;
 
-            if ($(this).hasClass('tab-marker')) return;
-            if ($(this).hasClass('scroll-control-left')) return;
-            if ($(this).hasClass('scroll-control-right')) return;
-
-            var result;
-            var tab = $(this), target = tab.data('target'), frame = $(target);
-            var tab_active = element.find("li.active");
-            var change_direction = tabs.index(tab) > tabs.index(tab_active) ? 'right' : 'left';
-
-            //console.log(change_direction);
-
-            if (tab.parent().hasClass('disabled')) {return false;}
-
-            if (typeof o.onTabClick === 'function') {
-                if (!o.onTabClick(tab)) {return false;}
-            } else {
-                if (typeof window[o.onTabClick] === 'function') {
-                    if (!window[o.onTabClick](tab)) {return false;}
-                } else {
-                    result = eval("(function(){"+o.onTabClick+"})");
-                    if (!result.call(tab)) {return false;}
-                }
-            }
-
-            if (target !=undefined && target.isUrl()) {
-                window.location.href = target;
-                return true;
-            }
-
-            element.data('activeTab', target);
-
-            that._openTab(tab, change_direction);
-
-            if (typeof o.onTabChange === 'function') {
-                o.onTabChange(tab);
-            } else {
-                if (typeof window[o.onTabChange] === 'function') {
-                    window[o.onTabChange](tab);
-                } else {
-                    result = eval("(function(){"+o.onTabChange+"})");
-                    result.call(tab);
-                }
-            }
-
-            e.preventDefault();
-            //e.stopPropagation();
+            v_list.animate({
+                scrollTop: scroll_to
+            }, CORE_ANIMATION_DURATION, function(){
+                target_element.addClass("active");
+            });
         });
     },
 
-    hideTab: function(tab){
-
+    _removeScrollEvents: function(){
+        var element = this.element;
+        element.find(".v-list").off('scrollstart');
+        element.find(".v-list").off('scrollstop');
     },
 
-    showTab: function(tab){
 
-    },
+    _createButtonsEvents: function(){
+        var that = this, element = this.element, o = this.options;
 
-    reset: function(tab){
-        this._openTab(tab)
+        element.find(".js-button-random").on("click", function(){
+
+            that._value = o.values[Utils.random(0, o.values.length - 1)];
+
+            that.setPosition();
+        });
+
+        element.find(".js-button-done").on("click", function(){
+            var result = that.value();
+            $.CoreCss.callback(o.onDone, result);
+        });
     },
 
     _setOptionsFromDOM: function(){
-        var that = this, element = this.element, o = this.options;
+        var element = this.element, o = this.options;
 
         $.each(element.data(), function(key, value){
             if (key in o) {
@@ -6790,13 +8367,6 @@ $.widget( "corecss.tabs" , {
     }
 });
 
-$(window).on('resize', function(){
-    var tabs = $('.tabs');
-    $.each(tabs, function(){
-        var el = $(this), _tabs = el.data("tabs"), tab = el.find("li.active");
-        _tabs.reset(tab);
-    });
-});
 // Source: js/widgets/widget.js
 $.widget( "corecss.widget" , {
 

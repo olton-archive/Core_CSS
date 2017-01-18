@@ -20,90 +20,40 @@
 <div class="app">
     <div class="view">
 
-        <div class="sidebar" data-role="sidebar" data-shift="header, footer, .view-content, #main-tabs" data-toggle="#sidebar-toggle" data-overlay="true">
-            <div class="sidebar-header">
-                    <span class="avatar">
-                        <img id="avatar_image">
-                    </span>
-                <span class="title fg-white">Имя клиента</span>
-                <span class="subtitle fg-gray-400">sergey@pimenov.com.ua</span>
-            </div>
-            <ul class="sidebar-menu">
-                <li class="divider"></li>
-                <li><a href="#about">Some</a></li>
-                <li><a href="#about">Menu</a></li>
-                <li><a href="#about">Items</a></li>
-            </ul>
-        </div>
-
         <header class="header fix-slow-animation">
-            <button class="tool-button ripple" id="sidebar-toggle"><span class="i-menu icon"></span></button>
+            <button class="nav-button" id="sidebar-toggle"><span></span></button>
             <span class="app-title">Core CSS</span>
-                <span style="position: relative" class=" place-right">
-                    <button class="tool-button ripple" id="optionMenu"><span class="i-more_vert icon"></span></button>
+            <span style="position: relative" class=" place-right">
+                    <button class="tool-button " id="optionMenu"><span class="i-more_vert icon"></span></button>
                     <ul class="menu dropdown place-right" data-role="dropdown" data-toggle-element="#optionMenu">
                         <li><a href="#">Параметры</a></li>
                     </ul>
                 </span>
-            <button class="tool-button place-right ripple"><span class="i-comment icon"></span></button>
-            <button class="tool-button place-right ripple"><span class="i-share icon"></span></button>
+            <button class="tool-button place-right " data-role="ripple"><span class="i-comment icon"></span></button>
+            <button class="tool-button place-right " data-role="ripple"><span class="i-share icon"></span></button>
         </header>
 
-        <footer class="footer bottom-nav fix-slow-animation">
-            <button class="button bg-pink fg-white ripple"><span class="i-add icon"></span><span class="label">Add</span></button>
-            <button class="button bg-pink fg-white ripple"><span class="i-favorite icon"></span><span class="label">Favorites</span></button>
-            <button class="button bg-pink fg-white ripple"><span class="i-timer icon"></span><span class="label">history</span></button>
+        <footer class="footer bottom-nav fix-slow-animation" data-role="ripple" data-ripple-target=".button">
+            <button class="button bg-pink fg-white "><span class="i-add icon"></span><span class="label">Add</span></button>
+            <button class="button bg-pink fg-white "><span class="i-favorite icon"></span><span class="label">Favorites</span></button>
+            <button class="button bg-pink fg-white "><span class="i-timer icon"></span><span class="label">history</span></button>
         </footer>
 
-        <ul class="bottom-sheet" id="bottom-sheet" data-role="bottomsheet">
-            <li class="ripple"><span class="icon mif-envelop"></span>Mail</li>
-            <li class="ripple"><span class="icon mif-command"></span>Message</li>
-            <li class="ripple"><span class="icon mif-location"></span>Location</li>
-            <li class="ripple"><span class="icon mif-voicemail"></span>Voice</li>
-            <li class="ripple"><span class="icon mif-phone"></span>Dialer</li>
+        <ul class="bottom-sheet" id="bottom-sheet" data-role="bottomsheet,ripple" data-ripple-target="li">
+            <li class=""><span class="icon i-contact_mail"></span>Mail</li>
+            <li class=""><span class="icon i-comment"></span>Message</li>
+            <li class=""><span class="icon i-power"></span>Location</li>
+            <li class=""><span class="icon i-keyboard_voice"></span>Voice</li>
+            <li class=""><span class="icon i-phone"></span>Dialer</li>
             <li class="divider"></li>
-            <li class="ripple"><span class="icon mif-upload"></span>Upload</li>
-            <li class="ripple"><span class="icon mif-security"></span>Security</li>
+            <li class=""><span class="icon i-file_upload"></span>Upload</li>
+            <li class=""><span class="icon i-security"></span>Security</li>
         </ul>
 
         <div class="view-content fix-slow-animation" style="padding-top: 50px !important;">
-            <h2 class="heading">Lists</h2>
+            <h2 class="heading">Виджет Wheel Select после клика на кнопку</h2>
 
-            <ul class="list bordered">
-                <li class="list-item with-second-label">
-                    <img class="avatar" src="images/me.jpg">
-                    <span class="label">List item</span>
-                    <span class="second-label">second label</span>
-                    <span class="second-action mif-alarm fg-red"></span>
-                </li>
-                <li class="list-item ">
-                    <img class="avatar" src="images/me.jpg">
-                    <span class="label">List item</span>
-                    <span class="second-action mif-alarm fg-green"></span>
-                </li>
-                <li class="list-item ">
-                    <img class="avatar" src="images/me.jpg">
-                    <span class="label">List item</span>
-                    <span class="second-action mif-alarm"></span>
-                </li>
-                <li class="list-item ">
-                    <img class="avatar" src="images/me.jpg">
-                    <span class="label">List item</span>
-                </li>
-                <li class="list-item ">
-                    <img class="avatar" src="images/me.jpg">
-                    <span class="label">List item</span>
-                </li>
-            </ul>
-
-            <br />
-
-            <h3 class="subheading">Custom item</h3>
-            <ul class="list">
-                <li class="list-item-custom padding4"></li>
-                <li class="list-item-custom padding4"></li>
-                <li class="list-item-custom padding4"></li>
-            </ul>
+            <button class="raised-button primary" onclick="corePicker.wheelSelect(['Item one','Item two','Item three','Item four','Item five','Item six','Item seven'],'Item two', null, 'Select value')">select Dialog</button>
         </div>
     </div>
 </div>

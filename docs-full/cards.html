@@ -45,6 +45,7 @@
                 <li><a href="/">Начало</a></li>
                 <li><a href="typography.html">Типографика</a></li>
                 <li><a href="colors.html">Цвета</a></li>
+                <li><a href="icons.html">New Icons</a></li>
                 <li><a href="tables.html">Таблицы</a></li>
                 <li><a href="buttons.html">Кнопки</a></li>
                 <li><a href="form.html">Форма и ее элементы</a></li>
@@ -66,17 +67,16 @@
                 <li><a href="tabs.html">Табы</a></li>
                 <li><a href="dialogs.html">Диалоговые окна</a></li>
                 <li><a href="multi-action.html">Многозадачные кнопки</a></li>
-                <li><a href="calendar.html">Календарь</a></li>
                 <li><a href="slider.html">Слайдер</a></li>
                 <li><a href="panels.html">Панели</a></li>
                 <li><a href="sheet.html">Доп. навигация</a></li>
                 <li><a href="menus.html">Меню</a></li>
                 <li><a href="wheel-select.html">New Weel Secect</a></li>
                 <li><a href="time-select.html">New Time Secect</a></li>
-                <li><a href="donut.html">Donut</a></li>
-                <li><a href="pickers.html">Pickers</a></li>
-                <li><a href="accordion.html">Accordion</a></li>
-                <li><a href="toasts.html">Toasts</a></li>
+                <li><a href="donut.html">New Donut</a></li>
+                <li><a href="pickers.html">New Pickers</a></li>
+                <li><a href="accordion.html">New Accordion</a></li>
+                <li><a href="toasts.html">New Toasts</a></li>
             </ul>
         </div>
     </div>
@@ -87,20 +87,80 @@
 
     <div class="example" data-text="пример">
 <pre><code class="html">
-    &lt;button class="flat-button ripple"&gt;Flat&lt;/button&gt;
+    &lt;div class="card shadow-1"&gt;
+        &lt;div class="card-content"&gt;
+            ...
+        &lt;/div&gt;
+    &lt;/div&gt;
 
-    &lt;button class="flat-button ripple"&gt;&lt;span&gt;Flat&lt;/span&gt; &lt;span class="mif-user"&gt;&lt;/span&gt; &lt;/button&gt;
+    &lt;div class="card shadow-1"&gt;
+        &lt;div class="card-header"&gt;
+            Card header
+        &lt;/div&gt;
+        &lt;div class="card-content"&gt;
+            ...
+        &lt;/div&gt;
+        &lt;div class="card-footer"&gt;
+            Card Footer
+        &lt;/div&gt;
+    &lt;/div&gt;
 
-    &lt;button class="raised-button bg-pink-300 bg-pink-900-active fg-white ripple"&gt;Raised&lt;/button&gt;
+    &lt;div class="card image-header shadow-1"&gt;
+        &lt;div class="card-header fg-white" style="background-image: url(http://lorempixel.com/1000/600/)"&gt;
+            Journey To Mountains
+        &lt;/div&gt;
+        &lt;div class="card-content"&gt;
+            &lt;p class="fg-gray"&gt;Posted on January 21, 2015&lt;/p&gt;
+            ...
+        &lt;/div&gt;
+        &lt;div class="card-footer"&gt;
+            &lt;button class="flat-button fg-blue"&gt;Like&lt;/button&gt;
+            &lt;button class="flat-button fg-blue"&gt;Read More&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
 
-    &lt;button class="raised-button ripple"&gt;Raised&lt;/button&gt;
+    &lt;div class="card shadow-1"&gt;
+        &lt;div class="card-header"&gt;
+            &lt;div class="avatar"&gt;
+                &lt;img src="http://lorempixel.com/68/68/people/"&gt;
+            &lt;/div&gt;
+            &lt;div class="name"&gt;John Doe&lt;/div&gt;
+            &lt;div class="date"&gt;Monday at 3:47 PM&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="card-content no-padding"&gt;
+            &lt;img src="http://lorempixel.com/1000/600/" style="width: 100%"&gt;
+        &lt;/div&gt;
+        &lt;div class="card-footer"&gt;
+            &lt;button class="flat-button i-thumb_up"&gt;&lt;/button&gt;
+            &lt;button class="flat-button i-comment"&gt;&lt;/button&gt;
+            &lt;button class="flat-button i-share"&gt;&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
 
-    &lt;button class="action-button ripple"&gt;&lt;span class="mif-plus"&gt;&lt;/span&gt;&lt;/button&gt;
-
-    &lt;button class="action-button mini ripple"&gt;&lt;span class="mif-plus"&gt;&lt;/span&gt;&lt;/button&gt;
-
-    &lt;button class="action-button primary bg-pink-300 bg-pink-900-active fg-white ripple"&gt;&lt;span class="mif-plus"&gt;&lt;/span&gt;&lt;/button&gt;
-
+    &lt;div class="card shadow-1"&gt;
+        &lt;div class="card-header"&gt;
+            &lt;div class="avatar"&gt;
+                &lt;img src="http://lorempixel.com/68/68/people/"&gt;
+            &lt;/div&gt;
+            &lt;div class="name"&gt;John Doe&lt;/div&gt;
+            &lt;div class="date"&gt;Monday at 3:47 PM&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="card-content"&gt;
+            What a nice photo i took yesterday!
+        &lt;/div&gt;
+        &lt;div class="card-content no-padding"&gt;
+            &lt;img src="http://lorempixel.com/1000/600/" style="width: 100%"&gt;
+        &lt;/div&gt;
+        &lt;div class="card-content fg-gray" style="display: flex; justify-content: space-between; align-items: center;"&gt;
+            &lt;span&gt;&lt;small&gt;Likes: &lt;/small&gt;112&lt;/span&gt;
+            &lt;span&gt;&lt;small&gt;Comments: &lt;/small&gt;43&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class="card-footer"&gt;
+            &lt;button class="flat-button i-thumb_up"&gt;&lt;/button&gt;
+            &lt;button class="flat-button i-comment"&gt;&lt;/button&gt;
+            &lt;button class="flat-button i-share"&gt;&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
 </code></pre>
     </div>
     <div class="phone android" style="margin-left: auto; margin-right: auto; float: none; -webkit-box-sizing: content-box;-moz-box-sizing: content-box;box-sizing: content-box;">

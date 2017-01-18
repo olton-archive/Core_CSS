@@ -7,7 +7,8 @@
 [class*=i-] {
   speak: none;
   display: inline-block;
-  font: normal normal normal 16px/1 icons;
+  font: normal normal normal 16px/1;
+  font-family: 'icons', 'Roboto', 'Noto Sans', sans-serif;
   font-size: inherit;
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
@@ -105,6 +106,9 @@
 .i-dialpad:before {
   content: "\e0bc";
 }
+.i-directions:before {
+  content: "\e52e";
+}
 .i-cancel:before {
   content: "\e611";
 }
@@ -131,6 +135,9 @@
 }
 .i-sms_failed:before {
   content: "\e626";
+}
+.i-record:before {
+  content: "\e061";
 }
 .i-fiber_new:before {
   content: "\e05e";
@@ -335,6 +342,9 @@
 }
 .i-star:before {
   content: "\e83a";
+}
+.i-stop:before {
+  content: "\e047";
 }
 .i-thumb_down:before {
   content: "\e8db";

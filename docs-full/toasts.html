@@ -35,6 +35,7 @@
     </style>
 </head>
 <body>
+
 <nav class="navbar dark fixed-top block-shadow-impact">
     <div class="navbar-content container">
         <a href="/" class="navbar-item fg-white">CoreCSS</a>
@@ -45,6 +46,7 @@
                 <li><a href="/">Начало</a></li>
                 <li><a href="typography.html">Типографика</a></li>
                 <li><a href="colors.html">Цвета</a></li>
+                <li><a href="icons.html">New Icons</a></li>
                 <li><a href="tables.html">Таблицы</a></li>
                 <li><a href="buttons.html">Кнопки</a></li>
                 <li><a href="form.html">Форма и ее элементы</a></li>
@@ -57,6 +59,7 @@
                 <li><a href="gravatar.html">Граватар</a></li>
                 <li><a href="stepper.html">Пошаговость</a></li>
                 <li><a href="chips.html">Chips</a></li>
+                <li><a href="cards.html">New Cards</a></li>
             </ul>
         </div>
         <div class="navbar-item">
@@ -65,39 +68,34 @@
                 <li><a href="tabs.html">Табы</a></li>
                 <li><a href="dialogs.html">Диалоговые окна</a></li>
                 <li><a href="multi-action.html">Многозадачные кнопки</a></li>
-                <li><a href="calendar.html">Календарь</a></li>
                 <li><a href="slider.html">Слайдер</a></li>
                 <li><a href="panels.html">Панели</a></li>
                 <li><a href="sheet.html">Доп. навигация</a></li>
                 <li><a href="menus.html">Меню</a></li>
+                <li><a href="wheel-select.html">New Weel Secect</a></li>
+                <li><a href="time-select.html">New Time Secect</a></li>
+                <li><a href="donut.html">New Donut</a></li>
+                <li><a href="pickers.html">New Pickers</a></li>
+                <li><a href="accordion.html">New Accordion</a></li>
+                <li><a href="toasts.html">New Toasts</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
 <div class="container">
-    <h1>Кнопки</h1>
+    <h1>Подсказки</h1>
 
     <div class="example" data-text="пример">
 <pre><code class="html">
-    &lt;button class="flat-button ripple"&gt;Flat&lt;/button&gt;
-
-    &lt;button class="flat-button ripple"&gt;&lt;span&gt;Flat&lt;/span&gt; &lt;span class="mif-user"&gt;&lt;/span&gt; &lt;/button&gt;
-
-    &lt;button class="raised-button bg-pink-300 bg-pink-900-active fg-white ripple"&gt;Raised&lt;/button&gt;
-
-    &lt;button class="raised-button ripple"&gt;Raised&lt;/button&gt;
-
-    &lt;button class="action-button ripple"&gt;&lt;span class="mif-plus"&gt;&lt;/span&gt;&lt;/button&gt;
-
-    &lt;button class="action-button mini ripple"&gt;&lt;span class="mif-plus"&gt;&lt;/span&gt;&lt;/button&gt;
-
-    &lt;button class="action-button primary bg-pink-300 bg-pink-900-active fg-white ripple"&gt;&lt;span class="mif-plus"&gt;&lt;/span&gt;&lt;/button&gt;
+&lt;button class="raised-button" onclick="$.Toast('This is a toast with message and default timeout')"&gt;Default&lt;/button&gt;
+&lt;button class="raised-button" onclick="$.Toast('This is a toast with custom timeout eq 5000', null, 5000)"&gt;Timeout&lt;/button&gt;
+&lt;button class="raised-button" onclick="$.Toast('This is a toast with callback', function(){alert('Ku from toast callback')})"&gt;Callback&lt;/button&gt;
 
 </code></pre>
     </div>
     <div class="phone android" style="margin-left: auto; margin-right: auto; float: none; -webkit-box-sizing: content-box;-moz-box-sizing: content-box;box-sizing: content-box;">
-        <iframe src="frame-buttons.html" frameborder="0" scrolling="no"></iframe>
+        <iframe src="frame-toasts.html" frameborder="0" scrolling="no"></iframe>
         <div class="statusbar"></div>
     </div>
 
