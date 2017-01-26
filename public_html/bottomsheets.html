@@ -1,0 +1,135 @@
+<div class="page">
+    <h1 class="h_header_2">Bottom sheets</h1>
+    <hr class="thin"/>
+    <p>
+        Bottom sheets slide up from the bottom of the screen to reveal more content. Bottom sheets are displayed only as a result of a user-initiated action.
+    </p>
+    <p>
+        Modal bottom sheets may present actions in a list or grid as an alternative to menus or simple dialogs.
+    </p>
+
+    <button class="raised-button bg-lightBlue fg-white" onclick="coreBottomSheet.toggle('#bottom-sheet', 'list')">List Style</button>
+    <button class="raised-button bg-green fg-white" onclick="coreBottomSheet.toggle('#bottom-sheet', 'grid')">Grid Style</button>
+
+    <br />
+    <br />
+
+    <div class="emulator short bg-gray-50">
+        <ul class="bottom-sheet pos-absolute" id="bottom-sheet" data-role="bottomsheet">
+            <li class=""><span class="icon i-comment"></span>Message</li>
+            <li class=""><span class="icon i-power"></span>Location</li>
+            <li class=""><span class="icon i-keyboard_voice"></span>Voice</li>
+            <li class=""><span class="icon i-phone"></span>Dialer</li>
+            <li class="divider"></li>
+            <li class=""><span class="icon i-file_upload"></span>Upload</li>
+        </ul>
+    </div>
+
+    <pre class="prettyprint linenums">
+        &lt;ul class="bottom-sheet" data-role="bottomsheet"&gt;
+            &lt;li class=""&gt;&lt;span class="icon i-comment"&gt;&lt;/span&gt;Message&lt;/li&gt;
+            &lt;li class=""&gt;&lt;span class="icon i-power"&gt;&lt;/span&gt;Location&lt;/li&gt;
+            &lt;li class=""&gt;&lt;span class="icon i-keyboard_voice"&gt;&lt;/span&gt;Voice&lt;/li&gt;
+            &lt;li class=""&gt;&lt;span class="icon i-phone"&gt;&lt;/span&gt;Dialer&lt;/li&gt;
+            &lt;li class="divider"&gt;&lt;/li&gt;
+            &lt;li class=""&gt;&lt;span class="icon i-file_upload"&gt;&lt;/span&gt;Upload&lt;/li&gt;
+        &lt;/ul&gt;
+    </pre>
+
+    <h3 class="heading">Options</h3>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Property</th>
+            <th>Data-*</th>
+            <th>Default</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>mode</td>
+            <td>data-mode</td>
+            <td>list</td>
+            <td>Display mode <strong>grid</strong> or <strong>list</strong></td>
+        </tr>
+        <tr>
+            <td>overlay</td>
+            <td>data-overlay</td>
+            <td>false</td>
+            <td>Display overlay <strong>true</strong> or <strong>false</strong></td>
+        </tr>
+        <tr>
+            <td>duration</td>
+            <td>data-duration</td>
+            <td>300</td>
+            <td>Display speed</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3 class="heading">Methods</h3>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>open</td>
+            <td>Open sheet</td>
+        </tr>
+        <tr>
+            <td>close</td>
+            <td>Close sheet</td>
+        </tr>
+        <tr>
+            <td>toggle</td>
+            <td>Toggle sheet</td>
+        </tr>
+        </tbody>
+    </table>
+    <pre class="prettyprint linenums">
+        var el = $('#el_id').data('bottomsheet');
+        el.open('list');
+        el.open('grid');
+        el.close();
+        el.toggle('list');
+        el.toggle('grid');
+    </pre>
+
+    <h3 class="heading">Global object</h3>
+    <p>
+        Core_CSS provides a global object <strong>coreBottomSheet</strong> to manipulate of Element.
+    </p>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>coreBottomSheet.open</td>
+            <td>Open sheet</td>
+        </tr>
+        <tr>
+            <td>coreBottomSheet.close</td>
+            <td>Close sheet</td>
+        </tr>
+        <tr>
+            <td>coreBottomSheet.toggle</td>
+            <td>Toggle sheet</td>
+        </tr>
+        </tbody>
+    </table>
+    <pre class="prettyprint linenums">
+        coreBottomSheet.open(element, mode);
+        coreBottomSheet.toggle(element, mode);
+        coreBottomSheet.close(element);
+    </pre>
+
+</div>

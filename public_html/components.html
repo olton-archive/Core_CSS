@@ -2,6 +2,33 @@
     <h1 class="h_header_2">Core_Components</h1>
     <hr class="thin"/>
     <p>
-        Core_Components includes a many widgets for creating cool interfaces in Material Design Style. All components are written with Google Material Design guidelines.
+        Core_CSS includes a many widgets (Core_Components) for creating cool interfaces in Material Design Style. All components are written with Google Material Design guidelines.
     </p>
+
+    <div class="align-center fg-gray-400" style="font-size: 160px;">
+        20+
+    </div>
+
+
+    <p>
+        Some components may require activation via data attribute <strong>data-role</strong> with value of component name.
+    </p>
+    <pre class="prettyprint linenums">
+        &lt;ul data-role="accordion"&gt;
+            ...
+        &lt;/ul&gt;
+    </pre>
+    <p>
+        Some components have any options. You can use the options by defining them through data attributes <strong>data-*</strong>.
+    </p>
+    <pre class="prettyprint linenums">
+        &lt;ul class="accordion"
+            data-close-other="false"
+            data-on-open="_function_name_"
+            data-on-close="console.log(arguments)"
+            data-role="accordion"&gt;
+        ...
+        &lt;/ul&gt;
+    </pre>
+
 </div>

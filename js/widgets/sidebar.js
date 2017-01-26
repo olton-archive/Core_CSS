@@ -103,6 +103,10 @@ $.widget("corecss.sidebar", {
         }
     },
 
+    isOpened: function(){
+        return this.element.data('opened') === true
+    },
+
     _setOptionsFromDOM: function(){
         var that = this, element = this.element, o = this.options;
 

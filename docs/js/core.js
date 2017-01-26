@@ -3483,7 +3483,7 @@ $.widget( "corecss.accordion" , {
     version: "1.0.0",
 
     options: {
-        closeAny: true,
+        closeOther: true,
         onOpen: $.noop,
         onClose: $.noop
     },
@@ -3570,7 +3570,7 @@ $.widget("corecss.bottomsheet", {
     options: {
         mode: "list",
         overlay: false,
-        duration: 200
+        duration: CORE_ANIMATION_DURATION
     },
 
     _create: function () {
@@ -3644,6 +3644,10 @@ $.widget("corecss.bottomsheet", {
         }
     },
 
+    toggle: function(mode){
+        return this.toggleState(mode);
+    },
+
     _setOptionsFromDOM: function(){
         var that = this, element = this.element, o = this.options;
 
@@ -3666,6 +3670,18 @@ $.widget("corecss.bottomsheet", {
     }
 });
 
+var coreBottomSheet = {
+    toggle: function(target, mode){
+        $(target).data("bottomsheet").toggleState(mode);
+    },
+    open: function(target, mode){
+        $(target).data("bottomsheet").open(mode);
+    },
+    close: function(target){
+        $(target).data("bottomsheet").close();
+    }
+};
+
 window.toggleBottomSheet = function(target, mode){
     $(target).data("bottomsheet").toggleState(mode);
 };
@@ -3678,19 +3694,19 @@ window.closeBottomSheet = function(target){
     $(target).data("bottomsheet").close();
 };
 
+$.bottomSheet = window.coreBottomSheet = coreBottomSheet;
+// Source: js/widgets/datepicker.js
 
-// Source: js/widgets/calendar.js
 
-
-$.widget( "corecss.calendar" , {
+$.widget( "corecss.datepicker" , {
 
     version: "1.0.0",
 
     options: {
-        weekStart: CORE_CALENDAR_WEEK_START,
+        //weekStart: CORE_CALENDAR_WEEK_START,
         mode: "default", // default, range, multi
-        startFrom: "day", // day, month, year
-        format: "dd-mm-yyyy",
+        //startFrom: "day", // day, month, year
+        //format: "dd-mm-yyyy",
         locale: CORE_LOCALE,
         toolbar: true,
         footer: true,
@@ -3735,7 +3751,7 @@ $.widget( "corecss.calendar" , {
         this._createCalendar();
         this._createEvents();
 
-        element.data('calendar', this);
+        element.data('datepicker', this);
 
         $.CoreCss.callback(o.onCreate, element);
     },
@@ -3784,11 +3800,6 @@ $.widget( "corecss.calendar" , {
         $.each(o.buttons, function(){
             html += "<button class='flat-button js-button-"+this+" "+(o.isDialog && (this == 'cancel' || this == 'done') ? 'js-dialog-close' : '')+"'>"+coreLocales[o.locale].buttons[this]+"</button>";
         });
-
-        // html += "<button class='flat-button js-button-cancel'>"+coreLocales[o.locale].buttons.cancel+"</button>";
-        // html += "<button class='flat-button js-button-today'>"+coreLocales[o.locale].buttons.today+"</button>";
-        // html += "<button class='flat-button js-button-clear'>"+coreLocales[o.locale].buttons.clear+"</button>";
-        // html += "<button class='flat-button js-button-done'>"+coreLocales[o.locale].buttons.done+"</button>";
 
         if (o.footer !== true) {
             footer.hide();
@@ -4087,8 +4098,8 @@ $.widget( "corecss.calendar" , {
     }
 });
 
-// Source: js/widgets/datepicker.js
-$.widget( "corecss.datepicker" , {
+// Source: js/widgets/dateselect.js
+$.widget( "corecss.dateselect" , {
 
     version: "1.0.0",
 
@@ -4127,7 +4138,7 @@ $.widget( "corecss.datepicker" , {
             that.today();
         }, 100);
 
-        element.data('datepicker', this);
+        element.data('dateselect', this);
     },
 
     _correct: function(){
@@ -4410,10 +4421,10 @@ $.widget( "corecss.dialog" , {
     version: "1.0.0",
 
     options: {
-        modal: true,
+        //modal: true,
         overlay: true,
         overlayColor: 'default',
-        overlayClickClose: false,
+        //overlayClickClose: false,
         type: 'default', // success, alert, warning, info
         content: false,
         contentFull: false,
@@ -4648,6 +4659,10 @@ $.widget( "corecss.dialog" , {
         this._setContent();
     },
 
+    isOpened: function(){
+        return this.element.data('opened') === true;
+    },
+
     toggle: function(){
         var element = this.element;
         if (element.data('opened')) {
@@ -4719,8 +4734,10 @@ $.widget( "corecss.dialog" , {
 });
 
 var dialog = {
-    open: function (el, content, contentType){
+
+    isDialog: function(el){
         var dialog = $(el), dialog_obj;
+
         if (dialog.length == 0) {
             console.log('Dialog ' + el + ' not found!');
             return false;
@@ -4730,6 +4747,16 @@ var dialog = {
 
         if (dialog_obj == undefined) {
             console.log('Element not contain role dialog! Please add attribute data-role="dialog" to element ' + el);
+            return false;
+        }
+
+        return true;
+    },
+
+    open: function (el, content, contentType){
+        var dialog = $(el), dialog_obj = dialog.data('dialog');
+
+        if (!this.isDialog(el)) {
             return false;
         }
 
@@ -4745,16 +4772,9 @@ var dialog = {
     },
 
     close: function(el){
-        var dialog = $(el), dialog_obj;
-        if (dialog.length == 0) {
-            console.log('Dialog ' + el + ' not found!');
-            return false;
-        }
+        var dialog = $(el), dialog_obj = dialog.data('dialog');
 
-        dialog_obj = dialog.data('dialog');
-
-        if (dialog_obj == undefined) {
-            console.log('Element not contain role dialog! Please add attribute data-role="dialog" to element ' + el);
+        if (!this.isDialog(el)) {
             return false;
         }
 
@@ -4762,16 +4782,9 @@ var dialog = {
     },
 
     toggle: function(el, content, contentType){
-        var dialog = $(el), dialog_obj;
-        if (dialog.length == 0) {
-            console.log('Dialog ' + el + ' not found!');
-            return false;
-        }
+        var dialog = $(el), dialog_obj = dialog.data('dialog');
 
-        dialog_obj = dialog.data('dialog');
-
-        if (dialog_obj == undefined) {
-            console.log('Element not contain role dialog! Please add attribute data-role="dialog" to element ' + el);
+        if (!this.isDialog(el)) {
             return false;
         }
 
@@ -4788,6 +4801,16 @@ var dialog = {
         } else {
             dialog_obj.open();
         }
+    },
+
+    isOpened: function(el){
+        var dialog = $(el), dialog_obj = dialog.data('dialog');
+
+        if (!this.isDialog(el)) {
+            return false;
+        }
+
+        return dialog_obj.element.data('opened') === true;
     },
 
     create: function(data){
@@ -6259,6 +6282,10 @@ $.widget("corecss.sidebar", {
         } else {
             this.open();
         }
+    },
+
+    isOpened: function(){
+        return this.element.data('opened') === true
     },
 
     _setOptionsFromDOM: function(){

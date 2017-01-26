@@ -995,6 +995,10 @@ header .app-title,
   color: inherit;
   font-size: 20px;
 }
+header .app-title:nth-child(1),
+.header .app-title:nth-child(1) {
+  padding-left: 10px;
+}
 header .header-container,
 .header .header-container {
   height: 100%;
@@ -1072,7 +1076,7 @@ footer,
   left: 50%;
   list-style: none inside;
   padding: 0;
-  margin: 0 0 0 -180px;
+  margin: 0 0 0 -50%;
   width: 100%;
   top: 100%;
   position: fixed;
@@ -1177,6 +1181,7 @@ footer,
 }
 .table {
   width: 100%;
+  background: #ffffff;
 }
 .table th {
   font-size: 12px;
@@ -1194,11 +1199,22 @@ footer,
 .table td.numeric {
   text-align: right;
 }
-.table tbody tr:hover {
+.table tr.selected {
+  background-color: #f5f5f5;
+}
+.table.hovering tbody tr:hover,
+.table.hovered tbody tr:hover {
   background-color: #eeeeee;
 }
-.table tbody tr.selected {
-  background-color: #f5f5f5;
+.table.border {
+  border: 1px #eee solid;
+}
+.table.border-all {
+  border: 1px #eee solid;
+}
+.table.border-all td,
+.table.border-all th {
+  border: 1px #eee solid;
 }
 .table tbody tr + tr {
   border-top: 1px #eeeeee solid;
@@ -3722,6 +3738,9 @@ a.action-button {
   display: block;
   position: relative;
   font-size: 14px;
+  width: calc(100% - 16px);
+  margin: 8px auto;
+  border-radius: 2px;
 }
 .card-header {
   border-bottom: 1px #eee solid;
@@ -3769,7 +3788,7 @@ a.action-button {
   min-height: 48px;
 }
 .card.image-header .card-header {
-  height: 40vw;
+  height: 144px;
   vertical-align: bottom;
   background-size: cover;
   background-position: center;
@@ -4002,7 +4021,7 @@ header.more ~ .fixed-tabs,
   display: block;
 }
 .chip + .chip {
-  margin-left: 10px;
+  margin-left: 8px;
 }
 .panel {
   display: block;
@@ -4123,6 +4142,22 @@ header.more ~ .fixed-tabs,
   -webkit-transform: scale(1);
           transform: scale(1);
   transition: all .3s;
+}
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden;
+}
+.video-container iframe,
+.video-container object,
+.video-container embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 .progress {
   display: block;
@@ -4815,6 +4850,7 @@ header.more ~ .fixed-tabs,
       -ms-flex-positive: 1;
           flex-grow: 1;
   text-align: center;
+  cursor: pointer;
 }
 .calendar-content .toolbar .prev_year:after,
 .calendar-content .toolbar .next_year:after,
@@ -4856,6 +4892,7 @@ header.more ~ .fixed-tabs,
 .calendar-content .week-days > .day {
   text-align: center;
   width: calc(100% / 7);
+  cursor: pointer;
 }
 .calendar-content .month-days {
   display: -webkit-flex;
@@ -4875,6 +4912,7 @@ header.more ~ .fixed-tabs,
   width: calc(100% / 7);
   padding: 8px 0;
   position: relative;
+  cursor: pointer;
 }
 .calendar-content .month-days > .today {
   color: #0288d1;
@@ -4899,6 +4937,23 @@ header.more ~ .fixed-tabs,
 }
 .calendar-footer .flat-button {
   color: #0288d1;
+}
+.calendar.landscape {
+  width: 512px;
+  height: 312px;
+}
+.calendar.landscape .calendar-header {
+  width: 180px;
+  float: left;
+  height: 100%;
+}
+.calendar.landscape .calendar-content {
+  margin-left: 180px;
+  height: calc(100% - 45px);
+  width: calc(100% - 180px);
+}
+.calendar.landscape .calendar-footer {
+  margin-left: 180px;
 }
 @media screen and (min-width: 640px) {
   .calendar:not(.no-rotate) {
@@ -5789,6 +5844,17 @@ header.more ~ .fixed-tabs,
 }
 * .margin8 {
   margin: 64px !important;
+}
+.flex-justify {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 .debug {
   border: 1px dotted red !important;

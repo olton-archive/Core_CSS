@@ -1,0 +1,115 @@
+<div class="page">
+    <h1 class="h_header_2">Date picker</h1>
+    <hr class="thin"/>
+    <p>
+        Core_CSS provides datepicker component for getting/setting date values.
+    </p>
+    <pre class="prettyprint linenums">
+        &lt;div data-role="datepicker"&gt;&lt;/div&gt;
+    </pre>
+    <div class="emulator" style="width: 360px; height: auto;">
+        <br />
+        <div data-role="datepicker" class="no-rotate"></div>
+        <br />
+    </div>
+    <br />
+    <div class="emulator no-640" style="width: 540px; height: auto;">
+        <br />
+        <div data-role="datepicker"></div>
+        <br />
+    </div>
+
+    <h4 class="subheading">Options</h4>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Option</th>
+            <th>Data-*</th>
+            <th>Default</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>mode</td>
+            <td>data-mode</td>
+            <td>default</td>
+            <td>Show datepicker in specific mode: default, multi</td>
+        </tr>
+        <tr>
+            <td>locale</td>
+            <td>data-locale</td>
+            <td>CORE_LOCALE</td>
+            <td>Show datepicker in specific language. For more info see <a href="#locales">locales</a></td>
+        </tr>
+        <tr>
+            <td>toolbar</td>
+            <td>data-toolbar</td>
+            <td>true</td>
+            <td>Show datepicker toolbar</td>
+        </tr>
+        <tr>
+            <td>footer</td>
+            <td>data-footer</td>
+            <td>true</td>
+            <td>Show datepicker footer</td>
+        </tr>
+        <tr>
+            <td>preset</td>
+            <td>data-preset</td>
+            <td>[&nbsp;]</td>
+            <td>Preset values</td>
+        </tr>
+        <tr>
+            <td>current</td>
+            <td>data-current</td>
+            <td>null</td>
+            <td>Current values</td>
+        </tr>
+        <tr>
+            <td>buttons</td>
+            <td>data-buttons</td>
+            <td>['cancel', 'today', 'clear', 'done']</td>
+            <td>Show specific datepicker footer buttons</td>
+        </tr>
+        <tr>
+            <td>onCreate</td>
+            <td>data-on-create</td>
+            <td>$.noop</td>
+            <td>Callback for on create event</td>
+        </tr>
+        <tr>
+            <td>onDone</td>
+            <td>data-on-done</td>
+            <td>$.noop</td>
+            <td>Callback for on done event</td>
+        </tr>
+        <tr>
+            <td>onCancel</td>
+            <td>data-on-cancel</td>
+            <td>$.noop</td>
+            <td>Callback for on cancel event</td>
+        </tr>
+        <tr>
+            <td>onToday</td>
+            <td>data-on-today</td>
+            <td>$.noop</td>
+            <td>Callback for on today event</td>
+        </tr>
+        <tr>
+            <td>onClear</td>
+            <td>data-on-clear</td>
+            <td>$.noop</td>
+            <td>Callback for on clear event</td>
+        </tr>
+        <tr>
+            <td>onDay</td>
+            <td>data-on-day</td>
+            <td>$.noop</td>
+            <td>Callback for on day event</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>

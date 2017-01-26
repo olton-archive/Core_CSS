@@ -1,0 +1,310 @@
+<div class="page">
+    <h1 class="h_header_2">Dialogs</h1>
+    <hr class="thin"/>
+    <p>
+        Dialogs inform users about a specific task and may contain critical information, require decisions, or involve multiple tasks.
+    </p>
+    <p>
+        Dialogs contain text and UI controls. They retain focus until dismissed or a required action has been taken. Use dialogs sparingly because they are interruptive.
+    </p>
+
+    <div class="clear bg-gray-100 padding2">
+        <button class="raised-button bg-red fg-white" onclick="coreDialog.open('#dialog1')">Open dialog</button>
+        <div id="dialog1" data-role="dialog" data-close-button="true" data-overlay="true" class="temp_object">
+            <div class="dialog-title">
+                Use Google's location service?
+            </div>
+            <div class="dialog-content">
+                Bassus abactors ducunt ad triticum. A fraternal form of manifestation is the bliss.
+            </div>
+            <div class="dialog-actions">
+                <button class="flat-button" onclick="coreDialog.close('#dialog1')">disagree</button>
+                <button class="flat-button" onclick="coreDialog.close('#dialog1')">agree</button>
+            </div>
+        </div>
+    </div>
+
+    <p>
+        Core_CSS provides two ways for create dialogs:
+    </p>
+    <ol>
+        <li>Predefined method</li>
+        <li>Runtime method</li>
+    </ol>
+    <p>
+        To use first method you must create <strong>div</strong> with attribute <strong>data-role="dialog"</strong> and them call dialog methods.
+    </p>
+    <pre class="prettyprint linenums">
+        &lt;div data-role="dialog" id="d1"&gt;
+            ...
+        &lt;/div&gt;
+
+        &lt;script&gt;
+            var d = $("d1").data('dialog');
+            d.open();
+        &lt;/script&gt;
+    </pre>
+    <p>
+        For second method you must use  <strong>$.Dialog</strong> or <strong>coreDialog</strong> objects.
+    </p>
+    <pre class="prettyprint linenums">
+        &lt;script&gt;
+            $.Dialog({
+                ...dialog_options...
+            });
+
+            or
+
+            coreDialog.create({
+                ...dialog_options...
+            });
+        &lt;/script&gt;
+    </pre>
+    <h3 class="heading">Options</h3>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Option</th>
+            <th>Data-*</th>
+            <th>Default</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>overlay</td>
+            <td>data-overlay</td>
+            <td>true</td>
+            <td>Show overlay when dialog open</td>
+        </tr>
+        <tr>
+            <td>overlayColor</td>
+            <td>data-overlay-color</td>
+            <td>default</td>
+            <td>Color of overlay hex value or class name</td>
+        </tr>
+        <tr>
+            <td>type</td>
+            <td>data-type</td>
+            <td>default</td>
+            <td>Predefined color type of dialog: default, success, alert, warning or info</td>
+        </tr>
+        <tr>
+            <td>content</td>
+            <td>data-content</td>
+            <td>false</td>
+            <td>Dialog content string of jquery object</td>
+        </tr>
+        <tr>
+            <td>contentFull</td>
+            <td>data-content-full</td>
+            <td>false</td>
+            <td>Dialog content string of jquery object</td>
+        </tr>
+        <tr>
+            <td>contentType</td>
+            <td>data-content-type</td>
+            <td>default</td>
+            <td>Dialog content type: default or video</td>
+        </tr>
+        <tr>
+            <td>hide</td>
+            <td>data-hide</td>
+            <td>false</td>
+            <td>Milliseconds to auto close dialog</td>
+        </tr>
+        <tr>
+            <td>width</td>
+            <td>data-width</td>
+            <td>320</td>
+            <td>Dialog width</td>
+        </tr>
+        <tr>
+            <td>height</td>
+            <td>data-height</td>
+            <td>auto</td>
+            <td>Dialog height</td>
+        </tr>
+        <tr>
+            <td>background</td>
+            <td>data-background</td>
+            <td>default</td>
+            <td>Dialog background color. Hex value or class name.</td>
+        </tr>
+        <tr>
+            <td>color</td>
+            <td>data-color</td>
+            <td>default</td>
+            <td>Dialog text color. Hex value or class name.</td>
+        </tr>
+        <tr>
+            <td>show</td>
+            <td>data-show</td>
+            <td>false</td>
+            <td>Dialog auto show when dialog create.</td>
+        </tr>
+        <tr>
+            <td>href</td>
+            <td>data-href</td>
+            <td>false</td>
+            <td>Link to external dialog content.</td>
+        </tr>
+        <tr>
+            <td>duration</td>
+            <td>data-duration</td>
+            <td>300</td>
+            <td>Animation speed in milliseconds</td>
+        </tr>
+        <tr>
+            <td>easing</td>
+            <td>data-easing</td>
+            <td>swing</td>
+            <td>Animation function name</td>
+        </tr>
+        <tr>
+            <td>closeAction</td>
+            <td>data-close-action</td>
+            <td>true</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>closeElement</td>
+            <td>data-close-element</td>
+            <td>.js-dialog-close</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>removeOnClose</td>
+            <td>data-remove-on-close</td>
+            <td>false</td>
+            <td>Remove dialog when dialog close</td>
+        </tr>
+        <tr>
+            <td>cls</td>
+            <td>data-cls</td>
+            <td></td>
+            <td>Additional class for dialog element</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3 class="heading">Methods</h3>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Method</th>
+            <th>Params</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>setContent</td>
+            <td>content</td>
+            <td>String or jQuery object</td>
+        </tr>
+        <tr>
+            <td>setContentHref</td>
+            <td>href</td>
+            <td>Link to external content</td>
+        </tr>
+        <tr>
+            <td>setContentVideo</td>
+            <td>href</td>
+            <td>Link to external content</td>
+        </tr>
+        <tr>
+            <td>toggle</td>
+            <td></td>
+            <td>Toggle dialog state</td>
+        </tr>
+        <tr>
+            <td>open</td>
+            <td></td>
+            <td>Open dialog</td>
+        </tr>
+        <tr>
+            <td>close</td>
+            <td></td>
+            <td>Close dialog</td>
+        </tr>
+        <tr>
+            <td>reset</td>
+            <td></td>
+            <td>Reset dialog position</td>
+        </tr>
+        <tr>
+            <td>isOpened</td>
+            <td></td>
+            <td>Check dialog is opened</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3 class="heading">Objects</h3>
+    <h4>coreDialog</h4>
+    <p>
+        Core_CSS provides object coreDialog to create and manage dialogs. This object contains next methods:
+    </p>
+    <ul>
+        <li><strong>coreDialog.open(el, content, contentType)</strong></li>
+        <li><strong>coreDialog.close(el)</strong></li>
+        <li><strong>coreDialog.toggle(el, content, contentType)</strong></li>
+        <li><strong>coreDialog.create(data)</strong></li>
+    </ul>
+
+    <h4>$.Dialog</h4>
+    <p>
+        $.Dialog is a synonym to coreDialog.create(...).
+    </p>
+    <h4>Data for create dialog method</h4>
+    <p>
+        Data can contains: title, content, actions and dialog options.
+    </p>
+
+
+    <h3 class="heading">Examples</h3>
+    <h4>Predefined dialog</h4>
+    <pre class="prettyprint linenums">
+        &lt;button class="raised-button" onclick="coreDialog.open('#dialog1')"&gt;Open dialog&lt;/button&gt;
+
+        &lt;div id="dialog1" data-role="dialog" data-overlay="true"&gt;
+            &lt;div class="dialog-title"&gt;
+                Use Google's location service?
+            &lt;/div&gt;
+            &lt;div class="dialog-content"&gt;
+                Bassus abactors ducunt ad triticum.
+                A fraternal form of manifestation is the bliss.
+            &lt;/div&gt;
+            &lt;div class="dialog-actions"&gt;
+                &lt;button class="flat-button" onclick="coreDialog.close('#dialog1')"&gt;disagree&lt;/button&gt;
+                &lt;button class="flat-button" onclick="coreDialog.close('#dialog1')"&gt;agree&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    </pre>
+
+    <h4>Runtime dialog</h4>
+    <pre class="prettyprint linenums">
+        $.Dialog({
+            title: "Dialog title",
+            content: "This is a dialog content",
+            actions: [
+                {
+                    title: "Ok",
+                    onclick: function(el){
+                        alert("You pressed OK button");
+                    }
+                },
+                {
+                    title: "Cancel",
+                    cls: "js-dialog-close"
+                }
+            ],
+            options: {
+                type: "warning"
+            }
+        });
+    </pre>
+</div>

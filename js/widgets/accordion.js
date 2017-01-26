@@ -3,7 +3,7 @@ $.widget( "corecss.accordion" , {
     version: "1.0.0",
 
     options: {
-        closeAny: true,
+        closeOther: true,
         onOpen: $.noop,
         onClose: $.noop
     },

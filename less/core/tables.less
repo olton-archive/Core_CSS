@@ -3,6 +3,7 @@
 
 .table {
     width: 100%;
+    background: @white;
 }
 
 .table {
@@ -26,19 +27,36 @@
 }
 
 .table {
-    tbody {
-        tr:hover {
-            background-color: @gray200;
-        }
-        tr.selected {
-            background-color: @gray100;
-        }
+    tr.selected {
+        background-color: @gray100;
+    }
 
+    &.hovering, &.hovered {
+        tbody {
+            tr:hover {
+                background-color: @gray200;
+            }
+        }
+    }
+    &.border {
+        border: 1px #eee solid;
+    }
+    &.border-all {
+        border: 1px #eee solid;
+        td, th {
+            border: 1px #eee solid;
+        }
+    }
+}
+
+
+
+.table {
+    tbody {
         tr + tr {
             border-top: 1px @gray200 solid;
         }
     }
-
     thead {
         border-bottom: 1px @gray300 solid;
     }

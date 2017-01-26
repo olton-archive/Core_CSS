@@ -9,6 +9,7 @@ body {
     right: auto;
     bottom: auto;
     height: auto;
+    min-height: 100%;
     overflow-y: scroll;
 }
 
@@ -188,6 +189,28 @@ body {
     display: none !important;
 }
 
+.prettyprint {
+    background-color: #eeeeee;
+    border-width: 1px !important;
+    border-color: #eeeeee !important;
+    /*border-left: 8px #555555 solid !important;*/
+}
+
+.prettyprint ol {
+    background-color: transparent !important;
+}
+
+.prettyprint li {background-color: white !important; list-style-type: decimal !important; padding-left: 1em; border-bottom: 1px #eee solid;}
+.prettyprint li:last-child{border-bottom: 0;}
+.prettyprint .tag {
+    font-size: .7rem;
+}
+
+.prettyprint {
+    overflow: hidden;
+    overflow-x: auto;
+}
+
 .prettyprint ol.linenums > li { list-style-type: decimal; }
 
 #colors-list {
@@ -234,6 +257,39 @@ body {
     border-top: 1px #eee solid;
 }
 
+.emulator {
+    height: 640px;
+    width: 360px;
+    padding: 0;
+    background: #fff;
+    overflow: hidden;
+    border: 1px solid #eee;
+    position: relative;
+}
+
+.emulator.short {
+    height: 300px;
+}
+.emulator.shorten {
+    height: 360px;
+}
+
+.emulator.medium {
+    height: 400px;
+}
+
+.emulator .header {
+    position: absolute;
+}
+
+.emulator .emulator-content {
+    padding-top: 54px;
+}
+
+.table thead {
+    /*background: #eee;*/
+}
+
 @media screen and (min-width: 1200px) {
     #icons-list li {
         width: 25%;
@@ -246,7 +302,7 @@ body {
     }
 }
 
-@media screen and (min-width: 769px) {
+@media screen and (min-width: 801px) {
     .sidebar {
         transform: translate3d(0,0,0);
         border-right: 1px #eee solid;

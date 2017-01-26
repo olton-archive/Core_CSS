@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-    <title>CoreCss - Simple CSS/JS framework for Phonegap</title>
+    <meta name="keywords" content="core_css, core css, phonegap, cordova, css framework, Core_CSS, Material Design, Material CSS">
+    <meta name="description" content="Core_Css - Simple CSS/JS framework for Phonegap and Cordova. Core_CSS - is a free and open source mobile HTML framework to develop hybrid mobile apps or web apps in Material Design Style.">
+    <title>Core_Css Documentation</title>
     <link rel="stylesheet" type="text/css" href="css/core.min.css">
     <link rel="stylesheet" type="text/css" href="css/core-colors.min.css">
     <link rel="stylesheet" type="text/css" href="css/core-icons.min.css">
@@ -19,6 +21,7 @@
 
         <div class="sidebar" data-role="sidebar" data-toggle="#sidebar-toggle"  data-overlay="true">
             <div class="sidebar-header">
+                <a href="/" class="fg-white" style="position: absolute; top: 10px; right: 10px;"><span class="i-home i-2x"></span></a>
                 <div class="avatar">
                     <img src="images/Core_logo3.svg" class="ani-logo">
                 </div>
@@ -26,38 +29,50 @@
                 <span class="subtitle fg-white"> 2017 &copy; Sergey Pimenov</span>
             </div>
             <ul class="sidebar-menu">
-                <li><a href="#"                       data-target="requirements">Requirements</a></li>
-                <li><a href="#"                       data-target="typo">Typography</a></li>
-                <li><a href="#"                       data-target="colors">Colors</a></li>
-                <li><a href="#"                       data-target="icons">Icons</a></li>
-                <li><a href="#"                       data-target="components">Components</a></li>
-                <li><a href="#"  class="second-level" data-target="bottomnav">Bottom navigation</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="bottomsheets">Bottom sheets</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="buttons">Buttons</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="cards">Cards</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="chips">Chips</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="datatables">Data tables</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="dialogs">Dialogs</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="grids">Grids</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="header">Header</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="lists">Lists</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="menus">Menus</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="panels">Panels</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="pickers">Pickers</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="progress">Progress &amp; activity</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="range">Range</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="steppers">Steppers</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="tabs">Tabs</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="textfields">Text fields</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="toasts">Toasts</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="toolbars">Toolbars</a></li>
-                <li class="disabled"><a href="#"                       data-target="utils">Utils</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="swipe">Ripple Plugin</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="swipe">Swipe Plugin</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="easing">Easing Functions</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="template">Template Engine</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="storage">Storage Engine</a></li>
-                <li class="disabled"><a href="#"  class="second-level" data-target="security">Security</a></li>
+                <li><a href="#requirements">Requirements</a></li>
+                <li><a href="#quick">Quick start</a></li>
+                <li><a href="#typo">Typography</a></li>
+                <li><a href="#colors">Colors</a></li>
+                <li><a href="#icons">Icons</a></li>
+                <li><a href="#components">Components</a></li>
+                <li><a href="#accordion" class="second-level" >Accordion</a></li>
+                <li><a href="#bottomnav" class="second-level" >Bottom navigation</a></li>
+                <li><a href="#bottomsheets" class="second-level" >Bottom sheets</a></li>
+                <li><a href="#buttons" class="second-level" >Buttons</a></li>
+                <li><a href="#cards" class="second-level" >Cards</a></li>
+                <li><a href="#chips" class="second-level" >Chips</a></li>
+                <li><a href="#datatables" class="second-level" >Data tables</a></li>
+                <li><a href="#datepicker" class="second-level" >Date picker</a></li>
+                <li><a href="#dateselect" class="second-level" >Date select</a></li>
+                <!--<li><a href="#datetime" class="second-level" >Date &amp; time</a></li>-->
+                <li><a href="#dialogs" class="second-level" >Dialogs</a></li>
+                <li class="disabled"><a href="#donuts" class="second-level" >Donuts</a></li>
+                <li class="disabled"><a href="#grids" class="second-level" >Grids</a></li>
+                <li class="disabled"><a href="#header" class="second-level" >Header</a></li>
+                <li class="disabled"><a href="#lists" class="second-level" >Lists</a></li>
+                <li class="disabled"><a href="#menus" class="second-level" >Menus</a></li>
+                <li class="disabled"><a href="#multiaction" class="second-level" >Multi action button</a></li>
+                <li class="disabled"><a href="#panels" class="second-level" >Panels</a></li>
+                <li class="disabled"><a href="#pickers" class="second-level" >Pickers</a></li>
+                <li class="disabled"><a href="#progress" class="second-level" >Progress &amp; activity</a></li>
+                <li class="disabled"><a href="#range" class="second-level" >Range</a></li>
+                <li class="disabled"><a href="#sidebar" class="second-level" >Sidebar</a></li>
+                <li class="disabled"><a href="#steppers" class="second-level" >Steppers</a></li>
+                <li class="disabled"><a href="#switches" class="second-level" >Switches</a></li>
+                <li class="disabled"><a href="#tabs" class="second-level" >Tabs</a></li>
+                <li class="disabled"><a href="#textfields" class="second-level" >Text fields</a></li>
+                <li class="disabled"><a href="#toasts" class="second-level" >Toasts</a></li>
+                <li class="disabled"><a href="#toolbars" class="second-level" >Toolbars</a></li>
+                <li class="disabled"><a href="#utils">Utils</a></li>
+                <li class="disabled"><a href="#gravatar" class="second-level" >Gravatar</a></li>
+                <li class="disabled"><a href="#easing" class="second-level" >Easing functions</a></li>
+                <li class="disabled"><a href="#locales" class="second-level" >Locales</a></li>
+                <li class="disabled"><a href="#ripple" class="second-level" >Ripple</a></li>
+                <li class="disabled"><a href="#template" class="second-level" >Template engine</a></li>
+                <li class="disabled"><a href="#touch" class="second-level" >Touch &amp; Swipe</a></li>
+                <li class="disabled"><a href="#storage" class="second-level" >Storage engine</a></li>
+                <li class="disabled"><a href="#security" class="second-level" >Security</a></li>
+                <li class="disabled"><a href="#classes" class="second-level" >Services classes</a></li>
             </ul>
         </div>
 
@@ -74,29 +89,51 @@
     <script>
         var media = "(min-width: 801px)";
         var mq = window.matchMedia( media );
-        var default_target = "welcome";
+        var default_target = location.hash.length > 0 ? location.hash.substr(1) : "welcome";
         $(".view-content").load(default_target+".html", function(){
             preCode("pre, textarea");
             PR.prettyPrint();
         });
 
-        $(".sidebar-menu").on("click", "li > a", function(e){
-            var target = $(this).data("target");
-            $(".view-content").load(target+".html", function( response, status, xhr ){
+//        $(".sidebar-menu").on("click", "li > a", function(e){
+//            var target = String($(this).data("target")); $(this).attr("href", "#"+target);
+//            $(".temp_object").remove();
+//            //history.pushState(null, '', ""+target+'.html');
+//            $(".view-content").load(target+".html", function( response, status, xhr ){
+//                if ( status == "error" ) {
+//                    coreToast('This volume in progress...');
+//                    return false;
+//                }
+//                $(".app").scrollTop(0);
+//                preCode("pre, textarea");
+//                PR.prettyPrint();
+//            });
+//            if (!mq.matches) {
+//                $(".sidebar").data("sidebar").close();
+//            }
+//        });
+
+        $(window).on("resize", function(){
+            mq = window.matchMedia( media );
+        });
+
+        window.addEventListener('popstate', function(e) {
+            var default_target = location.hash.length > 0 ? location.hash.substr(1) : "welcome";
+            $(".view-content").load(default_target+".html", function(response, status, xhr){
                 if ( status == "error" ) {
                     coreToast('This volume in progress...');
                     return false;
                 }
+                $(".app").scrollTop(0);
                 preCode("pre, textarea");
                 PR.prettyPrint();
+                if (!mq.matches) {
+                    var sb = $(".sidebar").data("sidebar");
+                    if (sb.isOpened()) {
+                        sb.close();
+                    }
+                }
             });
-            if (!mq.matches) {
-                $(".sidebar").data("sidebar").close();
-            }
-        });
-
-        $(window).on("resize", function(){
-            mq = window.matchMedia( media );
         });
     </script>
 </body>
