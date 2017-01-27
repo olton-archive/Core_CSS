@@ -22,53 +22,6 @@ if (window.CORE_ANIMATION_DURATION == undefined) {window.CORE_ANIMATION_DURATION
 
 var CoreCss = {
 
-    callback: function(cb, args){
-        if (cb != undefined) {
-            if (typeof cb === 'function') {
-                cb(args);
-            } else {
-                if (typeof window[cb] === 'function') {
-                    window[cb](args);
-                } else {
-                    var result = eval("(function(){"+cb+"})");
-                    var _arguments = [];
-                    if (args instanceof Array) {
-                        _arguments = args;
-                    } else {
-                        _arguments.push(args);
-                    }
-                    result.apply(null, _arguments);
-                }
-            }
-        }
-    },
-
-    uniqueId: function (prefix) {
-var d = new Date().getTime();
-        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-            var r = (d + Math.random() * 16) % 16 | 0;
-            d = Math.floor(d / 16);
-            return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-        });
-        return uuid;
-    },
-    
-    isTouchDevice: function() {
-        return (('ontouchstart' in window)
-        || (navigator.MaxTouchPoints > 0)
-        || (navigator.msMaxTouchPoints > 0));
-    },
-
-    secondsToFormattedString: function(time){
-        var hours, minutes, seconds;
-    
-        hours = parseInt( time / 3600 ) % 24;
-        minutes = parseInt( time / 60 ) % 60;
-        seconds = time % 60;
-    
-        return (hours ? (hours) + ":" : "") + (minutes < 10 ? "0"+minutes : minutes) + ":" + (seconds < 10 ? "0"+seconds : seconds);
-    },
-
     init: function(){
         var widgets = $("[data-role]");
 
@@ -2764,7 +2717,56 @@ return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(val);
 
     isFloat: function(n){
         return Number(n) === n && n % 1 !== 0;
+    },
+
+    uniqueId: function (prefix) {
+var d = new Date().getTime();
+        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = (d + Math.random() * 16) % 16 | 0;
+            d = Math.floor(d / 16);
+            return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+        });
+        return uuid;
+    },
+
+    isTouchDevice: function() {
+        return (('ontouchstart' in window)
+        || (navigator.MaxTouchPoints > 0)
+        || (navigator.msMaxTouchPoints > 0));
+    },
+
+
+    secondsToFormattedString: function(time){
+        var hours, minutes, seconds;
+
+        hours = parseInt( time / 3600 ) % 24;
+        minutes = parseInt( time / 60 ) % 60;
+        seconds = time % 60;
+
+        return (hours ? (hours) + ":" : "") + (minutes < 10 ? "0"+minutes : minutes) + ":" + (seconds < 10 ? "0"+seconds : seconds);
+    },
+
+    callback: function(cb, args){
+        if (cb != undefined) {
+            if (typeof cb === 'function') {
+                cb(args);
+            } else {
+                if (typeof window[cb] === 'function') {
+                    window[cb](args);
+                } else {
+                    var result = eval("(function(){"+cb+"})");
+                    var _arguments = [];
+                    if (args instanceof Array) {
+                        _arguments = args;
+                    } else {
+                        _arguments.push(args);
+                    }
+                    result.apply(null, _arguments);
+                }
+            }
+        }
     }
+
 };
 
 window.coreUtils = Utils;
@@ -3528,7 +3530,7 @@ $.widget( "corecss.accordion" , {
         content.slideDown(o.speed);
         frame.addClass('active');
 
-        $.CoreCss.callback(o.onOpen, frame);
+        Utils.callback(o.onOpen, frame);
     },
 
     _closeFrame: function(frame){
@@ -3537,7 +3539,7 @@ $.widget( "corecss.accordion" , {
         content.slideUp(o.speed,function(){
             frame.removeClass("active");
         });
-        $.CoreCss.callback(o.onClose, frame);
+        Utils.callback(o.onClose, frame);
     },
 
     _setOptionsFromDOM: function(){
@@ -3753,7 +3755,7 @@ $.widget( "corecss.datepicker" , {
 
         element.data('datepicker', this);
 
-        $.CoreCss.callback(o.onCreate, element);
+        Utils.callback(o.onCreate, element);
     },
 
     _drawHeader: function(){
@@ -3991,7 +3993,7 @@ $.widget( "corecss.datepicker" , {
             that.selected[0] = that.today.getTime();
             setTimeout(function(){
                 that._drawCalendar();
-                $.CoreCss.callback(o.onToday, element);
+                Utils.callback(o.onToday, element);
             }, 300);
         });
 
@@ -4000,7 +4002,7 @@ $.widget( "corecss.datepicker" , {
             that.selected = [];
             setTimeout(function(){
                 that._drawCalendar();
-                $.CoreCss.callback(o.onClear, element);
+                Utils.callback(o.onClear, element);
             }, 300);
         });
 
@@ -4014,7 +4016,7 @@ $.widget( "corecss.datepicker" , {
                     default: result = that.selected[0];
                 }
 
-                $.CoreCss.callback(o.onDone, result);
+                Utils.callback(o.onDone, result);
             }, 300);
         });
 
@@ -4072,7 +4074,7 @@ $.widget( "corecss.datepicker" , {
 
             }
 
-            $.CoreCss.callback(o.onDay, day);
+            Utils.callback(o.onDay, day);
         });
     },
 
@@ -4378,7 +4380,7 @@ $.widget( "corecss.dateselect" , {
 
         element.find(".js-button-done").on("click", function(){
             var result = new Date(that.year, that.month, that.day);
-            $.CoreCss.callback(o.onDone, result);
+            Utils.callback(o.onDone, result);
         });
 
         element.find(".js-button-today").on("click", function(){
@@ -4694,7 +4696,7 @@ $.widget( "corecss.dialog" , {
 
         //console.log('after show');
 
-        $.CoreCss.callback(o.onDialogOpen, element);
+        Utils.callback(o.onDialogOpen, element);
 
         if (o.hide && parseInt(o.hide) > 0) {
             this._interval = setTimeout(function(){
@@ -4717,7 +4719,7 @@ $.widget( "corecss.dialog" , {
         //element.fadeOut();
         this._hide();
 
-        $.CoreCss.callback(o.onDialogClose, element);
+        Utils.callback(o.onDialogClose, element);
 
     },
 
@@ -4835,7 +4837,7 @@ var dialog = {
 
                 if (item.onclick != undefined) button.on("click", function(){
 
-                    $.CoreCss.callback(item.onclick, dlg);
+                    Utils.callback(item.onclick, dlg);
 
                 });
 
@@ -4944,24 +4946,16 @@ $.widget( "corecss.donut" , {
     _setValue: function(v){
         var that = this, element = this.element, o = this.options;
 
-        o.value = v;
-
         var fill = element.find(".donut-fill");
         var title = element.find(".donut-title");
         var r = o.radius  * (1 - (1 - o.hole) / 2);
         var circumference = 2 * Math.PI * r;
-        var title_value = ((o.value * 1000 / o.total) / 10)+(o.cap);
-        var fill_value = ((o.value * circumference) / o.total) + ' ' + circumference;
+        var title_value = ((v * 1000 / o.total) / 10)+(o.cap);
+        var fill_value = ((v * circumference) / o.total) + ' ' + circumference;
 
         fill.attr("stroke-dasharray", fill_value);
         title.html(title_value);
     },
-
-    // _animationStep: function(v){
-    //     var that = this;
-    //     requestAnimationFrame(that._animationStep);
-    //     that._setValue(v);
-    // },
 
     val: function(v){
         var that = this, o = this.options;
@@ -4972,7 +4966,6 @@ $.widget( "corecss.donut" , {
 
         if (o.animate > 0 && !document.hidden) {
             var i = 0;
-            //var interval;
 
             console.log(v, o.value);
             if (v > o.value) {
@@ -4987,13 +4980,12 @@ $.widget( "corecss.donut" , {
                     clearInterval(that.animation_change_interval);
                 }
             }, o.animate);
-
-            //while(i !== v) this._animationStep(++i);
-
         } else {
             clearInterval(that.animation_change_interval);
             this._setValue(v);
         }
+
+        o.value = v;
     },
 
     _setOptionsFromDOM: function(){
@@ -5545,10 +5537,10 @@ $.widget( "corecss.progress" , {
             width: val + '%'
         });
 
-        $.CoreCss.callback(o.onChange, val);
+        Utils.callback(o.onChange, val);
 
         if (val == 100) {
-            $.CoreCss.callback(o.onEnd);
+            Utils.callback(o.onEnd);
         }
 
         return this;
@@ -5701,7 +5693,7 @@ $.widget("corecss.range", {
         this._placeMarker(o.position);
         this._showBuffer(o.buffer);
 
-        var event_down = CoreCss.isTouchDevice() ? 'touchstart' : 'mousedown';
+        var event_down = Utils.isTouchDevice() ? 'touchstart' : 'mousedown';
 
         if (o.target && $(o.target)[0].tagName == 'INPUT') {
             $(o.target).on('keyup', function(){
@@ -5741,8 +5733,8 @@ $.widget("corecss.range", {
         var element = this.element, o = this.options, that = this, hint = element.children('.range-hint');
         var returnedValue;
 
-        var event_move = CoreCss.isTouchDevice() ? 'touchmove' : 'mousemove';
-        var event_up = CoreCss.isTouchDevice() ? 'touchend' : 'mouseup mouseleave';
+        var event_move = Utils.isTouchDevice() ? 'touchmove' : 'mousemove';
+        var event_up = Utils.isTouchDevice() ? 'touchend' : 'mouseup mouseleave';
 
         $(document).on(event_move, function (event) {
             that._movingMarker(event);
@@ -5795,7 +5787,7 @@ $.widget("corecss.range", {
             rangeLength = o._range.length,
             markerSize = o._range.marker;
 
-        var event = !CoreCss.isTouchDevice() ? ev.originalEvent : ev.originalEvent.touches[0];
+        var event = !Utils.isTouchDevice() ? ev.originalEvent : ev.originalEvent.touches[0];
 
         //console.log(event);
 
@@ -6721,7 +6713,7 @@ $.widget( "corecss.timepicker" , {
                 m: that.minute,
                 am: that.am
             };
-            $.CoreCss.callback(o.onChange, val);
+            Utils.callback(o.onChange, val);
         });
 
         element.on("click", ".am, .pm", function(){
@@ -6741,7 +6733,7 @@ $.widget( "corecss.timepicker" , {
                 m: that.minute,
                 am: that.am
             };
-            $.CoreCss.callback(o.onChange, val);
+            Utils.callback(o.onChange, val);
         });
 
         element.on("click", ".js-button-done", function(){
@@ -6750,11 +6742,11 @@ $.widget( "corecss.timepicker" , {
                 m: that.minute,
                 am: that.am
             };
-            $.CoreCss.callback(o.onDone, val);
+            Utils.callback(o.onDone, val);
         });
 
         element.on("click", ".js-button-cancel", function(){
-            $.CoreCss.callback(o.onCancel);
+            Utils.callback(o.onCancel);
         });
     },
 
@@ -7008,7 +7000,7 @@ $.widget( "corecss.timeselect" , {
                 minute: that.minute,
                 second: that.second
             };
-            $.CoreCss.callback(o.onDone, result);
+            Utils.callback(o.onDone, result);
         });
 
         element.find(".js-button-now").on("click", function(){
@@ -8385,7 +8377,7 @@ $.widget( "corecss.wheelselect" , {
 
         element.find(".js-button-done").on("click", function(){
             var result = that.value();
-            $.CoreCss.callback(o.onDone, result);
+            Utils.callback(o.onDone, result);
         });
     },
 

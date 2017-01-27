@@ -276,7 +276,7 @@ $.widget( "corecss.dialog" , {
 
         //console.log('after show');
 
-        $.CoreCss.callback(o.onDialogOpen, element);
+        Utils.callback(o.onDialogOpen, element);
 
         if (o.hide && parseInt(o.hide) > 0) {
             this._interval = setTimeout(function(){
@@ -299,7 +299,7 @@ $.widget( "corecss.dialog" , {
         //element.fadeOut();
         this._hide();
 
-        $.CoreCss.callback(o.onDialogClose, element);
+        Utils.callback(o.onDialogClose, element);
 
     },
 
@@ -417,7 +417,7 @@ var dialog = {
 
                 if (item.onclick != undefined) button.on("click", function(){
 
-                    $.CoreCss.callback(item.onclick, dlg);
+                    Utils.callback(item.onclick, dlg);
 
                 });
 

@@ -154,7 +154,7 @@ $.widget( "corecss.timepicker" , {
                 m: that.minute,
                 am: that.am
             };
-            $.CoreCss.callback(o.onChange, val);
+            Utils.callback(o.onChange, val);
         });
 
         element.on("click", ".am, .pm", function(){
@@ -174,7 +174,7 @@ $.widget( "corecss.timepicker" , {
                 m: that.minute,
                 am: that.am
             };
-            $.CoreCss.callback(o.onChange, val);
+            Utils.callback(o.onChange, val);
         });
 
         element.on("click", ".js-button-done", function(){
@@ -183,11 +183,11 @@ $.widget( "corecss.timepicker" , {
                 m: that.minute,
                 am: that.am
             };
-            $.CoreCss.callback(o.onDone, val);
+            Utils.callback(o.onDone, val);
         });
 
         element.on("click", ".js-button-cancel", function(){
-            $.CoreCss.callback(o.onCancel);
+            Utils.callback(o.onCancel);
         });
     },
 

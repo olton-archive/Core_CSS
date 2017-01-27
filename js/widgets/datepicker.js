@@ -55,7 +55,7 @@ $.widget( "corecss.datepicker" , {
 
         element.data('datepicker', this);
 
-        $.CoreCss.callback(o.onCreate, element);
+        Utils.callback(o.onCreate, element);
     },
 
     _drawHeader: function(){
@@ -293,7 +293,7 @@ $.widget( "corecss.datepicker" , {
             that.selected[0] = that.today.getTime();
             setTimeout(function(){
                 that._drawCalendar();
-                $.CoreCss.callback(o.onToday, element);
+                Utils.callback(o.onToday, element);
             }, 300);
         });
 
@@ -302,7 +302,7 @@ $.widget( "corecss.datepicker" , {
             that.selected = [];
             setTimeout(function(){
                 that._drawCalendar();
-                $.CoreCss.callback(o.onClear, element);
+                Utils.callback(o.onClear, element);
             }, 300);
         });
 
@@ -316,7 +316,7 @@ $.widget( "corecss.datepicker" , {
                     default: result = that.selected[0];
                 }
 
-                $.CoreCss.callback(o.onDone, result);
+                Utils.callback(o.onDone, result);
             }, 300);
         });
 
@@ -374,7 +374,7 @@ $.widget( "corecss.datepicker" , {
 
             }
 
-            $.CoreCss.callback(o.onDay, day);
+            Utils.callback(o.onDay, day);
         });
     },
 

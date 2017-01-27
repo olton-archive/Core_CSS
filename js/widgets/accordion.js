@@ -48,7 +48,7 @@ $.widget( "corecss.accordion" , {
         content.slideDown(o.speed);
         frame.addClass('active');
 
-        $.CoreCss.callback(o.onOpen, frame);
+        Utils.callback(o.onOpen, frame);
     },
 
     _closeFrame: function(frame){
@@ -57,7 +57,7 @@ $.widget( "corecss.accordion" , {
         content.slideUp(o.speed,function(){
             frame.removeClass("active");
         });
-        $.CoreCss.callback(o.onClose, frame);
+        Utils.callback(o.onClose, frame);
     },
 
     _setOptionsFromDOM: function(){

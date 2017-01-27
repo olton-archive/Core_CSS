@@ -277,7 +277,7 @@ $.widget( "corecss.dateselect" , {
 
         element.find(".js-button-done").on("click", function(){
             var result = new Date(that.year, that.month, that.day);
-            $.CoreCss.callback(o.onDone, result);
+            Utils.callback(o.onDone, result);
         });
 
         element.find(".js-button-today").on("click", function(){
