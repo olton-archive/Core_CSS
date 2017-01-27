@@ -95,24 +95,6 @@
             PR.prettyPrint();
         });
 
-//        $(".sidebar-menu").on("click", "li > a", function(e){
-//            var target = String($(this).data("target")); $(this).attr("href", "#"+target);
-//            $(".temp_object").remove();
-//            //history.pushState(null, '', ""+target+'.html');
-//            $(".view-content").load(target+".html", function( response, status, xhr ){
-//                if ( status == "error" ) {
-//                    coreToast('This volume in progress...');
-//                    return false;
-//                }
-//                $(".app").scrollTop(0);
-//                preCode("pre, textarea");
-//                PR.prettyPrint();
-//            });
-//            if (!mq.matches) {
-//                $(".sidebar").data("sidebar").close();
-//            }
-//        });
-
         $(window).on("resize", function(){
             mq = window.matchMedia( media );
         });

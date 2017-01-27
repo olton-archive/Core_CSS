@@ -5386,13 +5386,13 @@ var picker = {
         });
     },
 
-    calendarPicker: function(cb_done, options){
+    datePicker: function(cb_done, options){
         var picker_options = $.extend({}, {
             isDialog: true,
             onDone: cb_done
         }, (options != undefined ? options : {}));
 
-        var picker = $("<div>").calendar(picker_options);
+        var picker = $("<div>").datepicker(picker_options);
         return coreDialog.create({
             content: picker,
             options: {
@@ -5401,13 +5401,13 @@ var picker = {
         });
     },
 
-    datePicker: function(cb_done, options){
+    dateSelect: function(cb_done, options){
         var picker_options = $.extend({}, {
             isDialog: true,
             onDone: cb_done
         }, (options != undefined ? options : {}));
 
-        var picker = $("<div>").datepicker(picker_options);
+        var picker = $("<div>").dateselect(picker_options);
         return coreDialog.create({
             content: picker,
             options: {

@@ -63,7 +63,7 @@
         <tr>
             <td>buttons</td>
             <td>data-buttons</td>
-            <td>['cancel', 'today', 'clear', 'done']</td>
+            <td>['cancel', 'random', 'today', 'done']</td>
             <td>Show specific datepicker footer buttons</td>
         </tr>
         <tr>
@@ -74,4 +74,18 @@
         </tr>
         </tbody>
     </table>
+    <h3 class="heading">Dialog mode</h3>
+    <p>
+        Core_CSS provides method to create date select widget as dialog. To create date select dialog you can call <strong>corePickers.dateSelect</strong> method. For more information about corePickers object see <a href="#pickers">pickers docs</a>.
+    </p>
+    <div class="padding2 bg-gray-100">
+        <button class="raised-button bg-red fg-white" onclick="corePicker.dateSelect(function(val){alert(val)})">Date select</button>
+    </div>
+    <pre class="prettyprint linenums">
+        corePicker.dateSelect(function(val){
+            ... callback for onDone ...
+        }, {
+            ... options ...
+        })
+    </pre>
 </div>
