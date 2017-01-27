@@ -8,3 +8,4 @@
 - [ ] calendar week start sunday
 - [ ] calendar range mode
 - [ ] datetime pickers width
+- [ ] fix donut animation

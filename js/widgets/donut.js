@@ -17,6 +17,8 @@ $.widget( "corecss.donut" , {
         showTitle: true
     },
 
+    animation_change_interval: undefined,
+
     _create: function () {
         var that = this, element = this.element, o = this.options;
 
@@ -87,20 +89,28 @@ $.widget( "corecss.donut" , {
             return o.value
         }
 
-        if (o.animate > 0) {
+        if (o.animate > 0 && !document.hidden) {
             var i = 0;
-            var interval;
+            //var interval;
 
-            interval = setInterval(function(){
+            console.log(v, o.value);
+            if (v > o.value) {
+                console.log("inc");
+            } else {
+                console.log("dec");
+            }
+
+            this.animation_change_interval = setInterval(function(){
                 that._setValue(++i);
                 if (i >= v) {
-                    clearInterval(interval);
+                    clearInterval(that.animation_change_interval);
                 }
             }, o.animate);
 
             //while(i !== v) this._animationStep(++i);
 
         } else {
+            clearInterval(that.animation_change_interval);
             this._setValue(v);
         }
     },
