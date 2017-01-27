@@ -4888,7 +4888,6 @@ $.widget( "corecss.donut" , {
         radius: 50,
         value: 0,
         background: "#ffffff",
-        color: "",
         stroke: "#d1d8e7",
         fill: "#49649f",
         fontSize: 24,
@@ -4956,6 +4955,12 @@ $.widget( "corecss.donut" , {
         title.html(title_value);
     },
 
+    // _animationStep: function(v){
+    //     var that = this;
+    //     requestAnimationFrame(that._animationStep);
+    //     that._setValue(v);
+    // },
+
     val: function(v){
         var that = this, o = this.options;
 
@@ -4969,10 +4974,12 @@ $.widget( "corecss.donut" , {
 
             interval = setInterval(function(){
                 that._setValue(++i);
-                if (i == v) {
+                if (i >= v) {
                     clearInterval(interval);
                 }
-            }, o.animate)
+            }, o.animate);
+
+            //while(i !== v) this._animationStep(++i);
 
         } else {
             this._setValue(v);

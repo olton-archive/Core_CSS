@@ -44,16 +44,14 @@
                 <li><a href="#datatables" class="second-level" >Data tables</a></li>
                 <li><a href="#datepicker" class="second-level" >Date picker</a></li>
                 <li><a href="#dateselect" class="second-level" >Date select</a></li>
-                <!--<li><a href="#datetime" class="second-level" >Date &amp; time</a></li>-->
                 <li><a href="#dialogs" class="second-level" >Dialogs</a></li>
-                <li class="disabled"><a href="#donuts" class="second-level" >Donuts</a></li>
+                <li><a href="#donuts" class="second-level" >Donuts</a></li>
                 <li class="disabled"><a href="#grids" class="second-level" >Grids</a></li>
                 <li class="disabled"><a href="#header" class="second-level" >Header</a></li>
                 <li class="disabled"><a href="#lists" class="second-level" >Lists</a></li>
                 <li class="disabled"><a href="#menus" class="second-level" >Menus</a></li>
                 <li class="disabled"><a href="#multiaction" class="second-level" >Multi action button</a></li>
                 <li class="disabled"><a href="#panels" class="second-level" >Panels</a></li>
-                <li class="disabled"><a href="#pickers" class="second-level" >Pickers</a></li>
                 <li class="disabled"><a href="#progress" class="second-level" >Progress &amp; activity</a></li>
                 <li class="disabled"><a href="#range" class="second-level" >Range</a></li>
                 <li class="disabled"><a href="#sidebar" class="second-level" >Sidebar</a></li>
@@ -61,6 +59,8 @@
                 <li class="disabled"><a href="#switches" class="second-level" >Switches</a></li>
                 <li class="disabled"><a href="#tabs" class="second-level" >Tabs</a></li>
                 <li class="disabled"><a href="#textfields" class="second-level" >Text fields</a></li>
+                <li class="disabled"><a href="#timepicker" class="second-level" >Time picker</a></li>
+                <li class="disabled"><a href="#timeselect" class="second-level" >Time select</a></li>
                 <li class="disabled"><a href="#toasts" class="second-level" >Toasts</a></li>
                 <li class="disabled"><a href="#toolbars" class="second-level" >Toolbars</a></li>
                 <li class="disabled"><a href="#utils">Utils</a></li>
@@ -68,6 +68,7 @@
                 <li class="disabled"><a href="#easing" class="second-level" >Easing functions</a></li>
                 <li class="disabled"><a href="#locales" class="second-level" >Locales</a></li>
                 <li class="disabled"><a href="#ripple" class="second-level" >Ripple</a></li>
+                <li class="disabled"><a href="#pickers" class="second-level" >Pickers</a></li>
                 <li class="disabled"><a href="#template" class="second-level" >Template engine</a></li>
                 <li class="disabled"><a href="#touch" class="second-level" >Touch &amp; Swipe</a></li>
                 <li class="disabled"><a href="#storage" class="second-level" >Storage engine</a></li>
@@ -87,6 +88,7 @@
     <script src="js/list.min.js"></script>
     <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
     <script>
+        var donut_interval;
         var media = "(min-width: 801px)";
         var mq = window.matchMedia( media );
         var default_target = location.hash.length > 0 ? location.hash.substr(1) : "welcome";
@@ -101,6 +103,7 @@
 
         window.addEventListener('popstate', function(e) {
             var default_target = location.hash.length > 0 ? location.hash.substr(1) : "welcome";
+            clearInterval(donut_interval);
             $(".view-content").load(default_target+".html", function(response, status, xhr){
                 if ( status == "error" ) {
                     coreToast('This volume in progress...');
