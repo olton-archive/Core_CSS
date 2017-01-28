@@ -2797,6 +2797,22 @@ var d = new Date().getTime();
         } else {
             return false;
         }
+    },
+
+    isCoreObject: function(el, type){
+        var $el = $(el), el_obj = $el.data(type);
+
+        if ($el.length == 0) {
+            console.log(type + ' ' + el + ' not found!');
+            return false;
+        }
+
+        if (el_obj == undefined) {
+            console.log('Element not contain role '+ type +'! Please add attribute data-role="'+type+'" to element ' + el);
+            return false;
+        }
+
+        return true;
     }
 
 };
@@ -4783,21 +4799,7 @@ $.widget( "corecss.dialog" , {
 var dialog = {
 
     isDialog: function(el){
-        var dialog = $(el), dialog_obj;
-
-        if (dialog.length == 0) {
-            console.log('Dialog ' + el + ' not found!');
-            return false;
-        }
-
-        dialog_obj = dialog.data('dialog');
-
-        if (dialog_obj == undefined) {
-            console.log('Element not contain role dialog! Please add attribute data-role="dialog" to element ' + el);
-            return false;
-        }
-
-        return true;
+        return Utils.isCoreObject(el, 'dialog');
     },
 
     open: function (el, content, contentType){
@@ -5310,6 +5312,10 @@ $.widget( "corecss.panel" , {
     _initPanel: function(){
         var that = this, element = this.element, o = this.options;
 
+        if (!element.hasClass('panel')) {
+            element.addClass('panel');
+        }
+
         if (o.open === true) {
             element.data("opened", true);
             element.removeClass("collapsed");
@@ -5376,6 +5382,18 @@ $.widget( "corecss.panel" , {
         }
     },
 
+    isOpened: function(){
+        return this.element.data("opened") === true;
+    },
+
+    setContent: function(html){
+        var that = this, element = this.element, o = this.options;
+        var content_wrapper = element.children(".panel-content");
+        if (content_wrapper.length > 0) {
+            content_wrapper.html(html);
+        }
+    },
+
     _setOptionsFromDOM: function(){
         var that = this, element = this.element, o = this.options;
 
@@ -5398,6 +5416,43 @@ $.widget( "corecss.panel" , {
     }
 });
 
+var panels = {
+
+    isPanel: function(el){
+        return Utils.isCoreObject(el, 'panel');
+    },
+
+    open: function(el){
+        if (!this.isPanel(el)) {
+            return false;
+        }
+
+        $(el).data('panel').open();
+    },
+
+    close: function(el){
+        if (!this.isPanel(el)) {
+            return false;
+        }
+
+        $(el).data('panel').close();
+    },
+
+    toggle: function(el){
+        if (!this.isPanel(el)) {
+            return false;
+        }
+
+        var panel = $(el).data('panel');
+        if (panel.isOpened()) {
+            panel.close();
+        } else {
+            panel.open();
+        }
+    }
+};
+
+$.Panels = window.corePanels = panels;
 // Source: js/widgets/pickers.js
 var picker = {
     timePicker: function(cb_done, cb_change){
