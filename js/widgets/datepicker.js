@@ -1,293 +1,380 @@
+
+
 $.widget( "corecss.datepicker" , {
 
     version: "1.0.0",
 
     options: {
+        //weekStart: CORE_CALENDAR_WEEK_START,
+        mode: "default", // default, range, multi
+        //startFrom: "day", // day, month, year
+        //format: "dd-mm-yyyy",
         locale: CORE_LOCALE,
-        minYear: 1900,
-        maxYear: new Date().getFullYear(),
-        day: (new Date()).getDate(),
-        month: (new Date()).getMonth(),
-        year: (new Date()).getFullYear(),
+        toolbar: true,
+        footer: true,
+        preset: [],
+        current: null,
+        buttons: ['cancel', 'today', 'clear', 'done'],
         isDialog: false,
-        buttons: ['cancel', 'random', 'today', 'done'],
-        onDone: $.noop
+
+        onCreate: $.noop,
+        onDone: $.noop,
+        onCancel: $.noop,
+        onToday: $.noop,
+        onClear: $.noop,
+        onDay: $.noop
     },
 
     current: new Date(),
-
-    day: null,
-    month: null,
-    year: null,
+    today: new Date(),
+    selected: [],
 
     _create: function () {
         var that = this, element = this.element, o = this.options;
 
         this._setOptionsFromDOM();
 
-        this.day = o.day;
-        this.month = o.month;
-        this.year = o.year;
+        if (typeof o.preset !== 'object') {
+            o.preset = o.preset.split(",").map(function(v){
+                return v.trim();
+            });
+        }
 
-        this._createPicker();
-        this._createScrollEvents();
-        this._createButtonsEvents();
+        this.selected = o.preset.map(function(v){
+            var d = new Date(v);
+            d.setHours(0,0,0,0);
+            return d.getTime();
+        });
 
-        setTimeout(function(){
-            that.today();
-        }, 100);
+        if (o.current != null && typeof o.current == 'string') {
+            this.current = new Date(o.current);
+        }
+
+        this._createCalendar();
+        this._createEvents();
 
         element.data('datepicker', this);
-    },
 
-    _correct: function(){
-        function isDate(y,m,d){
-            var date = new Date(y,m,d);
-            var convertedDate =
-                ""+date.getFullYear() + (date.getMonth()) + date.getDate();
-            var givenDate = "" + y + m + d;
-            return ( givenDate == convertedDate);
-        }
-
-        if (!isDate(this.year, this.month, this.day)) {
-            var date = new Date(this.year, this.month, this.day);
-            // date.setHours(0,0,0,0);
-            this.year = date.getFullYear();
-            this.month = date.getMonth();
-            this.day = date.getDate();
-            this._removeScrollEvents();
-            this.setPosition();
-            this._createScrollEvents();
-            //
-            // console.log("bad date! correct it.");
-            // console.log("new date is: " + date);
-        }
-    },
-
-    setPosition: function(){
-        var element = this.element;
-        var day = this.day,
-            month = this.month + 1,
-            year = this.year;
-        var d_list = element.find(".d-list"),
-            m_list = element.find(".m-list"),
-            y_list = element.find(".y-list");
-
-        this._removeScrollEvents();
-
-        // console.log(element.find(".js-dd-"+day).offset());
-        // console.log(element.find(".js-dm-"+month));
-        // console.log(element.find(".js-yy-"+year));
-        //
-        d_list.scrollTop(0).animate({
-           scrollTop: element.find(".js-dd-"+day).addClass("active").position().top - 48
-        });
-
-        m_list.scrollTop(0).animate({
-            scrollTop: element.find(".js-dm-"+month).addClass("active").position().top - 48
-        });
-
-        y_list.scrollTop(0).animate({
-            scrollTop: element.find(".js-yy-"+year).addClass("active").position().top - 48
-        });
-
-        this._createScrollEvents();
-    },
-
-    today: function(){
-        var d = new Date(); d.setHours(0,0,0,0);
-
-        this.day = d.getDate();
-        this.month = d.getMonth();
-        this.year = d.getFullYear();
-
-        this.setPosition();
+        Utils.callback(o.onCreate, element);
     },
 
     _drawHeader: function(){
-        var element = this.element,
-            day = this.day,
-            dd = new Date(this.year, this.month, this.day),
-            dayWeek = dd.getDay(),
-            month = this.month,
-            year = this.year,
-            html = "", header,
-            o = this.options;
+        var o = this.options, target = this.today,
+            day = target.getDate(),
+            dayWeek = target.getDay(),
+            month = target.getMonth(),
+            year = target.getFullYear(),
+            html = "", header;
 
-        html += "<span class='day'>"+coreLocales[o.locale].calendar.days[dayWeek + 14]+", "+coreLocales[o.locale].calendar.months[month + 12]+' '+day+", "+year+"</span>";
+        html += "<div class='year'>"+year+"</div>";
+        html += "<div class='day'>"+coreLocales[o.locale].calendar.days[dayWeek]+", "+coreLocales[o.locale].calendar.months[month + 12]+' '+day+"</div>";
 
         header = $(html);
 
         return header;
     },
 
+    _drawToolbar: function(){
+        var o = this.options,
+            month = this.current.getMonth(),
+            year = this.current.getFullYear(),
+            toolbar = $("<div>").addClass("toolbar");
+
+        $("<span>").addClass("prev_month js-control").appendTo(toolbar);
+        $("<span>").addClass("current_month").html(coreLocales[o.locale].calendar.months[month]).appendTo(toolbar);
+        $("<span>").addClass("next_month js-control").appendTo(toolbar);
+        $("<span>").addClass("prev_year js-control").appendTo(toolbar);
+        $("<span>").addClass("current_year").html(year).appendTo(toolbar);
+        $("<span>").addClass("next_year js-control").appendTo(toolbar);
+
+        if (o.toolbar !== true) {
+            toolbar.hide();
+        }
+
+        return toolbar;
+    },
+
     _drawFooter: function(){
         var element = this.element, o = this.options,
+            footer = element.find(".calendar-footer"),
             html = "";
 
         $.each(o.buttons, function(){
             html += "<button class='flat-button js-button-"+this+" "+(o.isDialog && (this == 'cancel' || this == 'done') ? 'js-dialog-close' : '')+"'>"+coreLocales[o.locale].buttons[this]+"</button>";
         });
 
-        // html += "<button class='flat-button js-button-rand'>"+coreLocales[o.locale].buttons.rand+"</button>";
-        // html += "<button class='flat-button js-button-today'>"+coreLocales[o.locale].buttons.today+"</button>";
-        // html += "<button class='flat-button js-button-done'>"+coreLocales[o.locale].buttons.done+"</button>";
+        if (o.footer !== true) {
+            footer.hide();
+        }
 
         return $(html);
     },
 
-    _drawPicker: function(){
-        var element = this.element, o = this.options;
-        var picker_inner = $("<div>").addClass("picker-content-inner");
-        var d_list, m_list, y_list;
-        var i;
+    _drawDays: function(distance){
 
-        d_list = $("<ul>").addClass("d-list").appendTo(picker_inner);
-        $("<li>").html("&nbsp;").appendTo(d_list);
-        for(i = 1; i <= 31; i++) {
-            $("<li>").html(i).appendTo(d_list).data('value', i).addClass("js-dd-"+i);
+        function getDay(date){
+            var day = date.getDay();
+            if (day == 0) day = 7;
+            return day - 1;
         }
-        $("<li>").html("&nbsp;").appendTo(d_list);
 
-        m_list = $("<ul>").addClass("m-list").appendTo(picker_inner);
-        $("<li>").html("&nbsp;").appendTo(m_list);
-        for(i = 1; i <= 12; i++) {
-            $("<li>").html(coreLocales[o.locale].calendar.months[i-1 + 12]).appendTo(m_list).data('value', i - 1).addClass("js-dm-"+i);
+        distance = distance || 0;
+        var o = this.options,
+            day = this.current.getDate(),
+            month = this.current.getMonth() + distance,
+            year = this.current.getFullYear(),
+            firstDay = new Date(year, month, 1),
+            i, j, md, dd, total = 0, days, stored_day,
+            p_month_days,
+            days_inner = $("<div>").addClass("days-frame");
+
+
+        if (month < 0) {
+            month = 11;
+            year--;
         }
-        $("<li>").html("&nbsp;").appendTo(m_list);
 
-        y_list = $("<ul>").addClass("y-list").appendTo(picker_inner);
-        $("<li>").html("&nbsp;").appendTo(y_list);
-        var j = 1;
-        for(i = o.minYear; i <= o.maxYear; i++) {
-            $("<li>").html(i).appendTo(y_list).data('value', i).addClass("js-dy-"+j+" js-yy-"+i);
-            j++;
+        if (month > 11) {
+            month = 0;
+            year++;
         }
-        $("<li>").html("&nbsp;").appendTo(y_list);
 
-        return picker_inner;
+        /* Draw days of week*/
+        var weekDays = $("<div>").addClass("week-days").appendTo(days_inner);
+        for (i = 0; i < 7; i++) {
+            if (o.weekStart === 0) {
+                j = i;
+            } else {
+                j = i + 1;
+                if (j === 7) { j = 0; }
+            }
+            $("<div/>").addClass("day").html(coreLocales[o.locale].calendar.days[j + 7]).appendTo(weekDays);
+        }
+        /* End of days of week */
+
+        days = $("<div>").addClass("days");
+
+        p_month_days = (new Date(year, month, 0)).getDate();
+
+        md = $("<div>").addClass("month-days").appendTo(days);
+
+        /* Draw prev month days */
+        for(i = 0; i < getDay(firstDay); i++) {
+            stored_day = new Date(year, month - 1, p_month_days - getDay(firstDay) + 1 + i);
+            dd = $("<div>").addClass("day fg-gray-400 prev-month-day").html(p_month_days - getDay(firstDay) + 1 + i).appendTo(md);
+            dd.data('day', stored_day);
+            if (this.selected.indexOf(stored_day.getTime()) > -1) {
+                dd.addClass("selected");
+            }
+            total++;
+        }
+
+        /* Draw current month days */
+        while(firstDay.getMonth() == month) {
+            stored_day = new Date(firstDay.getFullYear(), firstDay.getMonth(), firstDay.getDate());
+            dd = $("<div>").addClass("day").html(firstDay.getDate()).appendTo(md);
+            dd.data('day', stored_day);
+            if (
+                this.today.getFullYear() == firstDay.getFullYear() &&
+                this.today.getMonth() == firstDay.getMonth() &&
+                this.today.getDate() == firstDay.getDate()
+            ) {
+                dd.addClass("today");
+            }
+
+            if (this.selected.indexOf(stored_day.getTime()) > -1) {
+                dd.addClass("selected");
+            }
+
+            total++;
+
+            if (getDay(firstDay) % 7 == 6) {
+                md = $("<div>").addClass("month-days").appendTo(days);
+            }
+            firstDay.setDate(firstDay.getDate() + 1);
+        }
+
+        /* Draw next month days */
+        while(total < 42) {
+            stored_day = new Date(firstDay.getFullYear(), firstDay.getMonth(), firstDay.getDate());
+            dd = $("<div>").addClass("day fg-gray-400 next-month-day").html(firstDay.getDate()).appendTo(md);
+            dd.data('day', stored_day);
+            if (this.selected.indexOf(stored_day.getTime()) > -1) {
+                dd.addClass("selected");
+            }
+            if (getDay(firstDay) % 7 == 6) {
+                md = $("<div>").addClass("month-days").appendTo(days);
+            }
+            firstDay.setDate(firstDay.getDate() + 1);
+            total++;
+        }
+
+        days.appendTo(days_inner);
+
+        return days_inner;
     },
 
-    _createPicker: function(){
-        var h, c, f, element = this.element;
-
-        if (!element.hasClass("wheelpicker")) element.addClass("wheelpicker");
+    _drawCalendar: function(){
+        var h, c, f, d, element = this.element;
 
         element.html("");
 
-        h = $("<div>").addClass("picker-header").appendTo(element);
-        c = $("<div>").addClass("picker-content").appendTo(element);
-        f = $("<div>").addClass("picker-footer").appendTo(element);
+        h = $("<div>").addClass("calendar-header").appendTo(element);
+        c = $("<div>").addClass("calendar-content").appendTo(element);
+        f = $("<div>").addClass("calendar-footer").appendTo(element);
+        d = $("<div>").addClass("days-inner");
 
         h.append(this._drawHeader());
-        c.append(this._drawPicker());
+        c.append(this._drawToolbar());
+
+        c.append(d);
+        d.append(this._drawDays());
+
         f.append(this._drawFooter());
     },
 
-    _removeScrollEvents: function(){
-        var element = this.element;
-        element.find(".d-list").off('scrollstart');
-        element.find(".d-list").off('scrollstop');
-        element.find(".m-list").off('scrollstart');
-        element.find(".m-list").off('scrollstop');
-        element.find(".y-list").off('scrollstart');
-        element.find(".y-list").off('scrollstop');
-    },
-
-    _createScrollEvents: function(){
+    _createCalendar: function(){
         var that = this, element = this.element, o = this.options;
-        var d_list = element.find(".d-list"),
-            m_list = element.find(".m-list"),
-            y_list = element.find(".y-list");
 
-        d_list.on('scrollstart', function(){
-            d_list.find(".active").removeClass("active");
-        });
-        d_list.on('scrollstop', function(){
-            var target = Math.round((Math.ceil(d_list.scrollTop() + 48) / 48));
-            var target_element = d_list.find(".js-dd-"+target);
-            var val = target_element.data('value');
-            var scroll_to = target_element.position().top - 48 + d_list[0].scrollTop;
+            if (!element.hasClass("calendar")) {
+            element.addClass("calendar");
+        }
 
-            d_list.animate({
-                scrollTop: scroll_to
-            }, CORE_ANIMATION_DURATION, function(){
-                target_element.addClass("active");
-                that.day = val;
-                element.find(".picker-header").html(that._drawHeader());
-                that._correct();
-            });
-        });
+        this._drawCalendar();
 
-        m_list.on('scrollstart', function(){
-            m_list.find(".active").removeClass("active");
-        });
-        m_list.on('scrollstop', function(){
-            var target = Math.round((Math.ceil(m_list.scrollTop() + 48) / 48));
-            var target_element = m_list.find(".js-dm-"+target);
-            var val = target_element.data('value');
-            var scroll_to = target_element.position().top - 48 + m_list[0].scrollTop;
-
-            m_list.animate({
-                scrollTop: scroll_to
-            }, CORE_ANIMATION_DURATION, function(){
-                target_element.addClass("active");
-                that.month = val;
-                element.find(".picker-header").html(that._drawHeader());
-                that._correct();
-            });
-        });
-
-        y_list.on('scrollstart', function(){
-            y_list.find(".active").removeClass("active");
-        });
-        y_list.on('scrollstop', function(){
-            var target = Math.round((Math.ceil(y_list.scrollTop() + 48) / 48));
-            var target_element = y_list.find(".js-dy-"+target);
-            var val = target_element.data('value');
-            var scroll_to = target_element.position().top - 48 + y_list[0].scrollTop;
-
-            y_list.animate({
-                scrollTop: scroll_to
-            }, CORE_ANIMATION_DURATION, function(){
-                target_element.addClass("active");
-                that.year = val;
-                element.find(".picker-header").html(that._drawHeader());
-                that._correct();
-            });
+        element.ripple({
+            rippleTarget: '.flat-button, .day, .js-control',
+            rippleColor: '#ccc'
         });
     },
 
-    _createButtonsEvents: function(){
+    _createEvents: function(){
         var that = this, element = this.element, o = this.options;
 
-        element.find(".js-button-random").on("click", function(){
-            function randomInteger(min, max) {
-                var rand = min - 0.5 + Math.random() * (max - min + 1);
-                rand = Math.round(rand);
-                return rand;
+        element.on("click", ".js-control", function(){
+
+            var el = $(this), m, y;
+            var day = that.current.getDate(),
+                month = that.current.getMonth(),
+                year = that.current.getFullYear();
+
+            if (el.hasClass("prev_month")) {
+                month -= 1;
+                if (month < 0) {
+                    year -= 1;
+                    month = 11;
+                }
+                that.current = new Date(year, month);
+            }
+            if (el.hasClass("next_month")) {
+                month += 1;
+                if (month == 12) {
+                    year += 1;
+                    month = 0;
+                }
+                that.current = new Date(year, month);
+            }
+            if (el.hasClass("next_year")) {
+                that.current = new Date(year + 1, month);
+            }
+            if (el.hasClass("prev_year")) {
+                that.current = new Date(year - 1, month);
             }
 
-            that.day = randomInteger(1, 31);
-            that.month = randomInteger(0, 11);
-            that.year = randomInteger(o.minYear, o.maxYear);
+            setTimeout(function(){
+                that._drawCalendar();
+            }, 300);
 
-            that.setPosition();
         });
 
-        element.find(".js-button-done").on("click", function(){
-            var result = new Date(that.year, that.month, that.day);
-            $.CoreCss.callback(o.onDone, result);
+        element.on("click", ".js-button-today", function(){
+            that.current = that.today = new Date();
+            that.today.setHours(0,0,0,0);
+            that.selected[0] = that.today.getTime();
+            setTimeout(function(){
+                that._drawCalendar();
+                Utils.callback(o.onToday, element);
+            }, 300);
         });
 
-        element.find(".js-button-today").on("click", function(){
-            var d = new Date(); d.setHours(0,0,0,0);
+        element.on("click", ".js-button-clear", function(){
+            that.current = that.today = new Date();
+            that.selected = [];
+            setTimeout(function(){
+                that._drawCalendar();
+                Utils.callback(o.onClear, element);
+            }, 300);
+        });
 
-            that.day = d.getDate();
-            that.month = d.getMonth();
-            that.year = d.getFullYear();
+        element.on("click", ".js-button-done", function(){
+            setTimeout(function(){
+                var result;
 
-            that.setPosition();
+                switch(o.mode) {
+                    case 'range':
+                    case 'multi': result = that.selected; break;
+                    default: result = that.selected[0];
+                }
+
+                Utils.callback(o.onDone, result);
+            }, 300);
+        });
+
+        element.on("click", ".month-days .day", function(){
+            var el = $(this), day = el.data('day'), index = that.selected.indexOf(day.getTime());
+
+            if (o.mode == 'default') {
+
+                element.find(".selected").removeClass("selected");
+                that.selected = [];
+                that.current = that.today = day;
+                element.find(".calendar-header").html("").append(that._drawHeader());
+
+                if (el.hasClass("prev-month-day") || el.hasClass("next-month-day")) {
+                    that._drawCalendar();
+                    $.each(element.find(".month-days .day"), function () {
+                        var day2 = $(this).data('day');
+                        if (day.getTime() == day2.getTime()) {
+                            that.selected[0] = $(this).data('day').getTime();
+                            $(this).addClass("selected");
+                        }
+                    });
+                } else {
+                    that.selected[0] = day.getTime();
+                    el.addClass("selected");
+                }
+
+            }
+
+            if (o.mode == 'multi') {
+
+                if (el.hasClass("prev-month-day") || el.hasClass("next-month-day")) {
+                    that.current = el.data('day');
+                    that._drawCalendar();
+                    $.each(element.find(".month-days .day"), function () {
+                        var day2 = $(this).data('day');
+                        if (day.getTime() == day2.getTime()) {
+                            if (index == -1) {
+                                that.selected.push(day.getTime());
+                            } else {
+                                delete that.selected[index];
+                            }
+
+                            $(this).toggleClass("selected");
+                        }
+                    });
+                } else {
+                    if (index == -1) {
+                        that.selected.push(day.getTime());
+                    } else {
+                        delete that.selected[index];
+                    }
+                    el.toggleClass("selected");
+                }
+
+            }
+
+            Utils.callback(o.onDay, day);
         });
     },
 
@@ -306,7 +393,6 @@ $.widget( "corecss.datepicker" , {
     },
 
     _destroy: function () {
-        this._removeScrollEvents();
     },
 
     _setOption: function ( key, value ) {

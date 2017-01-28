@@ -5,7 +5,7 @@ $.widget("corecss.bottomsheet", {
     options: {
         mode: "list",
         overlay: false,
-        duration: 200
+        duration: CORE_ANIMATION_DURATION
     },
 
     _create: function () {
@@ -79,6 +79,10 @@ $.widget("corecss.bottomsheet", {
         }
     },
 
+    toggle: function(mode){
+        return this.toggleState(mode);
+    },
+
     _setOptionsFromDOM: function(){
         var that = this, element = this.element, o = this.options;
 
@@ -101,6 +105,18 @@ $.widget("corecss.bottomsheet", {
     }
 });
 
+var coreBottomSheet = {
+    toggle: function(target, mode){
+        $(target).data("bottomsheet").toggleState(mode);
+    },
+    open: function(target, mode){
+        $(target).data("bottomsheet").open(mode);
+    },
+    close: function(target){
+        $(target).data("bottomsheet").close();
+    }
+};
+
 window.toggleBottomSheet = function(target, mode){
     $(target).data("bottomsheet").toggleState(mode);
 };
@@ -113,3 +129,4 @@ window.closeBottomSheet = function(target){
     $(target).data("bottomsheet").close();
 };
 
+$.bottomSheet = window.coreBottomSheet = coreBottomSheet;

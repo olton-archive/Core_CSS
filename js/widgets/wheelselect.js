@@ -169,7 +169,7 @@ $.widget( "corecss.wheelselect" , {
 
         element.find(".js-button-done").on("click", function(){
             var result = that.value();
-            $.CoreCss.callback(o.onDone, result);
+            Utils.callback(o.onDone, result);
         });
     },
 

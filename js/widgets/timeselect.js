@@ -225,7 +225,7 @@ $.widget( "corecss.timeselect" , {
                 minute: that.minute,
                 second: that.second
             };
-            $.CoreCss.callback(o.onDone, result);
+            Utils.callback(o.onDone, result);
         });
 
         element.find(".js-button-now").on("click", function(){

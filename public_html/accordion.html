@@ -1,0 +1,81 @@
+<div class="page">
+    <h1 class="h_header_2">Accordion</h1>
+    <hr class="thin"/>
+
+    <p>
+        An accordion allows users to toggle the display of sections of content. Core_CSS provides a simple way to create accordion.
+    </p>
+
+    <div class="emulator short">
+        <ul class="accordion" data-role="accordion" data-close-any="false">
+            <li class="accordion-item">
+                <a class="item-header" data-role="ripple" data-ripple-color="#eee">Lorem ipsum</a>
+                <div class="item-content">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean elementum id neque nec commodo. Sed vel justo at turpis laoreet pellentesque quis sed lorem. Integer semper arcu nibh, non mollis arcu tempor vel. Sed pharetra tortor vitae est rhoncus, vel congue dui sollicitudin. Donec eu arcu dignissim felis viverra blandit suscipit eget ipsum.
+                </div>
+            </li>
+            <li class="accordion-item">
+                <a class="item-header" data-role="ripple" data-ripple-color="#eee">Lorem ipsum</a>
+                <div class="item-content">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean elementum id neque nec commodo. Sed vel justo at turpis laoreet pellentesque quis sed lorem. Integer semper arcu nibh, non mollis arcu tempor vel. Sed pharetra tortor vitae est rhoncus, vel congue dui sollicitudin. Donec eu arcu dignissim felis viverra blandit suscipit eget ipsum.
+                </div>
+            </li>
+            <li class="accordion-item">
+                <a class="item-header" data-role="ripple" data-ripple-color="#eee">Lorem ipsum</a>
+                <div class="item-content">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean elementum id neque nec commodo. Sed vel justo at turpis laoreet pellentesque quis sed lorem. Integer semper arcu nibh, non mollis arcu tempor vel. Sed pharetra tortor vitae est rhoncus, vel congue dui sollicitudin. Donec eu arcu dignissim felis viverra blandit suscipit eget ipsum.
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <pre class="prettyprint linenums">
+        &lt;ul class="accordion" data-role="accordion"&gt;
+            &lt;li class="accordion-item"&gt;
+                &lt;a class="item-header"&gt;Frame title&lt;/a&gt;
+                &lt;div class="item-content"&gt;
+                    ...frame content...
+                &lt;/div&gt;
+            &lt;/li&gt;
+            ...
+            &lt;li class="accordion-item"&gt;
+                &lt;a class="item-header"&gt;Frame title&lt;/a&gt;
+                &lt;div class="item-content"&gt;
+                    ...frame content...
+                &lt;/div&gt;
+            &lt;/li&gt;
+        &lt;/ul&gt;
+    </pre>
+
+    <h3 class="heading">Options</h3>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Property</th>
+            <th>Data-*</th>
+            <th>Default</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>closeOther</td>
+            <td>data-close-other</td>
+            <td>true</td>
+            <td>Close other frames when open current</td>
+        </tr>
+        <tr>
+            <td>onOpen</td>
+            <td>data-on-open</td>
+            <td>$.noop</td>
+            <td>Callback for frame open event</td>
+        </tr>
+        <tr>
+            <td>onClose</td>
+            <td>data-on-close</td>
+            <td>$.noop</td>
+            <td>Callback for frame close event</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,153 @@
+<div class="page">
+    <h1 class="h_header_2">Donut chart</h1>
+    <hr class="thin"/>
+    <p>
+        Core_CSS provides simple method to create donut chart.
+    </p>
+    <pre class="prettyprint linenums">
+        &lt;div data-role="donut" ...&gt;&lt;/div&gt;
+    </pre>
+    <div class="emulator clear" style="height: 280px;">
+
+        <div id="donut1" class="margin2 place-left" data-role="donut" data-value="35" data-animate="5"></div>
+        <div id="donut2" class="margin2 place-left" data-role="donut" data-value="35" data-hole="0" data-stroke="transparent" data-fill="#4CAF50" data-animate="5"></div>
+        <div id="donut3" class="margin2 place-left" data-role="donut" data-value="35" data-hole=".6" data-stroke="#f5f5f5" data-fill="#9C27B0" data-animate="5"></div>
+        <div id="donut4" class="margin2 place-left" data-role="donut" data-value="35" data-stroke="#F44336" data-fill="#FFC107" data-color="#FFF" data-cap="" data-animate="5" data-background="#4fc3f7" data-font-size="32"></div>
+
+        <script>
+            (function(){
+                clearInterval(donut_interval);
+                donut_interval = setInterval(function(){
+                    var i, d;
+                    for (i = 0; i < 4; i++) {
+                        d = coreUtils.random(0,100);
+                        $('#donut'+(i+1)).data('donut').val(d);
+                    }
+                }, 5000);
+            })();
+        </script>
+    </div>
+
+    <h4 class="heading">Options</h4>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Option</th>
+            <th>Data-*</th>
+            <th>Default</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>size</td>
+            <td>data-size</td>
+            <td>100</td>
+            <td>Donut size in pixels</td>
+        </tr>
+        <tr>
+            <td>radius</td>
+            <td>data-radius</td>
+            <td>50</td>
+            <td>Donut radius in pixels</td>
+        </tr>
+        <tr>
+            <td>value</td>
+            <td>data-value</td>
+            <td>0</td>
+            <td>Donut value</td>
+        </tr>
+        <tr>
+            <td>backgrouns</td>
+            <td>data-background</td>
+            <td>#ffffff</td>
+            <td>Donut background color in hex</td>
+        </tr>
+        <tr>
+            <td>stroke</td>
+            <td>data-stroke</td>
+            <td>#d1d8e7</td>
+            <td>Donut stroke color in hex</td>
+        </tr>
+        <tr>
+            <td>fill</td>
+            <td>data-fill</td>
+            <td>#49649f</td>
+            <td>Donut fill color in hex</td>
+        </tr>
+        <tr>
+            <td>color</td>
+            <td>data-color</td>
+            <td>#49649f</td>
+            <td>Donut text color in hex</td>
+        </tr>
+        <tr>
+            <td>fontSize</td>
+            <td>data-font-size</td>
+            <td>auto</td>
+            <td>Donut title font size in pixels or auto size</td>
+        </tr>
+        <tr>
+            <td>hole</td>
+            <td>data-hole</td>
+            <td>0.8</td>
+            <td>Donut hole size</td>
+        </tr>
+        <tr>
+            <td>total</td>
+            <td>data-total</td>
+            <td>100</td>
+            <td>Donut total value</td>
+        </tr>
+        <tr>
+            <td>cap</td>
+            <td>data-cap</td>
+            <td>%</td>
+            <td>Donut title sign (only text)</td>
+        </tr>
+        <tr>
+            <td>animate</td>
+            <td>data-animate</td>
+            <td>0</td>
+            <td>Donut animate speed</td>
+        </tr>
+        <tr>
+            <td>showTitle</td>
+            <td>data-show-title</td>
+            <td>true</td>
+            <td>Donut show/hide title</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3 class="heading">Methods</h3>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Method</th>
+            <th>Params</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>val</td>
+            <td>value</td>
+            <td>New donut value</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <pre class="prettyprint linenums">
+        &lt;div id="donut1" data-role="donut" ...&gt;&lt;/div&gt;
+
+        &lt;script&gt;
+            var new_value = coreUtils.random(0,100);
+            var d = $("#donut1").data("donut");
+
+            d.val(new_value);
+        &lt;/script&gt;
+    </pre>
+</div>

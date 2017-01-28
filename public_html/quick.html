@@ -1,0 +1,86 @@
+<div class="page">
+    <h1 class="h_header_2">Quick start</h1>
+    <hr class="thin"/>
+    <p>
+        This is a page template for app with Core_CSS.
+    </p>
+    <pre class="prettyprint linenums">
+        &lt;!DOCTYPE html&gt;
+        &lt;html lang="en"&gt;
+        &lt;head&gt;
+            &lt;meta charset="UTF-8"&gt;
+            &lt;meta name="viewport"
+                  content="user-scalable=no,
+                  initial-scale=1,
+                  maximum-scale=1,
+                  minimum-scale=1,
+                  width=device-width" /&gt;
+            &lt;meta http-equiv="Content-Security-Policy"
+                  content="...your_security_definition..." /&gt;
+
+            &lt;link rel="stylesheet" type="text/css" href="css/core.min.css"&gt;
+            &lt;link rel="stylesheet" type="text/css" href="css/core-colors.min.css"&gt;
+            &lt;link rel="stylesheet" type="text/css" href="css/core-icons.min.css"&gt;
+
+            &lt;title&gt;App template&lt;/title&gt;
+        &lt;/head&gt;
+        &lt;body&gt;
+            &lt;div class="app"&gt;
+                &lt;header class="header"&gt;...&lt;/header&gt;
+                &lt;div class="sidebar" data-role="sidebar"&gt;...&lt;/div&gt;
+                &lt;div class="bottomnav"&gt;...&lt;/div&gt;
+                &lt;ul class="bottomsheet"&gt;...&lt;/ul&gt;
+
+                &lt;div class="view-content"&gt;
+                    ...your_pages...
+                &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;script src="js/jquery-3.1.1.min.js"&gt;&lt;/script&gt;
+            &lt;script src="js/core.min.js"&gt;&lt;/script&gt;
+            &lt;script src="js/app.js"&gt;&lt;/script&gt;
+        &lt;/body&gt;
+        &lt;/html&gt;
+    </pre>
+
+    <h3 class="heading">Components initialising</h3>
+    <p>
+        All components can be initialized over <strong>data-role</strong> attribute or calling jQuery function.
+    </p>
+    <p>
+        If you init components over <strong>dat-role</strong> you must set component options in <strong>data-*</strong> attributes.
+    </p>
+
+    <h4>Example</h4>
+    <pre class="prettyprint linenums">
+        &lt;div data-role="timepicker" data-locale="uk-UA"&gt;&lt;/div&gt;
+    </pre>
+
+    <h3 class="heading">Component methods</h3>
+    <p>
+        To call components methods you must get component object and them call required method.
+    </p>
+    <pre class="prettyprint linenums">
+        &lt;div data-role="dialog" id="dialog1"&gt;
+            ...
+        &lt;/div&gt;
+
+        &lt;script&gt;
+            var html = "dialog new content";
+            var dlg = $("#dialog1").data("dialog");
+            dlg.setContent(html);
+            dlg.open();
+        &lt;/script&gt;
+    </pre>
+
+    <!---->
+    <!---->
+    <!--<h3 class="heading">Create from...</h3>-->
+    <!--<h4 class="subheading">Github</h4>-->
+    <!--<p>...</p>-->
+    <!--<h4 class="subheading">NPM</h4>-->
+    <!--<p>...</p>-->
+    <!--<h4 class="subheading">Phonegap</h4>-->
+    <!--<p>...</p>-->
+
+</div>

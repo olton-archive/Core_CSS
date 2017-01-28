@@ -3,10 +3,10 @@ $.widget( "corecss.dialog" , {
     version: "1.0.0",
 
     options: {
-        modal: true,
+        //modal: true,
         overlay: true,
         overlayColor: 'default',
-        overlayClickClose: false,
+        //overlayClickClose: false,
         type: 'default', // success, alert, warning, info
         content: false,
         contentFull: false,
@@ -241,6 +241,10 @@ $.widget( "corecss.dialog" , {
         this._setContent();
     },
 
+    isOpened: function(){
+        return this.element.data('opened') === true;
+    },
+
     toggle: function(){
         var element = this.element;
         if (element.data('opened')) {
@@ -272,7 +276,7 @@ $.widget( "corecss.dialog" , {
 
         //console.log('after show');
 
-        $.CoreCss.callback(o.onDialogOpen, element);
+        Utils.callback(o.onDialogOpen, element);
 
         if (o.hide && parseInt(o.hide) > 0) {
             this._interval = setTimeout(function(){
@@ -295,7 +299,7 @@ $.widget( "corecss.dialog" , {
         //element.fadeOut();
         this._hide();
 
-        $.CoreCss.callback(o.onDialogClose, element);
+        Utils.callback(o.onDialogClose, element);
 
     },
 
@@ -312,8 +316,10 @@ $.widget( "corecss.dialog" , {
 });
 
 var dialog = {
-    open: function (el, content, contentType){
+
+    isDialog: function(el){
         var dialog = $(el), dialog_obj;
+
         if (dialog.length == 0) {
             console.log('Dialog ' + el + ' not found!');
             return false;
@@ -323,6 +329,16 @@ var dialog = {
 
         if (dialog_obj == undefined) {
             console.log('Element not contain role dialog! Please add attribute data-role="dialog" to element ' + el);
+            return false;
+        }
+
+        return true;
+    },
+
+    open: function (el, content, contentType){
+        var dialog = $(el), dialog_obj = dialog.data('dialog');
+
+        if (!this.isDialog(el)) {
             return false;
         }
 
@@ -338,16 +354,9 @@ var dialog = {
     },
 
     close: function(el){
-        var dialog = $(el), dialog_obj;
-        if (dialog.length == 0) {
-            console.log('Dialog ' + el + ' not found!');
-            return false;
-        }
+        var dialog = $(el), dialog_obj = dialog.data('dialog');
 
-        dialog_obj = dialog.data('dialog');
-
-        if (dialog_obj == undefined) {
-            console.log('Element not contain role dialog! Please add attribute data-role="dialog" to element ' + el);
+        if (!this.isDialog(el)) {
             return false;
         }
 
@@ -355,16 +364,9 @@ var dialog = {
     },
 
     toggle: function(el, content, contentType){
-        var dialog = $(el), dialog_obj;
-        if (dialog.length == 0) {
-            console.log('Dialog ' + el + ' not found!');
-            return false;
-        }
+        var dialog = $(el), dialog_obj = dialog.data('dialog');
 
-        dialog_obj = dialog.data('dialog');
-
-        if (dialog_obj == undefined) {
-            console.log('Element not contain role dialog! Please add attribute data-role="dialog" to element ' + el);
+        if (!this.isDialog(el)) {
             return false;
         }
 
@@ -381,6 +383,16 @@ var dialog = {
         } else {
             dialog_obj.open();
         }
+    },
+
+    isOpened: function(el){
+        var dialog = $(el), dialog_obj = dialog.data('dialog');
+
+        if (!this.isDialog(el)) {
+            return false;
+        }
+
+        return dialog_obj.element.data('opened') === true;
     },
 
     create: function(data){
@@ -405,7 +417,7 @@ var dialog = {
 
                 if (item.onclick != undefined) button.on("click", function(){
 
-                    $.CoreCss.callback(item.onclick, dlg);
+                    Utils.callback(item.onclick, dlg);
 
                 });
 

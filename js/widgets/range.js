@@ -88,7 +88,7 @@ $.widget("corecss.range", {
         this._placeMarker(o.position);
         this._showBuffer(o.buffer);
 
-        var event_down = CoreCss.isTouchDevice() ? 'touchstart' : 'mousedown';
+        var event_down = Utils.isTouchDevice() ? 'touchstart' : 'mousedown';
 
         if (o.target && $(o.target)[0].tagName == 'INPUT') {
             $(o.target).on('keyup', function(){
@@ -128,8 +128,8 @@ $.widget("corecss.range", {
         var element = this.element, o = this.options, that = this, hint = element.children('.range-hint');
         var returnedValue;
 
-        var event_move = CoreCss.isTouchDevice() ? 'touchmove' : 'mousemove';
-        var event_up = CoreCss.isTouchDevice() ? 'touchend' : 'mouseup mouseleave';
+        var event_move = Utils.isTouchDevice() ? 'touchmove' : 'mousemove';
+        var event_up = Utils.isTouchDevice() ? 'touchend' : 'mouseup mouseleave';
 
         $(document).on(event_move, function (event) {
             that._movingMarker(event);
@@ -182,7 +182,7 @@ $.widget("corecss.range", {
             rangeLength = o._range.length,
             markerSize = o._range.marker;
 
-        var event = !CoreCss.isTouchDevice() ? ev.originalEvent : ev.originalEvent.touches[0];
+        var event = !Utils.isTouchDevice() ? ev.originalEvent : ev.originalEvent.touches[0];
 
         //console.log(event);
 

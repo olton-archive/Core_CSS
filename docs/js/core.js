@@ -16,58 +16,12 @@
 var $ = jQuery;
 
 // Source: js/init.js
+if (window.CORE_DEBUG == undefined) {window.CORE_DEBUG = true;}
 if (window.CORE_CALENDAR_WEEK_START == undefined) {window.CORE_CALENDAR_WEEK_START = 1;}
 if (window.CORE_LOCALE == undefined) {window.CORE_LOCALE = 'en-US';}
 if (window.CORE_ANIMATION_DURATION == undefined) {window.CORE_ANIMATION_DURATION = 200;}
 
 var CoreCss = {
-
-    callback: function(cb, args){
-        if (cb != undefined) {
-            if (typeof cb === 'function') {
-                cb(args);
-            } else {
-                if (typeof window[cb] === 'function') {
-                    window[cb](args);
-                } else {
-                    var result = eval("(function(){"+cb+"})");
-                    var _arguments = [];
-                    if (args instanceof Array) {
-                        _arguments = args;
-                    } else {
-                        _arguments.push(args);
-                    }
-                    result.apply(null, _arguments);
-                }
-            }
-        }
-    },
-
-    uniqueId: function (prefix) {
-var d = new Date().getTime();
-        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-            var r = (d + Math.random() * 16) % 16 | 0;
-            d = Math.floor(d / 16);
-            return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-        });
-        return uuid;
-    },
-    
-    isTouchDevice: function() {
-        return (('ontouchstart' in window)
-        || (navigator.MaxTouchPoints > 0)
-        || (navigator.msMaxTouchPoints > 0));
-    },
-
-    secondsToFormattedString: function(time){
-        var hours, minutes, seconds;
-    
-        hours = parseInt( time / 3600 ) % 24;
-        minutes = parseInt( time / 60 ) % 60;
-        seconds = time % 60;
-    
-        return (hours ? (hours) + ":" : "") + (minutes < 10 ? "0"+minutes : minutes) + ":" + (seconds < 10 ? "0"+seconds : seconds);
-    },
 
     init: function(){
         var widgets = $("[data-role]");
@@ -2764,7 +2718,56 @@ return /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(val);
 
     isFloat: function(n){
         return Number(n) === n && n % 1 !== 0;
+    },
+
+    uniqueId: function (prefix) {
+var d = new Date().getTime();
+        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = (d + Math.random() * 16) % 16 | 0;
+            d = Math.floor(d / 16);
+            return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+        });
+        return uuid;
+    },
+
+    isTouchDevice: function() {
+        return (('ontouchstart' in window)
+        || (navigator.MaxTouchPoints > 0)
+        || (navigator.msMaxTouchPoints > 0));
+    },
+
+
+    secondsToFormattedString: function(time){
+        var hours, minutes, seconds;
+
+        hours = parseInt( time / 3600 ) % 24;
+        minutes = parseInt( time / 60 ) % 60;
+        seconds = time % 60;
+
+        return (hours ? (hours) + ":" : "") + (minutes < 10 ? "0"+minutes : minutes) + ":" + (seconds < 10 ? "0"+seconds : seconds);
+    },
+
+    callback: function(cb, args){
+        if (cb != undefined) {
+            if (typeof cb === 'function') {
+                cb(args);
+            } else {
+                if (typeof window[cb] === 'function') {
+                    window[cb](args);
+                } else {
+                    var result = eval("(function(){"+cb+"})");
+                    var _arguments = [];
+                    if (args instanceof Array) {
+                        _arguments = args;
+                    } else {
+                        _arguments.push(args);
+                    }
+                    result.apply(null, _arguments);
+                }
+            }
+        }
     }
+
 };
 
 window.coreUtils = Utils;
@@ -3483,7 +3486,7 @@ $.widget( "corecss.accordion" , {
     version: "1.0.0",
 
     options: {
-        closeAny: true,
+        closeOther: true,
         onOpen: $.noop,
         onClose: $.noop
     },
@@ -3528,7 +3531,7 @@ $.widget( "corecss.accordion" , {
         content.slideDown(o.speed);
         frame.addClass('active');
 
-        $.CoreCss.callback(o.onOpen, frame);
+        Utils.callback(o.onOpen, frame);
     },
 
     _closeFrame: function(frame){
@@ -3537,7 +3540,7 @@ $.widget( "corecss.accordion" , {
         content.slideUp(o.speed,function(){
             frame.removeClass("active");
         });
-        $.CoreCss.callback(o.onClose, frame);
+        Utils.callback(o.onClose, frame);
     },
 
     _setOptionsFromDOM: function(){
@@ -3570,7 +3573,7 @@ $.widget("corecss.bottomsheet", {
     options: {
         mode: "list",
         overlay: false,
-        duration: 200
+        duration: CORE_ANIMATION_DURATION
     },
 
     _create: function () {
@@ -3644,6 +3647,10 @@ $.widget("corecss.bottomsheet", {
         }
     },
 
+    toggle: function(mode){
+        return this.toggleState(mode);
+    },
+
     _setOptionsFromDOM: function(){
         var that = this, element = this.element, o = this.options;
 
@@ -3666,6 +3673,18 @@ $.widget("corecss.bottomsheet", {
     }
 });
 
+var coreBottomSheet = {
+    toggle: function(target, mode){
+        $(target).data("bottomsheet").toggleState(mode);
+    },
+    open: function(target, mode){
+        $(target).data("bottomsheet").open(mode);
+    },
+    close: function(target){
+        $(target).data("bottomsheet").close();
+    }
+};
+
 window.toggleBottomSheet = function(target, mode){
     $(target).data("bottomsheet").toggleState(mode);
 };
@@ -3678,19 +3697,19 @@ window.closeBottomSheet = function(target){
     $(target).data("bottomsheet").close();
 };
 
+$.bottomSheet = window.coreBottomSheet = coreBottomSheet;
+// Source: js/widgets/datepicker.js
 
-// Source: js/widgets/calendar.js
 
-
-$.widget( "corecss.calendar" , {
+$.widget( "corecss.datepicker" , {
 
     version: "1.0.0",
 
     options: {
-        weekStart: CORE_CALENDAR_WEEK_START,
+        //weekStart: CORE_CALENDAR_WEEK_START,
         mode: "default", // default, range, multi
-        startFrom: "day", // day, month, year
-        format: "dd-mm-yyyy",
+        //startFrom: "day", // day, month, year
+        //format: "dd-mm-yyyy",
         locale: CORE_LOCALE,
         toolbar: true,
         footer: true,
@@ -3735,9 +3754,9 @@ $.widget( "corecss.calendar" , {
         this._createCalendar();
         this._createEvents();
 
-        element.data('calendar', this);
+        element.data('datepicker', this);
 
-        $.CoreCss.callback(o.onCreate, element);
+        Utils.callback(o.onCreate, element);
     },
 
     _drawHeader: function(){
@@ -3784,11 +3803,6 @@ $.widget( "corecss.calendar" , {
         $.each(o.buttons, function(){
             html += "<button class='flat-button js-button-"+this+" "+(o.isDialog && (this == 'cancel' || this == 'done') ? 'js-dialog-close' : '')+"'>"+coreLocales[o.locale].buttons[this]+"</button>";
         });
-
-        // html += "<button class='flat-button js-button-cancel'>"+coreLocales[o.locale].buttons.cancel+"</button>";
-        // html += "<button class='flat-button js-button-today'>"+coreLocales[o.locale].buttons.today+"</button>";
-        // html += "<button class='flat-button js-button-clear'>"+coreLocales[o.locale].buttons.clear+"</button>";
-        // html += "<button class='flat-button js-button-done'>"+coreLocales[o.locale].buttons.done+"</button>";
 
         if (o.footer !== true) {
             footer.hide();
@@ -3980,7 +3994,7 @@ $.widget( "corecss.calendar" , {
             that.selected[0] = that.today.getTime();
             setTimeout(function(){
                 that._drawCalendar();
-                $.CoreCss.callback(o.onToday, element);
+                Utils.callback(o.onToday, element);
             }, 300);
         });
 
@@ -3989,7 +4003,7 @@ $.widget( "corecss.calendar" , {
             that.selected = [];
             setTimeout(function(){
                 that._drawCalendar();
-                $.CoreCss.callback(o.onClear, element);
+                Utils.callback(o.onClear, element);
             }, 300);
         });
 
@@ -4003,7 +4017,7 @@ $.widget( "corecss.calendar" , {
                     default: result = that.selected[0];
                 }
 
-                $.CoreCss.callback(o.onDone, result);
+                Utils.callback(o.onDone, result);
             }, 300);
         });
 
@@ -4061,7 +4075,7 @@ $.widget( "corecss.calendar" , {
 
             }
 
-            $.CoreCss.callback(o.onDay, day);
+            Utils.callback(o.onDay, day);
         });
     },
 
@@ -4087,8 +4101,8 @@ $.widget( "corecss.calendar" , {
     }
 });
 
-// Source: js/widgets/datepicker.js
-$.widget( "corecss.datepicker" , {
+// Source: js/widgets/dateselect.js
+$.widget( "corecss.dateselect" , {
 
     version: "1.0.0",
 
@@ -4127,7 +4141,7 @@ $.widget( "corecss.datepicker" , {
             that.today();
         }, 100);
 
-        element.data('datepicker', this);
+        element.data('dateselect', this);
     },
 
     _correct: function(){
@@ -4367,7 +4381,7 @@ $.widget( "corecss.datepicker" , {
 
         element.find(".js-button-done").on("click", function(){
             var result = new Date(that.year, that.month, that.day);
-            $.CoreCss.callback(o.onDone, result);
+            Utils.callback(o.onDone, result);
         });
 
         element.find(".js-button-today").on("click", function(){
@@ -4410,10 +4424,10 @@ $.widget( "corecss.dialog" , {
     version: "1.0.0",
 
     options: {
-        modal: true,
+        //modal: true,
         overlay: true,
         overlayColor: 'default',
-        overlayClickClose: false,
+        //overlayClickClose: false,
         type: 'default', // success, alert, warning, info
         content: false,
         contentFull: false,
@@ -4648,6 +4662,10 @@ $.widget( "corecss.dialog" , {
         this._setContent();
     },
 
+    isOpened: function(){
+        return this.element.data('opened') === true;
+    },
+
     toggle: function(){
         var element = this.element;
         if (element.data('opened')) {
@@ -4679,7 +4697,7 @@ $.widget( "corecss.dialog" , {
 
         //console.log('after show');
 
-        $.CoreCss.callback(o.onDialogOpen, element);
+        Utils.callback(o.onDialogOpen, element);
 
         if (o.hide && parseInt(o.hide) > 0) {
             this._interval = setTimeout(function(){
@@ -4702,7 +4720,7 @@ $.widget( "corecss.dialog" , {
         //element.fadeOut();
         this._hide();
 
-        $.CoreCss.callback(o.onDialogClose, element);
+        Utils.callback(o.onDialogClose, element);
 
     },
 
@@ -4719,8 +4737,10 @@ $.widget( "corecss.dialog" , {
 });
 
 var dialog = {
-    open: function (el, content, contentType){
+
+    isDialog: function(el){
         var dialog = $(el), dialog_obj;
+
         if (dialog.length == 0) {
             console.log('Dialog ' + el + ' not found!');
             return false;
@@ -4730,6 +4750,16 @@ var dialog = {
 
         if (dialog_obj == undefined) {
             console.log('Element not contain role dialog! Please add attribute data-role="dialog" to element ' + el);
+            return false;
+        }
+
+        return true;
+    },
+
+    open: function (el, content, contentType){
+        var dialog = $(el), dialog_obj = dialog.data('dialog');
+
+        if (!this.isDialog(el)) {
             return false;
         }
 
@@ -4745,16 +4775,9 @@ var dialog = {
     },
 
     close: function(el){
-        var dialog = $(el), dialog_obj;
-        if (dialog.length == 0) {
-            console.log('Dialog ' + el + ' not found!');
-            return false;
-        }
+        var dialog = $(el), dialog_obj = dialog.data('dialog');
 
-        dialog_obj = dialog.data('dialog');
-
-        if (dialog_obj == undefined) {
-            console.log('Element not contain role dialog! Please add attribute data-role="dialog" to element ' + el);
+        if (!this.isDialog(el)) {
             return false;
         }
 
@@ -4762,16 +4785,9 @@ var dialog = {
     },
 
     toggle: function(el, content, contentType){
-        var dialog = $(el), dialog_obj;
-        if (dialog.length == 0) {
-            console.log('Dialog ' + el + ' not found!');
-            return false;
-        }
+        var dialog = $(el), dialog_obj = dialog.data('dialog');
 
-        dialog_obj = dialog.data('dialog');
-
-        if (dialog_obj == undefined) {
-            console.log('Element not contain role dialog! Please add attribute data-role="dialog" to element ' + el);
+        if (!this.isDialog(el)) {
             return false;
         }
 
@@ -4788,6 +4804,16 @@ var dialog = {
         } else {
             dialog_obj.open();
         }
+    },
+
+    isOpened: function(el){
+        var dialog = $(el), dialog_obj = dialog.data('dialog');
+
+        if (!this.isDialog(el)) {
+            return false;
+        }
+
+        return dialog_obj.element.data('opened') === true;
     },
 
     create: function(data){
@@ -4812,7 +4838,7 @@ var dialog = {
 
                 if (item.onclick != undefined) button.on("click", function(){
 
-                    $.CoreCss.callback(item.onclick, dlg);
+                    Utils.callback(item.onclick, dlg);
 
                 });
 
@@ -4865,16 +4891,18 @@ $.widget( "corecss.donut" , {
         radius: 50,
         value: 0,
         background: "#ffffff",
-        color: "",
         stroke: "#d1d8e7",
         fill: "#49649f",
-        fontSize: 24,
+        color: "#49649f",
+        fontSize: 'auto',
         hole: .8,
         total: 100,
         cap: "%",
         animate: 0,
         showTitle: true
     },
+
+    animation_change_interval: undefined,
 
     _create: function () {
         var that = this, element = this.element, o = this.options;
@@ -4894,7 +4922,7 @@ $.widget( "corecss.donut" , {
         var circumference = 2 * Math.PI * r;
         var strokeDasharray = ((o.value * circumference) / o.total) + ' ' + circumference;
         var transform = 'rotate(-90 ' + o.radius + ',' + o.radius + ')';
-        var fontSize = r * o.hole * 0.6;
+        var fontSize = o.fontSize === 'auto' ? r * o.hole * 0.6 : o.fontSize;
 
         if (!element.hasClass("donut")) element.addClass("donut");
 
@@ -4908,7 +4936,7 @@ $.widget( "corecss.donut" , {
         html += "   <circle class='donut-back' r='"+(r)+"px' cx='"+(o.radius)+"px' cy='"+(o.radius)+"px' transform='"+(transform)+"' fill='none' stroke='"+(o.stroke)+"' stroke-width='"+(width)+"'/>";
         html += "   <circle class='donut-fill' r='"+(r)+"px' cx='"+(o.radius)+"px' cy='"+(o.radius)+"px' transform='"+(transform)+"' fill='none' stroke='"+(o.fill)+"' stroke-width='"+(width)+"'/>";
         if (o.showTitle === true) {
-            html += "   <text   class='donut-title' x='" + (o.radius) + "px' y='" + (o.radius) + "px' dy='" + (fontSize / 3) + "px' text-anchor='middle' fill='" + (o.fill) + "' font-size='" + (fontSize) + "px'>0" + (o.cap) + "</text>";
+            html += "   <text   class='donut-title' x='" + (o.radius) + "px' y='" + (o.radius) + "px' dy='" + (fontSize / 3) + "px' text-anchor='middle' fill='" + (o.color) + "' font-size='" + (fontSize) + "px'>0" + (o.cap) + "</text>";
         }
         html += "</svg>";
 
@@ -4920,14 +4948,12 @@ $.widget( "corecss.donut" , {
     _setValue: function(v){
         var that = this, element = this.element, o = this.options;
 
-        o.value = v;
-
         var fill = element.find(".donut-fill");
         var title = element.find(".donut-title");
         var r = o.radius  * (1 - (1 - o.hole) / 2);
         var circumference = 2 * Math.PI * r;
-        var title_value = ((o.value * 1000 / o.total) / 10)+(o.cap);
-        var fill_value = ((o.value * circumference) / o.total) + ' ' + circumference;
+        var title_value = ((v * 1000 / o.total) / 10)+(o.cap);
+        var fill_value = ((v * circumference) / o.total) + ' ' + circumference;
 
         fill.attr("stroke-dasharray", fill_value);
         title.html(title_value);
@@ -4940,20 +4966,30 @@ $.widget( "corecss.donut" , {
             return o.value
         }
 
-        if (o.animate > 0) {
-            var i = 0;
-            var interval;
+        if (o.animate > 0 && !document.hidden) {
+            var inc = v > o.value;
+            var i = o.value + (inc ? -1 : 1);
 
-            interval = setInterval(function(){
-                that._setValue(++i);
-                if (i == v) {
-                    clearInterval(interval);
+            clearInterval(that.animation_change_interval);
+            this.animation_change_interval = setInterval(function(){
+                if (inc) {
+                    that._setValue(++i);
+                    if (i >= v) {
+                        clearInterval(that.animation_change_interval);
+                    }
+                } else {
+                    that._setValue(--i);
+                    if (i <= v) {
+                        clearInterval(that.animation_change_interval);
+                    }
                 }
-            }, o.animate)
-
+            }, o.animate);
         } else {
+            clearInterval(that.animation_change_interval);
             this._setValue(v);
         }
+
+        o.value = v;
     },
 
     _setOptionsFromDOM: function(){
@@ -5363,13 +5399,13 @@ var picker = {
         });
     },
 
-    calendarPicker: function(cb_done, options){
+    datePicker: function(cb_done, options){
         var picker_options = $.extend({}, {
             isDialog: true,
             onDone: cb_done
         }, (options != undefined ? options : {}));
 
-        var picker = $("<div>").calendar(picker_options);
+        var picker = $("<div>").datepicker(picker_options);
         return coreDialog.create({
             content: picker,
             options: {
@@ -5378,13 +5414,13 @@ var picker = {
         });
     },
 
-    datePicker: function(cb_done, options){
+    dateSelect: function(cb_done, options){
         var picker_options = $.extend({}, {
             isDialog: true,
             onDone: cb_done
         }, (options != undefined ? options : {}));
 
-        var picker = $("<div>").datepicker(picker_options);
+        var picker = $("<div>").dateselect(picker_options);
         return coreDialog.create({
             content: picker,
             options: {
@@ -5505,10 +5541,10 @@ $.widget( "corecss.progress" , {
             width: val + '%'
         });
 
-        $.CoreCss.callback(o.onChange, val);
+        Utils.callback(o.onChange, val);
 
         if (val == 100) {
-            $.CoreCss.callback(o.onEnd);
+            Utils.callback(o.onEnd);
         }
 
         return this;
@@ -5661,7 +5697,7 @@ $.widget("corecss.range", {
         this._placeMarker(o.position);
         this._showBuffer(o.buffer);
 
-        var event_down = CoreCss.isTouchDevice() ? 'touchstart' : 'mousedown';
+        var event_down = Utils.isTouchDevice() ? 'touchstart' : 'mousedown';
 
         if (o.target && $(o.target)[0].tagName == 'INPUT') {
             $(o.target).on('keyup', function(){
@@ -5701,8 +5737,8 @@ $.widget("corecss.range", {
         var element = this.element, o = this.options, that = this, hint = element.children('.range-hint');
         var returnedValue;
 
-        var event_move = CoreCss.isTouchDevice() ? 'touchmove' : 'mousemove';
-        var event_up = CoreCss.isTouchDevice() ? 'touchend' : 'mouseup mouseleave';
+        var event_move = Utils.isTouchDevice() ? 'touchmove' : 'mousemove';
+        var event_up = Utils.isTouchDevice() ? 'touchend' : 'mouseup mouseleave';
 
         $(document).on(event_move, function (event) {
             that._movingMarker(event);
@@ -5755,7 +5791,7 @@ $.widget("corecss.range", {
             rangeLength = o._range.length,
             markerSize = o._range.marker;
 
-        var event = !CoreCss.isTouchDevice() ? ev.originalEvent : ev.originalEvent.touches[0];
+        var event = !Utils.isTouchDevice() ? ev.originalEvent : ev.originalEvent.touches[0];
 
         //console.log(event);
 
@@ -6261,6 +6297,10 @@ $.widget("corecss.sidebar", {
         }
     },
 
+    isOpened: function(){
+        return this.element.data('opened') === true
+    },
+
     _setOptionsFromDOM: function(){
         var that = this, element = this.element, o = this.options;
 
@@ -6677,7 +6717,7 @@ $.widget( "corecss.timepicker" , {
                 m: that.minute,
                 am: that.am
             };
-            $.CoreCss.callback(o.onChange, val);
+            Utils.callback(o.onChange, val);
         });
 
         element.on("click", ".am, .pm", function(){
@@ -6697,7 +6737,7 @@ $.widget( "corecss.timepicker" , {
                 m: that.minute,
                 am: that.am
             };
-            $.CoreCss.callback(o.onChange, val);
+            Utils.callback(o.onChange, val);
         });
 
         element.on("click", ".js-button-done", function(){
@@ -6706,11 +6746,11 @@ $.widget( "corecss.timepicker" , {
                 m: that.minute,
                 am: that.am
             };
-            $.CoreCss.callback(o.onDone, val);
+            Utils.callback(o.onDone, val);
         });
 
         element.on("click", ".js-button-cancel", function(){
-            $.CoreCss.callback(o.onCancel);
+            Utils.callback(o.onCancel);
         });
     },
 
@@ -6964,7 +7004,7 @@ $.widget( "corecss.timeselect" , {
                 minute: that.minute,
                 second: that.second
             };
-            $.CoreCss.callback(o.onDone, result);
+            Utils.callback(o.onDone, result);
         });
 
         element.find(".js-button-now").on("click", function(){
@@ -8341,7 +8381,7 @@ $.widget( "corecss.wheelselect" , {
 
         element.find(".js-button-done").on("click", function(){
             var result = that.value();
-            $.CoreCss.callback(o.onDone, result);
+            Utils.callback(o.onDone, result);
         });
     },
 

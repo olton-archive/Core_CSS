@@ -1,0 +1,164 @@
+<div class="page">
+    <h1 class="h_header_2">Cards</h1>
+    <hr class="thin"/>
+    <p>
+        Core_CSS provides any classes to create cards. A card is a sheet of material that serves as an entry point to more detailed information.
+    </p>
+    <p>
+        Cards may contain a photo, text, and a link about a single subject. They may display content containing elements of varying size, such as photos with captions of variable length.
+    </p>
+    <h4>Default</h4>
+    <div class="emulator" style="height: 230px;">
+        <div class="card shadow-1">
+            <div class="card-header">
+                Card header
+            </div>
+            <div class="card-content">
+                Card with header and footer. Card header is used to display card title and footer for some additional information or for custom actions.
+            </div>
+            <div class="card-footer">
+                Card Footer
+            </div>
+        </div>
+    </div>
+    <pre class="prettyprint linenums">
+        &lt;div class="card"&gt;
+            &lt;div class="card-header"&gt;
+                Card header
+            &lt;/div&gt;
+            &lt;div class="card-content"&gt;
+                Card content.
+            &lt;/div&gt;
+            &lt;div class="card-footer"&gt;
+                Card Footer
+            &lt;/div&gt;
+        &lt;/div&gt;
+    </pre>
+
+    <h4>With image header</h4>
+    <div class="emulator" style="height: 350px;">
+        <div class="card image-header shadow-1">
+            <div class="card-header fg-white" style="background-image: url(http://lorempixel.com/1000/600/)">
+                Journey To Mountains
+            </div>
+            <div class="card-content">
+                <p class="fg-gray">Posted on January 21, 2015</p>
+                Quisque eget vestibulum nulla. Quisque quis dui quis ex ultricies efficitur vitae non felis. Phasellus quis nibh hendrerit...
+            </div>
+            <div class="card-footer">
+                <button class="flat-button fg-blue">Like</button>
+                <button class="flat-button fg-blue">Read More</button>
+            </div>
+        </div>
+    </div>
+    <pre class="prettyprint linenums">
+        &lt;div class="card image-header"&gt;
+            &lt;div class="card-header fg-white"
+                 style="background-image: url(http://lorempixel.com/1000/600/)"&gt;
+                Journey To Mountains
+            &lt;/div&gt;
+            &lt;div class="card-content"&gt;
+                &lt;p class="fg-gray"&gt;Posted on January 21, 2015&lt;/p&gt;
+                Quisque eget vestibulum nulla. Quisque quis dui quis ex
+                ultricies efficitur vitae non felis. Phasellus quis nibh
+                hendrerit...
+            &lt;/div&gt;
+            &lt;div class="card-footer"&gt;
+                &lt;button class="flat-button fg-blue"&gt;Like&lt;/button&gt;
+                &lt;button class="flat-button fg-blue"&gt;Read More&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    </pre>
+
+    <div class="emulator" style="height: 320px;">
+        <div class="card shadow-1">
+            <div class="card-header">
+                <div class="avatar">
+                    <img src="http://lorempixel.com/68/68/people/">
+                </div>
+                <div class="name">John Doe</div>
+                <div class="date">Monday at 3:47 PM</div>
+            </div>
+            <div class="card-content no-padding">
+                <img src="http://lorempixel.com/1000/600/" style="width: 100%">
+            </div>
+            <div class="card-footer">
+                <button class="flat-button i-thumb_up"></button>
+                <button class="flat-button i-comment"></button>
+                <button class="flat-button i-share"></button>
+            </div>
+        </div>
+    </div>
+    <pre class="prettyprint linenums">
+        &lt;div class="card"&gt;
+            &lt;div class="card-header"&gt;
+                &lt;div class="avatar"&gt;
+                    &lt;img src="http://lorempixel.com/68/68/people/"&gt;
+                &lt;/div&gt;
+                &lt;div class="name"&gt;John Doe&lt;/div&gt;
+                &lt;div class="date"&gt;Monday at 3:47 PM&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="card-content no-padding"&gt;
+                &lt;img src="http://lorempixel.com/1000/600/" style="width: 100%"&gt;
+            &lt;/div&gt;
+            &lt;div class="card-footer"&gt;
+                &lt;button class="flat-button i-thumb_up"&gt;&lt;/button&gt;
+                &lt;button class="flat-button i-comment"&gt;&lt;/button&gt;
+                &lt;button class="flat-button i-share"&gt;&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    </pre>
+
+    <div class="emulator" style="height: 420px;">
+        <div class="card shadow-1">
+            <div class="card-header">
+                <div class="avatar">
+                    <img src="http://lorempixel.com/68/68/people/">
+                </div>
+                <div class="name">John Doe</div>
+                <div class="date">Monday at 3:47 PM</div>
+            </div>
+            <div class="card-content">
+                What a nice photo i took yesterday!
+            </div>
+            <div class="card-content no-padding">
+                <img src="http://lorempixel.com/1000/600/" style="width: 100%">
+            </div>
+            <div class="card-content fg-gray" style="display: flex; justify-content: space-between; align-items: center;">
+                <span><small>Likes: </small>112</span>
+                <span><small>Comments: </small>43</span>
+            </div>
+            <div class="card-footer">
+                <button class="flat-button i-thumb_up"></button>
+                <button class="flat-button i-comment"></button>
+                <button class="flat-button i-share"></button>
+            </div>
+        </div>
+    </div>
+    <pre class="prettyprint linenums">
+        &lt;div class="card"&gt;
+            &lt;div class="card-header"&gt;
+                &lt;div class="avatar"&gt;
+                    &lt;img src="http://lorempixel.com/68/68/people/"&gt;
+                &lt;/div&gt;
+                &lt;div class="name"&gt;John Doe&lt;/div&gt;
+                &lt;div class="date"&gt;Monday at 3:47 PM&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="card-content"&gt;
+                What a nice photo i took yesterday!
+            &lt;/div&gt;
+            &lt;div class="card-content no-padding"&gt;
+                &lt;img src="http://lorempixel.com/1000/600/" style="width: 100%"&gt;
+            &lt;/div&gt;
+            &lt;div class="card-content fg-gray flex-justify"&gt;
+                &lt;span&gt;&lt;small&gt;Likes: &lt;/small&gt;112&lt;/span&gt;
+                &lt;span&gt;&lt;small&gt;Comments: &lt;/small&gt;43&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;div class="card-footer"&gt;
+                &lt;button class="flat-button i-thumb_up"&gt;&lt;/button&gt;
+                &lt;button class="flat-button i-comment"&gt;&lt;/button&gt;
+                &lt;button class="flat-button i-share"&gt;&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    </pre>
+</div>

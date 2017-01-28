@@ -7,16 +7,18 @@ $.widget( "corecss.donut" , {
         radius: 50,
         value: 0,
         background: "#ffffff",
-        color: "",
         stroke: "#d1d8e7",
         fill: "#49649f",
-        fontSize: 24,
+        color: "#49649f",
+        fontSize: 'auto',
         hole: .8,
         total: 100,
         cap: "%",
         animate: 0,
         showTitle: true
     },
+
+    animation_change_interval: undefined,
 
     _create: function () {
         var that = this, element = this.element, o = this.options;
@@ -36,7 +38,7 @@ $.widget( "corecss.donut" , {
         var circumference = 2 * Math.PI * r;
         var strokeDasharray = ((o.value * circumference) / o.total) + ' ' + circumference;
         var transform = 'rotate(-90 ' + o.radius + ',' + o.radius + ')';
-        var fontSize = r * o.hole * 0.6;
+        var fontSize = o.fontSize === 'auto' ? r * o.hole * 0.6 : o.fontSize;
 
         if (!element.hasClass("donut")) element.addClass("donut");
 
@@ -50,7 +52,7 @@ $.widget( "corecss.donut" , {
         html += "   <circle class='donut-back' r='"+(r)+"px' cx='"+(o.radius)+"px' cy='"+(o.radius)+"px' transform='"+(transform)+"' fill='none' stroke='"+(o.stroke)+"' stroke-width='"+(width)+"'/>";
         html += "   <circle class='donut-fill' r='"+(r)+"px' cx='"+(o.radius)+"px' cy='"+(o.radius)+"px' transform='"+(transform)+"' fill='none' stroke='"+(o.fill)+"' stroke-width='"+(width)+"'/>";
         if (o.showTitle === true) {
-            html += "   <text   class='donut-title' x='" + (o.radius) + "px' y='" + (o.radius) + "px' dy='" + (fontSize / 3) + "px' text-anchor='middle' fill='" + (o.fill) + "' font-size='" + (fontSize) + "px'>0" + (o.cap) + "</text>";
+            html += "   <text   class='donut-title' x='" + (o.radius) + "px' y='" + (o.radius) + "px' dy='" + (fontSize / 3) + "px' text-anchor='middle' fill='" + (o.color) + "' font-size='" + (fontSize) + "px'>0" + (o.cap) + "</text>";
         }
         html += "</svg>";
 
@@ -62,14 +64,12 @@ $.widget( "corecss.donut" , {
     _setValue: function(v){
         var that = this, element = this.element, o = this.options;
 
-        o.value = v;
-
         var fill = element.find(".donut-fill");
         var title = element.find(".donut-title");
         var r = o.radius  * (1 - (1 - o.hole) / 2);
         var circumference = 2 * Math.PI * r;
-        var title_value = ((o.value * 1000 / o.total) / 10)+(o.cap);
-        var fill_value = ((o.value * circumference) / o.total) + ' ' + circumference;
+        var title_value = ((v * 1000 / o.total) / 10)+(o.cap);
+        var fill_value = ((v * circumference) / o.total) + ' ' + circumference;
 
         fill.attr("stroke-dasharray", fill_value);
         title.html(title_value);
@@ -82,20 +82,30 @@ $.widget( "corecss.donut" , {
             return o.value
         }
 
-        if (o.animate > 0) {
-            var i = 0;
-            var interval;
+        if (o.animate > 0 && !document.hidden) {
+            var inc = v > o.value;
+            var i = o.value + (inc ? -1 : 1);
 
-            interval = setInterval(function(){
-                that._setValue(++i);
-                if (i == v) {
-                    clearInterval(interval);
+            clearInterval(that.animation_change_interval);
+            this.animation_change_interval = setInterval(function(){
+                if (inc) {
+                    that._setValue(++i);
+                    if (i >= v) {
+                        clearInterval(that.animation_change_interval);
+                    }
+                } else {
+                    that._setValue(--i);
+                    if (i <= v) {
+                        clearInterval(that.animation_change_interval);
+                    }
                 }
-            }, o.animate)
-
+            }, o.animate);
         } else {
+            clearInterval(that.animation_change_interval);
             this._setValue(v);
         }
+
+        o.value = v;
     },
 
     _setOptionsFromDOM: function(){

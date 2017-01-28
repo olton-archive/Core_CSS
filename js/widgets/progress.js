@@ -107,10 +107,10 @@ $.widget( "corecss.progress" , {
             width: val + '%'
         });
 
-        $.CoreCss.callback(o.onChange, val);
+        Utils.callback(o.onChange, val);
 
         if (val == 100) {
-            $.CoreCss.callback(o.onEnd);
+            Utils.callback(o.onEnd);
         }
 
         return this;
