@@ -316,6 +316,19 @@ $.widget( "corecss.datepicker" , {
                     default: result = that.selected[0];
                 }
 
+                if (result !== undefined) {
+                    if (Array.isArray(result)) {
+                        result = result.map(function(v){
+                            return new Date(v);
+                        });
+                    } else {
+                        result = new Date(result);
+                    }
+                }
+                 else {
+                    result = new Date();
+                }
+
                 Utils.callback(o.onDone, result);
             }, 300);
         });

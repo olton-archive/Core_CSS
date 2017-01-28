@@ -960,6 +960,18 @@ header.more ~ .view-content,
 .grid.condensed .cell {
   padding: 1px;
 }
+@media screen and (max-width: 640px) {
+  .grid.default-media .cell,
+  .grid-list.default-media .cell {
+    width: 50% !important;
+  }
+}
+@media screen and (max-width: 360px) {
+  .grid.default-media .cell,
+  .grid-list.default-media .cell {
+    width: 100% !important;
+  }
+}
 .overlay {
   position: fixed;
   top: 0;
