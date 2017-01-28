@@ -318,21 +318,7 @@ $.widget( "corecss.dialog" , {
 var dialog = {
 
     isDialog: function(el){
-        var dialog = $(el), dialog_obj;
-
-        if (dialog.length == 0) {
-            console.log('Dialog ' + el + ' not found!');
-            return false;
-        }
-
-        dialog_obj = dialog.data('dialog');
-
-        if (dialog_obj == undefined) {
-            console.log('Element not contain role dialog! Please add attribute data-role="dialog" to element ' + el);
-            return false;
-        }
-
-        return true;
+        return Utils.isCoreObject(el, 'dialog');
     },
 
     open: function (el, content, contentType){

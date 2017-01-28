@@ -130,6 +130,22 @@ var Utils = {
         } else {
             return false;
         }
+    },
+
+    isCoreObject: function(el, type){
+        var $el = $(el), el_obj = $el.data(type);
+
+        if ($el.length == 0) {
+            console.log(type + ' ' + el + ' not found!');
+            return false;
+        }
+
+        if (el_obj == undefined) {
+            console.log('Element not contain role '+ type +'! Please add attribute data-role="'+type+'" to element ' + el);
+            return false;
+        }
+
+        return true;
     }
 
 };

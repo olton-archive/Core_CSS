@@ -1,0 +1,153 @@
+<div class="page">
+    <h1 class="display3">Expansion panels</h1>
+    <hr class="thin"/>
+    <p>
+        Core_CSS provides special classes and widget to create <strong>expansion panels</strong>.
+    </p>
+
+    <h3 class="heading">Static panel</h3>
+    <div class="emulator short padding2">
+        <br />
+        <div class="panel">
+            <div class="panel-header">
+                Header
+            </div>
+            <div class="panel-content">
+                The thing invents enlightenment which is not powerful.
+                Chicken breasts taste best with whiskey and lots of szechuan pepper.
+            </div>
+            <div class="panel-footer">
+                Footer
+            </div>
+        </div>
+    </div>
+    <pre class="prettyprint linenums">
+        &lt;div class="panel"&gt;
+            &lt;div class="panel-header"&gt;
+                ... header ...
+                &lt;span class="toggle"&gt;&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;div class="panel-content"&gt;
+                ... panel content ...
+            &lt;/div&gt;
+            &lt;div class="panel-footer align-right"&gt;
+                ... footer ...
+            &lt;/div&gt;
+        &lt;/div&gt;
+    </pre>
+
+    <h3 class="heading">Expansion panel</h3>
+    <div class="emulator short padding2">
+        <br />
+        <div data-role="panel">
+            <div class="panel-header">
+                Header
+            </div>
+            <div class="panel-content">
+                The thing invents enlightenment which is not powerful. Chicken breasts taste best with whiskey and lots of szechuan pepper.
+            </div>
+            <div class="panel-footer align-right">
+                <button class="flat-button">Save</button>
+                <button class="flat-button">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <pre class="prettyprint linenums">
+        &lt;div data-role="panel"&gt;
+            &lt;div class="panel-header"&gt;
+                Header
+            &lt;/div&gt;
+            &lt;div class="panel-content"&gt;
+                The thing invents enlightenment which is not powerful.
+                Chicken breasts taste best with whiskey and lots of szechuan pepper.
+            &lt;/div&gt;
+            &lt;div class="panel-footer align-right"&gt;
+                &lt;button class="flat-button"&gt;Save&lt;/button&gt;
+                &lt;button class="flat-button"&gt;Cancel&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    </pre>
+
+    <h3 class="heading">Options</h3>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Option</th>
+            <th>Data-*</th>
+            <th>Default</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>collapseMode</td>
+            <td>data-collapse-mode</td>
+            <td>full</td>
+            <td>Hide footer on collapse</td>
+        </tr>
+        <tr>
+            <td>duration</td>
+            <td>data-duration</td>
+            <td>300</td>
+            <td>Collapse speed</td>
+        </tr>
+        <tr>
+            <td>open</td>
+            <td>data-open</td>
+            <td>true</td>
+            <td>Default mode for panel: opened or closed</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3 class="heading">Methods</h3>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Method</th>
+            <th>Params</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>open</td>
+            <td></td>
+            <td>Expand panel</td>
+        </tr>
+        <tr>
+            <td>close</td>
+            <td></td>
+            <td>Collapse panel</td>
+        </tr>
+        <tr>
+            <td>toggle</td>
+            <td></td>
+            <td>Toggle state of panel</td>
+        </tr>
+        <tr>
+            <td>isOpened</td>
+            <td></td>
+            <td>Toggle state of panel</td>
+        </tr>
+        <tr>
+            <td>setContent</td>
+            <td>html</td>
+            <td>SSet panel content</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3 class="heading">Object</h3>
+    <p>
+        Core_CSS provides <strong>corePanels</strong> object to panels manipulate. <strong>corePanels</strong> contains next methods:
+    </p>
+    <ul>
+        <li><strong>corePanels.isPanel(el)</strong> - check if object is panel</li>
+        <li><strong>corePanels.open(el)</strong> - open required panel</li>
+        <li><strong>corePanels.close(el)</strong> - close required panel</li>
+        <li><strong>corePanels.toggle(el)</strong> - toggle state of required panel</li>
+    </ul>
+</div>

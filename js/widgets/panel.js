@@ -21,6 +21,10 @@ $.widget( "corecss.panel" , {
     _initPanel: function(){
         var that = this, element = this.element, o = this.options;
 
+        if (!element.hasClass('panel')) {
+            element.addClass('panel');
+        }
+
         if (o.open === true) {
             element.data("opened", true);
             element.removeClass("collapsed");
@@ -87,6 +91,18 @@ $.widget( "corecss.panel" , {
         }
     },
 
+    isOpened: function(){
+        return this.element.data("opened") === true;
+    },
+
+    setContent: function(html){
+        var that = this, element = this.element, o = this.options;
+        var content_wrapper = element.children(".panel-content");
+        if (content_wrapper.length > 0) {
+            content_wrapper.html(html);
+        }
+    },
+
     _setOptionsFromDOM: function(){
         var that = this, element = this.element, o = this.options;
 
@@ -108,3 +124,41 @@ $.widget( "corecss.panel" , {
         this._super('_setOption', key, value);
     }
 });
+
+var panels = {
+
+    isPanel: function(el){
+        return Utils.isCoreObject(el, 'panel');
+    },
+
+    open: function(el){
+        if (!this.isPanel(el)) {
+            return false;
+        }
+
+        $(el).data('panel').open();
+    },
+
+    close: function(el){
+        if (!this.isPanel(el)) {
+            return false;
+        }
+
+        $(el).data('panel').close();
+    },
+
+    toggle: function(el){
+        if (!this.isPanel(el)) {
+            return false;
+        }
+
+        var panel = $(el).data('panel');
+        if (panel.isOpened()) {
+            panel.close();
+        } else {
+            panel.open();
+        }
+    }
+};
+
+$.Panels = window.corePanels = panels;
