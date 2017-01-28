@@ -3,7 +3,7 @@
 
 .calendar {
     display: block;
-    width: 330px;
+    width: 280px;
     margin: 0 auto;
     border-radius: 2px;
     position: relative;
@@ -36,7 +36,7 @@
 
 .calendar-content {
     .days-inner {
-        width: 314px;
+        width: 264px;
         height: 226px;
         position: relative;
         display: block;
@@ -65,6 +65,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        width: 100%;
     }
 
     .toolbar {
@@ -90,7 +91,7 @@
 
         .current_year, .current_month {
             text-align: center;
-            padding: 8px 16px;
+            padding: 8px 8px;
             flex-grow: 10;
         }
     }
@@ -109,7 +110,7 @@
 
         & > .day {
             text-align: center;
-            width: ~"calc(100% / 7)";
+            width: ~"calc(100% / 7 - 2px)";
             cursor: pointer;
         }
     }
@@ -123,12 +124,11 @@
 
         & > .day {
             text-align: center;
-            width: ~"calc(100% / 7)";
-            padding: 8px 0;
-            //line-height: 44.84px;
+            width: ~"calc(100% / 7 - 2px)";
+            padding: 10px 0;
             position: relative;
-            //height: 44.84px;
             cursor: pointer;
+            border-radius: 50%;
         }
 
         & > .today {
@@ -140,8 +140,6 @@
             &.selected {
                 color: @white;
                 background-color: @lightBlue700;
-                //border-radius: 50%;
-                //border-radius: 4px;
             }
         }
     }
@@ -156,11 +154,12 @@
 
     .flat-button {
         color: @lightBlue700;
+        font-size: .9em;
     }
 }
 
 .calendar-landscape() {
-    width: 512px;
+    width: 462px;
     height: 312px;
 
     .calendar-header {

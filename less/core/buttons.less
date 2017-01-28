@@ -203,3 +203,12 @@ a {
         cursor: pointer;
     }
 }
+
+.action-button, .multi-action {
+    &.floating-action-top {
+        z-index: 5000; top: 90px; left: 16px; position: fixed;
+    }
+    &.floating-action-bottom {
+        bottom: 20px; right: 20px; position: fixed;
+    }
+}
