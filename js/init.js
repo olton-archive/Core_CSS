@@ -1,3 +1,4 @@
+if (window.CORE_DEBUG == undefined) {window.CORE_DEBUG = true;}
 if (window.CORE_CALENDAR_WEEK_START == undefined) {window.CORE_CALENDAR_WEEK_START = 1;}
 if (window.CORE_LOCALE == undefined) {window.CORE_LOCALE = 'en-US';}
 if (window.CORE_ANIMATION_DURATION == undefined) {window.CORE_ANIMATION_DURATION = 200;}

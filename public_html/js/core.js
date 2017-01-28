@@ -16,6 +16,7 @@
 var $ = jQuery;
 
 // Source: js/init.js
+if (window.CORE_DEBUG == undefined) {window.CORE_DEBUG = true;}
 if (window.CORE_CALENDAR_WEEK_START == undefined) {window.CORE_CALENDAR_WEEK_START = 1;}
 if (window.CORE_LOCALE == undefined) {window.CORE_LOCALE = 'en-US';}
 if (window.CORE_ANIMATION_DURATION == undefined) {window.CORE_ANIMATION_DURATION = 200;}
@@ -4965,19 +4966,21 @@ $.widget( "corecss.donut" , {
         }
 
         if (o.animate > 0 && !document.hidden) {
-            var i = 0;
-
-            console.log(v, o.value);
-            if (v > o.value) {
-                console.log("inc");
-            } else {
-                console.log("dec");
-            }
-
+            var inc = v > o.value;
+            var i = o.value + (inc ? -1 : 1);
+            
+            clearInterval(that.animation_change_interval);
             this.animation_change_interval = setInterval(function(){
-                that._setValue(++i);
-                if (i >= v) {
-                    clearInterval(that.animation_change_interval);
+                if (inc) {
+                    that._setValue(++i);
+                    if (i >= v) {
+                        clearInterval(that.animation_change_interval);
+                    }
+                } else {
+                    that._setValue(--i);
+                    if (i <= v) {
+                        clearInterval(that.animation_change_interval);
+                    }
                 }
             }, o.animate);
         } else {
