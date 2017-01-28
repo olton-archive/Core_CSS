@@ -1,0 +1,120 @@
+<div class="page">
+    <h1 class="display3">Header</h1>
+    <hr class="thin"/>
+    <p>
+        Core_CSS provides simple way to create header for mobile App.
+    </p>
+    <pre class="prettyprint linenums">
+        &lt;div class="header"&gt;...&lt;/div&gt;
+        &lt;header class="header"&gt;...&lt;/header&gt;
+    </pre>
+    <div class="emulator short">
+        <div class="header pos-absolute">
+            <button class="nav-button" onclick="$(this).toggleClass('transform')"><span></span></button>
+            <span class="app-title">Core CSS</span>
+            <span style="position: relative" class=" place-right">
+                    <button class="tool-button " id="optionMenu"><span class="i-more_vert icon"></span></button>
+                    <ul class="menu dropdown place-right" data-role="dropdown" data-toggle-element="#optionMenu">
+                        <li><a>Menu Item 1</a></li>
+                        <li><a>Menu Item 2</a></li>
+                        <li class="divider"></li>
+                        <li><a>Menu Item 3</a></li>
+                    </ul>
+                </span>
+            <button class="tool-button place-right " data-role="ripple"><span class="i-comment icon"></span></button>
+            <button class="tool-button place-right " data-role="ripple"><span class="i-share icon"></span></button>
+        </div>
+    </div>
+    <h3 class="headline">Header elements</h3>
+
+    <h3 class="heading">Title</h3>
+    <pre class="prettyprint linenums">
+        &lt;header class="header"&gt;
+            &lt;span class="app-title"&gt;Core_CSS&lt;/span&gt;
+        &lt;/header&gt;
+    </pre>
+
+    <h3 class="heading">Buttons</h3>
+    <pre class="prettyprint linenums">
+        &lt;header class="header"&gt;
+            &lt;button class="nav-button"&gt;&lt;span&gt;&lt;/span&gt;&lt;/button&gt;
+            &lt;button class="tool-button"&gt;&lt;span class="i-comment icon"&gt;&lt;/span&gt;&lt;/button&gt;
+        &lt;/header&gt;
+    </pre>
+
+    <h3 class="heading">Menu</h3>
+    <pre class="prettyprint linenums">
+        &lt;header class="header"&gt;
+            &lt;span style="position: relative" class="place-right"&gt;
+                &lt;button class="tool-button" id="optionMenu"&gt;&lt;span class="i-more_vert icon"&gt;&lt;/span&gt;&lt;/button&gt;
+                &lt;ul class="menu dropdown place-right" data-role="dropdown" data-toggle-element="#optionMenu"&gt;
+                    &lt;li&gt;&lt;a href="#"&gt;Menu Item 1&lt;/a&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;a href="#"&gt;Menu Item 2&lt;/a&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;a href="#"&gt;Menu Item 3&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/span&gt;
+        &lt;/header&gt;
+    </pre>
+
+    <h3 class="heading">Groups</h3>
+    <div class="emulator short">
+        <div class="header bg-red-A400 pos-absolute">
+            <div class="header-container" id="header-main-group" style="display: block">
+                <button class="nav-button bg-red-A400"><span></span></button>
+                <span class="app-title">Core_CSS</span>
+                <button class="tool-button place-right bg-red-A400" id="searchButton"><span class="i-search icon"></span></button>
+            </div>
+            <div class="header-container" id="header-search-group" style="display: none">
+                <button class="tool-button bg-red-A400" id="closeSearchButton"><span class="i-back icon"></span></button>
+                <div class="input-control">
+                    <input type="text" name="search" class="search-in-list" placeholder="Search...">
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $('#searchButton, #closeSearchButton').off('click').on('click', function(){
+                var b = $(this);
+
+                if (b.attr('id') == 'searchButton') {
+                    $("#header-main-group").hide();
+                    $("#header-search-group").show();
+                    $(".search-in-list").focus();
+                } else {
+                    $("#header-main-group").show();
+                    $("#header-search-group").hide();
+                }
+            });
+        </script>
+    </div>
+    <pre class="prettyprint linenums">
+        &lt;div class="header bg-red-A400"&gt;
+            &lt;div class="header-container" id="header-main-group" style="display: block"&gt;
+                &lt;button class="nav-button bg-red-A400"&gt;&lt;span&gt;&lt;/span&gt;&lt;/button&gt;
+                &lt;span class="app-title"&gt;Core_CSS&lt;/span&gt;
+                &lt;button class="tool-button place-right bg-red-A400" id="searchButton"&gt;&lt;span class="i-search icon"&gt;&lt;/span&gt;&lt;/button&gt;
+            &lt;/div&gt;
+            &lt;div class="header-container" id="header-search-group" style="display: none"&gt;
+                &lt;button class="tool-button bg-red-A400" id="closeSearchButton"&gt;&lt;span class="i-back icon"&gt;&lt;/span&gt;&lt;/button&gt;
+                &lt;div class="input-control"&gt;
+                    &lt;input type="text" name="search" class="search-in-list" placeholder="Search..."&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;script&gt;
+            $('#searchButton, #closeSearchButton').off('click').on('click', function(){
+                var b = $(this);
+
+                if (b.attr('id') == 'searchButton') {
+                    $("#header-main-group").hide();
+                    $("#header-search-group").show();
+                    $(".search-in-list").focus();
+                } else {
+                    $("#header-main-group").show();
+                    $("#header-search-group").hide();
+                }
+            });
+        &lt;/script&gt;
+    </pre>
+</div>

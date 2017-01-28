@@ -105,53 +105,19 @@
     }
 }
 
-//
-//@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
-//    .grid:not(.no-transform) {
-//        .row {
-//            .cell {
-//                width: ~"calc(100% / 6)" !important;
-//            }
-//        }
-//    }
-//}
-//
-//@media only screen and (min-device-width : 640px) and (max-device-width : 768px) {
-//    .grid:not(.no-transform) {
-//        .row {
-//            .cell {
-//                width: ~"calc(100% / 4)" !important;
-//            }
-//        }
-//    }
-//}
-//
-//@media only screen and (max-device-width : 360px) {
-//    .grid:not(.no-transform) {
-//        .row {
-//            .cell {
-//                width: ~"calc(100% / 3)" !important;
-//            }
-//        }
-//    }
-//}
-//
-//@media only screen and (max-device-width : 320px) {
-//    .grid:not(.no-transform) {
-//        .row {
-//            .cell {
-//                width: ~"calc(100% / 2)" !important;
-//            }
-//        }
-//    }
-//}
-//
-//@media only screen and (max-device-width : 240px) {
-//    .grid:not(.no-transform) {
-//        .row {
-//            .cell {
-//                width: ~"calc(100% / 1)" !important;
-//            }
-//        }
-//    }
-//}
+@media screen and (max-width: 640px) {
+    .grid.default-media, .grid-list.default-media  {
+        .cell {
+            width: 50% !important;
+        }
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .grid.default-media, .grid-list.default-media {
+        .cell {
+            width: 100% !important;
+        }
+    }
+}
+

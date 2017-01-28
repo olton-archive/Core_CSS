@@ -278,6 +278,11 @@ body {
     height: 400px;
 }
 
+.emulator.full {
+    height: auto;
+    width: 100%;
+}
+
 .emulator .header {
     position: absolute;
 }
@@ -288,6 +293,19 @@ body {
 
 .table thead {
     /*background: #eee;*/
+}
+
+hr {
+    background: #ddd;
+}
+
+.demo-grid .cell {
+    min-height: 20px !important;
+    border: 1px #000000 dotted;
+}
+
+.page > h1 {
+    margin-top: 0;
 }
 
 @media screen and (min-width: 1200px) {
@@ -359,9 +377,11 @@ body {
     .no-big {
         display: block !important;
     }
+    /*
     .grid .cell {
         width: 50% !important;
     }
+    */
     .hero {
         height: 530px;
     }
@@ -377,9 +397,11 @@ body {
 }
 
 @media screen and (max-width: 360px){
+    /*
     .grid .cell {
         width: 100% !important;
     }
+    */
     #logo2 {
         display: none;
     }

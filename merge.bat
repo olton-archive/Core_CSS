@@ -1,4 +1,3 @@
-call npm version %3
 call git add .
 call git commit -am %2
 call git push

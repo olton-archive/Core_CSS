@@ -1,0 +1,106 @@
+<div class="page">
+    <h1 class="display3">Grids</h1>
+    <hr class="thin"/>
+    <p>
+        Core_CSS provides two type of grid: <strong>grid</strong> and <strong>grid-list</strong>. Grid list build as flex model. Grid build as float model.
+    </p>
+    <pre class="prettyprint linenums">
+        &lt;div class="grid-list"&gt;
+            &lt;div class="row"&gt;
+                &lt;div class="cell"&gt;&lt;/div&gt;
+                ...
+                &lt;div class="cell"&gt;&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class="grid"&gt;
+            &lt;div class="row [cells2...cells12]"&gt;
+                &lt;div class="cell [colspan2...colspan12] [offset2...offset12]"&gt;&lt;/div&gt;
+                ...
+                &lt;div class="cell"&gt;&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    </pre>
+
+    <h2 class="headline">Grid</h2>
+    <div class="emulator full padding2">
+        <div class="grid demo-grid default-media">
+            <div class="row">
+                <div class="cell"></div>
+            </div>
+            <div class="row cells2">
+                <div class="cell"></div>
+                <div class="cell"></div>
+            </div>
+            <div class="row cells3">
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+            </div>
+            <div class="row cells12">
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="headline">Grid list</h2>
+    <div class="emulator full padding2">
+        <div class="grid-list demo-grid">
+            <div class="row">
+                <div class="cell"></div>
+            </div>
+            <div class="row">
+                <div class="cell"></div>
+                <div class="cell"></div>
+            </div>
+            <div class="row">
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+            </div>
+            <div class="row">
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+            </div>
+        </div>
+    </div>
+    <h3 class="heading">Default media</h3>
+    <p>
+        With sub class <strong>default-media</strong> cells have fixed size:
+    </p>
+    <ul>
+        <li>Devices with max-width 640px - <strong>50%</strong></li>
+        <li>Devices with max-width 360px - <strong>100%</strong></li>
+    </ul>
+    <pre class="prettyprint linenums">
+        &lt;div class="grid-list default-media"&gt;
+            ...
+        &lt;/div&gt;
+
+        &lt;div class="grid default-media"&gt;
+            ...
+        &lt;/div&gt;
+    </pre>
+
+</div>
