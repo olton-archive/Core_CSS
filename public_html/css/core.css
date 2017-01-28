@@ -4793,7 +4793,7 @@ header.more ~ .fixed-tabs,
 }
 .calendar {
   display: block;
-  width: 330px;
+  width: 280px;
   margin: 0 auto;
   border-radius: 2px;
   position: relative;
@@ -4821,7 +4821,7 @@ header.more ~ .fixed-tabs,
   padding: 0 8px;
 }
 .calendar-content .days-inner {
-  width: 314px;
+  width: 264px;
   height: 226px;
   position: relative;
   display: block;
@@ -4852,6 +4852,7 @@ header.more ~ .fixed-tabs,
   -webkit-justify-content: space-between;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  width: 100%;
 }
 .calendar-content .toolbar .prev_year,
 .calendar-content .toolbar .next_year,
@@ -4881,7 +4882,7 @@ header.more ~ .fixed-tabs,
 .calendar-content .toolbar .current_year,
 .calendar-content .toolbar .current_month {
   text-align: center;
-  padding: 8px 16px;
+  padding: 8px 8px;
   -webkit-flex-grow: 10;
       -ms-flex-positive: 10;
           flex-grow: 10;
@@ -4904,7 +4905,7 @@ header.more ~ .fixed-tabs,
 }
 .calendar-content .week-days > .day {
   text-align: center;
-  width: calc(100% / 7);
+  width: calc(100% / 7 - 2px);
   cursor: pointer;
 }
 .calendar-content .month-days {
@@ -4922,10 +4923,11 @@ header.more ~ .fixed-tabs,
 }
 .calendar-content .month-days > .day {
   text-align: center;
-  width: calc(100% / 7);
-  padding: 8px 0;
+  width: calc(100% / 7 - 2px);
+  padding: 10px 0;
   position: relative;
   cursor: pointer;
+  border-radius: 50%;
 }
 .calendar-content .month-days > .today {
   color: #0288d1;
@@ -4950,9 +4952,10 @@ header.more ~ .fixed-tabs,
 }
 .calendar-footer .flat-button {
   color: #0288d1;
+  font-size: .9em;
 }
 .calendar.landscape {
-  width: 512px;
+  width: 462px;
   height: 312px;
 }
 .calendar.landscape .calendar-header {
@@ -4970,7 +4973,7 @@ header.more ~ .fixed-tabs,
 }
 @media screen and (min-width: 640px) {
   .calendar:not(.no-rotate) {
-    width: 512px;
+    width: 462px;
     height: 312px;
   }
   .calendar:not(.no-rotate) .calendar-header {
