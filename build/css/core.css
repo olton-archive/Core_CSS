@@ -5581,6 +5581,7 @@ header.more ~ .fixed-tabs,
 .donut {
   display: block;
   position: relative;
+  border-radius: 50%;
 }
 .donut > svg {
   width: 100%;

@@ -9,7 +9,8 @@ $.widget( "corecss.donut" , {
         background: "#ffffff",
         stroke: "#d1d8e7",
         fill: "#49649f",
-        fontSize: 24,
+        color: "#49649f",
+        fontSize: 'auto',
         hole: .8,
         total: 100,
         cap: "%",
@@ -37,7 +38,7 @@ $.widget( "corecss.donut" , {
         var circumference = 2 * Math.PI * r;
         var strokeDasharray = ((o.value * circumference) / o.total) + ' ' + circumference;
         var transform = 'rotate(-90 ' + o.radius + ',' + o.radius + ')';
-        var fontSize = r * o.hole * 0.6;
+        var fontSize = o.fontSize === 'auto' ? r * o.hole * 0.6 : o.fontSize;
 
         if (!element.hasClass("donut")) element.addClass("donut");
 
@@ -51,7 +52,7 @@ $.widget( "corecss.donut" , {
         html += "   <circle class='donut-back' r='"+(r)+"px' cx='"+(o.radius)+"px' cy='"+(o.radius)+"px' transform='"+(transform)+"' fill='none' stroke='"+(o.stroke)+"' stroke-width='"+(width)+"'/>";
         html += "   <circle class='donut-fill' r='"+(r)+"px' cx='"+(o.radius)+"px' cy='"+(o.radius)+"px' transform='"+(transform)+"' fill='none' stroke='"+(o.fill)+"' stroke-width='"+(width)+"'/>";
         if (o.showTitle === true) {
-            html += "   <text   class='donut-title' x='" + (o.radius) + "px' y='" + (o.radius) + "px' dy='" + (fontSize / 3) + "px' text-anchor='middle' fill='" + (o.fill) + "' font-size='" + (fontSize) + "px'>0" + (o.cap) + "</text>";
+            html += "   <text   class='donut-title' x='" + (o.radius) + "px' y='" + (o.radius) + "px' dy='" + (fontSize / 3) + "px' text-anchor='middle' fill='" + (o.color) + "' font-size='" + (fontSize) + "px'>0" + (o.cap) + "</text>";
         }
         html += "</svg>";
 
@@ -84,7 +85,7 @@ $.widget( "corecss.donut" , {
         if (o.animate > 0 && !document.hidden) {
             var inc = v > o.value;
             var i = o.value + (inc ? -1 : 1);
-            
+
             clearInterval(that.animation_change_interval);
             this.animation_change_interval = setInterval(function(){
                 if (inc) {
