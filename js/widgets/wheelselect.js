@@ -51,14 +51,15 @@ $.widget( "corecss.wheelselect" , {
     },
 
     setPosition: function(){
-        var element = this.element;
-        var value = this.options.values.indexOf(this._value);
+        var element = this.element, o = this.options;
+        var values = Utils.isFunc(o.values) ?  Utils.exec(o.values) : o.values;
+        var value_index = values.indexOf(this._value);
         var v_list = element.find(".v-list");
 
         this._removeScrollEvents();
 
         v_list.scrollTop(0).animate({
-            scrollTop: element.find(".js-vv-"+value).addClass("active").position().top - 48
+            scrollTop: element.find(".js-vv-"+value_index).addClass("active").position().top - 48
         });
 
         this._createScrollEvents();
@@ -91,12 +92,17 @@ $.widget( "corecss.wheelselect" , {
         var element = this.element, o = this.options;
         var picker_inner = $("<div>").addClass("picker-content-inner");
         var v_list;
-        var i;
+        var i, items;
 
         v_list = $("<ul>").addClass("v-list").appendTo(picker_inner);
         $("<li>").html("&nbsp;").appendTo(v_list);
 
-        if ((Object.prototype.toString.call( o.values ) === '[object Array]' || Object.prototype.toString.call( o.values ) === '[object Object]') && o.values.length > 0) {
+        if (Utils.isFunc(o.values)) {
+            items = Utils.exec(o.values);
+            $.each(items, function(i, v){
+                $("<li>").html(v).appendTo(v_list).data('value', v).addClass("js-vv-"+i);
+            });
+        } else if ((Object.prototype.toString.call( o.values ) === '[object Array]' || Object.prototype.toString.call( o.values ) === '[object Object]') && o.values.length > 0) {
             for(i = 0; i < o.values.length; i++) {
                 $("<li>").html(o.values[i]).appendTo(v_list).data('value', o.values[i]).addClass("js-vv-"+i);
             }

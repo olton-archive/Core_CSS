@@ -1,0 +1,117 @@
+<div class="page">
+    <h1 class="display3">Lists</h1>
+    <hr class="thin"/>
+    <p>
+        Lists present multiple line items vertically as a single continuous element. Core_CSS provides three predefined list styles: <strong>list-item</strong>, <strong>feed-item</strong> and <strong>list-item-custom</strong>,
+    </p>
+    <pre class="prettyprint linenums">
+        &lt;ul class="list"&gt;
+            &lt;li class="list-item"&gt;...&lt;/li&gt;
+            ...
+            &lt;li class="list-item"&gt;...&lt;/li&gt;
+        &lt;/ul&gt;
+        ...
+        &lt;ul class="list"&gt;
+            &lt;li class="feed-item"&gt;...&lt;/li&gt;
+            ...
+            &lt;li class="feed-item"&gt;...&lt;/li&gt;
+        &lt;/ul&gt;
+        ...
+        &lt;ul class="list"&gt;
+            &lt;li class="list-item-custom"&gt;...&lt;/li&gt;
+            ...
+            &lt;li class="list-item-custom"&gt;...&lt;/li&gt;
+        &lt;/ul&gt;
+    </pre>
+
+    <h3 class="heading">list-items</h3>
+    <div class="emulator" style="height: 308px">
+        <ul class="list">
+            <li class="list-item with-second-label">
+                <img class="avatar" src="images/me.jpg">
+                <span class="label">List item</span>
+                <span class="second-label">second label</span>
+                <span class="second-action i-alarm fg-red"></span>
+            </li>
+            <li class="list-item ">
+                <img class="avatar" src="images/me.jpg">
+                <span class="label">List item</span>
+            </li>
+            <li class="list-item ">
+                <img class="avatar" src="images/me.jpg">
+                <span class="label">List item</span>
+                <span class="second-action i-alarm"></span>
+            </li>
+            <li class="list-item ">
+                <img class="avatar" src="images/me.jpg">
+                <span class="label">List item</span>
+            </li>
+            <li class="list-item ">
+                <img class="avatar" src="images/me.jpg">
+                <span class="label">List item</span>
+            </li>
+        </ul>
+    </div>
+    <pre class="prettyprint linenums">
+        &lt;ul class="list"&gt;
+            &lt;li class="list-item with-second-label"&gt;
+                &lt;img class="avatar" src="images/me.jpg"&gt;
+                &lt;span class="label"&gt;List item&lt;/span&gt;
+                &lt;span class="second-label"&gt;second label&lt;/span&gt;
+                &lt;span class="second-action i-alarm fg-red"&gt;&lt;/span&gt;
+            &lt;/li&gt;
+            ...
+            &lt;li class="list-item "&gt;
+                &lt;img class="avatar" src="images/me.jpg"&gt;
+                &lt;span class="label"&gt;List item&lt;/span&gt;
+            &lt;/li&gt;
+        &lt;/ul&gt;
+    </pre>
+
+    <h3 class="heading">feed-items</h3>
+    <div class="emulator" style="height: 557px">
+        <ul class="list">
+            <li class="feed-item">
+                <img class="avatar place-right" src="http://lorempixel.com/96/72/">
+                <span class="label">There were some sings of a calm at noon</span>
+                <span class="additional">10 min</span>
+            </li>
+            <li class="feed-item">
+                <img class="avatar place-right" src="http://lorempixel.com/96/72/">
+                <span class="label">There were some sings of a calm at noon</span>
+                <span class="additional">10 min</span>
+            </li>
+            <li class="feed-item">
+                <img class="avatar place-right" src="http://lorempixel.com/96/72/">
+                <span class="label">There were some sings of a calm at noon</span>
+                <span class="additional">10 min</span>
+            </li>
+            <li class="align-center">...</li>
+            <li class="feed-item">
+                <img class="avatar" src="http://lorempixel.com/96/72/">
+                <span class="label">There were some sings of a calm at noon</span>
+                <span class="additional">10 min</span>
+            </li>
+            <li class="feed-item">
+                <img class="avatar" src="http://lorempixel.com/96/72/">
+                <span class="label">There were some sings of a calm at noon</span>
+                <span class="additional">10 min</span>
+            </li>
+        </ul>
+    </div>
+    <pre class="prettyprint linenums">
+        &lt;ul class="list"&gt;
+            &lt;li class="feed-item"&gt;
+                &lt;img class="avatar place-right" src="http://lorempixel.com/96/72/"&gt;
+                &lt;span class="label"&gt;There were some sings of a calm at noon&lt;/span&gt;
+                &lt;span class="additional"&gt;10 min&lt;/span&gt;
+            &lt;/li&gt;
+            ...
+            &lt;li class="feed-item"&gt;
+                &lt;img class="avatar" src="http://lorempixel.com/96/72/"&gt;
+                &lt;span class="label"&gt;There were some sings of a calm at noon&lt;/span&gt;
+                &lt;span class="additional"&gt;10 min&lt;/span&gt;
+            &lt;/li&gt;
+        &lt;/ul&gt;
+    </pre>
+</div>

@@ -99,6 +99,37 @@ var Utils = {
                 }
             }
         }
+    },
+
+    exec: function(f, args){
+        if (f != undefined) {
+            if (typeof f === 'function') {
+                return f(args);
+            } else {
+                if (typeof window[f] === 'function') {
+                    return window[f](args);
+                } else {
+                    var result = eval("(function(){"+f+"})");
+                    var _arguments = [];
+                    if (args instanceof Array) {
+                        _arguments = args;
+                    } else {
+                        _arguments.push(args);
+                    }
+                    return result.apply(null, _arguments);
+                }
+            }
+        }
+    },
+
+    isFunc: function(f){
+        if (f !== undefined) {
+            if (typeof f === 'function') {
+                return true;
+            } else return typeof window[f] === 'function';
+        } else {
+            return false;
+        }
     }
 
 };
