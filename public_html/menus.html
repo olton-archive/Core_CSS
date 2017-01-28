@@ -2,52 +2,147 @@
     <h1 class="display3">Menus</h1>
     <hr class="thin"/>
     <p>
-        Welcome
+        Menus display a list of choices on a transient sheet of material. Menus appear upon interaction with a button, action, or other control. They display a list of choices, with one choice per line.
+        <br />
+        <br />
+        Menu items may be disabled if not applicable to a certain context. Contextual menus dynamically change their available menu items based on the current state of the app.
+    </p>
+    <p>
+        Core_CSS provides simple ways to create any types of menus.
     </p>
     <pre class="prettyprint linenums">
-
+        &lt;ul class="menu"&gt;
+            ...
+        &lt;/ul&gt;
     </pre>
-    <div class="emulator">
-
+    <div class="emulator" style="height: 247px">
+        <ul class="menu static margin2">
+            <li><a href="#">Undo</a></li>
+            <li class="disabled"><a href="#">Redo</a></li>
+            <li class="divider"></li>
+            <li class="disabled"><a href="#">Cut</a></li>
+            <li class="disabled"><a href="#">Copy</a></li>
+            <li><a href="#">Paste</a></li>
+        </ul>
     </div>
+    <pre class="prettyprint linenums">
+        &lt;ul class="menu"&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Undo&lt;/a&gt;&lt;/li&gt;
+            &lt;li class="disabled"&gt;&lt;a href="#"&gt;Redo&lt;/a&gt;&lt;/li&gt;
+            &lt;li class="divider"&gt;&lt;/li&gt;
+            &lt;li class="disabled"&gt;&lt;a href="#"&gt;Cut&lt;/a&gt;&lt;/li&gt;
+            &lt;li class="disabled"&gt;&lt;a href="#"&gt;Copy&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Paste&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    </pre>
 
-    <h3 class="heading">Options</h3>
-    <table class="table border-all">
-        <thead class="bg-gray-100">
-        <tr>
-            <th>Option</th>
-            <th>Data-*</th>
-            <th>Default</th>
-            <th>Description</th>
-        </tr>
-        </thead>
+    <br />
+    <div class="emulator" style="height: 247px">
+        <ul class="menu static margin2">
+            <li data-hotkey-info="Ctrl+C"><a href="#">Item 1</a></li>
+            <li data-hotkey-info="Ctrl+A" class="disabled"><a href="#">Item 2</a></li>
+            <li class="divider"></li>
+            <li data-hotkey-info="Alt+C" class="checkable"><a href="#">Item 3</a></li>
+            <li data-hotkey-info="Ctrl+Shift+C" class="checkable checked"><a href="#">Item 4</a></li>
+            <li data-hotkey-info="Ctrl+Alt+K"><a href="#">Item 5</a></li>
+        </ul>
+    </div>
+    <pre class="prettyprint linenums">
+        &lt;ul class="menu"&gt;
+            &lt;li data-hotkey-info="Ctrl+C"&gt;&lt;a href="#"&gt;Item 1&lt;/a&gt;&lt;/li&gt;
+            &lt;li data-hotkey-info="Ctrl+A" class="disabled"&gt;&lt;a href="#"&gt;Item 2&lt;/a&gt;&lt;/li&gt;
+            &lt;li class="divider"&gt;&lt;/li&gt;
+            &lt;li data-hotkey-info="Alt+C" class="checkable"&gt;&lt;a href="#"&gt;Item 3&lt;/a&gt;&lt;/li&gt;
+            &lt;li data-hotkey-info="Ctrl+Shift+C" class="checkable checked"&gt;&lt;a href="#"&gt;Item 4&lt;/a&gt;&lt;/li&gt;
+            &lt;li data-hotkey-info="Ctrl+Alt+K"&gt;&lt;a href="#"&gt;Item 5&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    </pre>
 
-        <tbody>
-        <tr>
-            <td>mode</td>
-            <td>data-mode</td>
-            <td>default</td>
-            <td>Show datepicker in specific mode: default, multi</td>
-        </tr>
-        </tbody>
-    </table>
-
-    <h3 class="heading">Methods</h3>
-    <table class="table border-all">
-        <thead class="bg-gray-100">
-        <tr>
-            <th>Method</th>
-            <th>Params</th>
-            <th>Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <tr>
-            <td>size</td>
-            <td>data-size</td>
-            <td>100</td>
-        </tr>
-        </tbody>
-    </table>
+    <br/>
+    <div class="emulator" style="height: 460px">
+        <ul class="menu compact-dropdown place-left margin2" id="cascading-menu">
+            <li data-hotkey-info="Ctrl+B"><a href="#">Bold</a></li>
+            <li class="divider"></li>
+            <li class="dropdown"><a>Paragraph styles</a>
+                <ul class="menu">
+                    <li><a href="#">Single</a></li>
+                    <li><a href="#">1.15</a></li>
+                    <li class="checked dropdown"><a>Double</a>
+                        <ul class="menu">
+                            <li><a href="#">Single</a></li>
+                            <li class="dropdown"><a>1.15</a>
+                                <ul class="menu">
+                                    <li><a href="#">Single</a></li>
+                                    <li><a href="#">1.15</a></li>
+                                    <li class="checked"><a href="#">Double</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Add space before...</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Custom...</a></li>
+                                </ul>
+                            </li>
+                            <li class="checked"><a href="#">Double</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Add space before...</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Custom...</a></li>
+                        </ul>
+                    </li>
+                    <li class="divider"></li>
+                    <li><a href="#">Add space before...</a></li>
+                    <li><a href="#">Add space after...</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Custom...</a></li>
+                </ul>
+            </li>
+            <li class=""><a href="#">Align</a></li>
+            <li class=""><a href="#">Line spacing</a></li>
+            <li class=""><a href="#">Numbered list</a></li>
+            <li class=""><a href="#">List options</a></li>
+        </ul>
+    </div>
+    <pre class="prettyprint linenums">
+        &lt;ul class="menu compact-dropdown"&gt;
+            &lt;li data-hotkey-info="Ctrl+B"&gt;&lt;a href="#"&gt;Bold&lt;/a&gt;&lt;/li&gt;
+            &lt;li class="divider"&gt;&lt;/li&gt;
+            &lt;li class="dropdown"&gt;&lt;a href="#"&gt;Paragraph styles&lt;/a&gt;
+                &lt;ul class="menu"&gt;
+                    &lt;li&gt;&lt;a href="#"&gt;Single&lt;/a&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;a href="#"&gt;1.15&lt;/a&gt;&lt;/li&gt;
+                    &lt;li class="checked dropdown"&gt;&lt;a href="#"&gt;Double&lt;/a&gt;
+                        &lt;ul class="menu"&gt;
+                            &lt;li&gt;&lt;a href="#"&gt;Single&lt;/a&gt;&lt;/li&gt;
+                            &lt;li class="dropdown"&gt;&lt;a href="#"&gt;1.15&lt;/a&gt;
+                                &lt;ul class="menu"&gt;
+                                    &lt;li&gt;&lt;a href="#"&gt;Single&lt;/a&gt;&lt;/li&gt;
+                                    &lt;li&gt;&lt;a href="#"&gt;1.15&lt;/a&gt;&lt;/li&gt;
+                                    &lt;li class="checked"&gt;&lt;a href="#"&gt;Double&lt;/a&gt;&lt;/li&gt;
+                                    &lt;li class="divider"&gt;&lt;/li&gt;
+                                    &lt;li&gt;&lt;a href="#"&gt;Add space before...&lt;/a&gt;&lt;/li&gt;
+                                    &lt;li&gt;&lt;a href="#"&gt;Add space after...&lt;/a&gt;&lt;/li&gt;
+                                    &lt;li class="divider"&gt;&lt;/li&gt;
+                                    &lt;li&gt;&lt;a href="#"&gt;Custom...&lt;/a&gt;&lt;/li&gt;
+                                &lt;/ul&gt;
+                            &lt;/li&gt;
+                            &lt;li class="checked"&gt;&lt;a href="#"&gt;Double&lt;/a&gt;&lt;/li&gt;
+                            &lt;li class="divider"&gt;&lt;/li&gt;
+                            &lt;li&gt;&lt;a href="#"&gt;Add space before...&lt;/a&gt;&lt;/li&gt;
+                            &lt;li&gt;&lt;a href="#"&gt;Add space after...&lt;/a&gt;&lt;/li&gt;
+                            &lt;li class="divider"&gt;&lt;/li&gt;
+                            &lt;li&gt;&lt;a href="#"&gt;Custom...&lt;/a&gt;&lt;/li&gt;
+                        &lt;/ul&gt;
+                    &lt;/li&gt;
+                    &lt;li class="divider"&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;a href="#"&gt;Add space before...&lt;/a&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;a href="#"&gt;Add space after...&lt;/a&gt;&lt;/li&gt;
+                    &lt;li class="divider"&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;a href="#"&gt;Custom...&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/li&gt;
+            &lt;li class=""&gt;&lt;a href="#"&gt;Align&lt;/a&gt;&lt;/li&gt;
+            &lt;li class=""&gt;&lt;a href="#"&gt;Line spacing&lt;/a&gt;&lt;/li&gt;
+            &lt;li class=""&gt;&lt;a href="#"&gt;Numbered list&lt;/a&gt;&lt;/li&gt;
+            &lt;li class=""&gt;&lt;a href="#"&gt;List options&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    </pre>
 </div>
