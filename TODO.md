@@ -9,3 +9,4 @@
 - [ ] calendar range mode
 - [ ] datetime pickers width
 - [ ] fix donut animation
+- [ ] less size timepicker to 280px

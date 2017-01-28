@@ -1,0 +1,72 @@
+<div class="page">
+    <h1 class="display3">Floating action button</h1>
+    <hr class="thin"/>
+    <p>
+        Floating action buttons are used for a promoted action. They are distinguished by a circled icon floating above the UI and have motion behaviors that include morphing, launching, and a transferring anchor point.
+        <br />
+        <br />
+        Floating action buttons come in two sizes:
+    </p>
+    <ul>
+        <li>Default size: For most use cases</li>
+        <li>Mini size: Only used to create visual continuity with other screen elements</li>
+    </ul>
+
+    <pre class="prettyprint linenums">
+        &lt;button class="action-button floating-action-bottom"&gt;...&lt;/button&gt;
+        &lt;button class="action-button mini floating-action-top"&gt;...&lt;/button&gt;
+    </pre>
+
+    <div class="emulator short">
+        <div class="header pos-absolute">
+            <button class="nav-button"><span></span></button>
+            <span class="app-title">Core_CSS</span>
+        </div>
+        <button class="action-button bg-red fg-white floating-action-bottom pos-absolute"><span class="i-add i-2x"></span></button>
+    </div>
+    <br />
+    <div class="emulator short">
+        <div class="header more pos-absolute">
+            <button class="nav-button"><span></span></button>
+            <span class="app-title">Core_CSS</span>
+        </div>
+        <button class="action-button mini floating-action-top bg-red-A200 fg-white pos-absolute"><span class="i-add i-2x"></span></button>
+    </div>
+
+    <h3 class="heading">Multi actions</h3>
+    <p>
+        Core_CSS provides simple method for create <strong>multi action</strong> button.
+    </p>
+    <div class="emulator shorten">
+        <div class="header pos-absolute">
+            <button class="nav-button"><span></span></button>
+            <span class="app-title">Core_CSS</span>
+        </div>
+        <div class="multi-action floating-action-bottom pos-absolute">
+            <button class="action-button bg-red fg-white"
+                    onclick="$(this).toggleClass('active')">
+                <span class="i-add icon"></span>
+            </button>
+            <ul class="actions">
+                <li class="bg-blue"><a href="#"><span class="i-user_add"></span></a></li>
+                <li class="bg-teal"><a href="#"><span class="i-library"></span></a></li>
+                <li class="bg-pink"><a href="#"><span class="i-alarm"></span></a></li>
+                <li class="bg-orange"><a href="#"><span class="i-lock"></span></a></li>
+            </ul>
+        </div>
+    </div>
+    <pre class="prettyprint linenums">
+        &lt;div class="multi-action floating-action-bottom"&gt;
+            &lt;button class="action-button bg-red fg-white"
+                    onclick="$(this).toggleClass('active')"&gt;
+                &lt;span class="i-add icon"&gt;&lt;/span&gt;
+            &lt;/button&gt;
+            &lt;ul class="actions"&gt;
+                &lt;li class="bg-blue"&gt;&lt;a href="#"&gt;&lt;span class="i-user_add"&gt;&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                &lt;li class="bg-teal"&gt;&lt;a href="#"&gt;&lt;span class="i-library"&gt;&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                &lt;li class="bg-pink"&gt;&lt;a href="#"&gt;&lt;span class="i-alarm"&gt;&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                &lt;li class="bg-orange"&gt;&lt;a href="#"&gt;&lt;span class="i-lock"&gt;&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    </pre>
+</div>

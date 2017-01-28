@@ -26,6 +26,7 @@ header, .header {
         line-height: 48px;
         color: inherit;
         font-size: 20px;
+        font-weight: 100;
     }
     .app-title:nth-child(1) {
         padding-left: 10px;
@@ -47,6 +48,14 @@ header, .header {
 header, .header {
     &.more {
         height: @headerSize * 2;
+
+        & .app-title {
+            position: absolute;
+            bottom: 22px;
+            left: 74px;
+            height: 28px;
+            font-size: 24px;
+        }
     }
 }
 

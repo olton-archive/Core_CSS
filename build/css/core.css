@@ -1006,6 +1006,7 @@ header .app-title,
   line-height: 48px;
   color: inherit;
   font-size: 20px;
+  font-weight: 100;
 }
 header .app-title:nth-child(1),
 .header .app-title:nth-child(1) {
@@ -1022,6 +1023,14 @@ header .tool-button,
 header.more,
 .header.more {
   height: 112px;
+}
+header.more .app-title,
+.header.more .app-title {
+  position: absolute;
+  bottom: 22px;
+  left: 74px;
+  height: 28px;
+  font-size: 24px;
 }
 header .header-container .input-control,
 .header .header-container .input-control {
@@ -1453,6 +1462,19 @@ a.flat-button,
 a.action-button {
   line-height: 36px !important;
   cursor: pointer;
+}
+.action-button.floating-action-top,
+.multi-action.floating-action-top {
+  z-index: 5000;
+  top: 90px;
+  left: 16px;
+  position: fixed;
+}
+.action-button.floating-action-bottom,
+.multi-action.floating-action-bottom {
+  bottom: 20px;
+  right: 20px;
+  position: fixed;
 }
 .checkbox,
 .radio,
@@ -5707,28 +5729,28 @@ header.more ~ .fixed-tabs,
   position: fixed;
 }
 .pos-static {
-  position: static;
+  position: static !important;
 }
 .pos-relative {
-  position: relative;
+  position: relative !important;
 }
 .pos-absolute {
-  position: absolute;
+  position: absolute !important;
 }
 .pos-fixed {
-  position: fixed;
+  position: fixed !important;
 }
 .block {
-  display: block;
+  display: block !important;
 }
 .inline-block {
-  display: inline-block;
+  display: inline-block !important;
 }
 .place-right {
-  float: right;
+  float: right !important;
 }
 .place-left {
-  float: left;
+  float: left !important;
 }
 .no-display {
   display: none !important;
