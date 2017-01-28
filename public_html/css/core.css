@@ -1713,6 +1713,7 @@ a.action-button {
   width: 24px;
   height: 24px;
   font-size: 24px;
+  line-height: 24px;
   top: 50%;
   margin-top: -12px;
 }
