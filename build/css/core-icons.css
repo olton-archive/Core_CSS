@@ -103,6 +103,15 @@
 .i-contact_phone:before {
   content: "\e0cf";
 }
+.i-content_copy:before {
+  content: "\e14d";
+}
+.i-content_cut:before {
+  content: "\e14e";
+}
+.i-content_paste:before {
+  content: "\e14f";
+}
 .i-dialpad:before {
   content: "\e0bc";
 }
@@ -124,11 +133,17 @@
 .i-error:before {
   content: "\e000";
 }
+.i-insert_invitation:before {
+  content: "\e24f";
+}
 .i-event_available:before {
   content: "\e614";
 }
 .i-event_busy:before {
   content: "\e615";
+}
+.i-event_note:before {
+  content: "\e616";
 }
 .i-favorite:before {
   content: "\e87d";
@@ -151,6 +166,12 @@
 .i-file_upload:before {
   content: "\e2c6";
 }
+.i-running_tasks:before {
+  content: "\e3e0";
+}
+.i-fingerprint:before {
+  content: "\e90d";
+}
 .i-flight_in:before {
   content: "\e904";
 }
@@ -168,6 +189,12 @@
 }
 .i-group_add:before {
   content: "\e7f0";
+}
+.i-headset:before {
+  content: "\e310";
+}
+.i-highlight:before {
+  content: "\e25f";
 }
 .i-restore:before {
   content: "\e8b3";
@@ -292,8 +319,20 @@
 .i-record_voice_over:before {
   content: "\e91f";
 }
+.i-redo:before {
+  content: "\e15a";
+}
 .i-visibility:before {
   content: "\e8f4";
+}
+.i-replay:before {
+  content: "\e042";
+}
+.i-reply:before {
+  content: "\e15e";
+}
+.i-reply_all:before {
+  content: "\e15f";
 }
 .i-report:before {
   content: "\e160";
@@ -306,6 +345,9 @@
 }
 .i-school:before {
   content: "\e80c";
+}
+.i-sd_storage:before {
+  content: "\e1c2";
 }
 .i-search:before {
   content: "\e8b6";
@@ -346,6 +388,9 @@
 .i-stop:before {
   content: "\e047";
 }
+.i-store:before {
+  content: "\e563";
+}
 .i-thumb_down:before {
   content: "\e8db";
 }
@@ -354,6 +399,12 @@
 }
 .i-thumbs:before {
   content: "\e8dd";
+}
+.i-timeline:before {
+  content: "\e922";
+}
+.i-timer2:before {
+  content: "\e425";
 }
 .i-today:before {
   content: "\e8df";
@@ -367,14 +418,23 @@
 .i-tune:before {
   content: "\e429";
 }
+.i-undo:before {
+  content: "\e166";
+}
 .i-unfold:before {
   content: "\e5d7";
 }
 .i-update:before {
   content: "\e923";
 }
+.i-usb:before {
+  content: "\e1e0";
+}
 .i-verified:before {
   content: "\e8e8";
+}
+.i-voicemail:before {
+  content: "\e0d9";
 }
 .i-volume_off:before {
   content: "\e04f";

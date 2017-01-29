@@ -12,6 +12,10 @@ $.widget("corecss.sidebar", {
     _create: function () {
         var that = this, element = this.element, o = this.options;
 
+        if (!element.hasClass('sidebar')) {
+            element.addClass('sidebar');
+        }
+
         this._setOptionsFromDOM();
         this._setToggle();
 
@@ -93,7 +97,7 @@ $.widget("corecss.sidebar", {
         element.removeClass('active');
     },
 
-    toggleState: function(){
+    toggle: function(){
         var element = this.element;
 
         if (element.data('opened') === true) {
@@ -129,3 +133,44 @@ $.widget("corecss.sidebar", {
     }
 });
 
+var sidebar = {
+    isSidebar: function(el){
+        return Utils.isCoreObject(el, 'sidebar');
+    },
+
+    open: function(el){
+        if (!this.isSidebar(el)) {
+            return false;
+        }
+
+        var sb = $(el).data('sidebar');
+
+        if (!sb.isOpened()) {
+            sb.open();
+        }
+    },
+
+    close: function(el){
+        if (!this.isSidebar(el)) {
+            return false;
+        }
+
+        var sb = $(el).data('sidebar');
+
+        if (sb.isOpened()) {
+            sb.close();
+        }
+    },
+
+    toggle: function(el){
+        if (!this.isSidebar(el)) {
+            return false;
+        }
+
+        var sb = $(el).data('sidebar');
+
+        sb.toggle();
+    }
+};
+
+$.Sidebar = window.coreSidebar = sidebar;

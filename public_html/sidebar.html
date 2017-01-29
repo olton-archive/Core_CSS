@@ -1,0 +1,126 @@
+<div class="page">
+    <h1 class="display1">Sidebar</h1>
+    <hr class="thin"/>
+    <p>
+        Core_CSS provides classes, widget and object to create and manipulate sidebar.
+    </p>
+    <div class="emulator long" id="em-sidebar-1">
+        <div class="header pos-absolute">
+            <button class="nav-button" id="sbt1"><span></span></button>
+            <span class="app-title">Core_CSS</span>
+        </div>
+
+        <div class="pos-absolute sidebar-demo right-shadow" data-role="sidebar" data-toggle="#sbt1" id="sidebar-demo-1">
+            <div class="sidebar-header">
+                <a href="/" class="fg-white" style="position: absolute; top: 10px; right: 10px;"><span class="i-home i-2x"></span></a>
+                <div class="avatar">
+                    <img src="images/Core_logo3.svg" class="ani-logo">
+                </div>
+                <span class="title fg-white" style="font-size: 18px; font-weight: 100">Core_CSS Documentation</span>
+                <span class="subtitle fg-white"> 2017 &copy; Sergey Pimenov</span>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a>Requirements</a></li>
+                <li><a>Quick start</a></li>
+                <li><a>Typography</a></li>
+                <li><a>Colors</a></li>
+                <li><a>Icons</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="emulator bg-black" style="height: 54px; display: flex; align-items: center; justify-content: space-around">
+        <button class="flat-button" onclick="coreSidebar.close('#sidebar-demo-1');"><span class="i-undo fg-white i-2x" ></span></button>
+        <button class="flat-button"><span class="i-home fg-white i-2x" ></span></button>
+        <button class="flat-button"><span class="i-running_tasks fg-white i-2x" ></span></button>
+    </div>
+
+    <pre class="prettyprint linenums">
+        &lt;div data-role="sidebar"&gt;
+            ...
+        &lt;/div&gt;
+    </pre>
+
+    <h3 class="heading">Options</h3>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Option</th>
+            <th>Data-*</th>
+            <th>Default</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>toggle</td>
+            <td>data-toggle</td>
+            <td>null</td>
+            <td>Element to toggle sidebar state</td>
+        </tr>
+        <tr>
+            <td>shift</td>
+            <td>data-shift</td>
+            <td>null</td>
+            <td>Elements with comma separated hwo can be shifted when sidebar is open</td>
+        </tr>
+        <tr>
+            <td>overlay</td>
+            <td>data-overlay</td>
+            <td>false</td>
+            <td>Show or not overlay</td>
+        </tr>
+        <tr>
+            <td>duration</td>
+            <td>data-duration</td>
+            <td>300</td>
+            <td>Speed to shifting elements</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3 class="heading">Methods</h3>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Method</th>
+            <th>Params</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>open</td>
+            <td></td>
+            <td>Open sidebar</td>
+        </tr>
+        <tr>
+            <td>close</td>
+            <td></td>
+            <td>Close sidebar</td>
+        </tr>
+        <tr>
+            <td>toggle</td>
+            <td></td>
+            <td>Toggle state of sidebar</td>
+        </tr>
+        <tr>
+            <td>isOpened</td>
+            <td></td>
+            <td>Check if sidebar is opened</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3 class="heading">Object</h3>
+    <p>
+        Core_CSS provides <strong>coreSidebar</strong> object to sidebar manipulate. <strong>coreSidebar</strong> contains next methods:
+    </p>
+    <ul>
+        <li><strong>coreSidebar.isSidebar(el)</strong></li>
+        <li><strong>coreSidebar.open(el)</strong></li>
+        <li><strong>coreSidebar.close(el)</strong></li>
+        <li><strong>coreSidebar.toggle(el)</strong></li>
+    </ul>
+</div>
