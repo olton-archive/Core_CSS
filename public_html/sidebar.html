@@ -4,6 +4,11 @@
     <p>
         Core_CSS provides classes, widget and object to create and manipulate sidebar.
     </p>
+    <pre class="prettyprint linenums">
+        &lt;div data-role="sidebar"&gt;
+            ...
+        &lt;/div&gt;
+    </pre>
     <div class="emulator long" id="em-sidebar-1">
         <div class="header pos-absolute">
             <button class="nav-button" id="sbt1"><span></span></button>
@@ -33,10 +38,41 @@
         <button class="flat-button"><span class="i-home fg-white i-2x" ></span></button>
         <button class="flat-button"><span class="i-running_tasks fg-white i-2x" ></span></button>
     </div>
+    <pre class="prettyprint linenums">
+        &lt;div class="right-shadow" data-role="sidebar" data-toggle="#sbt1"&gt;
+            &lt;div class="sidebar-header"&gt;
+                &lt;div class="avatar"&gt;
+                    &lt;img src="images/Core_logo3.svg" class="ani-logo"&gt;
+                &lt;/div&gt;
+                &lt;span class="title fg-white"&gt;Core_CSS Documentation&lt;/span&gt;
+                &lt;span class="subtitle fg-white"&gt; 2017 &copy; Sergey Pimenov&lt;/span&gt;
+            &lt;/div&gt;
+            &lt;ul class="sidebar-menu"&gt;
+                &lt;li&gt;&lt;a&gt;Requirements&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a&gt;Quick start&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a&gt;Typography&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a&gt;Colors&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a&gt;Icons&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    </pre>
+
+
+    <h3 class="heading">Elements</h3>
+    <p>
+        Sidebar can contains two core elements: <strong>sidebar-header</strong> and <strong>sidebar-menu</strong>
+    </p>
 
     <pre class="prettyprint linenums">
         &lt;div data-role="sidebar"&gt;
-            ...
+            &lt;div class="sidebar-header"&gt;
+                ...
+            &lt;/div&gt;
+            &lt;ul class="sidebar-menu"&gt;
+                &lt;li&gt;&lt;a href="#"&gt;Menu Item&lt;/a&gt;&lt;/li&gt;
+                ...
+                &lt;li&gt;&lt;a href="#"&gt;Menu Item&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
         &lt;/div&gt;
     </pre>
 
