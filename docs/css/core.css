@@ -4609,7 +4609,7 @@ header.more ~ .fixed-tabs,
   bottom: 0;
   overflow-y: auto;
   overflow-x: hidden;
-  width: 320px;
+  width: 280px;
   background-color: #ffffff;
   padding: 0;
   z-index: 6000;
@@ -4674,6 +4674,7 @@ header.more ~ .fixed-tabs,
   display: block;
   height: 48px;
   position: relative;
+  cursor: pointer;
 }
 .sidebar-menu li a {
   position: relative;

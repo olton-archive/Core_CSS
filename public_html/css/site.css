@@ -278,6 +278,10 @@ body {
     height: 400px;
 }
 
+.emulator.long {
+    height: 500px;
+}
+
 .emulator.full {
     height: auto;
     width: 100%;
@@ -308,6 +312,10 @@ hr {
     margin-top: 0;
 }
 
+#sidebar-demo-1 {
+    width: 240px;
+}
+
 @media screen and (min-width: 1200px) {
     #icons-list li {
         width: 25%;
@@ -321,7 +329,7 @@ hr {
 }
 
 @media screen and (min-width: 801px) {
-    .sidebar {
+    .sidebar:not(.sidebar-demo) {
         transform: translate3d(0,0,0);
         border-right: 1px #eee solid;
     }
