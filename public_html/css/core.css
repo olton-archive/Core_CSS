@@ -4746,11 +4746,6 @@ header.more ~ .fixed-tabs,
           justify-content: space-between;
   counter-reset: stepper-counter;
   position: relative;
-  border: 1px #eeeeee solid;
-  border: 2px solid #eeeeee;
-}
-.stepper.thin-border {
-  border-width: 1px;
 }
 .stepper:before {
   position: absolute;

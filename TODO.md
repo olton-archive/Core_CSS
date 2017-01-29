@@ -7,6 +7,6 @@
 - [ ] calendar format outputs
 - [ ] calendar week start sunday
 - [ ] calendar range mode
-- [ ] datetime pickers width
-- [ ] fix donut animation
+- [ ] time picker width
 - [ ] less size timepicker to 280px
+- [ ] add stepper widget
