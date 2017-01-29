@@ -1,0 +1,190 @@
+<div class="page">
+    <h1 class="display1">Range</h1>
+    <hr class="thin"/>
+    <p>
+        Range let users select values by moving the slider thumb. Core_CSS provides simple method to create <strong>range</strong> element.
+    </p>
+    <h3 class="heading">Horizontal</h3>
+    <div class="emulator" style="height: 300px">
+        <br/>
+        <div class="margin2" data-role="range" data-position="35"></div>
+        <br/>
+        <div class="margin2" data-role="range" data-position="35" data-buffer="60"></div>
+        <br/>
+        <div class="margin2" data-role="range" data-position="35" data-buffer="60" data-show-hint="true" data-permanent-hint="true"></div>
+    </div>
+    <pre class="prettyprint linenums">
+        &lt;div data-role="range" data-position="35"&gt;&lt;/div&gt;
+    </pre>
+
+    <br />
+    <h3 class="heading">Vertical</h3>
+    <div class="emulator short">
+        <br />
+        <div class="margin2" data-role="range" data-vertical="true" data-position="35"></div>
+        <div class="margin2" data-role="range" data-vertical="true" data-position="35" data-buffer="60"></div>
+        <div class="margin2" data-role="range" data-vertical="true" data-position="35" data-buffer="60" data-show-hint="true" data-permanent-hint="true"></div>
+    </div>
+    <pre class="prettyprint linenums">
+        &lt;div data-role="range" data-vertical="true" data-position="35"&gt;&lt;/div&gt;
+    </pre>
+
+    <h3 class="heading">Options</h3>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Option</th>
+            <th>Data-*</th>
+            <th>Default</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>vertical</td>
+            <td>data-vertical</td>
+            <td>false</td>
+            <td>Show range in vertical orientation</td>
+        </tr>
+        <tr>
+            <td>position</td>
+            <td>data-position</td>
+            <td>0</td>
+            <td>Init range position</td>
+        </tr>
+        <tr>
+            <td>buffer</td>
+            <td>data-buffer</td>
+            <td>0</td>
+            <td>Buffer size (0-100) in percent for slider (great for players)</td>
+        </tr>
+        <tr>
+            <td>accuracy</td>
+            <td>data-accuracy</td>
+            <td>0</td>
+            <td>Range accuracy</td>
+        </tr>
+        <tr>
+            <td>showHint</td>
+            <td>data-show-hint</td>
+            <td>false</td>
+            <td>Show or hide hint for value</td>
+        </tr>
+        <tr>
+            <td>permanentHint</td>
+            <td>data-permanent-hint</td>
+            <td>false</td>
+            <td>Show hint for value in permanent mode</td>
+        </tr>
+        <tr class="no-display">
+            <td>hintPosition</td>
+            <td>data-hint-position</td>
+            <td>top | right</td>
+            <td>Hint position: top, bottom or left, right</td>
+        </tr>
+        <tr>
+            <td>color</td>
+            <td>data-color</td>
+            <td>default</td>
+            <td>Range back color</td>
+        </tr>
+        <tr>
+            <td>completeColor</td>
+            <td>data-complete-color</td>
+            <td>default</td>
+            <td>Range complete color</td>
+        </tr>
+        <tr>
+            <td>bufferColor</td>
+            <td>data-buffer-color</td>
+            <td>default</td>
+            <td>Range buffer color</td>
+        </tr>
+        <tr>
+            <td>markerColor</td>
+            <td>data-marker-color</td>
+            <td>default</td>
+            <td>Range marker color</td>
+        </tr>
+        <tr>
+            <td>colors</td>
+            <td>data-colors</td>
+            <td>false</td>
+            <td>Defines a set of colors that will be applied uniformly to complete color when marker is moving. String with comma delimiter.</td>
+        </tr>
+        <tr>
+            <td>minValue</td>
+            <td>data-min-value</td>
+            <td>0</td>
+            <td>Range min value</td>
+        </tr>
+        <tr>
+            <td>maxValue</td>
+            <td>data-max-value</td>
+            <td>100</td>
+            <td>Range max value</td>
+        </tr>
+        <tr>
+            <td>returnType</td>
+            <td>data-return-type</td>
+            <td>value</td>
+            <td>Return value as value or percents</td>
+        </tr>
+        <tr>
+            <td>target</td>
+            <td>data-target</td>
+            <td>false</td>
+            <td>Bound element</td>
+        </tr>
+        <tr>
+            <td>onStartChange</td>
+            <td>data-on-start-change</td>
+            <td>$.noop</td>
+            <td>Callback</td>
+        </tr>
+        <tr>
+            <td>onChange</td>
+            <td>data-on-change</td>
+            <td>$.noop(val)</td>
+            <td>Callback</td>
+        </tr>
+        <tr>
+            <td>onChanged</td>
+            <td>data-on-changed</td>
+            <td>$.noop(val)</td>
+            <td>Callback</td>
+        </tr>
+        <tr>
+            <td>onBufferChange</td>
+            <td>data-on-buffer-change</td>
+            <td>$.noop(val)</td>
+            <td>Callback</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3 class="heading">Methods</h3>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Method</th>
+            <th>Params</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>value</td>
+            <td>val or nothing</td>
+            <td>Set or get range value</td>
+        </tr>
+        <tr>
+            <td>buffer</td>
+            <td>val or nothing</td>
+            <td>Set or get range buffer value</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

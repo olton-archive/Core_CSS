@@ -47,7 +47,7 @@
         width: 100%;
         line-height: @rangeHeight;
         top: 50%;
-        margin-top: -.25rem;
+        margin-top: -4px;
         position: absolute;
     }
 
@@ -60,28 +60,27 @@
     }
 
     .buffer {
-        height: 4px;
+        height: 3px;
         width: auto;
-        background-color: @white;
+        background-color: @lightBlue100;
         z-index: 1;
         transition: background .3s ease;
         position: absolute;
         top: 50%;
-        margin-top: -2px;
+        margin-top: -4px;
         left: 0;
     }
 
     .range-hint {
-        min-width: 1.8rem;
         width: auto;
         height: auto;
         position: absolute;
         z-index: 3;
         border: 1px #ccc solid;
-        padding: .25rem;
-        top: -1.2rem;
+        padding: 4px;
+        top: -19px;
         text-align: center;
-        font-size: .625rem;
+        font-size: 10px;
         display: none;
         background: @amber100;
 
@@ -90,13 +89,13 @@
             border-left: 0;
             border-top: 0;
             content: "";
-            width: .25rem;
-            height: .25rem;
+            width: 4px;
+            height: 4px;
             display: block;
             position: absolute;
             background-color: inherit;
-            margin-top: -0.125rem;
-            margin-left: -0.15625rem;
+            margin-top: -2px;
+            margin-left: -2.5px;
             top: 100%;
             left: 50%;
             .rotate(45deg);
@@ -106,7 +105,7 @@
     &.hint-bottom {
         .range-hint {
             top: 100%;
-            margin-top: -.125rem;
+            margin-top: -2px;
             &:before {
                 top: -.0625rem;
                 .rotate(-135deg);
@@ -148,24 +147,24 @@
 
 .range {
     &.vertical {
-        min-height: 100px;
-        width: 2.125rem;
+        height: 200px;
+        width: @rangeHeight;
         display: inline-block;
 
         .range-backside, .complete {
             position: absolute;
             height: 100%;
-            width: .5rem;
+            width: 3px;
             bottom: 0;
             left: 50%;
-            margin-left: -.25rem;
+            margin-left: -4px;
             top: auto;
         }
 
         .marker {
             left: 50%;
             top: auto;
-            margin-left: -.5rem;
+            margin-left: -9px;
         }
 
         .complete {
@@ -174,24 +173,25 @@
         .buffer {
             position: absolute;
             height: auto;
-            width: 6px ;
+            width: 3px ;
             bottom: 0;
             left: 50%;
-            margin-left: -3px;
+            margin-left: -4px;
             top: auto;
         }
 
         .range-hint {
             left: 100%;
             margin-top: 0;
+            margin-left: -5px;
 
             &:before {
-                height: .25rem;
-                width: .25rem;
+                height: 4px;
+                width: 4px;
                 .rotate(135deg);
                 left: -1px;
                 top: 50%;
-                margin-top: -.125rem;
+                margin-top: -2px;
                 margin-left: -.135rem;
             }
         }
@@ -199,7 +199,7 @@
         &.hint-left {
             .range-hint {
                 left: -100%;
-                margin-left: .25rem;
+                margin-left: 4px;
 
                 &:before {
                     left: 100%;
