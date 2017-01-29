@@ -42,14 +42,15 @@
 .progress-line,
 .progress-line:before {
     height: 3px;
-    width: 100%;
     margin: 0;
 }
 .progress-line {
     background-color: #b3d4fc;
     display: flex;
+    overflow: hidden;
 }
 .progress-line:before {
+    width: 100%;
     background-color: #3f51b5;
     content: '';
     animation: running-progress 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;

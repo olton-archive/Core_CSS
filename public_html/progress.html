@@ -1,0 +1,196 @@
+<div class="page">
+    <h1 class="display3">Progress &amp; Activity</h1>
+    <hr class="thin"/>
+    <p>
+        Progress and activity indicators are visual indications of an app loading content.
+    </p>
+    <p>
+        Core_CSS provides any types of progress such as linear and circular.
+    </p>
+
+    <h3 class="heading">Linear</h3>
+    <div class="emulator" style="height: 110px">
+        <br/>
+        <div data-role="progress" data-value="35" class="margin2"></div>
+        <div data-role="progress" data-type="line" class="margin2"></div>
+        <div data-role="progress" data-type="buffered" data-bar-color="bg-cyan" data-buffer-color="bg-red" data-value="35" data-buffer="55" class="margin2"></div>
+    </div>
+    <pre class="prettyprint linenums">
+        &lt;div data-role="progress" data-value="35"&gt;&lt;/div&gt;
+
+        &lt;div data-role="progress" data-type="line"&gt;&lt;/div&gt;
+
+        &lt;div data-role="progress"
+                data-type="buffered"
+                data-bar-color="bg-cyan"
+                data-buffer-color="bg-red"
+                data-value="35"
+                data-buffer="55"&gt;&lt;/div&gt;
+    </pre>
+
+    <h3 class="heading">Circular</h3>
+    <div class="emulator" style="height: 120px;">
+        <br />
+        <div class="place-left margin2" data-role="progress" data-type="circle"></div>
+        <div class="place-left margin2" data-role="progress" data-type="circle" data-bar-color="st-yellow"></div>
+        <div class="place-left margin2" data-role="progress" data-type="circle" data-size="32" data-radius="10" data-bar-color="st-red"></div>
+    </div>
+    <pre class="prettyprint linenums">
+        &lt;div data-role="progress"
+                data-type="circle"&gt;&lt;/div&gt;
+
+        &lt;div data-role="progress"
+                data-type="circle"
+                data-bar-color="st-yellow"&gt;&lt;/div&gt;
+
+        &lt;div data-role="progress"
+                data-type="circle"
+                data-size="32"
+                data-radius="10"
+                data-bar-color="st-red"&gt;&lt;/div&gt;
+    </pre>
+
+
+    <h3 class="heading">Options</h3>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Option</th>
+            <th>Data-*</th>
+            <th>Default</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>value</td>
+            <td>data-value</td>
+            <td>0</td>
+            <td>Progress value</td>
+        </tr>
+        <tr>
+            <td>buffer</td>
+            <td>data-buffer</td>
+            <td>0</td>
+            <td>Progress buffer value</td>
+        </tr>
+        <tr>
+            <td>type</td>
+            <td>data-type</td>
+            <td>default</td>
+            <td>Progress type: default, line, circle, buffered</td>
+        </tr>
+        <tr>
+            <td>barColor</td>
+            <td>data-bar-color</td>
+            <td>class bg-green</td>
+            <td>Progress bar color - hex value or class name</td>
+        </tr>
+        <tr>
+            <td>bufferColor</td>
+            <td>data-buffer-color</td>
+            <td>class bg-yellow</td>
+            <td>Progress buffer color - hex value or class name</td>
+        </tr>
+        <tr>
+            <td>color</td>
+            <td>data-color</td>
+            <td>class bg-gray-600</td>
+            <td>Progress back color - hex value or class name</td>
+        </tr>
+        <tr>
+            <td>size</td>
+            <td>data-size</td>
+            <td>64</td>
+            <td>Progress size for circle</td>
+        </tr>
+        <tr>
+            <td>radius</td>
+            <td>data-radius</td>
+            <td>32</td>
+            <td>Progress bar size for circle</td>
+        </tr>
+        <tr>
+            <td>onChange</td>
+            <td>data-on-change</td>
+            <td>$.noop</td>
+            <td>Callback for value change event</td>
+        </tr>
+        <tr>
+            <td>onEnd</td>
+            <td>data-on-end</td>
+            <td>$.noop</td>
+            <td>Callback for value end</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3 class="heading">Methods</h3>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Method</th>
+            <th>Params</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>val</td>
+            <td>value</td>
+            <td>New value for progress bar</td>
+        </tr>
+        <tr>
+            <td>buffer</td>
+            <td>value</td>
+            <td>New value for progress buffer</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3 class="heading">Dialog mode</h3>
+    <p>
+        Core_CSS provides method to create progress as dialog. To create progress as dialog you must use <strong>coreProgress</strong> or <strong>$.Progress</strong> object and call <strong>showPreloader</strong> method.
+    </p>
+    <div class="padding2 bg-gray-100">
+        <button class="raised-button bg-red fg-white" onclick="coreProgress.showPreloader(undefined, 3000);">Preloader</button>
+        <button class="raised-button bg-red fg-white" onclick="coreProgress.showPreloader(32, 3000);">Small size</button>
+    </div>
+
+    <h3 class="heading">coreProgress</h3>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Method</th>
+            <th>Params</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>isProgress</td>
+            <td>element</td>
+            <td>Check if element is progress</td>
+        </tr>
+        <tr>
+            <td>value</td>
+            <td>el, value</td>
+            <td>New value for progress bar</td>
+        </tr>
+        <tr>
+            <td>buffer</td>
+            <td>el, value</td>
+            <td>New value for progress buffer</td>
+        </tr>
+        <tr>
+            <td>showPreloader</td>
+            <td>size, timeout</td>
+            <td>Show circle preloader as dialog</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
