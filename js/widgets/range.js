@@ -20,14 +20,13 @@ $.widget("corecss.range", {
         animate: false,
         minValue: 0,
         maxValue: 100,
-        currValue: 0,
         returnType: 'value',
         target: false,
 
         onStartChange: function(){},
-        onChange: function(value, range){},
-        onChanged: function(value, range){},
-        onBufferChange: function(value, range){},
+        onChange: function(value){},
+        onChanged: function(value){},
+        onBufferChange: function(value){},
 
         _range : {
             vertical: false,
@@ -39,6 +38,8 @@ $.widget("corecss.range", {
             stop: 0
         }
     },
+
+    currValue: 0,
 
     _create: function(){
         var that = this,
@@ -57,6 +58,10 @@ $.widget("corecss.range", {
                 }
             }
         });
+
+        if (!element.hasClass('range')) {
+            element.addClass('range');
+        }
 
         o.accuracy = o.accuracy < 0 ? 0 : o.accuracy;
         o.min = o.min < 0 ? 0 : o.min;
@@ -102,16 +107,9 @@ $.widget("corecss.range", {
         element.children('.marker').on(event_down, function (e) {
             $(this).addClass("focus");
             that._startMoveMarker(e);
-            if (typeof o.onStartChange === 'function') {
-                o.onStartChange();
-            } else {
-                if (typeof window[o.onStartChange] === 'function') {
-                    window[o.onStartChange]();
-                } else {
-                    var result = eval("(function(){"+o.onStartChange+"})");
-                    result.call();
-                }
-            }
+
+            Utils.callback(o.onStartChange);
+
             e.preventDefault();
             e.stopPropagation();
         });
@@ -151,17 +149,7 @@ $.widget("corecss.range", {
                 hint.css('display', 'none');
             }
 
-            if (typeof o.onChanged === 'function') {
-                o.onChanged(returnedValue, element);
-            } else {
-                if (typeof window[o.onChanged] === 'function') {
-                    window[o.onChanged](returnedValue, element);
-                } else {
-                    var result = eval("(function(){"+o.onChanged+"})");
-                    result.call(returnedValue, element);
-                }
-            }
-
+            Utils.callback(o.onChanged, returnedValue);
         });
 
         this._initPoints();
@@ -208,7 +196,7 @@ $.widget("corecss.range", {
 
         this._placeMarker(percents);
 
-        o.currValue = this._valueToRealValue(percents);
+        this.currValue = this._valueToRealValue(percents);
         o.position = percents;
 
         var returnedValue = o.returnType === 'value' ? this._valueToRealValue(o.position) : o.position;
@@ -222,16 +210,7 @@ $.widget("corecss.range", {
             $(o.target).trigger('change', returnedValue);
         }
 
-        if (typeof o.onChange === 'function') {
-            o.onChange(returnedValue, element);
-        } else {
-            if (typeof window[o.onChange] === 'function') {
-                window[o.onChange](returnedValue, element);
-            } else {
-                var result = eval("(function(){"+o.onChange+"})");
-                result.call(returnedValue, element);
-            }
-        }
+        Utils.callback(o.onChange, returnedValue);
     },
 
     _placeMarker: function (value) {
@@ -258,7 +237,8 @@ $.widget("corecss.range", {
             }
             if (o.showHint) {
                 hintValue = this._valueToRealValue(value);
-                hint.html(hintValue).css('top', size2 - marker.height()/2 - hint.height()/4);
+                hint.html(hintValue).css('top', size2 - marker.height()/2 - hint.height()/4 - 4);
+
             }
         } else {
             size = this._percToPix(value);
@@ -270,7 +250,7 @@ $.widget("corecss.range", {
             }
             if (o.showHint) {
                 hintValue = this._valueToRealValue(value);
-                hint.html(hintValue).css('left', size - marker.width()/2);
+                hint.html(hintValue).css('left', size - marker.width()/2 + 2);
             }
         }
     },
@@ -427,16 +407,8 @@ $.widget("corecss.range", {
                 $(o.target).trigger('change', returnedValue);
             }
 
-            if (typeof o.onChange === 'function') {
-                o.onChange(returnedValue, element);
-            } else {
-                if (typeof window[o.onChange] === 'function') {
-                    window[o.onChange](returnedValue, element);
-                } else {
-                    var result = eval("(function(){"+o.onChange+"})");
-                    result.call(returnedValue, element);
-                }
-            }
+            Utils.callback(o.onChange, returnedValue);
+
 
             return this;
         } else {
@@ -473,16 +445,7 @@ $.widget("corecss.range", {
 
             returnedValue = o.buffer;
 
-            if (typeof o.onBufferChange === 'function') {
-                o.onBufferChange(returnedValue, element);
-            } else {
-                if (typeof window[o.onBufferChange] === 'function') {
-                    window[o.onBufferChange](returnedValue, element);
-                } else {
-                    var result = eval("(function(){"+o.onBufferChange+"})");
-                    result.call(returnedValue, element);
-                }
-            }
+            Utils.callback(o.onBufferChange, returnedValue);
 
             return this;
         } else {
