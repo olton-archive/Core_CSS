@@ -1,5 +1,5 @@
 <div class="page">
-    <h1 class="display3">Header</h1>
+    <h1 class="display1">Header</h1>
     <hr class="thin"/>
     <p>
         Core_CSS provides simple way to create header for mobile App.
@@ -25,11 +25,23 @@
             <button class="tool-button place-right " data-role="ripple"><span class="i-share icon"></span></button>
         </div>
     </div>
+    <br />
+    <div class="emulator short">
+        <div class="header pos-absolute more">
+            <button class="nav-button" onclick="$(this).toggleClass('transform')"><span></span></button>
+            <span class="app-title">Core CSS</span>
+            <button class="action-button mini floating-action-top bg-red-A200 fg-white pos-absolute"><span class="i-add i-2x"></span></button>
+        </div>
+    </div>
     <h3 class="headline">Header elements</h3>
 
     <h3 class="heading">Title</h3>
     <pre class="prettyprint linenums">
         &lt;header class="header"&gt;
+            &lt;span class="app-title"&gt;Core_CSS&lt;/span&gt;
+        &lt;/header&gt;
+
+        &lt;header class="header more"&gt;
             &lt;span class="app-title"&gt;Core_CSS&lt;/span&gt;
         &lt;/header&gt;
     </pre>
