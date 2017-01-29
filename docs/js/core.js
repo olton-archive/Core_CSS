@@ -5689,6 +5689,35 @@ $.widget( "corecss.progress" , {
 });
 
 var progress = {
+
+    isProgress: function(el){
+        return Utils.isCoreObject(el, 'progress');
+    },
+
+    value: function(el, val){
+        if (!this.isProgress(el)) {
+            return false;
+        }
+
+        if (val !== undefined) {
+            $(el).data('progress').val(val);
+        } else {
+            return $(el).data('progress').val();
+        }
+    },
+
+    buffer: function(el, val){
+        if (!this.isProgress(el)) {
+            return false;
+        }
+
+        if (val !== undefined) {
+            $(el).data('progress').buffer(val);
+        } else {
+            return $(el).data('progress').buffer();
+        }
+    },
+
     showPreloader: function(size, timeout){
         size = size || 64;
         timeout = timeout || false;
