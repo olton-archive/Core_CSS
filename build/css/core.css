@@ -1771,6 +1771,7 @@ a.action-button {
   position: relative;
   height: 104px;
   padding: 16px 0;
+  overflow: hidden;
 }
 .feed-item .avatar {
   position: absolute;
@@ -1797,7 +1798,7 @@ a.action-button {
 .feed-item .additional {
   position: relative;
   display: block;
-  width: calc(100% - 90px);
+  width: calc(100% - 96px);
   font-size: 10px;
   z-index: 2;
 }
@@ -3847,6 +3848,7 @@ a.action-button {
   overflow-x: auto;
   width: auto;
   white-space: nowrap;
+  z-index: 4000;
 }
 .tabs::-webkit-scrollbar {
   display: none;
@@ -3958,9 +3960,8 @@ a.action-button {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 4000;
 }
-.tabs.fixed-tabs.deep {
+.tabs.deep {
   z-index: 3999;
 }
 .tabs.icons {
@@ -3983,11 +3984,13 @@ a.action-button {
   padding: 4px;
 }
 header ~ .fixed-tabs,
-.header ~ .fixed-tabs {
+.header ~ .fixed-tabs,
+.tabs.header-present {
   top: 56px;
 }
 header.more ~ .fixed-tabs,
-.header.more ~ .fixed-tabs {
+.header.more ~ .fixed-tabs,
+.tabs.header-present-more {
   top: 112px;
 }
 .tabs-content {

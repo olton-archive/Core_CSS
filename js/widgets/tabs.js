@@ -3,12 +3,13 @@ $.widget( "corecss.tabs" , {
     version: "1.0.0",
 
     options: {
-        openTarget: false,
-        duration: CORE_ANIMATION_DURATION,
         target: 'self',
-        markerColor: 'bg-white',
-        onTabClick: function(tab){return true;},
-        onTabChange: function(tab){}
+        tabsColor: 'bg-lightBlue',
+        fontColor: 'fg-white',
+        markerColor: 'bg-yellow',
+        deep: 'normal',
+        duration: CORE_ANIMATION_DURATION,
+        onTab: $.noop()
     },
 
 
@@ -32,6 +33,27 @@ $.widget( "corecss.tabs" , {
     _createTabs: function(){
         var element = this.element, o = this.options;
         //var tabs = element.find('li:not(.tab-marker)');
+
+        if (!element.hasClass('tabs')) {
+            element.addClass('tabs');
+        }
+
+        if (o.deep !== 'normal') {
+            element.addClass('deep');
+        }
+
+        if (Utils.isColor(o.tabsColor)) {
+            element.css('background-color', o.tabsColor);
+        } else {
+            element.addClass(o.tabsColor);
+        }
+
+        if (Utils.isColor(o.fontColor)) {
+            element.css('color', o.fontColor);
+        } else {
+            element.addClass(o.fontColor);
+        }
+
         var tab_marker = element.find('li.tab-marker');
 
         if (tab_marker.length == 0) {
@@ -118,17 +140,6 @@ $.widget( "corecss.tabs" , {
 
             if (tab.parent().hasClass('disabled')) {return false;}
 
-            if (typeof o.onTabClick === 'function') {
-                if (!o.onTabClick(tab)) {return false;}
-            } else {
-                if (typeof window[o.onTabClick] === 'function') {
-                    if (!window[o.onTabClick](tab)) {return false;}
-                } else {
-                    result = eval("(function(){"+o.onTabClick+"})");
-                    if (!result.call(tab)) {return false;}
-                }
-            }
-
             if (target !=undefined && Utils.isUrl(target)) {
                 window.location.href = target;
                 return true;
@@ -138,28 +149,11 @@ $.widget( "corecss.tabs" , {
 
             that._openTab(tab, change_direction);
 
-            if (typeof o.onTabChange === 'function') {
-                o.onTabChange(tab);
-            } else {
-                if (typeof window[o.onTabChange] === 'function') {
-                    window[o.onTabChange](tab);
-                } else {
-                    result = eval("(function(){"+o.onTabChange+"})");
-                    result.call(tab);
-                }
-            }
+            Utils.callback(o.onTab, tab);
 
             e.preventDefault();
             //e.stopPropagation();
         });
-    },
-
-    hideTab: function(tab){
-
-    },
-
-    showTab: function(tab){
-
     },
 
     reset: function(tab){

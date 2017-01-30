@@ -1,0 +1,207 @@
+<div class="page">
+    <h1 class="display1">Tabs</h1>
+    <hr class="thin"/>
+    <p>
+        Tabs make it easy to explore and switch between different views. Tabs enable content organization at a high level, such as switching between views, data sets, or functional aspects of an app.
+    </p>
+    <pre class="prettyprint linenums">
+        &lt;ul data-role="tabs"&gt;
+            &lt;li class="tab "&gt;One&lt;/li&gt;
+            &lt;li class="tab "&gt;Two Item&lt;/li&gt;
+            &lt;li class="tab "&gt;Three&lt;/li&gt;
+        &lt;/ul&gt;
+    </pre>
+    <div class="emulator long">
+        <div class="header pos-absolute bg-purple">
+            <button class="nav-button"><span></span></button>
+            <span class="app-title">Core_CSS</span>
+        </div>
+        <ul class="header-present flex" data-target="#tabs-frames-demo-1" data-deep="deep" data-tabs-color="bg-purple-700" data-font-color="fg-white" data-role="tabs,ripple" data-ripple-target=".tab" data-marker-color="bg-yellow">
+            <li class="tab" data-target="gallery">Gallery</li>
+            <li class="tab" data-target="description">Description</li>
+            <li class="tab" data-target="feed">Feed</li>
+        </ul>
+        <div class="view-content-demo" style=" height: calc(100% - 54px);">
+            <div id="tabs-frames-demo-1" class="tabs-content" style="padding-top: 54px; height: 100%">
+                <div id="gallery" style="overflow-y: auto; height: 100%">
+                    <div class="grid" id="grid1">
+                        <div class="row cells3">
+                            <div class="cell"><img src="http://loremflickr.com/118/165/technics"></div>
+                            <div class="cell"><img src="http://loremflickr.com/118/165/nature"></div>
+                            <div class="cell"><img src="http://loremflickr.com/118/165/business"></div>
+                        </div>
+                        <div class="row cells3">
+                            <div class="cell colspan2"><img src="http://loremflickr.com/236/165/sports"></div>
+                            <div class="cell"><img src="http://loremflickr.com/118/165/cats"></div>
+                        </div>
+                        <div class="row">
+                            <div class="cell"><img src="http://loremflickr.com/354/165/transport"></div>
+                        </div>
+                        <div class="row cells3">
+                            <div class="cell"><img src="http://loremflickr.com/118/165/technics"></div>
+                            <div class="cell"><img src="http://loremflickr.com/118/165/nature"></div>
+                            <div class="cell"><img src="http://loremflickr.com/118/165/business"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="description" style="overflow-y: auto; height: 100%">
+                    <div class="padding2">
+                        <h2>Header</h2>
+                        <p>
+                            Tabs make it easy to explore and switch between different views. Tabs enable content organization at a high level, such as switching between views, data sets, or functional aspects of an app.
+                        </p>
+                    </div>
+                </div>
+                <div id="feed" style="overflow-y: auto;  height: 100%">
+                    <ul class="list">
+                        <li class="feed-item">
+                            <img class="avatar place-right" src="http://lorempixel.com/96/72/">
+                            <span class="label">There were some sings of a calm at noon</span>
+                            <span class="additional">10 min</span>
+                        </li>
+                        <li class="feed-item">
+                            <img class="avatar place-right" src="http://lorempixel.com/96/72/">
+                            <span class="label">There were some sings of a calm at noon</span>
+                            <span class="additional">10 min</span>
+                        </li>
+                        <li class="feed-item">
+                            <img class="avatar place-right" src="http://lorempixel.com/96/72/">
+                            <span class="label">There were some sings of a calm at noon</span>
+                            <span class="additional">10 min</span>
+                        </li>
+                        <li class="align-center">...</li>
+                        <li class="feed-item">
+                            <img class="avatar" src="http://lorempixel.com/96/72/">
+                            <span class="label">There were some sings of a calm at noon</span>
+                            <span class="additional">10 min</span>
+                        </li>
+                        <li class="feed-item">
+                            <img class="avatar" src="http://lorempixel.com/96/72/">
+                            <span class="label">There were some sings of a calm at noon</span>
+                            <span class="additional">10 min</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="emulator bg-black" style="height: 54px; display: flex; align-items: center; justify-content: space-around">
+        <button class="flat-button"><span class="i-undo fg-white i-2x" ></span></button>
+        <button class="flat-button"><span class="i-home fg-white i-2x" ></span></button>
+        <button class="flat-button"><span class="i-running_tasks fg-white i-2x" ></span></button>
+    </div>
+
+    <h3 class="heading">Options</h3>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Option</th>
+            <th>Data-*</th>
+            <th>Default</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>target</td>
+            <td>data-target</td>
+            <td>self</td>
+            <td>The element that contains the frames. Default in same level with tabs</td>
+        </tr>
+        <tr>
+            <td>tabsColor</td>
+            <td>data-tabs-color</td>
+            <td>bg-lightBlue</td>
+            <td>Tabs background color. Class name or hex value.</td>
+        </tr>
+        <tr>
+            <td>fontColor</td>
+            <td>data-font-color</td>
+            <td>fg-white</td>
+            <td>Tabs font color. Class name or hex value.</td>
+        </tr>
+        <tr>
+            <td>markerColor</td>
+            <td>data-marker-color</td>
+            <td>bg-yellow</td>
+            <td>Tabs marker color. Class name or hex value.</td>
+        </tr>
+        <tr>
+            <td>deep</td>
+            <td>data-deep</td>
+            <td>normal</td>
+            <td>In normal mode tabs has z-index as header. Can be: normal or deep</td>
+        </tr>
+        <tr>
+            <td>onTab</td>
+            <td>data-on-tab</td>
+            <td>$.noop</td>
+            <td>Callback for tab change.</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3 class="heading">Tabs target</h3>
+    <pre class="prettyprint">
+        &lt;ul data-role="tabs" data-target="#element_id"&gt;
+            &lt;li class="tab" data-target="gallery"&gt;Gallery&lt;/li&gt;
+            &lt;li class="tab" data-target="description"&gt;Description&lt;/li&gt;
+            &lt;li class="tab" data-target="feed"&gt;Feed&lt;/li&gt;
+        &lt;/ul&gt;
+        &lt;div id="element_id"&gt;
+            &lt;div id="gallery"&gt;...&lt;/div&gt;
+            &lt;div id="description"&gt;...&lt;/div&gt;
+            &lt;div id="feed"&gt;...&lt;/div&gt;
+        &lt;/div&gt;
+    </pre>
+
+
+    <h3 class="heading">Tabs position</h3>
+    <p>
+        For change tabs align Core_CSS provides special classes:
+    </p>
+    <div class="emulator shorten padding1">
+        <h4 class="no-margin-bottom">align-left</h4>
+        <div data-role="tabs" class="align-left">
+            <li class="tab">One</li>
+            <li class="tab">Two</li>
+            <li class="tab">Three</li>
+        </div>
+        <h4 class="no-margin-bottom">align-center</h4>
+        <div data-role="tabs" class="align-center">
+            <li class="tab">One</li>
+            <li class="tab">Two</li>
+            <li class="tab">Three</li>
+        </div>
+        <h4 class="no-margin-bottom">align-right</h4>
+        <div data-role="tabs" class="align-right">
+            <li class="tab">One</li>
+            <li class="tab">Two</li>
+            <li class="tab">Three</li>
+        </div>
+        <h4 class="no-margin-bottom">flex-justify</h4>
+        <div data-role="tabs" class="flex-justify">
+            <li class="tab">One</li>
+            <li class="tab">Two</li>
+            <li class="tab">Three</li>
+        </div>
+    </div>
+    <pre class="prettyprint linenums">
+        &lt;div data-role="tabs" class="align-left"&gt;
+        &lt;div data-role="tabs" class="align-center"&gt;
+        &lt;div data-role="tabs" class="align-right"&gt;
+        &lt;div data-role="tabs" class="flex-justify"&gt;
+    </pre>
+    <h3 class="heading">Tabs state</h3>
+    <p>
+        To disable tab you can add class <strong>disabled</strong> to required tab.
+    </p>
+    <pre class="prettyprint linenums">
+        &lt;ul data-role="tabs"&gt;
+            &lt;li class="tab "&gt;One&lt;/li&gt;
+            &lt;li class="tab disabled"&gt;Two Item&lt;/li&gt;
+            &lt;li class="tab "&gt;Three&lt;/li&gt;
+        &lt;/ul&gt;
+    </pre>
+</div>
