@@ -258,7 +258,7 @@ body {
 }
 
 .emulator {
-    height: 640px;
+    height: 480px;
     width: 320px;
     padding: 0;
     background: #fff;
@@ -411,7 +411,7 @@ hr {
     }
     */
     #logo2 {
-        display: none;
+        /*display: none;*/
     }
     .no-360 {
         display: none !important;

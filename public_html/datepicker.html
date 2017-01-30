@@ -116,10 +116,10 @@
         Core_CSS provides method to create date picker widget as dialog. To create date picker dialog you can call <strong>corePickers.datePicker</strong> method. For more information about corePickers object see <a href="#pickers">pickers docs</a>.
     </p>
     <div class="padding2 bg-gray-100">
-        <button class="raised-button bg-red fg-white" onclick="console.log(corePicker); corePicker.datePicker(function(val){alert(val)})">Date picker</button>
+        <button class="raised-button bg-red fg-white" onclick="corePickers.datePicker(function(val){alert(val)})">Date picker</button>
     </div>
     <pre class="prettyprint linenums">
-        corePicker.datePicker(function(val){
+        corePickers.datePicker(function(val){
             ... callback for onDone ...
         }, {
             ... options ...

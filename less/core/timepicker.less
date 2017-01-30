@@ -4,7 +4,7 @@
 .timepicker {
     display: block;
     position: relative;
-    width: 330px;
+    width: 280px;
     margin: 0 auto;
     border-radius: 2px;
     border: 1px #eee solid;
@@ -54,7 +54,7 @@
 
     .picker-content {
         width: 100%;
-        height: 330px;
+        height: 280px;
         padding: 16px;
     }
 
@@ -95,26 +95,26 @@
         cursor: pointer;
 
         &.active {
-            background: @lightBlue700;
+            //background: @lightBlue700;
             color: @white;
         }
     }
 
     .picker-line {
         position: absolute;
-        height: 140px;
+        height: 118px;
         width: 1px;
         background: @lightBlue700;
-        top: 9px;
+        top: 7px;
         left: 50%;
         z-index: 1;
         transform-origin: 0 100%;
 
         &:after {
             position: absolute;
-            .square(40px);
+            .square(36px);
             top: 0;
-            left: -20px;
+            left: -18px;
             background: @lightBlue700;
             border-radius: 50%;
             content: "";
@@ -133,62 +133,72 @@
         @rotate: @i * 30 - 30;
 
         .picker-item:nth-of-type(@{i}) {
-            transform: rotate(@rotate * 1deg) translateY(-120px) rotate(@rotate * -1deg);
+            transform: rotate(@rotate * 1deg) translateY(-100px) rotate(@rotate * -1deg);
         }
     }
 
     .generate-timepicker-items(@n, (@i + 1));
 }
 
+.timepicker-landscape() {
+    width: 462px;
+    height: 280px;
+
+    .picker-header {
+        width: 180px;
+        float: left;
+        height: 100%;
+    }
+
+    .picker-content {
+        margin-left: 180px;
+        height: ~"calc(100% - 45px)";
+        width: ~"calc(100% - 180px)";
+
+        .picker-inner {
+            width: 200px;
+            margin: 0 auto;
+        }
+    }
+
+    .picker-footer {
+        margin-left: 180px;
+    }
+
+    .generate-timepicker-items(@timePickerItemsCount);
+
+    .generate-timepicker-items(@n, @i: 1) when (@i <= @n) {
+        @rotate: @i * 30 - 30;
+
+        .picker-item:nth-of-type(@{i}) {
+            transform: rotate(@rotate * 1deg) translateY(-78px) rotate(@rotate * -1deg);
+        }
+
+        .generate-timepicker-items(@n, (@i + 1));
+    }
+
+
+    .picker-line {
+        height: 96px;
+        top: 6px;
+    }
+}
+
+.timepicker {
+    &.landscape {
+        .timepicker-landscape();
+    }
+}
+
 @media screen and (min-width: 640px) {
     .timepicker:not(.no-rotate) {
-        width: 512px;
-        height: 312px;
-
-        .picker-header {
-            width: 180px;
-            float: left;
-            height: 100%;
-        }
-
-        .picker-content {
-            margin-left: 180px;
-            height: ~"calc(100% - 45px)";
-            width: ~"calc(100% - 180px)";
-
-            .picker-inner {
-                width: 235px;
-                margin: 0 auto;
-            }
-        }
-
-        .picker-footer {
-            margin-left: 180px;
-        }
-
-        .generate-timepicker-items(@timePickerItemsCount);
-
-        .generate-timepicker-items(@n, @i: 1) when (@i <= @n) {
-            @rotate: @i * 30 - 30;
-
-            .picker-item:nth-of-type(@{i}) {
-                transform: rotate(@rotate * 1deg) translateY(-90px) rotate(@rotate * -1deg);
-            }
-
-            .generate-timepicker-items(@n, (@i + 1));
-        }
-
-
-        .picker-line {
-            height: 110px;
-            top: 8px;
-        }
+        .timepicker-landscape();
     }
 }
 
 .timepicker-dialog {
     padding: 0;
-    width: 330px !important;
+    width: 280px !important;
     max-width: none;
 
     .dialog-content {
@@ -196,6 +206,6 @@
     }
 
     @media screen and (min-width: 640px) {
-        width: 512px !important;
+        width: 462px !important;
     }
 }

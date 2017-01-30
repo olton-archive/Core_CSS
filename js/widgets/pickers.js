@@ -1,4 +1,4 @@
-var picker = {
+var pickers = {
     timePicker: function(cb_done, cb_change){
         var picker = $("<div>").timepicker({
             onDone: cb_done,
@@ -73,4 +73,4 @@ var picker = {
     }
 };
 
-$.Picker = window.corePicker = picker;
+$.Pickers = window.corePickers = pickers;

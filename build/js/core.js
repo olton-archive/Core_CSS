@@ -5454,7 +5454,7 @@ var panels = {
 
 $.Panels = window.corePanels = panels;
 // Source: js/widgets/pickers.js
-var picker = {
+var pickers = {
     timePicker: function(cb_done, cb_change){
         var picker = $("<div>").timepicker({
             onDone: cb_done,
@@ -5529,7 +5529,7 @@ var picker = {
     }
 };
 
-$.Picker = window.corePicker = picker;
+$.Pickers = window.corePickers = pickers;
 // Source: js/widgets/progress.js
 $.widget( "corecss.progress" , {
 
