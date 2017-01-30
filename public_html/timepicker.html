@@ -1,0 +1,83 @@
+<div class="page">
+    <h1 class="display1">Time picker</h1>
+    <hr class="thin"/>
+    <p>
+        Core_CSS provides datepicker component for getting/setting time values.
+    </p>
+    <pre class="prettyprint linenums">
+        &lt;div data-role="timepicker"&gt;&lt;/div&gt;
+    </pre>
+    <div class="emulator">
+        <br />
+        <div data-role="timepicker" class="no-rotate"></div>
+    </div>
+
+    <div class="no-640">
+    <br/>
+    <div class="emulator" style="width: 640px; height: 320px;">
+        <br />
+        <div data-role="timepicker"></div>
+    </div>
+    </div>
+
+    <h3 class="heading">Options</h3>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Option</th>
+            <th>Data-*</th>
+            <th>Default</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>locale</td>
+            <td>data-locale</td>
+            <td>CORE_LOCALE</td>
+            <td>Show picker in specific language. For more info see <a href="#locales">locales</a></td>
+        </tr>
+        <tr>
+            <td>time</td>
+            <td>data-time</td>
+            <td>Current time</td>
+            <td>Init time, string or datetime object</td>
+        </tr>
+        <tr>
+            <td>onDone</td>
+            <td>data-on-done</td>
+            <td>$.noop</td>
+            <td>Callback for on done event</td>
+        </tr>
+        <tr>
+            <td>onChange</td>
+            <td>data-on-change</td>
+            <td>$.noop</td>
+            <td>Callback for on change event</td>
+        </tr>
+        <tr>
+            <td>onCancel</td>
+            <td>data-on-cancel</td>
+            <td>$.noop</td>
+            <td>Callback for on cancel event</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3 class="heading">Dialog mode</h3>
+    <p>
+        Core_CSS provides method to create date picker widget as dialog. To create date picker dialog you can call <strong>corePickers.timePicker</strong> method. For more information about corePickers object see <a href="#pickers">pickers docs</a>.
+    </p>
+    <div class="padding2 bg-gray-100">
+        <button class="raised-button bg-red fg-white" onclick="corePickers.timePicker(function(val){alert(val)})">Time picker</button>
+    </div>
+    <pre class="prettyprint linenums">
+        corePickers.timePicker(function(val){
+            ... callback for onDone ...
+        }, {
+            ... options ...
+        })
+    </pre>
+
+</div>

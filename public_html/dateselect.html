@@ -2,7 +2,7 @@
     <h1 class="display1">Date select</h1>
     <hr class="thin"/>
     <p>
-        Core_CSS provides components for getting/setting date and time values.
+        Core_CSS provides components for getting/setting date values.
     </p>
     <pre class="prettyprint linenums">
         &lt;div data-role="dateselect"&gt;&lt;/div&gt;
@@ -79,10 +79,10 @@
         Core_CSS provides method to create date select widget as dialog. To create date select dialog you can call <strong>corePickers.dateSelect</strong> method. For more information about corePickers object see <a href="#pickers">pickers docs</a>.
     </p>
     <div class="padding2 bg-gray-100">
-        <button class="raised-button bg-red fg-white" onclick="corePicker.dateSelect(function(val){alert(val)})">Date select</button>
+        <button class="raised-button bg-red fg-white" onclick="corePickers.dateSelect(function(val){alert(val)})">Date select</button>
     </div>
     <pre class="prettyprint linenums">
-        corePicker.dateSelect(function(val){
+        corePickers.dateSelect(function(val){
             ... callback for onDone ...
         }, {
             ... options ...

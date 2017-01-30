@@ -1,0 +1,80 @@
+<div class="page">
+    <h1 class="display1">Time select</h1>
+    <hr class="thin"/>
+    <p>
+        Core_CSS provides components for getting/setting time values.
+    </p>
+    <pre class="prettyprint linenums">
+        &lt;div data-role="timeselect"&gt;&lt;/div&gt;
+    </pre>
+    <div class="emulator" style="height: 320px;">
+        <br />
+        <div data-role="timeselect" ></div>
+    </div>
+
+    <h3 class="heading">Options</h3>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Option</th>
+            <th>Data-*</th>
+            <th>Default</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>locale</td>
+            <td>data-locale</td>
+            <td>CORE_LOCALE</td>
+            <td>Show picker in specific language. For more info see <a href="#locales">locales</a></td>
+        </tr>
+        <tr>
+            <td>hour</td>
+            <td>data-hour</td>
+            <td>0</td>
+            <td>Current hour value</td>
+        </tr>
+        <tr>
+            <td>minute</td>
+            <td>data-minute</td>
+            <td>0</td>
+            <td>Current minute value</td>
+        </tr>
+        <tr>
+            <td>second</td>
+            <td>data-second</td>
+            <td>0</td>
+            <td>Current second value</td>
+        </tr>
+        <tr>
+            <td>buttons</td>
+            <td>data-buttons</td>
+            <td>['cancel', 'random', 'now', 'done']</td>
+            <td>Show specific picker footer buttons</td>
+        </tr>
+        <tr>
+            <td>onDone</td>
+            <td>data-on-done</td>
+            <td>$.noop</td>
+            <td>Callback for on done event</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3 class="heading">Dialog mode</h3>
+    <p>
+        Core_CSS provides method to create date select widget as dialog. To create date select dialog you can call <strong>corePickers.timeSelect</strong> method. For more information about corePickers object see <a href="#pickers">pickers docs</a>.
+    </p>
+    <div class="padding2 bg-gray-100">
+        <button class="raised-button bg-red fg-white" onclick="corePickers.timeSelect(function(val){alert(val)})">Time select</button>
+    </div>
+    <pre class="prettyprint linenums">
+        corePickers.timeSelect(function(val){
+            ... callback for onDone ...
+        }, {
+            ... options ...
+        })
+    </pre>
+</div>
