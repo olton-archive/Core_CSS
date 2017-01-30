@@ -25,15 +25,18 @@
 }
 
 .stepper {
-    li {
+    span {
         line-height: 72px;
         padding: 0 12px 0 44px;
         text-align: left;
         position: relative;
         background-color: @white;
+        &.clickable {
+            cursor: pointer;
+        }
     }
 
-    li {
+    span {
         &:before {
             counter-increment: stepper-counter;
             content: counter(stepper-counter);
@@ -52,7 +55,7 @@
         }
     }
 
-    li {
+    span {
         &.current:before {
             background-color: @blue;
             color: @white;

@@ -4755,14 +4755,17 @@ header.more ~ .fixed-tabs,
   content: "";
   top: 50%;
 }
-.stepper li {
+.stepper span {
   line-height: 72px;
   padding: 0 12px 0 44px;
   text-align: left;
   position: relative;
   background-color: #ffffff;
 }
-.stepper li:before {
+.stepper span.clickable {
+  cursor: pointer;
+}
+.stepper span:before {
   counter-increment: stepper-counter;
   content: counter(stepper-counter);
   background-color: #9e9e9e;
@@ -4780,19 +4783,19 @@ header.more ~ .fixed-tabs,
   left: 12px;
   position: absolute;
 }
-.stepper li.current:before {
+.stepper span.current:before {
   background-color: #2196F3;
   color: #ffffff;
 }
-.stepper li.complete:before {
+.stepper span.complete:before {
   background-color: #4CAF50;
   color: #ffffff;
 }
-.stepper li.error:before {
+.stepper span.error:before {
   background-color: #d50000;
   color: #ffffff;
 }
-.stepper li.warning:before {
+.stepper span.warning:before {
   content: "";
   background-color: transparent;
   color: #000000;
@@ -4803,7 +4806,7 @@ header.more ~ .fixed-tabs,
   border-width: 0 12px 24px 12px;
   border-color: transparent transparent #FF5722 transparent;
 }
-.stepper li.warning:after {
+.stepper span.warning:after {
   content: "!";
   position: absolute;
   left: 22px;
