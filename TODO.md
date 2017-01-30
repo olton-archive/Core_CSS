@@ -9,4 +9,3 @@
 - [ ] calendar range mode
 - [ ] time picker width
 - [ ] less size timepicker to 280px
-- [ ] add stepper widget

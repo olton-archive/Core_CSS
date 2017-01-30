@@ -4,35 +4,137 @@
     <p>
         Core_CSS contains classes for creating steppers.
     </p>
-    <div class="emulator shorten padding2">
-        <ul class="stepper">
-            <li>Step1</li>
-            <li class="complete">Step2</li>
-        </ul>
-        <br />
-        <ul class="stepper">
-            <li class="complete">Step1</li>
-            <li class="current">Step2</li>
-        </ul>
-        <br />
-        <ul class="stepper">
-            <li class="complete">Step1</li>
-            <li class="warning">Step2</li>
-        </ul>
-        <br />
-        <ul class="stepper">
-            <li class="complete">Step1</li>
-            <li class="error">Step2</li>
-        </ul>
+    <pre class="prettyprint linenums">
+        &lt;div data-role="stepper" ...&gt;&lt;/div&gt;
+    </pre>
+    <div class="emulator full">
+        <script>
+            var steps_func = function(){
+                return ['F1', 'F2', 'F3', 'F4'];
+            }
+        </script>
+
+        <div data-role="stepper" data-steps="4" class="margin2" data-clickable="false"></div>
+        <div data-role="stepper" data-steps="4" data-label="Step" class="margin2"></div>
+        <div data-role="stepper" data-steps='["Step1", "Step2", "Step3"]' class="margin2"></div>
+        <div data-role="stepper" data-steps='["Start", "", "", "Finish"]' class="margin2"></div>
+        <div data-role="stepper" data-steps="steps_func" data-start-step="2" class="margin2"></div>
+        <div data-role="stepper" data-steps="steps_func" data-states='["current", "complete", "warning", "error"]' class="margin2"></div>
+    </div>
+    <pre class="prettyprint linenums">
+
+        &lt;script&gt;
+            var steps_func = function(){
+                return ['F1', 'F2', 'F3', 'F4'];
+            }
+        &lt;/script&gt;
+
+        &lt;div data-role="stepper" data-steps="4" class="margin2" data-clickable="false"&gt;&lt;/div&gt;
+        &lt;div data-role="stepper" data-steps="4" data-label="Step" class="margin2"&gt;&lt;/div&gt;
+        &lt;div data-role="stepper" data-steps='["Step1", "Step2", "Step3"]' class="margin2"&gt;&lt;/div&gt;
+        &lt;div data-role="stepper" data-steps='["Start", "", "", "Finish"]' class="margin2"&gt;&lt;/div&gt;
+        &lt;div data-role="stepper" data-steps="steps_func" data-start-step="2" class="margin2"&gt;&lt;/div&gt;
+        &lt;div data-role="stepper" data-steps="steps_func" data-states='["current", "complete", "warning", "error"]' class="margin2"&gt;&lt;/div&gt;
+    </pre>
+
+    <h3 class="heading">Options</h3>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Option</th>
+            <th>Data-*</th>
+            <th>Default</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>steps</td>
+            <td>data-steps</td>
+            <td>0</td>
+            <td>Steps for stepper. Int, serialized array or function name. Function must return a array of string with steps names.</td>
+        </tr>
+        <tr>
+            <td>states</td>
+            <td>data-states</td>
+            <td>null</td>
+            <td>States for the steps of stepper. serialized array or function name. Function must return a array of string. States ca be: current, complete, warning, error or empty string</td>
+        </tr>
+        <tr>
+            <td>startStep</td>
+            <td>data-start-step</td>
+            <td>1</td>
+            <td>Starting step of stepper</td>
+        </tr>
+        <tr>
+            <td>label</td>
+            <td>data-label</td>
+            <td>empty</td>
+            <td>Step prefix if steps defined as Int</td>
+        </tr>
+        <tr class="no-display">
+            <td>clickable</td>
+            <td>data-clickable</td>
+            <td>false</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>onStep</td>
+            <td>data-on-step</td>
+            <td>$.noop</td>
+            <td>Callback to step change</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3 class="heading">Methods</h3>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Method</th>
+            <th>Params</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>next</td>
+            <td></td>
+            <td>Goto next step</td>
+        </tr>
+        <tr>
+            <td>prev</td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>state</td>
+            <td>step_index, state</td>
+            <td>Goto prev step</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br />
+    <div class="emulator full padding2">
+        <div data-role="stepper" id="stepper_methods_demo_1" data-steps="4"></div>
+        <button class="raised-button bg-gray-100" onclick="coreSteppers.prev('#stepper_methods_demo_1')">Prev</button>
+        <button class="raised-button bg-gray-100" onclick="coreSteppers.next('#stepper_methods_demo_1')">Next</button>
+        <button class="raised-button bg-orange fg-white" onclick="coreSteppers.state('#stepper_methods_demo_1', 3, 'warning')">Warning</button>
+        <button class="raised-button bg-red fg-white" onclick="coreSteppers.state('#stepper_methods_demo_1', 4, 'error')">Error</button>
     </div>
 
-    <pre class="prettyprint linenums">
-        &lt;ul class="stepper"&gt;
-            &lt;li class="complete"&gt;Step1&lt;/li&gt;
-            &lt;li class="current"&gt;Step2&lt;/li&gt;
-            &lt;li class="warning"&gt;Step3&lt;/li&gt;
-            &lt;li class="error"&gt;Step4&lt;/li&gt;
-            &lt;li&gt;Step5&lt;/li&gt;
-        &lt;/ul&gt;
-    </pre>
+    <h3 class="heading">Object</h3>
+    <p>
+        Core_CSS provides <strong>coreSteppers</strong> object to steppers manipulation. <strong>coreSteppers</strong> contains next methods:
+    </p>
+    <ul>
+        <li><strong>coreSidebar.isStepper(el)</strong></li>
+        <li><strong>coreSidebar.next(el)</strong></li>
+        <li><strong>coreSidebar.prev(el)</strong></li>
+        <li><strong>coreSidebar.state(el, step, state)</strong></li>
+    </ul>
+
 </div>
