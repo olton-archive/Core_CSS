@@ -11,6 +11,7 @@
     overflow-x: auto;
     width: auto;
     white-space: nowrap;
+    z-index: @zIndexHeader;
 
     &::-webkit-scrollbar {
         display: none;
@@ -124,11 +125,10 @@
         top: 0;
         left: 0;
         right: 0;
-        z-index: @zIndexHeader;
+    }
 
-        &.deep {
-            z-index: @zIndexHeader - 1;
-        }
+    &.deep {
+        z-index: @zIndexHeader - 1;
     }
 }
 
@@ -157,11 +157,11 @@
     }
 }
 
-header ~ .fixed-tabs, .header ~ .fixed-tabs {
+header ~ .fixed-tabs, .header ~ .fixed-tabs, .tabs.header-present {
     top: @headerSize;
 }
 
-header.more ~ .fixed-tabs, .header.more ~ .fixed-tabs {
+header.more ~ .fixed-tabs, .header.more ~ .fixed-tabs, .tabs.header-present-more {
     top: @headerSize * 2;
 }
 
