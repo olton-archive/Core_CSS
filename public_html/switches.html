@@ -1,0 +1,113 @@
+<div class="page">
+    <h1 class="display1">Switches</h1>
+    <hr class="thin"/>
+    <p>
+        Selection controls allow the user to select options. Three types of selection controls are covered in this guidance:
+    </p>
+    <ul>
+        <li><strong>Checkboxes</strong> allow the selection of multiple options from a set.</li>
+        <li><strong>Radio</strong> buttons allow the selection of a single option from a set.</li>
+        <li><strong>Switches</strong> allow a selection to be turned on or off.</li>
+    </ul>
+
+    <div class="emulator padding2" style="height: 200px">
+        <table class="table">
+            <tbody>
+            <tr>
+                <td>
+                    <label class="checkbox">
+                        <input type="checkbox">
+                        <span class="check"></span>
+                    </label>
+                </td>
+                <td>
+                    <label class="checkbox">
+                        <input type="checkbox" checked>
+                        <span class="check"></span>
+                    </label>
+                </td>
+                <td>
+                    <label class="checkbox">
+                        <input type="checkbox" disabled>
+                        <span class="check"></span>
+                    </label>
+                </td>
+                <td>
+                    <label class="checkbox">
+                        <input type="checkbox" disabled checked>
+                        <span class="check"></span>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="radio">
+                        <input type="radio" name="r1">
+                        <span class="check"></span>
+                    </label>
+                </td>
+                <td>
+                    <label class="radio">
+                        <input type="radio" name="r1" checked>
+                        <span class="check"></span>
+                    </label>
+                </td>
+                <td>
+                    <label class="radio">
+                        <input type="radio" name="r1" disabled>
+                        <span class="check"></span>
+                    </label>
+                </td>
+                <td>
+                    <label class="radio">
+                        <input type="radio" name="r2" checked disabled>
+                        <span class="check"></span>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="check"></span>
+                    </label>
+                </td>
+                <td>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="check"></span>
+                    </label>
+                </td>
+                <td>
+                    <label class="switch">
+                        <input type="checkbox" disabled>
+                        <span class="check"></span>
+                    </label>
+                </td>
+                <td>
+                    <label class="switch">
+                        <input type="checkbox" disabled checked>
+                        <span class="check"></span>
+                    </label>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <pre class="prettyprint linenums">
+        &lt;label class="checkbox"&gt;
+            &lt;input type="checkbox" [checked, disabled]&gt;
+            &lt;span class="check"&gt;&lt;/span&gt;
+        &lt;/label&gt;
+
+        &lt;label class="radio"&gt;
+            &lt;input type="radio" [checked, disabled]&gt;
+            &lt;span class="check"&gt;&lt;/span&gt;
+        &lt;/label&gt;
+
+        &lt;label class="switch"&gt;
+            &lt;input type="checkbox" [checked, disabled]&gt;
+            &lt;span class="check"&gt;&lt;/span&gt;
+        &lt;/label&gt;
+    </pre>
+</div>
