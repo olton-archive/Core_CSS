@@ -1,0 +1,33 @@
+<div class="page">
+    <h1 class="display1">Toasts</h1>
+    <hr class="thin"/>
+    <p>
+        Toasts are primarily used for system messaging. They also display at the bottom of the screen, but may not be swiped off-screen. Core_CSS provides simple methods to create toasts.
+    </p>
+
+    <p>
+        Core_CSS define two object to create toasts: <strong>$.Toasts</strong> and <strong>coreToasts</strong> with method <strong>create</strong>
+    </p>
+
+    <pre class="prettyprint linenums">
+        &lt;script&gt;
+            coreToasts.create(message, callback, timeout, class);
+        &lt;/script&gt;
+    </pre>
+
+    <div class="padding2 bg-gray-100">
+        <button class="raised-button bg-red fg-white" onclick="coreToasts.create('This is a toast')">toast</button>
+        <button class="raised-button bg-red fg-white" onclick="coreToasts.create('This is a toast', function(){alert('This is a callback of toast')})">callback</button>
+        <button class="raised-button bg-red fg-white" onclick="coreToasts.create('This is a toast', null, 5000)">timeout</button>
+    </div>
+
+    <pre class="prettyprint linenums">
+        coreToasts.create('This is a toast')
+
+        coreToasts.create('This is a toast', function(){
+            alert('This is a callback of toast')
+        })
+
+        coreToasts.create('This is a toast', null, 5000)
+    </pre>
+</div>
