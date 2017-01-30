@@ -6,8 +6,12 @@
         An accordion allows users to toggle the display of sections of content. Core_CSS provides a simple way to create accordion.
     </p>
 
-    <div class="emulator short">
-        <ul class="accordion" data-role="accordion" data-close-any="false">
+    <div class="emulator shorten">
+        <div class="header pos-absolute bg-purple">
+            <button class="nav-button"><span></span></button>
+            <span class="app-title">Core_CSS</span>
+        </div>
+        <ul class="accordion" data-role="accordion" data-close-any="false" style="padding-top: 54px;">
             <li class="accordion-item">
                 <a class="item-header" data-role="ripple" data-ripple-color="#eee">Lorem ipsum</a>
                 <div class="item-content">
@@ -27,6 +31,11 @@
                 </div>
             </li>
         </ul>
+    </div>
+    <div class="emulator bg-black" style="height: 54px; display: flex; align-items: center; justify-content: space-around">
+        <button class="flat-button"><span class="i-undo fg-white i-2x" ></span></button>
+        <button class="flat-button"><span class="i-home fg-white i-2x" ></span></button>
+        <button class="flat-button"><span class="i-running_tasks fg-white i-2x" ></span></button>
     </div>
 
     <pre class="prettyprint linenums">

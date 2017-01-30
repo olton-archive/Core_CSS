@@ -3867,16 +3867,39 @@ a.action-button {
   margin: 0;
   overflow: hidden;
 }
-.tabs.flex {
+.tabs.flex-justify {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
-.tabs.flex > li,
-.tabs.flex .tab {
+.tabs.flex-justify > li,
+.tabs.flex-justify .tab {
+  -webkit-flex-grow: 0;
+      -ms-flex-positive: 0;
+          flex-grow: 0;
+  -webkit-flex-basis: auto;
+      -ms-flex-preferred-size: auto;
+          flex-basis: auto;
+}
+.tabs.flex-around {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
+}
+.tabs.flex-around > li,
+.tabs.flex-around .tab {
   -webkit-flex-grow: 0;
       -ms-flex-positive: 0;
           flex-grow: 0;

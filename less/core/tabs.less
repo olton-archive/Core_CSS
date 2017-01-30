@@ -31,9 +31,21 @@
         overflow: hidden;
     }
 
-    &.flex {
+    &.flex-justify {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
+        align-items: center;
+
+        & > li, .tab {
+            flex-grow: 0;
+            flex-basis: auto;
+        }
+    }
+
+    &.flex-around {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
 
         & > li, .tab {
             flex-grow: 0;
