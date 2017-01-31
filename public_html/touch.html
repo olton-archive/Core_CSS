@@ -1,0 +1,242 @@
+<div class="page">
+    <h1 class="display1">Touch &amp; Swipe</h1>
+    <hr class="thin"/>
+    <p>
+        Core_CSS contains widget for handling touch and swipe. This widget based on <a href="https://github.com/olton/TouchSwipe-Jquery-Plugin">TouchSwipe</a> from <a href="https://github.com/mattbryson">Matt Bryson</a>.
+    </p>
+    <p>
+        Widget can be used on touch devices such as iPad, iPhone, Android etc.
+        Detects single and multiple finger swipes, pinches and falls back to mouse 'drags' on the desktop.
+        Time and distance thresholds can be set to distinguish between swipe gesture and slow drag.
+        Allows exclusion of child elements (interactive elements) as well allowing page scrolling or page zooming depending on configuration.
+    </p>
+    <p>
+        Widget features:
+    </p>
+    <ul>
+        <li>Detects swipes in 4 directions, "up", "down", "left" and "right"</li>
+        <li>Detects pinches "in" and "out"</li>
+        <li>Supports single finger or double finger touch events</li>
+        <li>Supports click events both on the touchSwipe object and its child objects</li>
+        <li>Definable threshold / maxTimeThreshold to determin when a gesture is actually a swipe</li>
+        <li>Events triggered for swipe "start","move","end" and "cancel"</li>
+        <li>End event can be triggered either on touch release, or as soon as threshold is met</li>
+        <li>Allows swiping and page scrolling</li>
+        <li>Disables user input elements (Button, form, text etc) from triggering swipes</li>
+    </ul>
+
+    <h3 class="heading">Usage</h3>
+    <pre class="prettyprint linenums">
+        $(function() {
+            $("#test").touch( {
+                swipe:function(event, direction, distance, duration, fingerCount, fingerData) {
+                  $(this).text("You swiped " + direction );
+                }
+            });
+        });
+    </pre>
+
+    <h3 class="heading">Options</h3>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Option</th>
+            <th>Data-*</th>
+            <th>Default</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>fingers</td>
+            <td>data-fingers</td>
+            <td>1</td>
+            <td>Constants representing the number of fingers used in a swipe.</td>
+        </tr>
+        <tr>
+            <td>threshold</td>
+            <td>data-threshold</td>
+            <td>75</td>
+            <td>By setting the threshold you can set how far the user must swipe before it is considered a swipe.</td>
+        </tr>
+        <tr>
+            <td>cancelThreshold</td>
+            <td>data-cancel-threshold</td>
+            <td>null</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>pinchThreshold</td>
+            <td>data-pinch-threshold</td>
+            <td>20</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>maxTimeThreshold</td>
+            <td>data-max-time-threshold</td>
+            <td>null</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>fingerReleaseThreshold</td>
+            <td>data-finger-release-threshold</td>
+            <td>250</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>longTapThreshold</td>
+            <td>data-long-tap-threshold</td>
+            <td>500</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>doubleTapThreshold</td>
+            <td>data-double-tap-threshold</td>
+            <td>200</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>swipe</td>
+            <td>data-swipe</td>
+            <td>null</td>
+            <td>Function. Params: event, direction, distance, duration, fingerCount, fingerData, currentDirection</td>
+        </tr>
+        <tr>
+            <td>swipeLeft</td>
+            <td>data-swipe-left</td>
+            <td>null</td>
+            <td>Function. Params: event, direction, distance, duration, fingerCount, fingerData, currentDirection</td>
+        </tr>
+        <tr>
+            <td>swipeRight</td>
+            <td>data-swipe-right</td>
+            <td>null</td>
+            <td>Function. Params: event, direction, distance, duration, fingerCount, fingerData, currentDirection</td>
+        </tr>
+        <tr>
+            <td>swipeUp</td>
+            <td>data-swipe-up</td>
+            <td>null</td>
+            <td>Function. Params: event, direction, distance, duration, fingerCount, fingerData, currentDirection</td>
+        </tr>
+        <tr>
+            <td>swipeDown</td>
+            <td>data-swipe-down</td>
+            <td>null</td>
+            <td>Function. Params: event, direction, distance, duration, fingerCount, fingerData, currentDirection</td>
+        </tr>
+        <tr>
+            <td>swipeStatus</td>
+            <td>data-swipe-status</td>
+            <td>null</td>
+            <td>Function. Params: event, phase, direction, distance, duration, fingerCount, fingerData, currentDirection</td>
+        </tr>
+        <tr>
+            <td>pinchIn</td>
+            <td>data-pinch-in</td>
+            <td>null</td>
+            <td>Function. Params: event, direction, distance, duration, fingerCount, zoom, fingerData</td>
+        </tr>
+        <tr>
+            <td>pinchOut</td>
+            <td>data-pinch-out</td>
+            <td>null</td>
+            <td>Function. Params: event, direction, distance, duration, fingerCount, zoom, fingerData</td>
+        </tr>
+        <tr>
+            <td>pinchStatus</td>
+            <td>data-pinch-status</td>
+            <td>null</td>
+            <td>Function. Params: event, direction, distance, duration, fingerCount, zoom, fingerData</td>
+        </tr>
+        <tr>
+            <td>tap</td>
+            <td>data-tap</td>
+            <td>null</td>
+            <td>Function. Params: event, target</td>
+        </tr>
+        <tr>
+            <td>doubleTap</td>
+            <td>data-double-tap</td>
+            <td>null</td>
+            <td>Function. Params: event, target</td>
+        </tr>
+        <tr>
+            <td>longTap</td>
+            <td>data-long-tap</td>
+            <td>null</td>
+            <td>Function. Params: event, target</td>
+        </tr>
+        <tr>
+            <td>hold</td>
+            <td>data-hold</td>
+            <td>null</td>
+            <td>Function. Params: event, target</td>
+        </tr>
+        <tr>
+            <td>triggerOnTouchEnd</td>
+            <td>data-trigger-on-touch-end</td>
+            <td>true</td>
+            <td>With triggerOnTouchEnd you can trigger the swipe end handler either when the user releases (default) or when the user has swiped the distance / time of the thresholds (but is still swiping).</td>
+        </tr>
+        <tr>
+            <td>triggerOnTouchLeave</td>
+            <td>data-trigger-on-touch-leave</td>
+            <td>false</td>
+            <td>With triggerOnTouchLeave you can end the event if the user swipes off the element</td>
+        </tr>
+        <tr>
+            <td>allowPageScroll</td>
+            <td>data-allow-page-scroll</td>
+            <td>auto</td>
+            <td>Allow or disallow page scroll</td>
+        </tr>
+        <tr>
+            <td>fallbackToMouseEvents</td>
+            <td>data-fallback-to-mouse-events</td>
+            <td>true</td>
+            <td>Generate fallback to mouse events</td>
+        </tr>
+        <tr>
+            <td>excludedElements</td>
+            <td>data-excluded-elements</td>
+            <td>.noSwipe</td>
+            <td>
+                If you want to exclude certain child elements from triggering swipes, you can simply add a .noSwipe class to the element. Then the element and any of its children will no longer trigger the swipe.
+                Also, a jQuery selector is used to exclude input elements as well as the .noSwipe elements. By default all button, input, select, textarea and a elements are excluded.	So either add a .noSwipe class the element, or set your own selector in the excludedElements property.
+            </td>
+        </tr>
+        <tr>
+            <td>preventDefaultEvents</td>
+            <td>data-prevent-default-events</td>
+            <td>true</td>
+            <td>Call preventDefault on events</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3 class="heading">Methods</h3>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Method</th>
+            <th>Params</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>enable</td>
+            <td></td>
+            <td>Enable touch and swipe</td>
+        </tr>
+        <tr>
+            <td>disable</td>
+            <td></td>
+            <td>Disable touch and swipe</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
