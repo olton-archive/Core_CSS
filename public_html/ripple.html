@@ -1,0 +1,107 @@
+<div class="page">
+    <h1 class="display1">Ripple effect</h1>
+    <hr class="thin"/>
+    <p>
+        Core_CSS provides simple method to create ripple effect when object clicked. For this feature Core_CSS contains Ripple widget.
+    </p>
+    <p>
+        To add ripple effect for object you must add attribute <strong>data-role</strong> with value ripple and if need define ripple color over attribute <strong>data-ripple-color</strong>.
+        Also you can define sub elements for ripple effect over attribute <strong>data-ripple-target</strong>.
+        To define alpha factor for ripple effect, you can use attribute <strong>data-ripple-alpha</strong>.
+    </p>
+
+    <div class="emulator">
+        <div class="header pos-absolute more">
+            <button class="nav-button" id="sidebar-toggle"><span></span></button>
+            <span class="app-title">Core CSS</span>
+            <button class="tool-button place-right " data-role="ripple"><span class="i-more_vert icon"></span></button>
+            <button class="tool-button place-right " data-role="ripple"><span class="i-comment icon"></span></button>
+            <button class="tool-button place-right " data-role="ripple"><span class="i-share icon"></span></button>
+        </div>
+
+        <button class="action-button mini floating-action-top bg-red-A200 fg-white pos-absolute" data-role="ripple" ><span class="i-add i-2x"></span></button>
+
+        <div style="padding-top: 130px">
+            <ul class="list" data-role="ripple" data-ripple-target="li" data-ripple-color="#448aff">
+                <li class="list-item with-second-label">
+                    <img class="avatar" src="images/me.jpg">
+                    <span class="label">List item</span>
+                    <span class="second-label">second label</span>
+                    <span class="second-action i-alarm fg-red"></span>
+                </li>
+                <li class="list-item ">
+                    <img class="avatar" src="images/me.jpg">
+                    <span class="label">List item</span>
+                </li>
+                <li class="list-item ">
+                    <img class="avatar" src="images/me.jpg">
+                    <span class="label">List item</span>
+                    <span class="second-action i-alarm"></span>
+                </li>
+                <li class="list-item ">
+                    <img class="avatar" src="images/me.jpg">
+                    <span class="label">List item</span>
+                </li>
+                <li class="list-item ">
+                    <img class="avatar" src="images/me.jpg">
+                    <span class="label">List item</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="bottom-nav" style="position: absolute; bottom: 0;" data-role="ripple" data-ripple-target=".button">
+            <button class="button bg-pink fg-white"><span class="icon i-add"></span><span class="label">Add</span></button>
+            <button class="button bg-pink fg-white"><span class="icon i-favorite"></span><span class="label">Favorites</span></button>
+            <button class="button bg-pink fg-white"><span class="icon i-search"></span><span class="label">Search</span></button>
+        </div>
+    </div>
+    <div class="emulator bg-black" style="height: 54px; display: flex; align-items: center; justify-content: space-around" data-role="ripple" data-ripple-target="button">
+        <button class="flat-button"><span class="i-undo fg-white i-2x" ></span></button>
+        <button class="flat-button"><span class="i-home fg-white i-2x" ></span></button>
+        <button class="flat-button"><span class="i-running_tasks fg-white i-2x" ></span></button>
+    </div>
+    <pre class="prettyprint linenums">
+        &lt;button class="tool-button" data-role="ripple"&gt;&lt;span class="i-more_vert icon"&gt;&lt;/span&gt;&lt;/button&gt;
+        &lt;div class="bottom-nav" data-role="ripple" data-ripple-target="button"&gt;
+            &lt;button class="button bg-pink fg-white"&gt;&lt;span class="icon i-add"&gt;&lt;/span&gt;&lt;span class="label"&gt;Add&lt;/span&gt;&lt;/button&gt;
+            &lt;button class="button bg-pink fg-white"&gt;&lt;span class="icon i-favorite"&gt;&lt;/span&gt;&lt;span class="label"&gt;Favorites&lt;/span&gt;&lt;/button&gt;
+            &lt;button class="button bg-pink fg-white"&gt;&lt;span class="icon i-search"&gt;&lt;/span&gt;&lt;span class="label"&gt;Search&lt;/span&gt;&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;ul class="list" data-role="ripple" data-ripple-target="li" data-ripple-color="#448aff"&gt;
+            ...
+        &lt;/ul&gt;
+    </pre>
+
+    <h3 class="heading">Options</h3>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Option</th>
+            <th>Data-*</th>
+            <th>Default</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>rippleColor</td>
+            <td>data-ripple-color</td>
+            <td>#ffffff</td>
+            <td>Ripple effect color</td>
+        </tr>
+        <tr>
+            <td>rippleAlpha</td>
+            <td>data-ripple-alpha</td>
+            <td>0.4</td>
+            <td>Ripple alpha factor (transparency) for ripple color</td>
+        </tr>
+        <tr>
+            <td>rippleTarget</td>
+            <td>data-ripple-target</td>
+            <td>0.4</td>
+            <td>Sub elements to make ripple effect</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
