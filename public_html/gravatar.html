@@ -1,0 +1,109 @@
+<div class="page">
+    <h1 class="display1">Gravatar helper</h1>
+    <hr class="thin"/>
+    <p>
+        Core_CSS contains method to get your <a href="http://gravatar.com">Gravatar image</a>.
+    </p>
+    <h3 class="heading">Getting gravatar</h3>
+    <div class="emulator padding4 short">
+        <img data-role="gravatar" data-email="sergey@pimenov.com.ua" class="margin2 place-left">
+        <div data-role="gravatar" data-email="sergey@pimenov.com.ua" class="margin2 place-left"></div>
+        <img id="avatar_1" class="margin2 place-left">
+        <div id="avatar_2" class="margin2 place-left"></div>
+    </div>
+    <pre class="prettyprint linenums">
+        &lt;img data-role="gravatar" data-email="sergey@pimenov.com.ua"&gt;
+        &lt;div data-role="gravatar" data-email="sergey@pimenov.com.ua"&gt;&lt;/div&gt;
+
+        &lt;img id="avatar_1"&gt;
+        $("#avatar_1").attr("src", coreGravatars.getImageSrc('sergey@pimenov.com.ua'));
+
+        &lt;div id="avatar_2"&gt;&lt;/div&gt;
+        $("#avatar_2").html(coreGravatars.getImage('sergey@pimenov.com.ua'));
+    </pre>
+
+    <h3 class="heading">Any size</h3>
+    <div class="emulator padding4 short">
+        <img data-role="gravatar" data-email="sergey@pimenov.com.ua" data-size="40" class="margin2 place-left">
+        <img data-role="gravatar" data-email="sergey@pimenov.com.ua" data-size="80" class="margin2 place-left">
+        <img data-role="gravatar" data-email="sergey@pimenov.com.ua" data-size="120" class="margin2 place-left">
+    </div>
+    <pre class="prettyprint linenums">
+        &lt;img data-role="gravatar" data-email="sergey@pimenov.com.ua" data-size="40"&gt;
+        &lt;img data-role="gravatar" data-email="sergey@pimenov.com.ua" data-size="80"&gt;
+        &lt;img data-role="gravatar" data-email="sergey@pimenov.com.ua" data-size="120"&gt;
+    </pre>
+
+    <h3 class="heading">Default wrappers</h3>
+    <div class="emulator padding1" style="height: 230px">
+        <img data-role="gravatar" data-email="test@test.com" data-default="mm" data-size="80" class="set-border margin1 place-left">
+        <img data-role="gravatar" data-email="test@test.com" data-default="identicon" data-size="80" class="set-border margin1 place-left">
+        <img data-role="gravatar" data-email="test@test.com" data-default="monsterid" data-size="80" class="set-border margin1 place-left">
+        <img data-role="gravatar" data-email="test@test.com" data-default="wavatar" data-size="80" class="set-border margin1 place-left">
+        <img data-role="gravatar" data-email="test@test.com" data-default="retro" data-size="80" class="set-border margin1 place-left">
+        <img data-role="gravatar" data-email="test@test.com" data-default="blank" data-size="80" class="set-border margin1 place-left">
+    </div>
+    <pre class="prettyprint linenums">
+        &lt;img data-role="gravatar" data-email="test@test.com" data-default="mm"&gt;
+        &lt;img data-role="gravatar" data-email="test@test.com" data-default="identicon"&gt;
+        &lt;img data-role="gravatar" data-email="test@test.com" data-default="monsterid"&gt;
+        &lt;img data-role="gravatar" data-email="test@test.com" data-default="wavatar"&gt;
+        &lt;img data-role="gravatar" data-email="test@test.com" data-default="retro"&gt;
+        &lt;img data-role="gravatar" data-email="test@test.com" data-default="blank"&gt;
+    </pre>
+
+    <h3 class="heading">Object</h3>
+    <p>
+        <strong>coreGravatars</strong> object contains two methods:
+    </p>
+    <ul>
+        <li><strong>coreGravatars.getImage</strong> - getting image element</li>
+        <li><strong>coreGravatars.getImageSrc</strong> - getting image source path</li>
+    </ul>
+
+    <h4 class="text-bold">coreGravatars.getImage</h4>
+    <pre class="prettyprint linenums">
+        coreGravatars.getImage(email, size, def, is_jquery_object);
+    </pre>
+
+    <h4 class="text-bold">coreGravatars.getImageSrc</h4>
+    <pre class="prettyprint linenums">
+        coreGravatars.getImageSrc(email, size, def);
+    </pre>
+
+    <h4 class="text-bold">Parameters</h4>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Parameter</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>email</td>
+            <td>Email for which you want to image</td>
+        </tr>
+        <tr>
+            <td>size</td>
+            <td>Size of result image</td>
+        </tr>
+        <tr>
+            <td>def</td>
+            <td>Default wrapper for result image if not found</td>
+        </tr>
+        <tr>
+            <td>is_jquery_object</td>
+            <td>Return type for getImage method: element or jQuery object</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(function(){
+        $("#avatar_1").attr("src", coreGravatars.getImageSrc('sergey@pimenov.com.ua'));
+        $("#avatar_2").html(coreGravatars.getImage('sergey@pimenov.com.ua'));
+    })
+</script>

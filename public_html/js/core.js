@@ -497,7 +497,35 @@ var locales = {
             no: "Нет",
             random: "Случайно"
         }
+    },
+
+    'de_DE': {
+        calendar: {
+            months: [
+                "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember",
+                "Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"
+            ],
+            days: [
+                "Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag",
+                "Sn", "Mn", "Di", "Mi", "Do", "Fr", "Sa",
+                "Son", "Mon", "Die", "Mit", "Don", "Fre", "Sam"
+            ],
+            time: ["UHR", "MIN", "SEK"]
+        },
+        buttons: {
+            ok: "OK",
+            cancel: "Abbrechen",
+            done: "Fertig",
+            today: "Heute",
+            now: "Jetzt",
+            clear: "Reinigen",
+            help: "Hilfe",
+            yes: "Ja",
+            no: "Nein",
+            random: "Zufällig"
+        }
     }
+
 };
 
 window.coreLocales = locales;
@@ -2813,6 +2841,19 @@ var d = new Date().getTime();
         }
 
         return true;
+    },
+
+    addLocale: function(data){
+        $.extend(locales, data);
+    },
+
+    getLocaleNames: function(){
+        var result = [];
+        $.each(locales, function(i, v){
+            result.push(i);
+        });
+
+        return result;
     }
 
 };
@@ -5234,7 +5275,7 @@ var gravatar = {
     }
 };
 
-window.gravatar = gravatar;
+$.Gravatars = window.coreGravatars = gravatar;
 
 $.widget( "corecss.gravatar" , {
 
