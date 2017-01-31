@@ -65,7 +65,7 @@ body {
 
 .version {
     position: absolute;
-    bottom: -32px;
+    bottom: -36px;
     width: 100%;
     text-align: center;
     color: #eee;
@@ -314,6 +314,23 @@ hr {
 
 #sidebar-demo-1 {
     width: 240px;
+}
+
+.easing-table tr td:nth-child(even) {
+    width: 140px;
+}
+.js-demo-cube-container {
+    padding: 10px;
+    width: 240px;
+    position: relative;
+}
+.js-demo-cube {
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    left: 10px;
+    top: 7px;
+    background: #000;
 }
 
 @media screen and (min-width: 1200px) {
