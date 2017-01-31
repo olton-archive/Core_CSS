@@ -1,0 +1,55 @@
+<div class="page">
+    <h1 class="display1">Template engine</h1>
+    <hr class="thin"/>
+    <p>
+        Core_CSS contains micro template engine. This feature specified in function <strong>coreTemplate</strong> or <strong>$.Template</strong>.
+        The function takes 2 parameters: template as string and vars defined as object.
+    </p>
+    <pre class="prettyprint linenums">
+        var template =
+         'My skills:' +
+         '&lt;%if(this.showSkills) {%&gt;' +
+         '&lt;ul&gt;' +
+         '&lt;%for(var i = 0; i &lt; this.skills.length; i++) {%&gt;' +
+         '&lt;li&gt;&lt;a href="#"&gt;&lt;%this.skills[i]%&gt;&lt;/a&gt;&lt;/li&gt;' +
+         '&lt;/ul&gt;' +
+         '&lt;br/&gt;&lt;strong&gt;Total: &lt;/strong&gt;&lt;%this.skills.length%&gt; main skills' +
+         '&lt;%}%&gt;' +
+         '&lt;%} else {%&gt;' +
+         '&lt;p&gt;none&lt;/p&gt;' +
+         '&lt;%}%&gt;';
+
+        var result = coreTemplate(template, {
+            skills: ["js", "html", "css"],
+            showSkills: true
+        });
+
+        console.log(result);
+    </pre>
+    <h3 class="heading">Result</h3>
+    <div class="emulator short padding2">
+        <div id="template_result"></div>
+    </div>
+</div>
+
+<script>
+     var template =
+         'My skills:' +
+         '<%if(this.showSkills) {%>' +
+         '<ul>' +
+         '<%for(var i = 0; i < this.skills.length; i++) {%>' +
+         '<li><a href="#"><%this.skills[i]%></a></li>' +
+         '<%}%>' +
+         '</ul>' +
+         '<br/><strong>Total: </strong><%this.skills.length%> main skills' +
+         '<%} else {%>' +
+         '<p>none</p>' +
+         '<%}%>';
+
+     var result = coreTemplate(template, {
+         skills: ["javascript", "html", "css", "php", "oracle", "mysql", "java", "pascal", "c/c++"],
+         showSkills: true
+     });
+
+     $("#template_result").html(result);
+</script>
