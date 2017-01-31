@@ -1,0 +1,55 @@
+<div class="page">
+    <h1 class="display1">Locales</h1>
+    <hr class="thin"/>
+    <p>
+        Core_CSS contains object with locales for displaying any widgets in special languages.
+    </p>
+    <p>
+        To get supported locales list you can call <strong>soreUtils.getLocaleNames</strong> method.
+    </p>
+    <pre class="prettyprint linenums">
+        var locales = coreUtils.getLocaleNames();
+        console.log(locales);
+    </pre>
+
+    <p>
+        To add your custom locale you can call <strong>coreUtils.addLocale</strong> method.
+    </p>
+    <pre class="prettyprint linenums">
+        var de_locale = {
+            'de_DE': {
+                calendar: {
+                    months: [
+                        "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember",
+                        "Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"
+                    ],
+                    days: [
+                        "Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag",
+                        "Sn", "Mn", "Di", "Mi", "Do", "Fr", "Sa",
+                        "Son", "Mon", "Die", "Mit", "Don", "Fre", "Sam"
+                    ],
+                    time: ["UHR", "MIN", "SEK"]
+                },
+                buttons: {
+                    ok: "OK",
+                    cancel: "Abbrechen",
+                    done: "Fertig",
+                    today: "Heute",
+                    now: "Jetzt",
+                    clear: "Reinigen",
+                    help: "Hilfe",
+                    yes: "Ja",
+                    no: "Nein",
+                    random: "Zufällig"
+                }
+            }
+        }
+
+        coreUtils.addLocale(de_locale);
+    </pre>
+
+</div>
+
+<script>
+    console.log(coreUtils.getLocaleNames());
+</script>

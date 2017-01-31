@@ -19,7 +19,7 @@ var gravatar = {
     }
 };
 
-window.gravatar = gravatar;
+$.Gravatars = window.coreGravatars = gravatar;
 
 $.widget( "corecss.gravatar" , {
 

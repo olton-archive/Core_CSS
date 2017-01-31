@@ -146,6 +146,19 @@ var Utils = {
         }
 
         return true;
+    },
+
+    addLocale: function(data){
+        $.extend(locales, data);
+    },
+
+    getLocaleNames: function(){
+        var result = [];
+        $.each(locales, function(i, v){
+            result.push(i);
+        });
+
+        return result;
     }
 
 };
