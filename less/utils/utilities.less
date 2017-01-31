@@ -14,8 +14,8 @@
 .size6 {width: @unitSize * 6;}
 .size7 {width: @unitSize * 7;}
 .size0,
-.full-width {width: 100%;}
-.full-height {height: 100%;}
+.full-width {width: 100% !important;}
+.full-height {height: 100% !important;}
 
 .fixed-bottom, .fixed-top {
     position: fixed;
@@ -34,11 +34,11 @@
 }
 
 .full-screen {
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    position: fixed;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    right: 0 !important;
+    position: fixed !important;
 }
 
 .pos-static {position: static !important;}
@@ -66,10 +66,10 @@
 .no-float {float: none !important;}
 .no-visible {visibility: hidden !important;}
 .no-border {border: 0 !important;}
-.no-border-top {border-top: 0 !important;}
-.no-border-left {border-left: 0 !important;}
-.no-border-right {border-right: 0 !important;}
-.no-border-bottom {border-bottom: 0 !important;}
+//.no-border-top {border-top: 0 !important;}
+//.no-border-left {border-left: 0 !important;}
+//.no-border-right {border-right: 0 !important;}
+//.no-border-bottom {border-bottom: 0 !important;}
 .no-overflow {overflow: hidden !important;}
 .no-scroll {overflow: hidden !important;}
 .no-scroll-x {overflow-x: hidden !important;}

@@ -1,0 +1,97 @@
+<div class="page">
+    <h1 class="display1">Utilities functions</h1>
+    <hr class="thin"/>
+    <p>
+        Core_CSS provides nay utilities function stored in <strong>coreUtils</strong> object.
+    </p>
+
+    <h3 class="heading">Functions</h3>
+    <table class="table border-all">
+        <thead class="bg-gray-100">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>isUrl(string)</td>
+            <td>Check value is url</td>
+        </tr>
+        <tr>
+            <td>isColor(string)</td>
+            <td>Check value is hex color</td>
+        </tr>
+        <tr>
+            <td>secondsToTime(num)</td>
+            <td>Convert seconds to time. Return object {"h": hours, "m": minutes, "s": seconds}</td>
+        </tr>
+        <tr>
+            <td>hex2rgba(hex, alpha)</td>
+            <td>Convert hex string to rgba value with alpha factor. Return value is string 'rgba(...)'</td>
+        </tr>
+        <tr>
+            <td>random(from, to)</td>
+            <td>Generate random value from ... to</td>
+        </tr>
+        <tr>
+            <td>isInt(any)</td>
+            <td>Check if value is a integer</td>
+        </tr>
+        <tr>
+            <td>isFloat(any)</td>
+            <td>Check if value is a float</td>
+        </tr>
+        <tr>
+            <td>uniqueId(prefix)</td>
+            <td>Generate unique ID in format xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx</td>
+        </tr>
+        <tr>
+            <td>isTouchDevice()</td>
+            <td>Check if device is touchable</td>
+        </tr>
+        <tr>
+            <td>secondsToFormattedString(num)</td>
+            <td>Convert seconds to HH:MI:SS</td>
+        </tr>
+        <tr>
+            <td>callback(cb, args)</td>
+            <td>Cool for creating callbacks. cb - function name or real function or js code, args - arguments</td>
+        </tr>
+        <tr>
+            <td>exec(cb, args)</td>
+            <td>Execute function. cb - function name or real function or js code, args - arguments</td>
+        </tr>
+        <tr>
+            <td>isFunc(func)</td>
+            <td>Check if value is function</td>
+        </tr>
+        <tr>
+            <td>isCoreObject(el, role_name)</td>
+            <td>Check if value is Core_CSS widget</td>
+        </tr>
+        <tr>
+            <td>addLocale(data)</td>
+            <td>Add custom locale to coreLocales in runtime</td>
+        </tr>
+        <tr>
+            <td>getLocaleNames()</td>
+            <td>Get Core_CSS locale names</td>
+        </tr>
+        </tbody>
+    </table>
+    <h4 class="text-bold">Example</h4>
+    <pre class="prettyprint linenums">
+        coreUtils.isTouchDevice();
+    </pre>
+
+    <h3>Extends js types</h3>
+    <ul>
+        <li>Array.prototype.shuffle</li>
+        <li>Array.prototype.clone</li>
+        <li>Array.prototype.unique</li>
+        <li>Number.prototype.format</li>
+        <li>Date.prototype.format</li>
+    </ul>
+</div>

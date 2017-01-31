@@ -333,6 +333,10 @@ hr {
     background: #000;
 }
 
+.display1 {
+    font-weight: 100 !important;
+}
+
 @media screen and (min-width: 1200px) {
     #icons-list li {
         width: 25%;
