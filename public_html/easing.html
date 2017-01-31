@@ -1,0 +1,297 @@
+<div class="page">
+    <h1 class="display1">Easing functions</h1>
+    <hr class="thin"/>
+    <p>
+        Core_CSS includes a easing function for animate effect. This module created by George McGinley Smith and has BSD license. <a href="http://gsgd.co.uk/sandbox/jquery/easing/">Easing offsite</a>.
+    </p>
+
+    <pre class="prettyprint linenums">
+        $(element).animate({
+            ...
+        }, time, easing_func);
+    </pre>
+
+    <table class="table border bordered easing-table">
+        <thead>
+        <tr class="bg-gray-100">
+            <th>Func name</th>
+            <th>Demo</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>swing</td>
+            <td style="width: 240px">
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="swing"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>easeInQuad</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeInQuad"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>easeOutQuad</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeOutQuad"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>easeInOutQuad</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeInOutQuad"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>easeInCubic</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeInCubic"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>easeOutCubic</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeOutCubic"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>easeInOutCubic</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeInOutCubic"></div>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>easeInQuart</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeInQuart"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>easeOutQuart</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeOutQuart"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>easeInOutQuart</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeInOutQuart"></div>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>easeInQuint</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeInQuint"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>easeOutQuint</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeOutQuint"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>easeInOutQuint</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeInOutQuint"></div>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>easeInSine</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeInSine"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>easeOutSine</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeOutSine"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>easeInOutSine</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeInOutSine"></div>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>easeInExpo</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeInExpo"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>easeOutExpo</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeOutExpo"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>easeInOutExpo</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeInOutExpo"></div>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>easeInCirc</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeInCirc"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>easeOutCirc</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeOutCirc"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>easeInOutCirc</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeInOutCirc"></div>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>easeInElastic</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeInElastic"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>easeOutElastic</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeOutElastic"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>easeInOutElastic</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeInOutElastic"></div>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>easeInBack</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeInBack"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>easeOutBack</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeOutBack"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>easeInOutBack</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeInOutBack"></div>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>easeInBounce</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeInBounce"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>easeOutBounce</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeOutBounce"></div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>easeInOutBounce</td>
+            <td>
+                <div class="bg-dark js-demo-cube-container">
+                    <div class="js-demo-cube bg-lightBlue" data-easing="easeInOutBounce"></div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<script>
+    $(function(){
+        var cubes = $('.js-demo-cube');
+        var i_cubes = setInterval(function(){
+            $.each(cubes, function(){
+                var cube = $(this);
+                cube.css({
+                    left: 10
+                }).animate({
+                    left: 230
+                }, 1500, cube.data('easing'));
+            });
+        }, 3000);
+    });
+</script>
