@@ -135,12 +135,6 @@ module.exports = function(grunt) {
                 src: '**/*',
                 dest: 'build/fonts'
             },
-            docs: {
-                expand: true,
-                cwd: 'build',
-                src: '**/*',
-                dest: 'docs'
-            },
             public_html: {
                 expand: true,
                 cwd: 'build',
