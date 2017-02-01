@@ -1,0 +1,46 @@
+<div class="page">
+    <h1 class="display1">Customize</h1>
+    <hr class="thin"/>
+    <p>
+        If you want to customize Core_CSS or add new widget or css class then you can add your own js or less files and run Grunt.
+    </p>
+
+    <p>
+        Before use Grunt you must install <a href="https://nodejs.org/">nodejs</a> and last <a href="https://www.npmjs.com/">npm</a>.
+    </p>
+
+    <h3 class="heading">Grunt</h3>
+
+    <strong>Goto project directory:</strong>
+    <pre class="prettyprint linenums">
+        cmd:\> cd path_to\Core_CSS
+    </pre>
+
+    <strong>Install grunt:</strong>
+    <pre class="prettyprint linenums">
+        cmd:\> npm install -g grunt-cli
+    </pre>
+
+    <strong>Install project dependencies:</strong>
+    <pre class="prettyprint linenums">
+        cmd:\> npm install
+    </pre>
+
+    <strong>Add your files:</strong>
+    <ul>
+        <li>Widget JS - add js file to js/widgets</li>
+        <li>Utils JS - add js file to js/utils</li>
+        <li>Less (css) component - add less file to less/core and add import to core.less</li>
+        <li>Less (css) utils - add less file to less/utils and add import to core.less</li>
+        <li>Less (css) colors - add variables to variables.less file and create classes in core-colors.less</li>
+    </ul>
+
+    <strong>Run grunt:</strong>
+    <pre class="prettyprint linenums">
+        cmd:\> grunt
+    </pre>
+
+    <p class="padding2 bg-gray-100">
+        To change grunt tasks you can modify Grunfile.js in project directory.
+    </p>
+</div>
