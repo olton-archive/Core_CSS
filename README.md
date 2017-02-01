@@ -4,7 +4,7 @@ The main approach of the Core_CSS is to give you an opportunity to create Mobile
 Core_CSS is completely <strong>free</strong> and <strong>open-source</strong> (MIT Licensed).
 
 ## Site
-http://coreui.org.ua
+http://coreui.net
 
 ## Repo
 https://github.com/olton/Core_CSS
