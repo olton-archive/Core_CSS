@@ -3620,7 +3620,7 @@ $.widget( "corecss.accordion" , {
         var o = this.options;
         var content = frame.children('.item-content');
 
-        if (o.closeAny) this._closeAllFrames();
+        if (o.closeOther) this._closeAllFrames();
 
         content.slideDown(o.speed);
         frame.addClass('active');
